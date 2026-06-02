@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import {
   allDismantleCandidates,
-  buildDismantleDisplayGroups,
   findDismantleBySlot,
 } from './dismantle';
+import { buildDismantleDisplayGroups, buildRedundantBrowseGroups } from '@/lib/browse/redundantGroups';
 import { DEFAULT_REDUNDANT_PEER_SCOPE } from '@/lib/scoring/peerScope';
 import type { ArmorPiece } from '@/types';
 
@@ -104,10 +104,25 @@ describe('buildDismantleDisplayGroups', () => {
       power: 440,
     });
     const candidates = allDismantleCandidates([keeper, dup], 'hunter');
-    const groups = buildDismantleDisplayGroups(candidates);
+    const groups = buildRedundantBrowseGroups(candidates, [keeper, dup]);
     expect(groups).toHaveLength(1);
     expect(groups[0]?.reason).toBe('tuning-duplicate');
     const ids = groups[0]?.members.map((m) => m.piece.instanceId).sort();
     expect(ids).toEqual(['dup', 'keep']);
+    expect(groups[0]?.members.find((m) => m.role === 'keeper')?.piece.instanceId).toBe('keep');
+  });
+
+  it('shows every piece in a mutual tuning cluster', () => {
+    const a = piece('a', { weapons: 30, grenade: 25, super: 20 }, { tuningStat: 'weapons', power: 460 });
+    const b = piece('b', { weapons: 30, grenade: 25, super: 20 }, { tuningStat: 'weapons', power: 450 });
+    const c = piece('c', { weapons: 30, grenade: 25, super: 20 }, { tuningStat: 'weapons', power: 440 });
+    const items = [a, b, c];
+    const candidates = allDismantleCandidates(items, 'hunter');
+    expect(candidates).toHaveLength(2);
+    const groups = buildRedundantBrowseGroups(candidates, items);
+    expect(groups).toHaveLength(1);
+    expect(groups[0]?.members).toHaveLength(3);
+    expect(groups[0]?.members[0]?.role).toBe('keeper');
+    expect(groups[0]?.members.filter((m) => m.role === 'redundant')).toHaveLength(2);
   });
 });

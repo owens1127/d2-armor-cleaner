@@ -130,7 +130,7 @@ function OverflowPill({ count }: { count: number }) {
   );
 }
 
-function TuningBadge({ stat, differs }: { stat: Stat; differs?: boolean }) {
+export function TuningBadge({ stat, differs }: { stat: Stat; differs?: boolean }) {
   const label = STAT_LABELS[stat];
   const text = `Tuning: ${label}`;
   return (
@@ -149,7 +149,7 @@ function TuningBadge({ stat, differs }: { stat: Stat; differs?: boolean }) {
   );
 }
 
-function StatPill({
+export function StatPill({
   stat,
   value,
   role,

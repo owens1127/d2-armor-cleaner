@@ -91,6 +91,10 @@ export interface CopyDimQueriesButtonProps {
   /** When true, use `.ui-icon-btn--compact` (32px) for dense loadout rows. */
   compact?: boolean;
   disabled?: boolean;
+  /** Overrides default bulk aria-label and title. */
+  ariaLabel?: string;
+  /** Screen reader announcement after copy; defaults from ariaLabel or bulk label. */
+  announcement?: string;
 }
 
 export function CopyDimQueriesButton({
@@ -98,11 +102,16 @@ export function CopyDimQueriesButton({
   className = '',
   compact = false,
   disabled = false,
+  ariaLabel,
+  announcement,
 }: CopyDimQueriesButtonProps) {
   const [copied, setCopied] = useState(false);
   const resetTimerRef = useRef<number | null>(null);
   const pieceCount = instanceIds.length;
-  const label = copyDimQueriesAriaLabel(pieceCount);
+  const label = ariaLabel ?? copyDimQueriesAriaLabel(pieceCount);
+  const copiedAnnouncement =
+    announcement ??
+    (ariaLabel ? `${ariaLabel} copied to clipboard.` : copyDimQueriesAnnouncement(pieceCount));
 
   useEffect(() => {
     return () => {
@@ -148,7 +157,7 @@ export function CopyDimQueriesButton({
         )}
       </button>
       <span className="sr-only" aria-live="polite" role="status">
-        {copied ? copyDimQueriesAnnouncement(pieceCount) : ''}
+        {copied ? copiedAnnouncement : ''}
       </span>
     </>
   );

@@ -1,6 +1,9 @@
 /** In-page anchor for the combos stat-priority editor (DesiredBuildsSection). */
 export const COMBOS_SECTION_ID = 'combos';
 
+/** In-page anchor for global dupe rules on Settings. */
+export const DUPE_RULES_SECTION_ID = 'dupe-rules';
+
 export function normalizeHashTargetId(hash: string): string {
   const raw = hash.replace(/^#/, '');
   return raw === 'desired-builds' ? COMBOS_SECTION_ID : raw;

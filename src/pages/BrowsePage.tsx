@@ -13,11 +13,14 @@ import {
 } from '@/lib/constants';
 import {
   allDismantleCandidates,
-  buildDismantleDisplayGroups,
   countDismantleCandidates,
-  countRedundantMembersInGroups,
+  filterDismantleItems,
   findDismantleBySlot,
 } from '@/lib/dupes/dismantle';
+import {
+  buildRedundantBrowseGroups,
+  countRedundantMembersInGroups,
+} from '@/lib/browse/redundantGroups';
 import { sortBrowseItems, type BrowseSortOrder } from '@/lib/armor/sort';
 import {
   filterBrowseRedundantOnly,
@@ -233,6 +236,7 @@ export function BrowsePage() {
 
   const redundantGroups = useMemo(() => {
     if (!redundantOnly) return [];
+    const activeClassItems = filterDismantleItems(classItems, dismantleExclusions);
     const raw = findDismantleBySlot(
       allItems,
       classType,
@@ -241,8 +245,9 @@ export function BrowsePage() {
       dismantleExclusions,
     );
     const candidates = [...raw.values()].flat();
-    const groups = buildDismantleDisplayGroups(
+    const groups = buildRedundantBrowseGroups(
       candidates,
+      activeClassItems,
       redundantPeerScope,
       classPrefs,
     );

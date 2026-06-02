@@ -2,7 +2,12 @@ import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-route
 import { DupeRulesImpact } from '@/components/DupeRulesImpact';
 import { Layout } from '@/components/Layout';
 import { desiredBuildsEditorPath, settingsPath } from '@/lib/nav';
-import { COMBOS_SECTION_ID, normalizeHashTargetId } from '@/lib/nav/hashScroll';
+import {
+  COMBOS_SECTION_ID,
+  DUPE_RULES_SECTION_ID,
+  normalizeHashTargetId,
+} from '@/lib/nav/hashScroll';
+import { useScrollToLocationHash } from '@/lib/nav/useScrollToLocationHash';
 import { DUPE_MIN_TIER_VALUES, DUPE_PRESETS, formatDupeMinTierLabel } from '@/lib/constants';
 import { isBungieConfigured } from '@/lib/bungie/auth';
 import { getDimApiKey } from '@/lib/dim/tags';
@@ -40,6 +45,7 @@ const DUPE_TAG_TOGGLES = [
 ] as const;
 
 export function SettingsPage() {
+  useScrollToLocationHash();
   const { class: classParam } = useParams<{ class: string }>();
   const location = useLocation();
   const navigate = useNavigate();
@@ -319,7 +325,7 @@ export function SettingsPage() {
         </div>
       </section>
 
-      <section className="mb-10 max-w-xl space-y-4">
+      <section id={DUPE_RULES_SECTION_ID} className="mb-10 max-w-xl space-y-4 scroll-mt-24">
         <div>
           <h2 className="text-sm font-semibold uppercase text-muted mb-2">Dupe rules</h2>
           <p className="text-sm text-muted max-w-lg">

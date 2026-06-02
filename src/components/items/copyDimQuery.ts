@@ -21,8 +21,16 @@ export function copyDimQueriesAriaLabel(_pieceCount: number): string {
   return 'Copy DIM search for shown pieces';
 }
 
+export function copyDimQueriesGroupAriaLabel(pieceCount: number): string {
+  return `Copy DIM search for all ${pieceCount} piece${pieceCount === 1 ? '' : 's'} in this group`;
+}
+
 export function copyDimQueriesAnnouncement(pieceCount: number): string {
   return `${copyDimQueriesAriaLabel(pieceCount)} copied to clipboard.`;
+}
+
+export function copyDimQueriesGroupAnnouncement(pieceCount: number): string {
+  return `${copyDimQueriesGroupAriaLabel(pieceCount)} copied to clipboard.`;
 }
 
 export async function copyDimQueriesForInstances(

@@ -25,11 +25,16 @@ function freshConfigsForItem(item: ArmorPiece): Partial<Record<Stat, number>>[] 
   return tuningPermutations(item, { statsBase: intrinsicStats(item) });
 }
 
-function prepareItems(items: ArmorPiece[]): ArmorPiece[] {
+/** Attach tuning stat configurations before equivalence checks. */
+export function prepareItemsForTuningComparison(items: ArmorPiece[]): ArmorPiece[] {
   return items.map((item) => ({
     ...item,
     statConfigurations: freshConfigsForItem(item),
   }));
+}
+
+function prepareItems(items: ArmorPiece[]): ArmorPiece[] {
+  return prepareItemsForTuningComparison(items);
 }
 
 function configsForItem(item: ArmorPiece): Partial<Record<Stat, number>>[] {
@@ -167,7 +172,8 @@ function bestCoveragePeer(
   return null;
 }
 
-function buildMutualTuningGroups(
+/** Union-find clusters of mutually tuning-equivalent pieces (same slot scope). */
+export function mutualTuningGroups(
   items: ArmorPiece[],
   scope?: RedundantPeerScope,
 ): ArmorPiece[][] {
@@ -236,7 +242,7 @@ export function findTuningRedundantMap(
   const map = new Map<string, TuningCoverageResult>();
   const handled = new Set<string>();
 
-  for (const group of buildMutualTuningGroups(eligible, scope)) {
+  for (const group of mutualTuningGroups(eligible, scope)) {
     if (group.length < 2) continue;
     const sorted = sortByRedundantKeepPriority(group, effectivePrefs);
     const keeper = sorted[0];

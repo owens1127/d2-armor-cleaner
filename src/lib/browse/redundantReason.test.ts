@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { armorPiece } from '@/test/armorFixtures';
 import type { DismantleCandidate } from '@/lib/dupes/dismantle';
-import { formatRedundantReasonLine, redundantReasonBadge } from '@/lib/browse/redundantReason';
+import { formatRedundantReasonLine, redundantGroupReasonLabel, redundantReasonBadge } from '@/lib/browse/redundantReason';
 
 describe('formatRedundantReasonLine', () => {
   it('describes stat-lower vs keeper with beat summary', () => {
@@ -42,5 +42,11 @@ describe('formatRedundantReasonLine', () => {
     expect(formatRedundantReasonLine(candidate)).toContain('Keeper Helm');
     expect(formatRedundantReasonLine(candidate)).toContain('keep one');
     expect(redundantReasonBadge(candidate.reason)).toBe('Tuning duplicate');
+    expect(redundantGroupReasonLabel(candidate.reason)).toBe('Same tuning · pick one to keep');
+  });
+
+  it('labels stat-lower groups in plain English', () => {
+    expect(redundantGroupReasonLabel('stat-lower')).toBe('Strictly lower · pick one to keep');
+    expect(redundantGroupReasonLabel('tuning-duplicate')).toBe('Same tuning · pick one to keep');
   });
 });

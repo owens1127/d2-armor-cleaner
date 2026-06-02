@@ -1,19 +1,34 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BrowseCardActionGrid } from '@/components/duel/BrowseCardActionGrid';
+import {
+  StatPill,
+  TuningBadge,
+  statCompareMap,
+} from '@/components/duel/ArmorCard';
 import { ItemIcon } from '@/components/items/ItemIcon';
 import { ItemTagIndicator } from '@/components/items/ItemTagIndicator';
+import { CopyDimQueriesButton } from '@/components/items/CopyDimQueryButton';
+import {
+  copyDimQueriesGroupAnnouncement,
+  copyDimQueriesGroupAriaLabel,
+} from '@/components/items/copyDimQuery';
 import { ARCHETYPE_LABELS, CLASS_LABELS, SLOT_LABELS } from '@/lib/constants';
-import type { ClassType } from '@/types';
+import type { ClassType, Stat } from '@/types';
 import type {
   DismantleDisplayGroup,
   DismantleGroupMember,
 } from '@/lib/dupes/dismantle';
 import {
-  formatRedundantMemberDetail,
-  redundantGroupReasonLabel,
-} from '@/lib/browse/redundantReason';
+  analyzeRedundantGroupMatch,
+  formatRedundantGroupLowerLine,
+  formatRedundantGroupMatchingLine,
+  redundantMemberStatEntries,
+  type RedundantGroupMatch,
+} from '@/lib/browse/redundantMatchDisplay';
 import { setBrowseRedundantInParams } from '@/lib/browse/redundantFilter';
+import { settingsPath } from '@/lib/nav';
+import { DUPE_RULES_SECTION_ID } from '@/lib/nav/hashScroll';
 import type { ArmorPiece } from '@/types';
 
 export interface RedundantRollsBrowseProps {
@@ -33,7 +48,6 @@ export interface RedundantRollsBrowseProps {
 function rollMetaLine(item: ArmorPiece): string {
   const set = item.armorSet?.name;
   const parts = [
-    SLOT_LABELS[item.armorSlot],
     ARCHETYPE_LABELS[item.archetype],
     item.tier != null ? `T${item.tier}` : null,
     set ?? null,
@@ -41,34 +55,96 @@ function rollMetaLine(item: ArmorPiece): string {
   return parts.join(' · ');
 }
 
-function keeperAnchorId(groupId: string): string {
-  return `redundant-keeper-${groupId}`;
+function groupGridClass(count: number): string {
+  if (count <= 2) return 'grid-cols-1 sm:grid-cols-2';
+  if (count <= 4) return 'grid-cols-2 lg:grid-cols-4';
+  return 'grid-cols-2 sm:grid-cols-3';
+}
+
+function statHighlightForMember(
+  piece: ArmorPiece,
+  match: RedundantGroupMatch,
+  reason: DismantleDisplayGroup['reason'],
+  comparePiece: ArmorPiece | null,
+  stat: Stat,
+): 'win' | 'lose' | 'tie' | undefined {
+  if (reason === 'tuning-duplicate') {
+    return match.allSameIntrinsicRoll ? 'tie' : undefined;
+  }
+  if (!comparePiece) return undefined;
+  return statCompareMap(piece, comparePiece)[stat];
+}
+
+function RedundantMatchStatRow({
+  piece,
+  match,
+  reason,
+  comparePiece,
+}: {
+  piece: ArmorPiece;
+  match: RedundantGroupMatch;
+  reason: DismantleDisplayGroup['reason'];
+  comparePiece: ArmorPiece | null;
+}) {
+  const entries = redundantMemberStatEntries(piece, match, reason);
+
+  return (
+    <div className="flex flex-wrap gap-1">
+      {entries.map((entry) => (
+        <StatPill
+          key={`${entry.role ?? 'line'}-${entry.stat}`}
+          stat={entry.stat}
+          value={entry.value}
+          role={entry.role}
+          compact
+          highlight={statHighlightForMember(
+            piece,
+            match,
+            reason,
+            comparePiece,
+            entry.stat,
+          )}
+        />
+      ))}
+      {piece.tuningStat && (
+        <TuningBadge
+          stat={piece.tuningStat}
+          differs={
+            reason === 'stat-lower' &&
+            comparePiece != null &&
+            comparePiece.tuningStat !== piece.tuningStat
+          }
+        />
+      )}
+    </div>
+  );
 }
 
 function RedundantGroupPieceTile({
-  groupId,
   member,
+  match,
+  reason,
+  comparePiece,
   onToggleKeep,
   onToggleFavorite,
   onToggleJunk,
 }: {
-  groupId: string;
   member: DismantleGroupMember;
+  match: RedundantGroupMatch;
+  reason: DismantleDisplayGroup['reason'];
+  comparePiece: ArmorPiece | null;
   onToggleKeep: (piece: ArmorPiece) => void;
   onToggleFavorite: (piece: ArmorPiece) => void;
   onToggleJunk: (piece: ArmorPiece) => void;
 }) {
-  const { piece, role, candidate, copyCount } = member;
+  const { piece, role, copyCount } = member;
   const isKeeper = role === 'keeper';
-  const memberDetail =
-    !isKeeper && candidate ? formatRedundantMemberDetail(candidate) : null;
 
   return (
     <article
-      id={isKeeper ? keeperAnchorId(groupId) : undefined}
-      className={`flex flex-col rounded-lg border p-3 gap-2 min-w-0 scroll-mt-24 ${
+      className={`flex flex-col rounded-lg border p-3 gap-2 min-w-0 ${
         isKeeper
-          ? 'border-emerald-500/25 bg-emerald-500/[0.06]'
+          ? 'border-white/15 bg-white/[0.03] ring-1 ring-inset ring-white/10'
           : 'border-border bg-surface-2/80'
       }`}
     >
@@ -102,18 +178,17 @@ function RedundantGroupPieceTile({
         </div>
       </div>
 
-      <span
-        className={`self-start text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded ${
-          isKeeper
-            ? 'bg-emerald-500/15 text-emerald-200/90'
-            : 'bg-white/8 text-white/55'
-        }`}
-      >
-        {isKeeper ? 'Keep' : 'Redundant'}
-      </span>
+      <RedundantMatchStatRow
+        piece={piece}
+        match={match}
+        reason={reason}
+        comparePiece={comparePiece}
+      />
 
-      {memberDetail && (
-        <p className="text-[11px] text-white/50 leading-snug">{memberDetail}</p>
+      {isKeeper && (
+        <span className="self-start text-[10px] text-white/45 tracking-wide">
+          Suggested keep
+        </span>
       )}
 
       <div className="mt-auto pt-1">
@@ -125,6 +200,41 @@ function RedundantGroupPieceTile({
         />
       </div>
     </article>
+  );
+}
+
+function RedundantGroupMatchSummary({
+  match,
+  reason,
+}: {
+  match: RedundantGroupMatch;
+  reason: DismantleDisplayGroup['reason'];
+}) {
+  const matchingLine = formatRedundantGroupMatchingLine(match, reason);
+  const lowerLine = formatRedundantGroupLowerLine(match);
+
+  return (
+    <div className="flex flex-col gap-2 mt-1 w-full basis-full">
+      <p className="text-xs text-white/60 leading-relaxed">{matchingLine}</p>
+      {lowerLine && (
+        <p className="text-xs text-amber-200/75 leading-relaxed">{lowerLine}</p>
+      )}
+      {match.sharedStatEntries.length > 0 && (
+        <div className="flex flex-wrap gap-1">
+          {match.sharedStatEntries.map((entry) => (
+            <StatPill
+              key={`shared-${entry.stat}`}
+              stat={entry.stat}
+              value={entry.value}
+              role={entry.role}
+              compact
+              highlight="tie"
+            />
+          ))}
+          {match.sharedTuning && <TuningBadge stat={match.sharedTuning} />}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -144,78 +254,67 @@ function RedundantDupeGroup({
   onToggleJunk: (piece: ArmorPiece) => void;
 }) {
   const pieceCount = group.members.length;
-  const redundantCount = group.members.filter((m) => m.role === 'redundant').length;
-  const keeper = group.members.find((m) => m.role === 'keeper');
-  const keeperAnchor = keeperAnchorId(group.id);
-
-  const scrollToKeeper = useCallback(() => {
-    document.getElementById(keeperAnchor)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, [keeperAnchor]);
+  const match = useMemo(() => analyzeRedundantGroupMatch(group), [group]);
+  const groupInstanceIds = useMemo(
+    () => group.members.flatMap((member) => member.instanceIds),
+    [group.members],
+  );
+  const firstRedundant =
+    group.members.find((member) => member.role === 'redundant')?.piece ?? null;
 
   return (
     <section className="border border-border rounded-xl bg-surface overflow-hidden">
-      <button
-        type="button"
-        onClick={onToggleCollapsed}
-        className="w-full flex flex-wrap items-center gap-x-2 gap-y-1 px-4 py-3 text-left hover:bg-white/[0.03] transition-colors"
-        aria-expanded={!collapsed}
-      >
-        <span className="text-sm font-medium text-white">
-          {SLOT_LABELS[group.slot]}
-        </span>
-        <span className="text-white/30" aria-hidden>
-          ·
-        </span>
-        <span className="text-sm text-white/80">{redundantGroupReasonLabel(group.reason)}</span>
-        <span className="text-white/30" aria-hidden>
-          ·
-        </span>
-        <span className="text-sm text-muted">
-          {pieceCount} piece{pieceCount === 1 ? '' : 's'}
-          {redundantCount > 0 && (
-            <span className="text-white/40">
-              {' '}
-              ({redundantCount} redundant)
-            </span>
-          )}
-        </span>
-        <span className="ml-auto text-xs text-muted">{collapsed ? 'Show' : 'Hide'}</span>
-      </button>
+      <div className="w-full flex flex-wrap items-start gap-x-2 gap-y-1 px-4 py-3 hover:bg-white/[0.03] transition-colors">
+        <button
+          type="button"
+          onClick={onToggleCollapsed}
+          className="flex-1 min-w-0 flex flex-wrap items-start gap-x-2 gap-y-1 text-left"
+          aria-expanded={!collapsed}
+        >
+          <span className="text-sm font-medium text-white">
+            {SLOT_LABELS[group.slot]}
+          </span>
+          <span className="text-white/30" aria-hidden>
+            ·
+          </span>
+          <span className="text-sm text-white/75">Pick one to keep</span>
+          <span className="text-white/30" aria-hidden>
+            ·
+          </span>
+          <span className="text-sm text-muted">
+            {pieceCount} piece{pieceCount === 1 ? '' : 's'}
+          </span>
+          <RedundantGroupMatchSummary match={match} reason={group.reason} />
+        </button>
+        <div className="flex items-center gap-2 shrink-0 ml-auto">
+          <CopyDimQueriesButton
+            compact
+            instanceIds={groupInstanceIds}
+            ariaLabel={copyDimQueriesGroupAriaLabel(groupInstanceIds.length)}
+            announcement={copyDimQueriesGroupAnnouncement(groupInstanceIds.length)}
+          />
+          <button
+            type="button"
+            onClick={onToggleCollapsed}
+            className="text-xs text-muted shrink-0"
+          >
+            {collapsed ? 'Show' : 'Hide'}
+          </button>
+        </div>
+      </div>
 
       {!collapsed && (
-        <div className="px-4 pb-4 pt-0 border-t border-border/60">
-          {group.reason === 'tuning-duplicate' && keeper && (
-            <p className="text-xs text-white/55 mt-3 mb-3 leading-relaxed">
-              Same tuning layouts —{' '}
-              <button
-                type="button"
-                onClick={scrollToKeeper}
-                className="text-white/80 hover:text-white underline underline-offset-2"
-              >
-                {keeper.piece.name}
-              </button>{' '}
-              is the suggested keep; triage the rest in this group.
-            </p>
-          )}
-          {group.reason === 'stat-lower' && keeper && (
-            <p className="text-xs text-white/55 mt-3 mb-3 leading-relaxed">
-              Strictly lower than{' '}
-              <button
-                type="button"
-                onClick={scrollToKeeper}
-                className="text-white/80 hover:text-white underline underline-offset-2"
-              >
-                {keeper.piece.name}
-              </button>
-              .
-            </p>
-          )}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div className="px-4 pb-4 pt-3 border-t border-border/60">
+          <div className={`grid gap-3 ${groupGridClass(pieceCount)}`}>
             {group.members.map((member) => (
               <RedundantGroupPieceTile
                 key={member.instanceIds.join('|')}
-                groupId={group.id}
                 member={member}
+                match={match}
+                reason={group.reason}
+                comparePiece={
+                  member.role === 'keeper' ? firstRedundant : match.keeper
+                }
                 onToggleKeep={onToggleKeep}
                 onToggleFavorite={onToggleFavorite}
                 onToggleJunk={onToggleJunk}
@@ -264,10 +363,20 @@ export function RedundantRollsBrowse({
             Redundant rolls · {CLASS_LABELS[classType]}
           </h1>
           <p className="text-muted text-sm mt-2 max-w-xl leading-relaxed">
-            {filteredCount} of {totalCandidateCount} redundant piece
-            {totalCandidateCount === 1 ? '' : 's'} in {groupList.length} group
-            {groupList.length === 1 ? '' : 's'}. Each group shows the roll to keep and
-            strictly lower or tuning-duplicate pieces. Confirm in DIM before dismantling.
+            {filteredCount} redundant piece{totalCandidateCount === 1 ? '' : 's'} across{' '}
+            {groupList.length} group{groupList.length === 1 ? '' : 's'}. Each group shows matching
+            stats and tuning side by side. Triage with keep, favorite, or junk, then confirm in
+            DIM before dismantling.
+          </p>
+          <p className="text-muted text-xs mt-1.5 max-w-xl">
+            Results feel too strict or too loose?{' '}
+            <Link
+              to={`${settingsPath(classType)}#${DUPE_RULES_SECTION_ID}`}
+              className="underline hover:text-white/90"
+            >
+              Adjust dupe rules in Settings
+            </Link>
+            .
           </p>
         </div>
         <Link
