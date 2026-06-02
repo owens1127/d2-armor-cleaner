@@ -223,6 +223,16 @@ export function clearCalibrateSessionProgress(): void {
 export function resetCalibrateProgressAfterCompletion(): void {
   clearCalibrateSessionProgress();
   clearOnboardingProgress();
+  calibrateHmrRef.current = null;
+  if (import.meta.hot?.data) {
+    delete import.meta.hot.data[HMR_CALIBRATE_KEY];
+  }
+}
+
+/** Persist onboarding completion and clear all in-progress onboarding/calibrate state. */
+export function markOnboardingComplete(): void {
+  localStorage.setItem(LS_ONBOARDING, 'true');
+  resetCalibrateProgressAfterCompletion();
 }
 
 function calibrateProgressFromStorage(options?: {

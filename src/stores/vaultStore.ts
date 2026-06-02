@@ -22,7 +22,7 @@ import {
   saveStoredDupeRules,
   snapshotDupeRules,
 } from '@/lib/dupe-rules/storage';
-import { clearOnboardingProgress } from '@/lib/onboarding/storage';
+import { clearOnboardingProgress, markOnboardingComplete } from '@/lib/onboarding/storage';
 import {
   applyLocalOverridesToArmorPieces,
   loadLocalDimTagOverrides,
@@ -423,8 +423,12 @@ export const useVaultStore = create<VaultStore>((set, get) => ({
   },
 
   setOnboardingComplete: (v) => {
-    localStorage.setItem(LS_ONBOARDING, String(v));
-    if (v) clearOnboardingProgress();
+    if (v) {
+      markOnboardingComplete();
+    } else {
+      localStorage.setItem(LS_ONBOARDING, String(v));
+      clearOnboardingProgress();
+    }
     set({ onboardingComplete: v });
   },
 

@@ -1,8 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   defaultCalibrateProgress,
-  resetCalibrateProgressAfterCompletion,
   getCalibrateInitialState,
+  getCalibrateNavPath,
+  getOnboardingResumePath,
+  hasInProgressOnboarding,
+  isOnboardingComplete,
+  markInventoryComplete,
+  markOnboardingComplete,
+  markRulesAccepted,
+  resetCalibrateProgressAfterCompletion,
+  saveCalibrateProgress,
   type CalibrateProgress,
 } from '@/lib/onboarding/storage';
 import { mergeCalibrateProgressFromUrl } from '@/lib/onboarding/calibrateUrl';
@@ -115,5 +123,27 @@ describe('calibration non-linear navigation flow', () => {
 
     const nextRun = getCalibrateInitialState({ urlClass: 'hunter' });
     expect(nextRun.step).toBe('class');
+  });
+
+  it('markOnboardingComplete clears sets-step progress and resumes at dashboard', () => {
+    markRulesAccepted();
+    markInventoryComplete('balanced');
+    saveCalibrateProgress({
+      ...defaultCalibrateProgress(),
+      step: 'sets',
+      setOrder: [101, 202],
+      completedSteps: ['class', 'stats', 'archetype', 'tertiary', 'tuning'],
+    });
+
+    markOnboardingComplete();
+
+    expect(isOnboardingComplete()).toBe(true);
+    expect(hasInProgressOnboarding()).toBe(false);
+    expect(localStore.get(LS_ONBOARDING_PROGRESS)).toBeUndefined();
+    expect(getOnboardingResumePath(true)).toBe('/dashboard/hunter');
+    expect(getCalibrateNavPath('hunter')).toBe('/onboarding/calibrate?class=hunter');
+
+    const nextVoluntaryVisit = getCalibrateInitialState({ urlClass: 'hunter' });
+    expect(nextVoluntaryVisit.step).toBe('class');
   });
 });

@@ -24,6 +24,7 @@ import {
   calibrationTuningStats,
   defaultArchetypeOrder,
   defaultSetOrderHashes,
+  normalizeArchetypeOrder,
   resolveArmorSetInfo,
 } from '@/lib/scoring/calibrate';
 import { getClassPrefs, updateClassPrefs } from '@/lib/prefs/profile';
@@ -61,7 +62,6 @@ import {
   calibrateHmrRef,
   ensureCalibratePhase,
   getCalibrateProgressForMount,
-  resetCalibrateProgressAfterCompletion,
   markBackToInventory,
   registerCalibrateHmrHandlers,
   saveCalibrateProgress,
@@ -245,10 +245,10 @@ export function CalibratePage() {
   );
   const setPieces = useMemo(() => calibrationSetPieces(classItems), [classItems]);
 
-  const effectiveArchetypeOrder = useMemo(() => {
-    if (archetypeOrder.length === defaultArchetypeOrder().length) return archetypeOrder;
-    return defaultArchetypeOrder();
-  }, [archetypeOrder]);
+  const effectiveArchetypeOrder = useMemo(
+    () => normalizeArchetypeOrder(archetypeOrder),
+    [archetypeOrder],
+  );
 
   const defaultSetHashes = useMemo(
     () => defaultSetOrderHashes(classItems),
@@ -447,9 +447,7 @@ export function CalibratePage() {
   function finishTuningStep() {
     const nextCompleted = withCompleted('tuning');
     if (setPieces.length < 2) {
-      completeCalibration({
-        completedSteps: [...nextCompleted, 'sets'],
-      });
+      completeCalibration();
     } else {
       persistProgress({
         step: 'sets',
@@ -465,7 +463,7 @@ export function CalibratePage() {
     applyCalibrationChoice(calibrationKeySetOrder(), (p) =>
       applySetOrder(p, effectiveSetOrder),
     );
-    completeCalibration({ completedSteps: withCompleted('sets') });
+    completeCalibration();
   }
 
   function skipArchetype() {
@@ -524,17 +522,14 @@ export function CalibratePage() {
     }
   }
 
-  function completeCalibration(overrides: Partial<CalibrateProgress> = {}) {
-    persistProgress(overrides);
+  function completeCalibration() {
     savePrefs(usePrefsStore.getState().profile);
     finish();
   }
 
   function finish() {
-    calibrateHmrRef.current = null;
-    resetCalibrateProgressAfterCompletion();
     setOnboardingComplete(true);
-    navigate(`/dashboard/${calibrateClass}`);
+    navigate(`/dashboard/${calibrateClass}`, { replace: true });
   }
 
   function jumpToStep(targetStep: CalibrateStep) {
@@ -657,7 +652,7 @@ export function CalibratePage() {
 
   useEffect(() => {
     if (step !== 'sets' || setPieces.length >= 2) return;
-    completeCalibration({ completedSteps: withCompleted('sets') });
+    completeCalibration();
   }, [step, setPieces.length, calibrateClass]);
 
   return (
@@ -750,22 +745,21 @@ export function CalibratePage() {
       )}
 
       {step === 'archetype' && (
-        <div className="max-w-md">
+        <div className="max-w-lg">
           <CalibrateStepHeader
             step="archetype"
             calibrateClass={calibrateClass}
             classSelected={classSelected}
             title="Rank archetypes by preference"
-            instruction="Most preferred at the top. All six archetypes are listed; vault ownership does not limit the list."
-            contextVisual={<ArchetypeGroupIcons archetypes={effectiveArchetypeOrder} />}
-            contextLabel="Archetype stat pairings"
+            instruction="Most preferred at the top. Drag rows or use the arrows. All six archetypes are listed; vault ownership does not limit the list."
           />
           <RankedReorderList
             items={effectiveArchetypeOrder}
             getKey={(arch) => arch}
             getLabel={(arch) => ARCHETYPE_LABELS[arch]}
+            emphasizeLabel
             getSecondaryLabel={(arch) => formatArchetypeStatsLabel(arch)}
-            getLeadingVisual={(arch) => <ArchetypePairIcons archetype={arch} />}
+            getLeadingVisual={(arch) => <ArchetypePairIcons archetype={arch} size="md" />}
             onReorder={(next) => persistProgress({ archetypeOrder: next })}
             onMove={moveArchetype}
           />
@@ -787,22 +781,23 @@ export function CalibratePage() {
             step="tertiary"
             calibrateClass={calibrateClass}
             classSelected={classSelected}
-            title={`Rank tertiary stats for ${ARCHETYPE_LABELS[currentTertiaryArchetype]}`}
-            instruction={`${ARCHETYPE_LABELS[currentTertiaryArchetype]} ${tertiaryArchetypeIndex + 1}/${tertiaryArchetypes.length}. From your vault: ${tertiaryStats.map((s) => STAT_LABELS[s]).join(', ')}. Drag to reorder or use arrow buttons.`}
-            contextVisual={
-              <span className="inline-flex items-center gap-1.5">
-                <ArchetypePairIcons archetype={currentTertiaryArchetype} />
-                <span className="text-neutral-500">:</span>
-                <StatGroupIcons stats={effectiveTertiaryOrder} />
-              </span>
+            title="Rank tertiary stats"
+            instruction={
+              <CalibrateRollRankInstruction
+                archetype={currentTertiaryArchetype}
+                archetypeIndex={tertiaryArchetypeIndex}
+                archetypeCount={tertiaryArchetypes.length}
+                role="tertiary"
+                vaultStats={tertiaryStats}
+              />
             }
-            contextLabel={`${ARCHETYPE_LABELS[currentTertiaryArchetype]} tertiary priorities`}
           />
           <RankedReorderList
             items={effectiveTertiaryOrder}
             getKey={(stat) => stat}
             getLabel={(stat) => STAT_LABELS[stat]}
-            getLeadingVisual={(stat) => <StatIcon stat={stat} size="sm" variant="glyph" />}
+            emphasizeLabel
+            getLeadingVisual={(stat) => <StatIcon stat={stat} size="md" variant="glyph" />}
             onReorder={persistTertiaryOrder}
             onMove={moveTertiary}
           />
@@ -834,22 +829,23 @@ export function CalibratePage() {
             step="tuning"
             calibrateClass={calibrateClass}
             classSelected={classSelected}
-            title={`Rank tuning stats for ${ARCHETYPE_LABELS[currentTuningArchetype]}`}
-            instruction={`${ARCHETYPE_LABELS[currentTuningArchetype]} ${tuningArchetypeIndex + 1}/${tuningArchetypes.length}. Drag to reorder or use arrow buttons.`}
-            contextVisual={
-              <span className="inline-flex items-center gap-1.5">
-                <ArchetypePairIcons archetype={currentTuningArchetype} />
-                <span className="text-neutral-500">:</span>
-                <StatGroupIcons stats={currentTuningOrder} />
-              </span>
+            title="Rank tuning stats"
+            instruction={
+              <CalibrateRollRankInstruction
+                archetype={currentTuningArchetype}
+                archetypeIndex={tuningArchetypeIndex}
+                archetypeCount={tuningArchetypes.length}
+                role="tuning"
+                vaultStats={tuningStats}
+              />
             }
-            contextLabel={`${ARCHETYPE_LABELS[currentTuningArchetype]} tuning priorities`}
           />
           <RankedReorderList
             items={currentTuningOrder}
             getKey={(stat) => stat}
             getLabel={(stat) => STAT_LABELS[stat]}
-            getLeadingVisual={(stat) => <StatIcon stat={stat} size="sm" variant="glyph" />}
+            emphasizeLabel
+            getLeadingVisual={(stat) => <StatIcon stat={stat} size="md" variant="glyph" />}
             onReorder={persistCurrentTuningOrder}
             onMove={moveCurrentTuning}
           />
@@ -902,7 +898,11 @@ export function CalibratePage() {
             onReorder={(next) => persistProgress({ setOrder: next })}
             onMove={moveSet}
           />
-          <OnboardingStepActions onBack={goBack} onSkip={finish} skipLabel="Skip armor sets">
+          <OnboardingStepActions
+            onBack={goBack}
+            onSkip={completeCalibration}
+            skipLabel="Skip armor sets"
+          >
             <button
               type="button"
               onClick={finishSets}
@@ -945,18 +945,18 @@ function CalibrateStepHeader({
   calibrateClass: ClassType;
   classSelected: boolean;
   title: string;
-  instruction?: string;
+  instruction?: ReactNode;
   contextVisual?: ReactNode;
   contextLabel?: string;
 }) {
   const stepIndex = STEPS.indexOf(step);
   return (
     <div className="mb-6">
-      <p className="text-xs text-neutral-400 mb-2">
+      <p className="text-xs text-muted mb-2">
         Step {stepIndex + 1} of {STEPS.length} · {STEP_LABELS[step]}
         {classSelected && ` · ${CLASS_LABELS[calibrateClass]}`}
       </p>
-      <h2 className="text-sm font-semibold text-white mb-1">{title}</h2>
+      <h2 className="text-xl font-semibold text-white mb-2">{title}</h2>
       {contextVisual && (
         <div
           className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-border bg-surface-2 text-neutral-300 mb-2"
@@ -965,8 +965,28 @@ function CalibrateStepHeader({
           {contextVisual}
         </div>
       )}
-      {instruction && <p className="text-xs text-neutral-400">{instruction}</p>}
+      {instruction && (
+        <div className="text-sm text-muted space-y-1">{instruction}</div>
+      )}
     </div>
+  );
+}
+
+function RankDragHandle() {
+  return (
+    <span
+      className="inline-flex shrink-0 cursor-grab text-muted hover:text-white active:cursor-grabbing"
+      aria-hidden
+    >
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+        <circle cx="5" cy="3.5" r="1.25" />
+        <circle cx="11" cy="3.5" r="1.25" />
+        <circle cx="5" cy="8" r="1.25" />
+        <circle cx="11" cy="8" r="1.25" />
+        <circle cx="5" cy="12.5" r="1.25" />
+        <circle cx="11" cy="12.5" r="1.25" />
+      </svg>
+    </span>
   );
 }
 
@@ -976,6 +996,7 @@ function RankedReorderList<T extends string | number>({
   getLabel,
   getLeadingVisual,
   getSecondaryLabel,
+  emphasizeLabel,
   onReorder,
   onMove,
 }: {
@@ -984,6 +1005,7 @@ function RankedReorderList<T extends string | number>({
   getLabel: (item: T) => string;
   getLeadingVisual?: (item: T) => ReactNode;
   getSecondaryLabel?: (item: T) => string;
+  emphasizeLabel?: boolean;
   onReorder: (next: T[]) => void;
   onMove: (index: number, dir: -1 | 1) => void;
 }) {
@@ -1002,11 +1024,12 @@ function RankedReorderList<T extends string | number>({
       {items.map((item, i) => {
         const label = getLabel(item);
         const key = getKey(item);
+        const secondary = getSecondaryLabel?.(item);
         return (
           <li
             key={key}
-            className={`flex items-center gap-2 border border-border rounded-lg px-3 py-2 bg-surface-2 ${
-              draggingKey === key ? 'opacity-70' : ''
+            className={`flex items-center gap-3 rounded-lg border border-border bg-surface-2 px-3 py-2.5 transition-colors hover:border-white/15 ${
+              draggingKey === key ? 'border-white/20 opacity-80' : ''
             }`}
             draggable
             onDragStart={() => setDraggingKey(key)}
@@ -1016,32 +1039,45 @@ function RankedReorderList<T extends string | number>({
               reorderTo(i);
               setDraggingKey(null);
             }}
-            aria-label={`Rank ${label}`}
+            aria-label={`Rank ${i + 1}: ${label}${secondary ? `, ${secondary}` : ''}`}
           >
-            <span className="text-neutral-400 w-6 text-sm tabular-nums">{i + 1}</span>
+            <RankDragHandle />
+            <span className="w-5 shrink-0 text-xs tabular-nums text-muted">{i + 1}</span>
             {getLeadingVisual && (
-              <span className="inline-flex shrink-0 items-center justify-center">{getLeadingVisual(item)}</span>
+              <span className="inline-flex shrink-0 items-center justify-center">
+                {getLeadingVisual(item)}
+              </span>
             )}
-            <span className="flex-1 font-medium truncate">{label}</span>
-            {getSecondaryLabel && (
-              <span className="text-xs text-neutral-500 hidden sm:inline">{getSecondaryLabel(item)}</span>
-            )}
-            <button
-              type="button"
-              onClick={() => onMove(i, -1)}
-              className="ui-icon-btn--compact text-base text-neutral-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/15"
-              aria-label={`Move ${label} up`}
-            >
-              ↑
-            </button>
-            <button
-              type="button"
-              onClick={() => onMove(i, 1)}
-              className="ui-icon-btn--compact text-base text-neutral-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/15"
-              aria-label={`Move ${label} down`}
-            >
-              ↓
-            </button>
+            <div className="min-w-0 flex-1">
+              <div
+                className={`truncate text-white ${
+                  emphasizeLabel ? 'text-base font-semibold' : 'text-sm font-medium'
+                }`}
+              >
+                {label}
+              </div>
+              {secondary && <div className="truncate text-xs text-muted">{secondary}</div>}
+            </div>
+            <div className="flex shrink-0 items-center gap-0.5">
+              <button
+                type="button"
+                onClick={() => onMove(i, -1)}
+                disabled={i === 0}
+                className="ui-icon-btn--compact border border-transparent text-base text-muted hover:border-white/15 hover:bg-white/5 hover:text-white disabled:pointer-events-none disabled:opacity-30"
+                aria-label={`Move ${label} up`}
+              >
+                ↑
+              </button>
+              <button
+                type="button"
+                onClick={() => onMove(i, 1)}
+                disabled={i === items.length - 1}
+                className="ui-icon-btn--compact border border-transparent text-base text-muted hover:border-white/15 hover:bg-white/5 hover:text-white disabled:pointer-events-none disabled:opacity-30"
+                aria-label={`Move ${label} down`}
+              >
+                ↓
+              </button>
+            </div>
           </li>
         );
       })}
@@ -1059,23 +1095,55 @@ function StatGroupIcons({ stats }: { stats: Stat[] }) {
   );
 }
 
-function ArchetypePairIcons({ archetype }: { archetype: Archetype }) {
+function ArchetypePairIcons({
+  archetype,
+  size = 'sm',
+}: {
+  archetype: Archetype;
+  size?: 'sm' | 'md';
+}) {
   const [primary, secondary] = ARCHETYPE_STATS[archetype];
   return (
-    <span className="inline-flex items-center gap-1" aria-hidden>
-      <StatIcon stat={primary} size="sm" variant="glyph" />
-      <StatIcon stat={secondary} size="sm" variant="glyph" />
+    <span className="inline-flex items-center gap-1.5" aria-hidden>
+      <StatIcon stat={primary} size={size} variant="glyph" />
+      <StatIcon stat={secondary} size={size} variant="glyph" />
     </span>
   );
 }
 
-function ArchetypeGroupIcons({ archetypes }: { archetypes: Archetype[] }) {
+function CalibrateRollRankInstruction({
+  archetype,
+  archetypeIndex,
+  archetypeCount,
+  role,
+  vaultStats,
+}: {
+  archetype: Archetype;
+  archetypeIndex: number;
+  archetypeCount: number;
+  role: 'tertiary' | 'tuning';
+  vaultStats: Stat[];
+}) {
+  const [primaryStat] = ARCHETYPE_STATS[archetype];
+  const rolePhrase = role === 'tertiary' ? 'Rank tertiary stats.' : 'Rank tuning stats.';
   return (
-    <span className="inline-flex items-center gap-1" aria-hidden>
-      {archetypes.map((arch) => (
-        <ArchetypePairIcons key={arch} archetype={arch} />
-      ))}
-    </span>
+    <>
+      <span className="block font-medium text-foreground/90">
+        {ARCHETYPE_LABELS[archetype]} · primary {STAT_LABELS[primaryStat]}. {rolePhrase}
+        {archetypeCount > 1 && (
+          <span className="font-normal text-muted">
+            {' '}
+            · {archetypeIndex + 1}/{archetypeCount}
+          </span>
+        )}
+      </span>
+      {vaultStats.length > 0 && (
+        <span className="block text-muted">
+          From your vault: {vaultStats.map((s) => STAT_LABELS[s]).join(', ')}.
+        </span>
+      )}
+      <span className="block pt-1 text-muted">Drag rows or use the arrows. Most important at the top.</span>
+    </>
   );
 }
 
