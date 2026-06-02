@@ -23,7 +23,7 @@ interface ItemIconProps {
     | 'tertiaryStat'
     | 'tuningStat'
   >;
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  size?: 'loadout' | 'xs' | 'sm' | 'md' | 'lg';
   /** When set, skips session-store lookup for pending tags. */
   pendingTag?: TagValue | null;
   /** Identical roll copies in scope (vault, bucket, etc.). Shown top-left when > 1. */
@@ -39,7 +39,7 @@ interface ItemIconProps {
   buildOptimalSetScope?: number;
 }
 
-const SIZE = { xs: 42, sm: 48, md: 64, lg: 80 } as const;
+const SIZE = { loadout: 32, xs: 42, sm: 48, md: 64, lg: 80 } as const;
 
 function CopyCountBadge({ count, title }: { count: number; title: string }) {
   return (
@@ -123,7 +123,7 @@ export function ItemIcon({
         <BuildOptimalIndicator
           count={buildOptimalCount}
           title={buildOptimalTitle}
-          size={size}
+          size={size === 'loadout' ? 'xs' : size}
           variant={buildOptimalVariant}
         />
       )}
@@ -131,7 +131,7 @@ export function ItemIcon({
         dimTag={piece.dimTag}
         dimFavorite={piece.dimFavorite}
         pendingTag={pendingTag}
-        size={size}
+        size={size === 'loadout' ? 'xs' : size}
         tilePx={px}
       />
     </div>

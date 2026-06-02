@@ -93,6 +93,7 @@ export {
   formatOptimalRollArchetypeLegend,
   formatEmptyPatternColumnMessage,
   formatEmptyPatternRollContext,
+  formatEmptyPatternSlotAriaLabel,
   formatEmptyPatternSlotMessage,
   type EmptyPatternMessageOptions,
   formatOptimalRollBannerIntro,

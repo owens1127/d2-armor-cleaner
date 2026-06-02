@@ -20,8 +20,8 @@ export function BuildPageLinkCard({ classType, prefs }: BuildPageLinkCardProps) 
           <h2 className="text-sm font-semibold text-white">Your combos</h2>
           <p className="text-xs text-muted mt-0.5 max-w-xl">
             {buildCount > 0
-              ? `${buildCount} ${buildCount === 1 ? 'combo' : 'combos'} — loadout coverage, projected totals, and keep/favorite actions`
-              : 'Set up combos to see whether your vault can hit your targets'}
+              ? `${buildCount} ${buildCount === 1 ? 'combo' : 'combos'}`
+              : 'No combos yet'}
           </p>
         </div>
         <Link

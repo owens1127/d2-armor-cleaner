@@ -42,14 +42,9 @@ export function VaultInsights({
 
   return (
     <section className="mb-8 p-4 border border-border rounded-xl bg-surface-2">
-      <div className="mb-3">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">
-          Recommended actions
-        </h2>
-        <p className="text-xs text-muted mt-1">
-          Suggested next steps from your vault scan and calibrated preferences.
-        </p>
-      </div>
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-muted mb-3">
+        Next steps
+      </h2>
       <ul className="space-y-2">
         {actions.map((action) => (
           <li key={action.id}>

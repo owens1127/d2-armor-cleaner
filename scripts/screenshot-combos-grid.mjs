@@ -5,30 +5,42 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
-const outDir = join(root, 'screenshots');
-const outPath = join(outDir, 'combos-recommended-grid.png');
+const outDir = join(root, 'scripts', 'screenshots');
+const outPath = join(outDir, 'combo-grid-uniform.png');
 
 const membershipId = 'destiny-demo-grid';
 const slots = ['helmet', 'gauntlets', 'chest', 'legs', 'class'];
 const tunings = ['weapons', 'grenade', 'melee', 'class'];
 
 const vaultItems = tunings.flatMap((tuningStat) =>
-  slots.map((armorSlot) => ({
-    instanceId: `grid-${tuningStat}-${armorSlot}`,
-    itemHash: 1,
-    name: `Smoke Weave ${armorSlot === 'helmet' ? 'Mask' : armorSlot === 'gauntlets' ? 'Grips' : armorSlot === 'chest' ? 'Vest' : armorSlot === 'legs' ? 'Strides' : 'Cloak'} ${tuningStat}`,
-    classType: 'hunter',
-    armorSlot,
-    tier: 5,
-    power: 450,
-    location: 'vault',
-    archetype: 'gunner',
-    baseStats: { weapons: 35, grenade: 20, super: 30 },
-    tertiaryStat: 'super',
-    tuningStat,
-    isMasterwork: false,
-    dimTag: null,
-  })),
+  slots.map((armorSlot) => {
+    const slotLabel =
+      armorSlot === 'helmet'
+        ? 'Mask'
+        : armorSlot === 'gauntlets'
+          ? 'Grips'
+          : armorSlot === 'chest'
+            ? 'Vest'
+            : armorSlot === 'legs'
+              ? 'Strides'
+              : 'Cloak';
+    return {
+      instanceId: `grid-${tuningStat}-${armorSlot}`,
+      itemHash: 1,
+      name: `Ferropotent ${slotLabel} of the Iron Lord ${tuningStat}`,
+      classType: 'hunter',
+      armorSlot,
+      tier: 5,
+      power: 450,
+      location: 'vault',
+      archetype: 'gunner',
+      baseStats: { weapons: 35, grenade: 20, super: 30 },
+      tertiaryStat: 'super',
+      tuningStat,
+      isMasterwork: false,
+      dimTag: null,
+    };
+  }),
 );
 
 const prefs = {
@@ -174,7 +186,7 @@ mkdirSync(outDir, { recursive: true });
 const browser = await chromium.launch();
 const context = await browser.newContext({
   ignoreHTTPSErrors: true,
-  viewport: { width: 1280, height: 900 },
+  viewport: { width: 1440, height: 900 },
 });
 const page = await context.newPage();
 
@@ -188,7 +200,11 @@ await page.getByRole('heading', { name: 'Recommended pieces' }).waitFor({ timeou
 await page.waitForTimeout(800);
 
 const section = page.locator('section').filter({ hasText: 'Recommended pieces' });
-await section.screenshot({ path: outPath });
+await section.getByText(/Ferropotent/).first().waitFor({ timeout: 10_000 });
+const loadoutGrid = section.locator('.flex.flex-col.gap-4 > .grid').first();
+await loadoutGrid.waitFor({ timeout: 10_000 });
+await loadoutGrid.screenshot({ path: outPath });
+await section.screenshot({ path: join(outDir, 'combos-recommended-grid.png') });
 
 await browser.close();
 console.log(outPath);

@@ -7,6 +7,7 @@ import { Layout } from '@/components/Layout';
 import { DUPE_MIN_TIER_VALUES, DUPE_PRESETS, formatDupeMinTierLabel } from '@/lib/constants';
 import { isBungieConfigured } from '@/lib/bungie/auth';
 import { getDimApiKey } from '@/lib/dim/tags';
+import { isDevBuild } from '@/lib/env';
 import { clearSession } from '@/lib/bungie/loadVault';
 import { clearOnboardingProgress } from '@/lib/onboarding/storage';
 import { useAuthStore, useSessionStore, useVaultStore, resetVaultStore } from '@/stores';
@@ -106,19 +107,21 @@ export function SettingsPage() {
         </button>
       </section>
 
-      <section className="mb-10 max-w-xl">
-        <h2 className="text-sm font-semibold uppercase text-muted mb-3">API status</h2>
-        <ul className="text-sm space-y-1 text-muted">
-          <li>Bungie: {isBungieConfigured() ? 'configured' : 'missing .env keys'}</li>
-          <li>DIM Sync: {getDimApiKey() ? 'configured' : 'missing key'}</li>
-        </ul>
-        {!getDimApiKey() && (
-          <p className="text-xs text-muted mt-2">
-            Get a DIM key: POST to api.destinyitemmanager.com/new_app with origin
-            https://localhost:5173
-          </p>
-        )}
-      </section>
+      {isDevBuild() && (
+        <section className="mb-10 max-w-xl">
+          <h2 className="text-sm font-semibold uppercase text-muted mb-3">Developer</h2>
+          <ul className="text-sm space-y-1 text-muted">
+            <li>Bungie: {isBungieConfigured() ? 'configured' : 'not configured'}</li>
+            <li>DIM Sync: {getDimApiKey() ? 'configured' : 'not configured'}</li>
+          </ul>
+          {!getDimApiKey() && (
+            <p className="text-xs text-muted mt-2">
+              Local DIM key: POST to api.destinyitemmanager.com/new_app with origin{' '}
+              {typeof window !== 'undefined' ? window.location.origin : 'this site'}.
+            </p>
+          )}
+        </section>
+      )}
 
       <section className="mb-10 max-w-xl">
         <h2 className="text-sm font-semibold uppercase text-muted mb-3">Review tags</h2>
@@ -154,8 +157,8 @@ export function SettingsPage() {
       <section className="mb-10 max-w-xl">
         <h2 className="text-sm font-semibold uppercase text-muted mb-3">Preferences</h2>
         <p className="text-xs text-muted mb-3">
-          Each class has its own stat and archetype weights from calibration. Dupe rules below stay
-          shared unless overridden per class.
+          Per-class stat and archetype weights from calibration. Dupe rules are shared unless
+          overridden per class.
         </p>
         <ClassSwitcher
           mode="button"
@@ -318,8 +321,7 @@ export function SettingsPage() {
         <div>
           <h2 className="text-sm font-semibold uppercase text-muted mb-2">Dupe rules</h2>
           <p className="text-sm text-muted max-w-lg">
-            One set of rules for finding similar armor everywhere: dashboard heatmap buckets,
-            compare/duel, browse filters, and the redundant rolls dismantle list.
+            Shared rules for heatmap, compare, browse, and dismantle lists.
           </p>
         </div>
 

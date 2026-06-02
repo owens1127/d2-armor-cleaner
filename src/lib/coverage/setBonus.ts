@@ -1,5 +1,13 @@
+import { resolveArmorSetDisplayName } from '@/lib/items/setIcons';
 import type { ArmorPiece } from '@/types';
 import type { BuildProfile } from '@/lib/coverage/builds';
+
+const UNKNOWN_SET_LABEL = 'Unknown set';
+
+/** Strip trailing " Set" for compact combo copy (matches build name suffix style). */
+export function compactArmorSetDisplayName(name: string): string {
+  return name.replace(/\s+Set$/i, '');
+}
 
 export interface SetBonusTarget {
   hash: number;
@@ -66,10 +74,7 @@ export function countSetSlotsWithPieces(items: ArmorPiece[], setHash: number): n
 }
 
 export function resolveSetName(items: ArmorPiece[], setHash: number): string {
-  for (const item of items) {
-    if (item.armorSet?.hash === setHash) return item.armorSet.name;
-  }
-  return `Set ${setHash}`;
+  return resolveArmorSetDisplayName(setHash, items) ?? UNKNOWN_SET_LABEL;
 }
 
 /** Unique armor sets present in vault items, sorted by name. */
@@ -90,7 +95,7 @@ export function formatSetBonusTargetLabel(
   pieces: 2 | 4,
   items: ArmorPiece[],
 ): string {
-  const name = resolveSetName(items, hash);
+  const name = compactArmorSetDisplayName(resolveSetName(items, hash));
   return `${pieces}pc ${name}`;
 }
 

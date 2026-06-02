@@ -6,6 +6,7 @@ import {
   prioritizeQueueHead,
   rebuildDuelQueueKeys,
 } from '@/lib/dupes/queue';
+import { getLastDuelBucketKey } from '@/lib/session/lastDuelBucket';
 import {
   emptyBucketSessionFields,
   hasBucketSessionProgress,
@@ -139,7 +140,7 @@ export function deriveCleanQueue(
 
 export type CleanMountPlan =
   | { action: 'noop' }
-  | { action: 'init' }
+  | { action: 'awaitBucket' }
   | {
       action: 'restore';
       duelQueue: string[];
@@ -195,6 +196,22 @@ export function planCleanMount(
   return freshCleanMountWithOptionalBucket(urlClass, classVault, session, urlBucketKey, pendingTags);
 }
 
+/** URL bucket wins; else last chosen bucket when still valid in vault. */
+export function resolveDuelMountBucketKey(
+  classType: ClassType,
+  classVault: Pick<ClassVaultState, 'buckets'>,
+  urlBucketKey: string | null,
+): string | null {
+  if (urlBucketKey && findBucketByKey(classVault.buckets, urlBucketKey)) {
+    return urlBucketKey;
+  }
+  const lastKey = getLastDuelBucketKey(classType);
+  if (lastKey && findBucketByKey(classVault.buckets, lastKey)) {
+    return lastKey;
+  }
+  return null;
+}
+
 function freshCleanMountWithOptionalBucket(
   urlClass: ClassType,
   classVault: Pick<ClassVaultState, 'buckets'>,
@@ -202,13 +219,14 @@ function freshCleanMountWithOptionalBucket(
   urlBucketKey: string | null,
   pendingTags: PendingTag[],
 ): CleanMountPlan {
-  if (urlBucketKey && findBucketByKey(classVault.buckets, urlBucketKey)) {
+  const mountBucketKey = resolveDuelMountBucketKey(urlClass, classVault, urlBucketKey);
+  if (mountBucketKey) {
     return {
       action: 'restore',
-      duelQueue: deriveCleanQueue(urlClass, classVault, session, urlBucketKey, pendingTags),
+      duelQueue: deriveCleanQueue(urlClass, classVault, session, mountBucketKey, pendingTags),
       ...emptyBucketSessionFields(),
     };
   }
 
-  return { action: 'init' };
+  return { action: 'awaitBucket' };
 }

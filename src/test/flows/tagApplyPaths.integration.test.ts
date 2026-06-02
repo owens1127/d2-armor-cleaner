@@ -1,6 +1,12 @@
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createAutoFilterRule } from '@/lib/auto-filter/match';
+import { planBulkDimTagApply } from '@/lib/dim/bulkTagPlan';
 import { filterDashboardItems } from '@/lib/dashboard/items';
+import {
+  applyLocalOverridesToArmorPieces,
+  loadLocalDimTagOverrides,
+  mergeDimTagMapWithLocalOverrides,
+} from '@/lib/dim/localTagOverrides';
 import { loadReviewTags } from '@/lib/session/reviewTags';
 import { armorPiece, weaponsSuperVault } from '@/test/armorFixtures';
 import type { ArmorPiece } from '@/types';
@@ -151,6 +157,48 @@ describe('tag apply paths: review queue vs direct DIM', () => {
       expect.objectContaining({ instanceId: 'queue-flip', tag: 'junk' }),
     ]);
     expect(useSessionStore.getState().pendingTags).toHaveLength(1);
+  });
+
+  it('bulk keep on mixed dimTags uses one DIM batch and does not clear already-kept pieces', async () => {
+    const alreadyKeep = armorPiece({ instanceId: 'already-keep', name: 'Kept', dimTag: 'keep' });
+    const needsKeep = armorPiece({ instanceId: 'needs-keep', name: 'Needs' });
+    seedVault([alreadyKeep, needsKeep]);
+
+    const plan = planBulkDimTagApply([alreadyKeep, needsKeep], 'keep');
+    expect(plan?.tag).toBe('keep');
+    expect(plan?.pieces.map((p) => p.instanceId)).toEqual(['needs-keep']);
+
+    await useSessionStore.getState().applyTagDirect(plan!.pieces, plan!.tag);
+
+    expect(applyDimTagsMock).toHaveBeenCalledTimes(1);
+    expect(applyDimTagsMock).toHaveBeenCalledWith('destiny-1', 'mock-dim-token', [
+      { instanceId: 'needs-keep', tag: 'keep' },
+    ]);
+    expect(useVaultStore.getState().allItems.find((i) => i.instanceId === 'already-keep')?.dimTag).toBe(
+      'keep',
+    );
+    expect(useVaultStore.getState().allItems.find((i) => i.instanceId === 'needs-keep')?.dimTag).toBe(
+      'keep',
+    );
+  });
+
+  it('applyTagDirect records local override so stale DIM reload keeps tag', async () => {
+    const target = armorPiece({ instanceId: 'stale-dim', name: 'Stale DIM' });
+    seedVault([target]);
+
+    await useSessionStore.getState().applyTagDirect([target], 'keep');
+
+    const overrides = loadLocalDimTagOverrides('destiny-1');
+    expect(overrides['stale-dim']).toEqual(expect.objectContaining({ tag: 'keep' }));
+
+    const staleDimFetch = { 'stale-dim': { dimTag: null, dimFavorite: false } };
+    const merged = mergeDimTagMapWithLocalOverrides(staleDimFetch, overrides);
+    const reloaded = applyLocalOverridesToArmorPieces(
+      [armorPiece({ instanceId: 'stale-dim', dimTag: null })],
+      overrides,
+    );
+    expect(merged['stale-dim']).toEqual({ dimTag: 'keep', dimFavorite: false });
+    expect(reloaded[0]?.dimTag).toBe('keep');
   });
 
   it('direct junk hides item on dashboard via dimTag, not pendingTags', async () => {

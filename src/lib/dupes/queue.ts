@@ -120,6 +120,25 @@ export function prioritizeQueueHead(duelQueue: string[], headKey: string | null)
   return [headKey, ...duelQueue.filter((k) => k !== headKey)];
 }
 
+/** Duplicate buckets that still have ≥2 duel-eligible items for a class. */
+export function duelableBucketsForClass(
+  classType: ClassType,
+  buckets: DupeBucket[],
+  pendingTags: PendingTag[] = [],
+): DupeBucket[] {
+  const excluded = duelExcludedIds(
+    [],
+    [],
+    pendingTags,
+    buckets.flatMap((b) => b.items),
+  );
+  return sortBucketsForPicker(
+    buckets.filter(
+      (b) => b.key.classType === classType && bucketHasDuelCandidates(b, excluded),
+    ),
+  );
+}
+
 export function buildDuelQueueKeys(
   classType: ClassType,
   buckets: DupeBucket[],

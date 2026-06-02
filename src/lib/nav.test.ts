@@ -1,6 +1,31 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+const { localStorageMock, local } = vi.hoisted(() => {
+  const local = new Map<string, string>();
+  const localStorageMock = {
+    getItem: (key: string) => local.get(key) ?? null,
+    setItem: (key: string, value: string) => {
+      local.set(key, value);
+    },
+    removeItem: (key: string) => {
+      local.delete(key);
+    },
+    clear: () => {
+      local.clear();
+    },
+  };
+  return { localStorageMock, local };
+});
+
+vi.stubGlobal('localStorage', localStorageMock);
 import { encodeBuildId } from '@/lib/coverage/buildIdCodec';
-import { classSwitchPath, resolveCombosBuildId } from './nav';
+import {
+  authenticatedLandingPath,
+  buildAuthenticatedNavLinks,
+  classSwitchPath,
+  resolveCombosBuildId,
+} from './nav';
+import { LS_ONBOARDING } from '@/lib/storage/keys';
 import type { DesiredBuild } from '@/types';
 
 const MELEE_SUPER_ID = encodeBuildId({
@@ -28,6 +53,29 @@ const FERRO_ID = encodeBuildId({
 function build(id: string): Pick<DesiredBuild, 'id' | 'enabled'> {
   return { id, enabled: true };
 }
+
+beforeEach(() => {
+  local.clear();
+});
+
+describe('buildAuthenticatedNavLinks', () => {
+  it('omits Home and starts with Dashboard for the active class', () => {
+    const links = buildAuthenticatedNavLinks('warlock');
+    expect(links.map((l) => l.label)).not.toContain('Home');
+    expect(links[0]).toEqual({
+      label: 'Dashboard',
+      match: '/dashboard',
+      to: '/dashboard/warlock',
+    });
+  });
+});
+
+describe('authenticatedLandingPath', () => {
+  it('returns class dashboard when onboarding is complete', () => {
+    local.set(LS_ONBOARDING, 'true');
+    expect(authenticatedLandingPath('titan')).toBe('/dashboard/titan');
+  });
+});
 
 describe('classSwitchPath', () => {
   it('swaps class segment on class-aware routes and preserves query and hash', () => {

@@ -8,6 +8,7 @@ import {
   isValidSlotRepresentative,
   loadoutVerdictFromLoadout,
   migrateRollPatternToSlotRepresentatives,
+  orderEligiblePiecesForSlotPicker,
   pieceLoadoutContribution,
   rankEligiblePiecesForPatternInSlot,
   rankEligiblePiecesForSlot,
@@ -544,6 +545,21 @@ describe('rankEligiblePiecesForPatternInSlot', () => {
       'higher-tier',
       'higher-want',
       'lower-want',
+    ]);
+  });
+});
+
+describe('orderEligiblePiecesForSlotPicker', () => {
+  it('sorts by instance id ascending regardless of algorithm rank', () => {
+    const ranked = [
+      { piece: piece({ instanceId: '300' }), contributionScore: 10, fitLabel: '' },
+      { piece: piece({ instanceId: '20' }), contributionScore: 1, fitLabel: '' },
+      { piece: piece({ instanceId: '100' }), contributionScore: 5, fitLabel: '' },
+    ];
+    expect(orderEligiblePiecesForSlotPicker(ranked).map((r) => r.piece.instanceId)).toEqual([
+      '20',
+      '100',
+      '300',
     ]);
   });
 });

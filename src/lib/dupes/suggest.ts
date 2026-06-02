@@ -77,7 +77,7 @@ export function suggestDupeRules(
       rule: 'preset',
       presetId: 'standard',
       recommended: true,
-      reason: 'Standard preset matches your vault size.',
+      reason: 'Standard preset for your vault size.',
       impact: {
         buckets: standard.bucketCount,
         itemsToReview: standard.reviewCount,

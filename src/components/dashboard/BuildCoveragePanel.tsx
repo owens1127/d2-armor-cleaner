@@ -24,14 +24,27 @@ import { SlotIcon } from '@/components/SlotIcon';
 import { StatIcon } from '@/components/StatIcon';
 import { ArmorSetIcons, ComboTargetIcons } from '@/components/ArmorSetIcons';
 import { ItemIcon } from '@/components/items/ItemIcon';
-import { CopyDimQueryButton } from '@/components/items/CopyDimQueryButton';
+import { CopyDimQueriesButton, CopyDimQueryButton } from '@/components/items/CopyDimQueryButton';
 import {
-  LOADOUT_ACTION_COL_W,
-  LOADOUT_CHOOSE_BTN_H,
-  LOADOUT_SLOT_MAIN_H,
+  LOADOUT_ACTION_CELL_CLASS,
+  LOADOUT_ACTION_CHOOSE_CELL_CLASS,
+  LOADOUT_ACTION_GRID_CLASS,
+  LOADOUT_ACTION_PLACEHOLDER_CLASS,
+  LOADOUT_LEFT_CLUSTER_CLASS,
+  LOADOUT_META_LINE_CLASS,
+  LOADOUT_NAME_CLASS,
+  LOADOUT_ROW_INNER_CLASS,
+  LOADOUT_SLOT_ROW_SHELL,
+  LOADOUT_TEXT_BLOCK_CLASS,
+  loadoutChooseBtnClass,
+  rollPatternActionRailStyle,
   rollPatternColumnsGridClass,
-  rollPatternLoadoutColumnSubgridStyle,
+  rollPatternLoadoutColumnGridStyle,
   rollPatternLoadoutSetRowStyle,
+  measureLoadoutPickerMenuWidthPx,
+  rollPatternPickerActionRailStyle,
+  rollPatternPickerSlotRowInnerStyle,
+  rollPatternSlotRowInnerStyle,
   shouldSplitRollChipsInSetRow,
 } from '@/components/dashboard/buildCoverageLayout';
 import { formatArmorTierBadge, hasDisplayTier } from '@/lib/armor/tier';
@@ -51,6 +64,7 @@ import {
   formatSetBonusProgressLabel,
   formatSetBonusVaultReachLabel,
   deriveOptimalRollPatterns,
+  formatEmptyPatternSlotAriaLabel,
   formatEmptyPatternSlotMessage,
   archetypeIrrelevantSecondary,
   archetypePriorityIntrinsics,
@@ -62,7 +76,6 @@ import {
   orderEligiblePiecesForSlotPicker,
   resolveEffectiveRollPatternSlotRepresentatives,
   type OptimalRollPattern,
-  type PatternLoadoutSource,
   type PatternSlotLoadoutEntry,
   type RollStatRole,
 } from '@/lib/coverage/analyze';
@@ -73,9 +86,11 @@ import type {
 import { defaultStatTargetsFromPrefs, resolveDesiredBuild, resolveDesiredBuildFromParam } from '@/lib/coverage/builds';
 import {
   buildPatternLoadoutGridData,
+  collectRecommendedPatternGridPieces,
   countUniqueSetPiecesInPatternGrid,
   type PatternColumnSlotRow,
 } from '@/lib/coverage/patternLoadoutGrid';
+import { planBulkDimTagApply } from '@/lib/dim/bulkTagPlan';
 import {
   fingerprintArmorItems,
   fingerprintRollRepresentatives,
@@ -103,16 +118,104 @@ interface BuildCoveragePanelProps {
   prefs: ClassPreferenceProfile;
 }
 
-/** Picker overlay: fixed columns so tag actions and status badge stay aligned row-to-row. */
-const PICKER_TAG_COL_W = 'w-[9.5rem]';
-const PICKER_STATUS_COL_W = 'w-[4.5rem]';
-
 function TagActionGlyph({ tag, px = TAG_ACTION_GLYPH_PX }: { tag: TagActionKind; px?: number }) {
   const def = DIM_TAG_DEFINITIONS[tag];
   return (
     <svg width={px} height={px} viewBox="0 0 512 512" aria-hidden className="block shrink-0">
       <path fill="currentColor" d={def.svgPath} />
     </svg>
+  );
+}
+
+function RecommendedPiecesBulkActions({
+  dimCopyInstanceIds,
+  taggablePieces,
+  onBulkKeep,
+  onBulkFavorite,
+  onBulkJunk,
+}: {
+  dimCopyInstanceIds: readonly string[];
+  taggablePieces: readonly ArmorPiece[];
+  onBulkKeep: (pieces: readonly ArmorPiece[]) => void;
+  onBulkFavorite: (pieces: readonly ArmorPiece[]) => void;
+  onBulkJunk: (pieces: readonly ArmorPiece[]) => void;
+}) {
+  const tagCount = taggablePieces.length;
+  const allKeep =
+    tagCount > 0 && taggablePieces.every((piece) => tagActionKeepActive(piece));
+  const allJunk =
+    tagCount > 0 && taggablePieces.every((piece) => tagActionJunkActive(piece));
+  const allFavorite =
+    tagCount > 0 && taggablePieces.every((piece) => tagActionFavoriteActive(piece));
+  const tagsDisabled = tagCount === 0;
+
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <div className={LOADOUT_ACTION_CELL_CLASS}>
+        <CopyDimQueriesButton
+          compact
+          instanceIds={dimCopyInstanceIds}
+          disabled={dimCopyInstanceIds.length === 0}
+        />
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-[11px] text-muted shrink-0">Tag all:</span>
+        <div
+          className={LOADOUT_ACTION_GRID_CLASS}
+          style={{ gridTemplateColumns: 'repeat(3, var(--spacing-touch-sm))' }}
+        >
+          <div className={LOADOUT_ACTION_CELL_CLASS}>
+            <TagActionButton
+              compact
+              tag="keep"
+              active={allKeep}
+              disabled={tagsDisabled}
+              title={
+                tagsDisabled
+                  ? 'No taggable pieces'
+                  : allKeep
+                    ? 'Clear keep on all'
+                    : 'Mark all keep'
+              }
+              onClick={() => onBulkKeep(taggablePieces)}
+            />
+          </div>
+          <div className={LOADOUT_ACTION_CELL_CLASS}>
+            <TagActionButton
+              compact
+              tag="favorite"
+              active={allFavorite}
+              locked={allFavorite}
+              disabled={tagsDisabled}
+              title={
+                tagsDisabled
+                  ? 'No taggable pieces'
+                  : allFavorite
+                    ? 'All favorited'
+                    : 'Mark all favorite'
+              }
+              onClick={() => onBulkFavorite(taggablePieces)}
+            />
+          </div>
+          <div className={LOADOUT_ACTION_CELL_CLASS}>
+            <TagActionButton
+              compact
+              tag="junk"
+              active={allJunk}
+              disabled={tagsDisabled}
+              title={
+                tagsDisabled
+                  ? 'No taggable pieces'
+                  : allJunk
+                    ? 'Clear junk on all'
+                    : 'Mark all junk'
+              }
+              onClick={() => onBulkJunk(taggablePieces)}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -155,7 +258,7 @@ function browseBuildHref(classType: ClassType, buildId: string): string {
 }
 
 const patternChipBaseClass =
-  'inline-flex items-center gap-1 px-1.5 py-0.5 rounded border text-[10px] leading-none';
+  'inline-flex items-center gap-1 px-1.5 py-0.5 rounded border text-xs leading-none';
 
 function PatternRollSeparator() {
   return (
@@ -169,7 +272,7 @@ function PatternPriorityStatChip({ stat, bonus }: { stat: Stat; bonus: number })
   return (
     <span
       title={`${STAT_LABELS[stat]} from archetype (+${bonus})`}
-      className={`${patternChipBaseClass} border-white/25 bg-white/8 text-white`}
+      className={`${patternChipBaseClass} border-white/15 bg-white/[0.04] text-white/80`}
     >
       <StatIcon stat={stat} size="sm" variant="glyph" />
       <span>{STAT_LABELS[stat]}</span>
@@ -181,7 +284,7 @@ function PatternIrrelevantSecondaryChip({ stat }: { stat: Stat }) {
   return (
     <span
       title={`${STAT_LABELS[stat]} — not a combo priority`}
-      className={`${patternChipBaseClass} border-white/8 bg-transparent text-white/35 text-[9px]`}
+      className={`${patternChipBaseClass} border-white/8 bg-transparent text-white/35`}
     >
       <StatIcon stat={stat} size="sm" variant="glyph" className="opacity-60" />
       <span>{STAT_LABELS[stat]}</span>
@@ -209,7 +312,7 @@ function PatternRollRoleChip({ stat, role }: { stat: Stat; role: RollStatRole })
   return (
     <span
       title={rollStatRoleTitle(stat, role)}
-      className={`${patternChipBaseClass} border-white/15 bg-white/5 text-white/90`}
+      className={`${patternChipBaseClass} border-white/12 bg-white/[0.03] text-white/75`}
     >
       <StatIcon stat={stat} size="sm" variant="glyph" />
       <span>{STAT_LABELS[stat]}</span>
@@ -297,13 +400,17 @@ function RollPatternColumnHeader({
       className="flex min-w-0 flex-col gap-1"
       aria-label={`${title}${setName ? ` · ${setName}` : ''}`}
     >
-      <div className="flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5">
-        <span className="text-[11px] font-semibold leading-snug text-white">{title}</span>
+      <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-0.5">
+        <span className="text-base font-semibold tracking-tight leading-snug text-white/90">
+          {title}
+        </span>
         {slotsFilled !== undefined && (
-          <span className="shrink-0 text-[10px] tabular-nums text-muted">{slotsFilled}/5</span>
+          <span className="shrink-0 text-sm font-normal tabular-nums text-muted">
+            {slotsFilled}/5
+          </span>
         )}
         {setName && (
-          <span className="inline-flex min-w-0 items-center gap-1 text-[10px] font-medium leading-snug text-accent-dim">
+          <span className="inline-flex min-w-0 items-center gap-1 text-sm font-medium leading-snug text-muted">
             {setHash !== undefined && (
               <ArmorSetIcons setHash={setHash} items={items} size="sm" maxIcons={1} />
             )}
@@ -333,11 +440,9 @@ function RollPatternColumnHeader({
 function ChevronIcon({ open, className = '' }: { open: boolean; className?: string }) {
   return (
     <svg
-      width={16}
-      height={16}
       viewBox="0 0 12 12"
       aria-hidden
-      className={`block shrink-0 transition-transform ${open ? 'rotate-180' : ''} ${className}`}
+      className={`block shrink-0 h-3 w-3 transition-transform ${open ? 'rotate-180' : ''} ${className}`}
     >
       <path
         d="M2.5 4.5 6 8l3.5-3.5"
@@ -351,31 +456,29 @@ function ChevronIcon({ open, className = '' }: { open: boolean; className?: stri
   );
 }
 
-function SelectedCheckIcon() {
-  return (
-    <svg width={16} height={16} viewBox="0 0 12 12" aria-hidden className="block shrink-0 text-white/70">
-      <path
-        d="M2.5 6.25 4.75 8.5 9.5 3.75"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
-  );
-}
-
-const PICKER_MENU_MIN_WIDTH = 260;
 const PICKER_MENU_MAX_HEIGHT = 280;
+const PICKER_MENU_FALLBACK_WIDTH_PX = 480;
 
-function computePickerMenuPosition(anchor: DOMRect, popW: number, popH: number) {
+/** Portaled menu — elevated above page (see DominatorPopover / BucketPanel). */
+const PICKER_MENU_BACKDROP_CLASS = 'fixed inset-0 z-[299] bg-black/45';
+const PICKER_MENU_PANEL_CLASS =
+  'fixed z-[300] flex min-h-0 flex-col overflow-hidden rounded-md border border-white/15 bg-surface-3 ring-1 ring-white/10 shadow-[0_16px_48px_-12px_rgb(0_0_0/0.72),0_4px_16px_-4px_rgb(0_0_0/0.5)]';
+
+function computePickerMenuPosition(
+  anchor: DOMRect,
+  columnRect: DOMRect | null,
+  popW: number,
+  popH: number,
+) {
   const base = computePopoverPosition(anchor, popW, popH);
   const vw = typeof window !== 'undefined' ? window.innerWidth : 1024;
-  let x = anchor.right - popW;
+  const alignRight = columnRect?.right ?? anchor.right;
+  let x = alignRight - popW;
   x = Math.max(8, Math.min(x, vw - 8 - popW));
   return { ...base, x };
 }
+
+const LOADOUT_COLUMN_SELECTOR = '[data-loadout-column]';
 
 function PiecePickerMetaLine({
   piece,
@@ -392,15 +495,15 @@ function PiecePickerMetaLine({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0 text-[10px] text-white/45 mt-0.5 min-w-0">
+    <div className="mt-0.5 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0 text-xs text-muted">
       {tierLabel && (
-        <span className="tabular-nums text-white/55 shrink-0" title={`Tier ${piece.tier}`}>
+        <span className="shrink-0 tabular-nums" title={`Tier ${piece.tier}`}>
           {tierLabel}
         </span>
       )}
       {setName && (
         <span
-          className={`inline-flex min-w-0 items-center gap-1 ${isSetTarget ? 'text-accent-dim font-medium' : ''}`}
+          className={`inline-flex min-w-0 items-center gap-1 truncate ${isSetTarget ? 'text-accent-dim font-medium' : ''}`}
           title={setName}
         >
           <ArmorSetIcons
@@ -441,19 +544,27 @@ function SlotPiecePickerMenu({
 }) {
   const menuRef = useRef<HTMLDivElement>(null);
   const listId = useId();
-  const displayPieces = orderEligiblePiecesForSlotPicker(
-    eligiblePieces,
-    selectedInstanceId,
-  );
+  const displayPieces = orderEligiblePiecesForSlotPicker(eligiblePieces);
   const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [menuWidthPx, setMenuWidthPx] = useState(0);
 
   const updatePosition = useCallback(() => {
-    const anchor = anchorRef.current?.getBoundingClientRect();
+    const anchor = anchorRef.current;
     const menu = menuRef.current;
     if (!anchor || !menu) return;
+    const anchorRect = anchor.getBoundingClientRect();
+    const columnEl = anchor.closest(LOADOUT_COLUMN_SELECTOR);
+    const columnRect = columnEl?.getBoundingClientRect() ?? null;
+    const vw = typeof window !== 'undefined' ? window.innerWidth : 1024;
+    const widthPx = measureLoadoutPickerMenuWidthPx(columnRect?.width ?? 0, vw);
+    if (widthPx > 0) {
+      setMenuWidthPx(widthPx);
+    }
+    const popW = widthPx > 0 ? widthPx : menu.offsetWidth || PICKER_MENU_FALLBACK_WIDTH_PX;
     const next = computePickerMenuPosition(
-      anchor,
-      menu.offsetWidth || PICKER_MENU_MIN_WIDTH,
+      anchorRect,
+      columnRect,
+      popW,
       menu.offsetHeight || 160,
     );
     setPos({ x: next.x, y: next.y });
@@ -491,53 +602,52 @@ function SlotPiecePickerMenu({
   if (!open) return null;
 
   return createPortal(
-    <div
-      ref={menuRef}
-      id={listId}
-      role="listbox"
-      aria-label={`Choose ${SLOT_LABELS[slot]}`}
-      className="fixed z-[300] rounded-md border border-border bg-surface-2 shadow-lg shadow-black/50 overflow-hidden flex flex-col min-h-0"
-      onMouseDown={(event) => event.stopPropagation()}
-      onWheel={(event) => event.stopPropagation()}
-      style={{
-        left: pos.x,
-        top: pos.y,
-        minWidth: PICKER_MENU_MIN_WIDTH,
-        maxWidth: 'min(320px, calc(100vw - 16px))',
-        maxHeight: PICKER_MENU_MAX_HEIGHT,
-      }}
-    >
-      <div className="px-2.5 py-1.5 border-b border-border/60 bg-black/20 shrink-0">
+    <>
+      <div
+        className={PICKER_MENU_BACKDROP_CLASS}
+        aria-hidden
+        onClick={onClose}
+      />
+      <div
+        ref={menuRef}
+        id={listId}
+        role="listbox"
+        aria-label={`Choose ${SLOT_LABELS[slot]}`}
+        className={PICKER_MENU_PANEL_CLASS}
+        onMouseDown={(event) => event.stopPropagation()}
+        onWheel={(event) => event.stopPropagation()}
+        style={{
+          left: pos.x,
+          top: pos.y,
+          width: menuWidthPx > 0 ? menuWidthPx : undefined,
+          minWidth: menuWidthPx > 0 ? menuWidthPx : PICKER_MENU_FALLBACK_WIDTH_PX,
+          maxWidth: menuWidthPx > 0 ? menuWidthPx : `min(${PICKER_MENU_FALLBACK_WIDTH_PX}px, calc(100vw - 16px))`,
+          maxHeight: PICKER_MENU_MAX_HEIGHT,
+        }}
+      >
+      <div className="shrink-0 border-b border-white/10 bg-white/[0.04] px-2.5 py-1.5">
         <p className="text-[10px] font-medium uppercase tracking-wide text-white/45">
           {SLOT_LABELS[slot]}
         </p>
         <p className="text-[11px] text-white/70 tabular-nums">
           {eligiblePieces.length} eligible {eligiblePieces.length === 1 ? 'piece' : 'pieces'}
         </p>
-        <p className="text-[10px] text-white/45 mt-0.5">
-          Sorted by combo fit, then preference and tier
-        </p>
       </div>
-      <ul className="overflow-y-auto flex-1 min-h-0 py-0.5">
+      <ul className="overflow-y-auto flex-1 min-h-0">
         {displayPieces.map(({ piece: altPiece }) => {
           const selected = altPiece.instanceId === selectedInstanceId;
-          const isTaggedKeep = tagActionKeepActive(altPiece);
-          const isTaggedJunk = tagActionJunkActive(altPiece);
-          const dimFavorite = tagActionFavoriteActive(altPiece);
           const selectRow = () => {
             onSelectPiece(altPiece.instanceId);
             onClose();
           };
-          const rowClass = `w-full flex items-center gap-2 px-1 py-1 transition-colors border-l-2 cursor-pointer ${
-            selected
-              ? 'border-l-white/75 bg-white/[0.08]'
-              : 'border-l-transparent hover:bg-white/5 hover:border-l-white/25'
-          }`;
+          const rowClass =
+            'box-border h-16 min-h-16 max-h-16 overflow-hidden border-b border-white/10 last:border-b-0 transition-colors cursor-pointer hover:bg-white/[0.03]';
           return (
             <li
               key={altPiece.instanceId}
               role="option"
               aria-selected={selected}
+              tabIndex={0}
               className={rowClass}
               onClick={selectRow}
               onKeyDown={(event) => {
@@ -547,82 +657,47 @@ function SlotPiecePickerMenu({
                 }
               }}
             >
-              <div className="flex-1 min-w-0 flex items-center gap-2 pl-1 pr-0.5 py-0.5 text-left">
-                <ItemIcon
-                  piece={altPiece}
-                  size="sm"
-                  buildOptimal={false}
-                />
-                <div className="flex-1 min-w-0">
+              <div
+                className={LOADOUT_ROW_INNER_CLASS}
+                style={rollPatternPickerSlotRowInnerStyle()}
+              >
+                <div className={LOADOUT_LEFT_CLUSTER_CLASS}>
                   <span
-                    className={`text-[11px] leading-snug line-clamp-2 block ${
-                      selected ? 'text-white font-medium' : 'text-white/90'
-                    }`}
-                    title={altPiece.name}
-                  >
+                    className={`h-1.5 w-1.5 shrink-0 rounded-full ${selected ? 'bg-accent' : 'opacity-0'}`}
+                    aria-hidden
+                  />
+                  <ItemIcon piece={altPiece} size="loadout" buildOptimal={false} />
+                </div>
+                <div className={LOADOUT_TEXT_BLOCK_CLASS}>
+                  <span className={LOADOUT_NAME_CLASS} title={altPiece.name}>
                     {altPiece.name}
                   </span>
-                  <PiecePickerMetaLine piece={altPiece} />
+                  <div className={LOADOUT_META_LINE_CLASS}>
+                    <PiecePickerMetaLine piece={altPiece} />
+                  </div>
                 </div>
-              </div>
-              <div
-                className={`flex shrink-0 items-center justify-end gap-0.5 ${PICKER_TAG_COL_W}`}
-                onClick={(event) => event.stopPropagation()}
-              >
-                <CopyDimQueryButton
-                  instanceId={altPiece.instanceId}
-                  itemName={altPiece.name}
-                />
-                <TagActionButton
-                  tag="keep"
-                  active={isTaggedKeep}
-                  title={isTaggedKeep ? 'Remove keep tag in DIM' : 'Tag keep in DIM'}
-                  onClick={() => onToggleKeep(altPiece)}
-                />
-                <TagActionButton
-                  tag="favorite"
-                  active={dimFavorite}
-                  locked={dimFavorite}
-                  title={
-                    dimFavorite ? 'Already favorited in DIM' : 'Tag favorite in DIM'
-                  }
-                  onClick={() => onToggleFavorite(altPiece)}
-                />
-                <TagActionButton
-                  tag="junk"
-                  active={isTaggedJunk}
-                  title={isTaggedJunk ? 'Remove junk tag in DIM' : 'Tag junk in DIM'}
-                  onClick={() => onToggleJunk(altPiece)}
+                <PatternLoadoutActionGrid
+                  railVariant="picker"
+                  piece={altPiece}
+                  mode="full"
+                  hasAlternatives={false}
+                  eligibleCount={0}
+                  pickerOpen={false}
+                  onToggleChoose={() => {}}
+                  pickerTriggerRef={anchorRef}
+                  stopRowActivation
+                  onToggleKeep={onToggleKeep}
+                  onToggleFavorite={onToggleFavorite}
+                  onToggleJunk={onToggleJunk}
                 />
               </div>
-              <span
-                className={`shrink-0 flex items-center justify-end text-[10px] pr-1.5 ${PICKER_STATUS_COL_W}`}
-              >
-                {selected && (
-                  <span className="inline-flex items-center gap-0.5 text-white/80">
-                    <SelectedCheckIcon />
-                    Selected
-                  </span>
-                )}
-              </span>
             </li>
           );
         })}
       </ul>
-    </div>,
+      </div>
+    </>,
     document.body,
-  );
-}
-
-function SlotColumn({ slot }: { slot: ArmorPiece['armorSlot'] }) {
-  const slotLabel = SLOT_LABELS[slot];
-  return (
-    <div
-      className="flex items-center justify-center w-7 shrink-0 self-center"
-      title={slotLabel}
-    >
-      <SlotIcon slot={slot} size="sm" />
-    </div>
   );
 }
 
@@ -630,7 +705,7 @@ function NearMatchTuneIndicator({ title }: { title?: string }) {
   if (!title) return null;
   return (
     <span
-      className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.05] text-white/55"
+      className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-border/60 bg-white/[0.03] text-muted"
       title={title}
       aria-label={title}
     >
@@ -648,6 +723,160 @@ function NearMatchTuneIndicator({ title }: { title?: string }) {
   );
 }
 
+function LoadoutActionIconPlaceholder() {
+  return (
+    <div
+      className={`${LOADOUT_ACTION_CELL_CLASS} ${LOADOUT_ACTION_PLACEHOLDER_CLASS}`}
+      aria-hidden
+    >
+      <span className="ui-icon-btn ui-icon-btn--compact rounded border border-transparent" />
+    </div>
+  );
+}
+
+function LoadoutChoosePlaceholder() {
+  return (
+    <div
+      className={`${LOADOUT_ACTION_CHOOSE_CELL_CLASS} ${LOADOUT_ACTION_PLACEHOLDER_CLASS}`}
+      aria-hidden
+    >
+      <span className={loadoutChooseBtnClass({ open: false })}>
+        <span>Choose</span>
+        <span className="tabular-nums opacity-0">0</span>
+      </span>
+    </div>
+  );
+}
+
+function PatternLoadoutActionGrid({
+  piece,
+  mode,
+  railVariant = 'slot',
+  hasAlternatives,
+  eligibleCount,
+  pickerOpen,
+  onToggleChoose,
+  pickerTriggerRef,
+  stopRowActivation = false,
+  onToggleKeep,
+  onToggleFavorite,
+  onToggleJunk,
+}: {
+  piece?: ArmorPiece;
+  mode: 'full' | 'dim-only' | 'empty';
+  railVariant?: 'slot' | 'picker';
+  hasAlternatives: boolean;
+  eligibleCount: number;
+  pickerOpen: boolean;
+  onToggleChoose: () => void;
+  pickerTriggerRef: React.RefObject<HTMLButtonElement | null>;
+  /** Prevent picker list row from selecting when clicking tag/DIM controls. */
+  stopRowActivation?: boolean;
+  onToggleKeep: (piece: ArmorPiece) => void;
+  onToggleFavorite: (piece: ArmorPiece) => void;
+  onToggleJunk: (piece: ArmorPiece) => void;
+}) {
+  const isPickerRail = railVariant === 'picker';
+  const railStyle = isPickerRail ? rollPatternPickerActionRailStyle() : rollPatternActionRailStyle();
+  const isolateActivation = stopRowActivation
+    ? {
+        onClick: (event: React.MouseEvent) => event.stopPropagation(),
+        onMouseDown: (event: React.MouseEvent) => event.stopPropagation(),
+      }
+    : {};
+
+  if (mode === 'empty' || !piece) {
+    return (
+      <div
+        className={LOADOUT_ACTION_GRID_CLASS}
+        style={railStyle}
+        aria-hidden
+        {...isolateActivation}
+      >
+        <LoadoutActionIconPlaceholder />
+        <LoadoutActionIconPlaceholder />
+        <LoadoutActionIconPlaceholder />
+        <LoadoutActionIconPlaceholder />
+        {!isPickerRail && <LoadoutChoosePlaceholder />}
+      </div>
+    );
+  }
+
+  const isTaggedKeep = tagActionKeepActive(piece);
+  const isTaggedJunk = tagActionJunkActive(piece);
+  const dimFavorite = tagActionFavoriteActive(piece);
+  const dimOnly = mode === 'dim-only';
+
+  return (
+    <div className={LOADOUT_ACTION_GRID_CLASS} style={railStyle} {...isolateActivation}>
+      <div className={`${LOADOUT_ACTION_CELL_CLASS} ${dimOnly ? 'opacity-55' : ''}`}>
+        <CopyDimQueryButton compact instanceId={piece.instanceId} itemName={piece.name} />
+      </div>
+      {dimOnly ? (
+        <LoadoutActionIconPlaceholder />
+      ) : (
+        <div className={LOADOUT_ACTION_CELL_CLASS}>
+          <TagActionButton
+            compact
+            tag="keep"
+            active={isTaggedKeep}
+            title={isTaggedKeep ? 'Remove keep tag in DIM' : 'Tag keep in DIM'}
+            onClick={() => onToggleKeep(piece)}
+          />
+        </div>
+      )}
+      {dimOnly ? (
+        <LoadoutActionIconPlaceholder />
+      ) : (
+        <div className={LOADOUT_ACTION_CELL_CLASS}>
+          <TagActionButton
+            compact
+            tag="favorite"
+            active={dimFavorite}
+            locked={dimFavorite}
+            title={dimFavorite ? 'Already favorited in DIM' : 'Tag favorite in DIM'}
+            onClick={() => onToggleFavorite(piece)}
+          />
+        </div>
+      )}
+      {dimOnly ? (
+        <LoadoutActionIconPlaceholder />
+      ) : (
+        <div className={LOADOUT_ACTION_CELL_CLASS}>
+          <TagActionButton
+            compact
+            tag="junk"
+            active={isTaggedJunk}
+            title={isTaggedJunk ? 'Remove junk tag in DIM' : 'Tag junk in DIM'}
+            onClick={() => onToggleJunk(piece)}
+          />
+        </div>
+      )}
+      {!isPickerRail &&
+        (hasAlternatives ? (
+          <div className={LOADOUT_ACTION_CHOOSE_CELL_CLASS}>
+            <button
+              ref={pickerTriggerRef}
+              type="button"
+              onClick={onToggleChoose}
+              aria-haspopup="listbox"
+              aria-expanded={pickerOpen}
+              aria-label={`Choose piece — ${eligibleCount} eligible`}
+              title={`${eligibleCount} eligible pieces in vault`}
+              className={loadoutChooseBtnClass({ open: pickerOpen })}
+            >
+              <span>Choose</span>
+              <span className="tabular-nums opacity-70">{eligibleCount}</span>
+              <ChevronIcon open={pickerOpen} className="opacity-70" />
+            </button>
+          </div>
+        ) : (
+          <LoadoutChoosePlaceholder />
+        ))}
+    </div>
+  );
+}
+
 function PatternSlotRow({
   slotEntry,
   pattern,
@@ -656,7 +885,6 @@ function PatternSlotRow({
   eligiblePieces,
   displayPiece,
   matchTier,
-  selectionSource,
   onSelectPiece,
   onToggleKeep,
   onToggleFavorite,
@@ -676,7 +904,6 @@ function PatternSlotRow({
   eligiblePieces: EligibleLoadoutPiece[];
   displayPiece: ArmorPiece | null;
   matchTier: 'perfect' | 'near' | null;
-  selectionSource: PatternLoadoutSource;
   onSelectPiece: (instanceId: string) => void;
   onToggleKeep: (piece: ArmorPiece) => void;
   onToggleFavorite: (piece: ArmorPiece) => void;
@@ -696,16 +923,46 @@ function PatternSlotRow({
   const hasAlternatives = eligiblePieces.length > 1;
 
   if (!displayPiece) {
+    const emptyAriaLabel = formatEmptyPatternSlotAriaLabel(slot, pattern, {
+      priorities,
+      setName,
+    });
+
     return (
       <div
-        className={`flex h-full min-h-0 flex-col border-b border-dashed border-border/35 last:border-b-0 ${LOADOUT_SLOT_MAIN_H}`}
+        className={`${LOADOUT_SLOT_ROW_SHELL} border-b border-dashed border-border/35 last:border-b-0`}
       >
-        <div className="flex min-h-0 flex-1 items-center gap-2.5 px-3">
-          <SlotColumn slot={slot} />
-          <p className="min-w-0 flex-1 text-[11px] leading-snug text-muted/90">
-            {formatEmptyPatternSlotMessage(slot, pattern, { priorities, setName })}
-          </p>
-          <div className={`shrink-0 ${LOADOUT_ACTION_COL_W}`} aria-hidden />
+        <div
+          className={`${LOADOUT_ROW_INNER_CLASS} bg-white/[0.02]`}
+          style={rollPatternSlotRowInnerStyle()}
+          aria-label={emptyAriaLabel}
+          title={emptyAriaLabel}
+        >
+          <div
+            className={`${LOADOUT_LEFT_CLUSTER_CLASS} opacity-45`}
+            title={SLOT_LABELS[slot]}
+          >
+            <SlotIcon slot={slot} size="sm" />
+          </div>
+          <div className={LOADOUT_TEXT_BLOCK_CLASS}>
+            <span className="block truncate text-sm font-normal leading-tight text-muted">
+              {formatEmptyPatternSlotMessage(slot)}
+            </span>
+            <div className={LOADOUT_META_LINE_CLASS} aria-hidden>
+              <span className="text-xs text-white/50">—</span>
+            </div>
+          </div>
+          <PatternLoadoutActionGrid
+            mode="empty"
+            hasAlternatives={false}
+            eligibleCount={0}
+            pickerOpen={false}
+            onToggleChoose={() => {}}
+            pickerTriggerRef={pickerTriggerRef}
+            onToggleKeep={onToggleKeep}
+            onToggleFavorite={onToggleFavorite}
+            onToggleJunk={onToggleJunk}
+          />
         </div>
       </div>
     );
@@ -713,20 +970,8 @@ function PatternSlotRow({
 
   const piece = displayPiece;
   const isNearMatch = matchTier === 'near';
-  const isTaggedKeep = tagActionKeepActive(piece);
-  const isTaggedJunk = tagActionJunkActive(piece);
-  const dimFavorite = tagActionFavoriteActive(piece);
-  const userPick = selectionSource === 'representative';
 
-  const rowSurfaceClass = isNearMatch
-    ? 'bg-white/[0.02]'
-    : pieceIsSetTarget
-      ? userPick
-        ? 'bg-accent-dim/12'
-        : 'bg-accent-dim/8'
-      : userPick
-        ? 'bg-white/10'
-        : 'bg-white/[0.05]';
+  const rowSurfaceClass = isNearMatch ? 'bg-white/[0.02]' : 'bg-white/[0.05]';
 
   const rowTooltip =
     isNearMatch && nearMatchTitle
@@ -735,17 +980,21 @@ function PatternSlotRow({
 
   return (
     <div
-      className={`flex h-full min-h-0 flex-col overflow-hidden border-b border-white/10 last:border-b-0 ${LOADOUT_SLOT_MAIN_H}`}
+      className={`${LOADOUT_SLOT_ROW_SHELL} border-b border-white/10 last:border-b-0`}
     >
       <div
-        className={`flex min-h-0 flex-1 items-center gap-1.5 px-3 transition-colors ${rowSurfaceClass}`}
+        className={`${LOADOUT_ROW_INNER_CLASS} transition-colors ${rowSurfaceClass}`}
+        style={rollPatternSlotRowInnerStyle()}
         title={isNearMatch ? rowTooltip : undefined}
       >
-        <SlotColumn slot={slot} />
-        <div className={isNearMatch ? 'shrink-0 opacity-45' : 'shrink-0'}>
+        <div
+          className={`${LOADOUT_LEFT_CLUSTER_CLASS} ${isNearMatch ? 'opacity-45' : ''}`}
+          title={SLOT_LABELS[slot]}
+        >
+          <SlotIcon slot={slot} size="sm" />
           <ItemIcon
             piece={piece}
-            size="xs"
+            size="loadout"
             buildOptimal={showColumnComboBadge}
             buildOptimalCount={showColumnComboBadge ? Math.max(1, columnComboBadgeCount) : 0}
             buildOptimalVariant={isTopGoldColumnPiece ? 'sole' : 'default'}
@@ -757,97 +1006,38 @@ function PatternSlotRow({
           />
         </div>
 
-        {isNearMatch ? (
-          <div className="flex min-w-0 flex-1 flex-col justify-center gap-0.5" title={rowTooltip}>
-            <div className="flex min-w-0 items-start gap-1">
-              <span
-                className="line-clamp-2 min-w-0 flex-1 break-words text-[11px] font-medium leading-snug text-white/92"
-                title={piece.name}
-              >
-                {piece.name}
-              </span>
+        <div className={LOADOUT_TEXT_BLOCK_CLASS} title={isNearMatch ? rowTooltip : undefined}>
+          <span
+            className={
+              isNearMatch
+                ? 'block truncate text-sm font-normal leading-tight text-muted'
+                : LOADOUT_NAME_CLASS
+            }
+            title={piece.name}
+          >
+            {piece.name}
+          </span>
+          <div className={LOADOUT_META_LINE_CLASS}>
+            {isNearMatch ? (
               <NearMatchTuneIndicator title={nearMatchTitle} />
-            </div>
+            ) : (
+              <PiecePickerMetaLine piece={piece} isSetTarget={pieceIsSetTarget} />
+            )}
           </div>
-        ) : (
-          <div className="flex min-w-0 flex-1 flex-col justify-center">
-            <span
-              className="line-clamp-2 min-w-0 break-words text-[11px] font-medium leading-snug text-white"
-              title={piece.name}
-            >
-              {piece.name}
-            </span>
-            <PiecePickerMetaLine piece={piece} isSetTarget={pieceIsSetTarget} />
-          </div>
-        )}
-
-        {isNearMatch ? (
-          <div className="flex shrink-0 items-center self-center opacity-55">
-            <CopyDimQueryButton
-              compact
-              instanceId={piece.instanceId}
-              itemName={piece.name}
-            />
-          </div>
-        ) : (
-        <div
-          className={`flex min-h-0 shrink-0 flex-col items-end justify-between self-stretch py-0.5 ${LOADOUT_ACTION_COL_W}`}
-        >
-          <div className="flex items-center gap-0.5">
-            <CopyDimQueryButton
-              compact
-              instanceId={piece.instanceId}
-              itemName={piece.name}
-            />
-            <TagActionButton
-              compact
-              tag="keep"
-              active={isTaggedKeep}
-              title={isTaggedKeep ? 'Remove keep tag in DIM' : 'Tag keep in DIM'}
-              onClick={() => onToggleKeep(piece)}
-            />
-            <TagActionButton
-              compact
-              tag="favorite"
-              active={dimFavorite}
-              locked={dimFavorite}
-              title={dimFavorite ? 'Already favorited in DIM' : 'Tag favorite in DIM'}
-              onClick={() => onToggleFavorite(piece)}
-            />
-            <TagActionButton
-              compact
-              tag="junk"
-              active={isTaggedJunk}
-              title={isTaggedJunk ? 'Remove junk tag in DIM' : 'Tag junk in DIM'}
-              onClick={() => onToggleJunk(piece)}
-            />
-          </div>
-          {hasAlternatives ? (
-            <button
-              ref={pickerTriggerRef}
-              type="button"
-              onClick={() => setPickerOpen((open) => !open)}
-              aria-haspopup="listbox"
-              aria-expanded={pickerOpen}
-              aria-label={`Choose piece — ${eligiblePieces.length} eligible`}
-              title={`${eligiblePieces.length} eligible pieces in vault`}
-              className={`inline-flex cursor-pointer ${LOADOUT_CHOOSE_BTN_H} items-center gap-1 rounded-md px-2 text-[11px] font-medium transition-colors ${
-                pickerOpen
-                  ? 'bg-white/18 text-white ring-1 ring-white/25'
-                  : userPick
-                    ? 'bg-white/12 text-white hover:bg-white/18'
-                    : 'bg-white/[0.05] text-white/85 hover:bg-white/12 hover:text-white'
-              }`}
-            >
-              <span>Choose</span>
-              <span className="tabular-nums text-white/50">{eligiblePieces.length}</span>
-              <ChevronIcon open={pickerOpen} className="text-white/65" />
-            </button>
-          ) : (
-            <span className={`shrink-0 ${LOADOUT_CHOOSE_BTN_H}`} aria-hidden />
-          )}
         </div>
-        )}
+
+        <PatternLoadoutActionGrid
+          piece={piece}
+          mode={isNearMatch ? 'dim-only' : 'full'}
+          hasAlternatives={hasAlternatives}
+          eligibleCount={eligiblePieces.length}
+          pickerOpen={pickerOpen}
+          onToggleChoose={() => setPickerOpen((open) => !open)}
+          pickerTriggerRef={pickerTriggerRef}
+          onToggleKeep={onToggleKeep}
+          onToggleFavorite={onToggleFavorite}
+          onToggleJunk={onToggleJunk}
+        />
       </div>
 
       {hasAlternatives && (
@@ -908,10 +1098,11 @@ const RollPatternColumn = memo(function RollPatternColumn({
 
   return (
     <div
-      className={`grid min-w-0 overflow-hidden rounded-xl bg-surface/50 ring-1 ${hasAnyPiece ? 'ring-white/10' : 'ring-white/7'} backdrop-blur-sm`}
-      style={rollPatternLoadoutColumnSubgridStyle()}
+      data-loadout-column
+      className={`grid min-w-0 rounded-xl bg-surface/50 ring-1 ${hasAnyPiece ? 'ring-white/10' : 'ring-white/7'} backdrop-blur-sm`}
+      style={rollPatternLoadoutColumnGridStyle()}
     >
-      <div className="flex h-full min-h-0 flex-col border-b border-white/10 px-3 py-2.5">
+      <div className="flex h-full min-h-0 max-h-[4.5rem] flex-col overflow-hidden border-b border-white/10 px-3 py-2.5">
         <RollPatternColumnHeader
           pattern={pattern}
           priorities={focusStats}
@@ -935,7 +1126,6 @@ const RollPatternColumn = memo(function RollPatternColumn({
             setName={setName}
             displayPiece={row.displayPiece}
             matchTier={row.matchTier}
-            selectionSource={row.selectionSource}
             eligiblePieces={eligibleBySlot[row.slotEntry.slot] ?? []}
             onSelectPiece={(instanceId) => onSelectSlotPiece(row.slotEntry.slot, instanceId)}
             onToggleKeep={onToggleKeep}
@@ -1239,18 +1429,87 @@ export function BuildCoveragePanel({
     [runDirectTag],
   );
 
+  const recommendedDimCopyPieces = useMemo(
+    () =>
+      collectRecommendedPatternGridPieces(
+        recommendedPatternLoadout.columns,
+        columnRowsByKey,
+        { includeNearMatch: true },
+      ),
+    [recommendedPatternLoadout.columns, columnRowsByKey],
+  );
+
+  const recommendedTaggablePieces = useMemo(
+    () =>
+      collectRecommendedPatternGridPieces(
+        recommendedPatternLoadout.columns,
+        columnRowsByKey,
+      ),
+    [recommendedPatternLoadout.columns, columnRowsByKey],
+  );
+
+  const recommendedDimCopyInstanceIds = useMemo(
+    () => recommendedDimCopyPieces.map((piece) => piece.instanceId),
+    [recommendedDimCopyPieces],
+  );
+
+  const applyBulkRowTags = useCallback(
+    (pieces: readonly ArmorPiece[], resolveTag: (piece: ArmorPiece) => TagValue | null) => {
+      if (pieces.length === 0) return;
+      const byTag = new Map<TagValue | null, ArmorPiece[]>();
+      for (const piece of pieces) {
+        const tag = resolveTag(piece);
+        const group = byTag.get(tag) ?? [];
+        group.push(piece);
+        byTag.set(tag, group);
+      }
+      for (const [tag, group] of byTag) {
+        void applyTagDirect(group, tag).catch((error: unknown) => {
+          console.error(error);
+        });
+      }
+    },
+    [applyTagDirect],
+  );
+
+  const bulkKeep = useCallback(
+    (pieces: readonly ArmorPiece[]) => {
+      const plan = planBulkDimTagApply(pieces, 'keep');
+      if (!plan) return;
+      void applyTagDirect(plan.pieces, plan.tag).catch((error: unknown) => {
+        console.error(error);
+      });
+    },
+    [applyTagDirect],
+  );
+
+  const bulkFavorite = useCallback(
+    (pieces: readonly ArmorPiece[]) => {
+      const targets = pieces.filter((piece) => !armorHasDimFavorite(piece));
+      applyBulkRowTags(targets, () => 'favorite');
+    },
+    [applyBulkRowTags],
+  );
+
+  const bulkJunk = useCallback(
+    (pieces: readonly ArmorPiece[]) => {
+      const plan = planBulkDimTagApply(pieces, 'junk');
+      if (!plan) return;
+      void applyTagDirect(plan.pieces, plan.tag).catch((error: unknown) => {
+        console.error(error);
+      });
+    },
+    [applyTagDirect],
+  );
+
   if (!hasSavedBuilds) {
     return (
       <section className="mb-10 rounded-2xl bg-surface/60 px-5 py-4 ring-1 ring-white/8">
         <h2 className="text-base font-semibold tracking-tight text-white">Your combos</h2>
-        <p className="mt-1 max-w-xl text-sm text-muted/90">
-          Can your vault support tuned armor for your priority stats?
-        </p>
         <div className="mt-4 rounded-xl bg-black/15 px-4 py-4 ring-1 ring-white/10">
           <p className="text-sm font-medium text-white">No combos yet</p>
           <p className="mt-2 max-w-lg text-sm text-muted">
-            Add 2–4 stats in priority order below. We pick the best piece per optimal roll pattern
-            from your vault for archetype and tuning alignment.
+            Add 2–4 stat priorities. Best vault piece per roll pattern.
           </p>
           <Link
             to={desiredBuildsEditorPath(classType)}
@@ -1284,19 +1543,23 @@ export function BuildCoveragePanel({
         {allAnalyses.map((analysis) => {
           const id = analysis.build.desiredBuildId ?? analysis.build.id;
           const active = id === buildId;
+          const comboLabel = analysis.build.label;
           return (
             <button
               key={id}
               type="button"
               onClick={() => selectBuild(id)}
-              className={`cursor-pointer text-left rounded-lg px-3 py-2 transition-colors ring-1 ${
+              className={`inline-flex w-auto max-w-full max-w-md min-w-0 flex-col cursor-pointer text-left rounded-lg px-3 py-2 transition-colors ring-1 ${
                 active
                   ? 'bg-white/12 ring-white/25'
                   : 'bg-white/[0.03] ring-white/10 hover:bg-white/[0.06] hover:ring-white/18'
               }`}
             >
-              <span className="block max-w-[10rem] truncate text-[11px] font-medium text-white">
-                {analysis.build.label}
+              <span
+                className="block line-clamp-2 text-[11px] font-medium leading-snug text-white"
+                title={comboLabel}
+              >
+                {comboLabel}
               </span>
               <span className="mt-1 inline-flex items-center gap-0.5">
                 <ComboTargetIcons
@@ -1321,14 +1584,28 @@ export function BuildCoveragePanel({
       )}
 
       <div className="mb-3 space-y-3">
-        <div className="flex items-center justify-between gap-2">
-          <h3 className="text-sm font-semibold text-white/95">Recommended pieces</h3>
-          <Link
-            to={browseBuildHref(classType, buildId)}
-            className="cursor-pointer text-[11px] text-white/70 hover:text-white underline-offset-2 hover:underline shrink-0"
-          >
-            Browse vault
-          </Link>
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+          <div className="min-w-0">
+            <h3 className="text-sm font-semibold text-white/95">Recommended pieces</h3>
+            <p className="mt-0.5 text-[10px] text-muted">
+              DIM tags and search for the grid below
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <RecommendedPiecesBulkActions
+              dimCopyInstanceIds={recommendedDimCopyInstanceIds}
+              taggablePieces={recommendedTaggablePieces}
+              onBulkKeep={bulkKeep}
+              onBulkFavorite={bulkFavorite}
+              onBulkJunk={bulkJunk}
+            />
+            <Link
+              to={browseBuildHref(classType, buildId)}
+              className="cursor-pointer text-[11px] text-white/70 hover:text-white underline-offset-2 hover:underline shrink-0"
+            >
+              Browse vault
+            </Link>
+          </div>
         </div>
         {(build.setBonus2pc !== undefined || build.setBonus4pc !== undefined) && (
           <div className="space-y-1 rounded-lg bg-white/[0.03] px-3 py-2.5 ring-1 ring-white/10">
@@ -1464,8 +1741,7 @@ function BuildCoverageDetails({
 
       {analysis.redundantOverlap && (
         <p className="rounded-lg bg-white/[0.03] px-3 py-2 text-xs text-muted ring-1 ring-white/10">
-          You have plenty of pieces for this combo, but some slots are still empty. New drops
-          may be duplicates of rolls you already have. Prioritize pieces that fill empty slots.
+          Empty slots remain despite redundant rolls. Prioritize fills over more dupes.
         </p>
       )}
 

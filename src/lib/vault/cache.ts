@@ -1,5 +1,7 @@
-import type { ArmorPiece } from '@/types';
+import type { ArmorPiece, TagValue } from '@/types';
 import type { DimItemTagState } from '@/lib/dim/parseTags';
+import { dimItemTagStateFromTag } from '@/lib/dim/localTagOverrides';
+import { parseDimItemTag } from '@/lib/dim/parseTags';
 import { idbDelete, idbGet, idbPut, openAppDb } from '@/lib/storage/idb';
 import {
   IDB_VAULT_STORE,
@@ -88,6 +90,36 @@ export async function writeVaultCache(entry: VaultCacheEntry): Promise<void> {
   } catch {
     /* cache is best-effort */
   }
+}
+
+/** Best-effort patch of cached vault items/DIM tags after a local tag apply. */
+export async function patchVaultCacheDimTags(
+  destinyMembershipId: string,
+  updates: { instanceId: string; tag: TagValue | null }[],
+): Promise<void> {
+  if (updates.length === 0) return;
+  const cached = await readVaultCache(destinyMembershipId);
+  if (!cached) return;
+
+  const updateMap = new Map(updates.map((u) => [u.instanceId, u.tag]));
+  const nextDimTags = { ...cached.dimTags };
+  const nextItems = cached.items.map((item) => {
+    const tag = updateMap.get(item.instanceId);
+    if (tag === undefined) return item;
+    const parsed = tag === null ? { dimTag: null, dimFavorite: false } : parseDimItemTag(tag);
+    nextDimTags[item.instanceId] = dimItemTagStateFromTag(tag);
+    return {
+      ...item,
+      dimTag: parsed.dimTag,
+      dimFavorite: parsed.dimFavorite,
+    };
+  });
+
+  await writeVaultCache({
+    ...cached,
+    items: nextItems,
+    dimTags: nextDimTags,
+  });
 }
 
 export async function clearVaultCache(destinyMembershipId?: string): Promise<void> {

@@ -145,13 +145,12 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
     <>
       <h1 className="text-2xl font-bold mb-2">Review tags</h1>
       <p className="text-muted mb-2">
-        {reviewTags.length} tags queued · {keep.length} keep · {junk.length} junk. Queued icons
-        are what &quot;Apply to DIM&quot; will write; existing DIM tags are noted below each row
-        when different.
+        {reviewTags.length} queued · {keep.length} keep · {junk.length} junk. Apply writes queued
+        tags; rows note existing DIM tags when different.
       </p>
       <p className="text-muted text-xs mb-2">
-        Combo signal: <span className="text-cyan-300">blue</span> = best for combo slot,{' '}
-        <span className="text-rose-300">salmon</span> = exclusive best row winner.
+        <span className="text-cyan-300">Blue</span> = best slot fit ·{' '}
+        <span className="text-rose-300">salmon</span> = exclusive row winner
       </p>
       <div className="mb-8" />
 

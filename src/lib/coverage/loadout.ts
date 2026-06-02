@@ -59,8 +59,8 @@ import {
  * Eligibility hard-gates tuning per column; a piece cannot satisfy both weapons and grenade tuning.
  *
  * ### E. Empty slot copy
- * {@link formatEmptyPatternSlotMessage} — one flowing line aligned with the column header
- * (pattern context · optional set · slot name).
+ * {@link formatEmptyPatternSlotMessage} — short per-row label; pattern context lives in the
+ * column header. {@link formatEmptyPatternSlotAriaLabel} carries the full hunt hint for AT.
  */
 export interface ColumnSlotContext {
   pattern: OptimalRollPattern;
@@ -430,8 +430,13 @@ export function formatEmptyPatternRollContext(
   return `${formatArchetypeGroupLabel(pattern.archetype, priorities)} · ${rollLine}`;
 }
 
-/** Empty per-slot hunt hint inside a roll-pattern column (single flowing line). */
-export function formatEmptyPatternSlotMessage(
+/** Short visible label for an empty slot row (pattern details are in the column header). */
+export function formatEmptyPatternSlotMessage(slot: ArmorSlot): string {
+  return `${SLOT_LABELS[slot]} — no match`;
+}
+
+/** Full hunt hint for empty slot rows — screen readers and row tooltips. */
+export function formatEmptyPatternSlotAriaLabel(
   slot: ArmorSlot,
   pattern: OptimalRollPattern,
   options: EmptyPatternMessageOptions = {},
@@ -624,21 +629,16 @@ function compareLoadoutPieces(
   return setA.localeCompare(setB);
 }
 
-/** Picker display order: pinned selected piece first, then algorithm rank. */
+/** Picker display order: stable ascending item instance id (not algorithm rank). */
 export function orderEligiblePiecesForSlotPicker(
   ranked: EligibleLoadoutPiece[],
-  selectedInstanceId?: string,
 ): EligibleLoadoutPiece[] {
-  if (!selectedInstanceId || ranked.length <= 1) return ranked;
-
-  const selectedIndex = ranked.findIndex(
-    ({ piece }) => piece.instanceId === selectedInstanceId,
+  if (ranked.length <= 1) return ranked;
+  return [...ranked].sort((a, b) =>
+    a.piece.instanceId.localeCompare(b.piece.instanceId, undefined, {
+      numeric: true,
+    }),
   );
-  if (selectedIndex <= 0) return ranked;
-
-  const selected = ranked[selectedIndex]!;
-  const rest = ranked.filter((_, index) => index !== selectedIndex);
-  return [selected, ...rest];
 }
 
 function bestPieceForSlot(

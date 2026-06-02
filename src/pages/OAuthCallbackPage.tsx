@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { exchangeBungieCode, getBungieConfig, storeBungieTokens } from '@/lib/bungie/auth';
+import { isDevBuild, oauthFailureDevChecklist, oauthFailureSuffix } from '@/lib/env';
 import { getBungieAccessToken } from '@/lib/bungie/client';
 import { SS_BUNGIE_OAUTH_STATE } from '@/lib/storage/keys';
 import { getOnboardingResumePath, isOnboardingComplete } from '@/lib/onboarding/storage';
@@ -98,12 +99,9 @@ export function OAuthCallbackPage() {
         const msg = e instanceof Error ? e.message : 'Login failed';
         const { redirectUri, clientId } = getBungieConfig();
         setError(
-          `${msg}\n\nBungie app checklist:\n` +
-            `• Redirect URL: ${redirectUri}\n` +
-            `• Origin: ${window.location.origin}\n` +
-            `• Client ID in .env matches app (${clientId ?? '?'})\n` +
-            `• API key is from the same Bungie application\n` +
-            `• Restart dev server after .env changes`,
+          msg +
+            oauthFailureSuffix() +
+            (isDevBuild() ? oauthFailureDevChecklist(redirectUri, clientId) : ''),
         );
       });
   }, [params, navigate, loadLiveVault]);

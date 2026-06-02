@@ -119,8 +119,7 @@ export function InventorySnapshotPage() {
     <Layout>
       <h1 className="text-2xl font-bold mb-2">Your armor vault</h1>
       <p className="text-muted mb-8 max-w-2xl">
-        Tier 5 armor counts (default dupe scope) across all characters. Use this to spot gaps before
-        trimming dupes.
+        Tier 5 counts per class and slot (default dupe scope).
       </p>
 
       {vaultRefreshing && (
@@ -133,7 +132,7 @@ export function InventorySnapshotPage() {
         <p className="mb-6 text-muted border border-border rounded-lg px-4 py-3 text-sm bg-surface-2">
           No Tier 5 armor found
           {lastParsedCount !== null ? ` (imported ${lastParsedCount} tiered pieces total)` : ''}.
-          We import any tiered armor (Tier 1-5); legacy and never-tiered pieces are skipped.
+          Imports tiered armor (T1–T5) only; legacy and untiered gear skipped.
         </p>
       )}
 
@@ -185,7 +184,7 @@ export function InventorySnapshotPage() {
           How much do you want to keep?
         </h2>
         <p className="text-sm text-muted mb-4">
-          Sets a rough target per class. D2 Armor Cleaner uses this to estimate how much trimming makes sense.
+          Per-class keep target for trim estimates.
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
           {VAULT_KEEP_OPTIONS.map((opt) => (

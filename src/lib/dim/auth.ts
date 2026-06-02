@@ -1,4 +1,4 @@
-import { getDimApiKey } from '@/lib/env';
+import { dimSyncUnavailableMessage, getDimApiKey } from '@/lib/env';
 import { setBungieAuthItem } from '@/lib/bungie/authStorage';
 import {
   parseDimTagsFromAnnotations,
@@ -13,7 +13,7 @@ export async function exchangeDimToken(
   bungieMembershipId: string,
 ): Promise<string> {
   const apiKey = getDimApiKey();
-  if (!apiKey) throw new Error('DIM API key not configured');
+  if (!apiKey) throw new Error(dimSyncUnavailableMessage());
 
   const res = await fetch(`${DIM_API}/auth/token`, {
     method: 'POST',

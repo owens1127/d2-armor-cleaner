@@ -24,7 +24,13 @@ import {
 } from '@/lib/dupe-rules/storage';
 import { clearOnboardingProgress } from '@/lib/onboarding/storage';
 import {
+  applyLocalOverridesToArmorPieces,
+  loadLocalDimTagOverrides,
+  recordLocalDimTagOverrides,
+} from '@/lib/dim/localTagOverrides';
+import {
   clearVaultCacheMeta,
+  patchVaultCacheDimTags,
   readVaultCache,
   writeVaultCache,
 } from '@/lib/vault/cache';
@@ -238,7 +244,9 @@ export const useVaultStore = create<VaultStore>((set, get) => ({
     const cached = await readVaultCache(membership.destinyMembershipId);
     if (!cached || cached.items.length === 0) return false;
 
-    commitVaultItems(cached.items, cached.lastParsedCount, cached.fetchedAt);
+    const overrides = loadLocalDimTagOverrides(membership.destinyMembershipId);
+    const items = applyLocalOverridesToArmorPieces(cached.items, overrides);
+    commitVaultItems(items, cached.lastParsedCount, cached.fetchedAt);
     if (cached.parseDiagnostics || cached.fetchDiagnostics) {
       useVaultStore.setState({
         vaultParseDiagnostics: cached.parseDiagnostics ?? null,
@@ -422,6 +430,13 @@ export const useVaultStore = create<VaultStore>((set, get) => ({
 
   patchItemDimTags: (updates) => {
     if (updates.length === 0) return;
+    const membership =
+      useAuthStore.getState().membership?.destinyMembershipId ??
+      restoreMembership()?.destinyMembershipId;
+    if (membership) {
+      recordLocalDimTagOverrides(membership, updates);
+      void patchVaultCacheDimTags(membership, updates);
+    }
     const updateMap = new Map(updates.map((u) => [u.instanceId, u.tag]));
     const { allItems, globalDupeRules, classRuleOverrides } = get();
     const nextItems = allItems.map((item) => {

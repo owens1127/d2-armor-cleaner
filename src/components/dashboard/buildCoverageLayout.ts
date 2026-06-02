@@ -1,43 +1,115 @@
 import type { CSSProperties } from 'react';
 import type { PatternLoadoutEntry } from '@/lib/coverage/loadout';
 
-/** Synchronized loadout grid: 1 header row + 5 armor slot rows per pattern column. */
-export const LOADOUT_GRID_ROW_COUNT = 6;
+/** Fixed header row — keeps slot rows aligned across pattern columns. */
+export const LOADOUT_HEADER_ROW_H = '4.5rem';
 
-/** Minimum header track height — title, set, and chips wrap naturally. */
-export const LOADOUT_HEADER_ROW_MIN_H = '2rem';
+/** Slot row shell — fills subgrid track, clips overflow. */
+export const LOADOUT_SLOT_ROW_SHELL =
+  'box-border h-16 min-h-16 max-h-16 overflow-hidden';
 
-/** Slot row height includes pb-2 so the Choose control clears the row border. */
-export const LOADOUT_SLOT_MAIN_H = 'h-[5.5rem] pb-2';
+/** Fixed slot row track — subgrid keeps every column row-aligned. */
+export const LOADOUT_SLOT_ROW_H = '4rem';
 
-/** Outer row track size for subgrid alignment (matches LOADOUT_SLOT_MAIN_H). */
-export const LOADOUT_SLOT_ROW_H = '5.5rem';
+/**
+ * Three-column row: slot cluster | name (2 lines) | fixed-width 5-slot action rail.
+ */
+export const LOADOUT_ROW_INNER_CLASS =
+  'grid h-16 w-full min-h-16 max-h-16 flex-1 items-center gap-x-2 overflow-hidden px-3 py-1';
 
-/** Fits copy + 4×32px compact icon buttons with gap-0.5. */
-export const LOADOUT_ACTION_COL_W = 'w-[8.5rem] min-w-[8.5rem]';
-export const LOADOUT_CHOOSE_BTN_H = 'h-7 min-h-7';
+export const LOADOUT_LEFT_CLUSTER_CLASS =
+  'flex w-[var(--loadout-left-cluster)] min-w-[var(--loadout-left-cluster)] max-w-[var(--loadout-left-cluster)] shrink-0 items-center gap-1 overflow-hidden';
 
-/** Minimum pattern column width; columns grow with 1fr to fill the set row. */
-export const LOADOUT_COLUMN_MIN_W = '20rem';
+/** Name + meta — always two lines tall so rows do not shift when meta is empty. */
+export const LOADOUT_TEXT_BLOCK_CLASS =
+  'relative z-0 flex min-h-[2.375rem] min-w-0 flex-col justify-center overflow-hidden';
 
-export function rollPatternLoadoutGridTemplateRows(): string {
-  return `minmax(${LOADOUT_HEADER_ROW_MIN_H},auto) repeat(5,minmax(${LOADOUT_SLOT_ROW_H},auto))`;
+export const LOADOUT_NAME_CLASS =
+  'block truncate text-sm font-medium leading-tight text-white';
+
+/** Second line: tier/set meta or near-match hint; min-height holds space when empty. */
+export const LOADOUT_META_LINE_CLASS = 'mt-0.5 flex min-h-[1.125rem] items-center gap-1.5';
+
+/** [DIM][keep][favorite][junk][Choose N] — fixed tracks, never omit a cell. */
+export const LOADOUT_ACTION_GRID_CLASS =
+  'relative z-10 grid shrink-0 items-center justify-self-end gap-0.5';
+
+export const LOADOUT_ACTION_CELL_CLASS =
+  'flex size-[var(--spacing-touch-sm)] items-center justify-center';
+
+export const LOADOUT_ACTION_CHOOSE_CELL_CLASS =
+  'flex h-[var(--spacing-touch-sm)] w-full items-center justify-center';
+
+/** Invisible placeholder occupying the same box as a real control. */
+export const LOADOUT_ACTION_PLACEHOLDER_CLASS = 'pointer-events-none invisible';
+
+/** Choose chip — fixed height; column 5 width comes from the action grid track. */
+export function loadoutChooseBtnClass(options: { open: boolean }): string {
+  const base =
+    'inline-flex h-[var(--spacing-touch-sm)] w-full min-w-0 max-w-full cursor-pointer items-center justify-center gap-0.5 overflow-hidden whitespace-nowrap rounded border px-1 text-[10px] font-medium leading-none transition-colors';
+  if (options.open) {
+    return `${base} border-white/25 bg-white/12 text-white ring-1 ring-white/20`;
+  }
+  return `${base} border-border text-muted hover:bg-white/5 hover:text-white hover:border-white/15`;
 }
 
-/** Set row: shared row tracks so column headers and slots stay equal height (CSS subgrid). */
+/** Minimum pattern column width; must fit left cluster + text + action rail. */
+export const LOADOUT_COLUMN_MIN_W = 'var(--loadout-column-min)';
+
+export function rollPatternLoadoutColumnGridTemplateRows(): string {
+  return `${LOADOUT_HEADER_ROW_H} repeat(5, ${LOADOUT_SLOT_ROW_H})`;
+}
+
+/** Set row: column tracks only; each pattern column owns matching fixed row tracks. */
 export function rollPatternLoadoutSetRowStyle(columnCount: number): CSSProperties {
+  return rollPatternLoadoutColumnsStyle(columnCount);
+}
+
+/** Pattern column — fixed header + five slot rows (same template in every column). */
+export function rollPatternLoadoutColumnGridStyle(): CSSProperties {
   return {
-    ...rollPatternLoadoutColumnsStyle(columnCount),
-    gridTemplateRows: rollPatternLoadoutGridTemplateRows(),
+    gridTemplateRows: rollPatternLoadoutColumnGridTemplateRows(),
   };
 }
 
-/** Pattern column spans the set row and inherits row tracks from the parent grid. */
-export function rollPatternLoadoutColumnSubgridStyle(): CSSProperties {
+export function rollPatternSlotRowInnerStyle(): CSSProperties {
   return {
-    gridRow: `span ${LOADOUT_GRID_ROW_COUNT}`,
-    gridTemplateRows: 'subgrid',
+    gridTemplateColumns:
+      'var(--loadout-left-cluster) minmax(0, 1fr) var(--loadout-action-rail)',
   };
+}
+
+/** Picker list row — middle column grows; rail is 4 compact buttons only. */
+export function rollPatternPickerSlotRowInnerStyle(): CSSProperties {
+  return {
+    gridTemplateColumns:
+      'var(--loadout-left-cluster) minmax(0, 1fr) var(--loadout-picker-action-rail)',
+  };
+}
+
+export function rollPatternActionRailStyle(): CSSProperties {
+  return {
+    width: 'var(--loadout-action-rail)',
+    minWidth: 'var(--loadout-action-rail)',
+    maxWidth: 'var(--loadout-action-rail)',
+    gridTemplateColumns: 'repeat(4, var(--spacing-touch-sm)) 5.5rem',
+  };
+}
+
+export function rollPatternPickerActionRailStyle(): CSSProperties {
+  return {
+    width: 'var(--loadout-picker-action-rail)',
+    minWidth: 'var(--loadout-picker-action-rail)',
+    maxWidth: 'var(--loadout-picker-action-rail)',
+    gridTemplateColumns: 'repeat(4, var(--spacing-touch-sm))',
+  };
+}
+
+/** Measured pattern column width capped to viewport (picker menu inline width). */
+export function measureLoadoutPickerMenuWidthPx(columnWidthPx: number, viewportWidthPx: number): number {
+  const max = Math.max(0, viewportWidthPx - 16);
+  if (columnWidthPx <= 0) return max;
+  return Math.min(columnWidthPx, max);
 }
 
 function loadoutColumnTrack(): string {

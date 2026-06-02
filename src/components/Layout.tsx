@@ -2,11 +2,13 @@ import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { HeaderClassPicker } from '@/components/HeaderClassPicker';
 import { MobileNav } from '@/components/MobileNav';
+import { SignInWithBungieButton } from '@/components/SignInWithBungieButton';
 import { SiteFooter } from '@/components/SiteFooter';
 import { VaultStatusBanner } from '@/components/VaultStatusBanner';
 import { BuildOptimalProvider } from '@/components/items/BuildOptimalProvider';
 import { PendingTagsProvider } from '@/components/items/PendingTagsProvider';
 import {
+  authenticatedLandingPath,
   buildAuthenticatedNavLinks,
   isNavLinkActive,
   navClassFromPath,
@@ -27,12 +29,12 @@ function NavLinks({
 }) {
   return (
     <>
-      {links.map(({ to, label, match, home }) => (
+      {links.map(({ to, label, match }) => (
         <Link
           key={label}
           to={to}
           className={`ui-nav-link px-3.5 py-2.5 rounded-md relative transition-colors ${
-            isNavLinkActive(pathname, { label, match, to, home })
+            isNavLinkActive(pathname, { label, match, to })
               ? 'text-white bg-white/10'
               : 'text-muted hover:text-white'
           }`}
@@ -73,7 +75,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <Link
-              to="/"
+              to={membership ? authenticatedLandingPath(activeNavClass) : '/'}
               className="ui-heading font-semibold text-white tracking-tight text-base shrink-0"
             >
               D2 Armor Cleaner
@@ -92,8 +94,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
               pendingCount={pendingCount}
             />
           </nav>
-          <div className="text-sm text-muted">
-            {membership?.displayName}
+          <div className="shrink-0 text-sm">
+            {membership ? (
+              <span className="text-muted truncate max-w-[10rem] sm:max-w-none">
+                {membership.displayName}
+              </span>
+            ) : (
+              <SignInWithBungieButton className="ui-btn-primary px-3.5 py-1.5 text-xs font-medium" />
+            )}
           </div>
         </div>
         <div className="ui-divider max-w-7xl mx-auto" />

@@ -5,6 +5,7 @@ import { TransitionFlash } from '@/components/TransitionFlash';
 import { comparePieces } from '@/components/duel/ArmorCard';
 import { BucketSwitcher } from '@/components/duel/BucketSwitcher';
 import { BucketWrapUpPanel } from '@/components/duel/BucketWrapUpPanel';
+import { DuelBucketChooser } from '@/components/duel/DuelBucketChooser';
 import { DuelComparePanel } from '@/components/duel/DuelComparePanel';
 import { DuelKeyboardHints, DuelPageCenter } from '@/components/duel/DuelPageShell';
 import { PendingTagsFootnote } from '@/components/duel/PendingTagsFootnote';
@@ -25,6 +26,7 @@ import { CLASS_LABELS, ARCHETYPE_LABELS, SLOT_LABELS, STAT_LABELS } from '@/lib/
 import {
   activeBucketItemCount,
   bucketKeyString,
+  duelableBucketsForClass,
   findBucketByKey,
   formatDupeBucketLabel,
 } from '@/lib/dupes/queue';
@@ -39,12 +41,12 @@ import {
   hasInBucketProgress,
   planCleanMount,
   showCleanEmptyState,
-  vaultHasDuelableBuckets,
 } from '@/lib/session/cleanSession';
 import {
   buildBucketWrapUpReport,
   isBucketReadyForWrapUp,
 } from '@/lib/session/bucketWrapUp';
+import { setLastDuelBucketKey } from '@/lib/session/lastDuelBucket';
 import {
   buildCleanSearchParams,
   parseCleanSearchParams,
@@ -168,9 +170,7 @@ export function DuelPage() {
       session.pendingTags,
     );
 
-    if (plan.action === 'init') {
-      initDuelQueue(classType);
-    } else if (plan.action === 'restore') {
+    if (plan.action === 'restore') {
       restoreCleanProgress({
         classType,
         duelQueue: plan.duelQueue,
@@ -294,14 +294,6 @@ export function DuelPage() {
     if (searchParamsMatchCleanState(searchParams, nextState)) return;
     setSearchParams(buildCleanSearchParams(nextState), { replace: true });
   }, [currentBucketKey, searchParams, setSearchParams]);
-
-  useEffect(() => {
-    if (!classVault || bucket || duelQueue.length > 0) return;
-    if (showCleanEmptyState(classType, classVault, pendingTags)) return;
-    if (!vaultHasDuelableBuckets(classType, classVault, pendingTags)) return;
-    initDuelQueue(classType);
-    hydratedRef.current = null;
-  }, [classVault, bucket, duelQueue.length, classType, pendingTags, initDuelQueue]);
 
   function syncTournament(next: { champion: ArmorPiece | null; challengerQueue: ArmorPiece[] }) {
     setChampion(next.champion);
@@ -736,6 +728,28 @@ export function DuelPage() {
     [duelQueue, classVault],
   );
 
+  const pickableBuckets = useMemo(
+    () =>
+      classVault ? duelableBucketsForClass(classType, classVault.buckets, pendingTags) : [],
+    [classVault, classType, pendingTags],
+  );
+
+  const needsBucketChoice =
+    !!classVault &&
+    !bucket &&
+    duelQueue.length === 0 &&
+    !empty &&
+    pickableBuckets.length > 0;
+
+  function handleChooseBucket(targetKey: string) {
+    if (!pickableBuckets.some((b) => bucketKeyString(b.key) === targetKey)) return;
+    setLastDuelBucketKey(classType, targetKey);
+    initDuelQueue(classType);
+    switchToBucket(targetKey);
+    syncTournament({ champion: null, challengerQueue: [] });
+    hydratedRef.current = null;
+  }
+
   const bucketWrapUpReport = useMemo(() => {
     if (!bucket || !bucketWrapUpKey) return null;
     return buildBucketWrapUpReport(nonIgnoredItems, {
@@ -778,6 +792,7 @@ export function DuelPage() {
     ) {
       return;
     }
+    setLastDuelBucketKey(classType, targetKey);
     clearUndoStack();
     switchToBucket(targetKey);
     syncTournament({ champion: null, challengerQueue: [] });
@@ -934,12 +949,14 @@ export function DuelPage() {
                 </p>
               ) : empty ? (
                 <p className="text-sm text-muted mt-1">No duplicate armor to compare for this class</p>
+              ) : needsBucketChoice ? (
+                <p className="text-sm text-muted mt-1">Choose a duplicate group to start</p>
               ) : (
                 <p className="text-sm text-muted mt-1">Starting next duplicate group…</p>
               )}
             </div>
 
-            {queueBuckets.length > 0 && !showingBucketWrapUp && (
+            {queueBuckets.length > 0 && !showingBucketWrapUp && !needsBucketChoice && (
               <div className="flex flex-wrap items-end gap-2 shrink-0">
                 <BucketSwitcher
                   buckets={queueBuckets}
@@ -981,7 +998,15 @@ export function DuelPage() {
               />
             )}
 
-            {!showingBucketWrapUp && duelInitializing && (
+            {needsBucketChoice && (
+              <DuelBucketChooser
+                classLabel={CLASS_LABELS[classType]}
+                buckets={pickableBuckets}
+                onSelect={handleChooseBucket}
+              />
+            )}
+
+            {!showingBucketWrapUp && !needsBucketChoice && duelInitializing && (
               <p className="text-muted text-center">Preparing comparisons…</p>
             )}
 
@@ -989,8 +1014,7 @@ export function DuelPage() {
               <div className="text-center py-8 ui-card w-full max-w-md mx-auto">
                 <p className="ui-heading text-xl font-medium mb-2">Queue empty</p>
                 <p className="text-sm text-muted mb-4">
-                  {tagKeepCount} keep · {tagJunkCount} junk queued. Review tags before applying to
-                  DIM, or restart the queue to compare more duplicate groups.
+                  {tagKeepCount} keep · {tagJunkCount} junk queued.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Link to="/review" className="ui-btn-primary inline-block px-8 py-3">
@@ -1025,6 +1049,7 @@ export function DuelPage() {
             )}
 
             {!showingBucketWrapUp &&
+              !needsBucketChoice &&
               !empty &&
               !queueExhausted &&
               !duelInitializing &&

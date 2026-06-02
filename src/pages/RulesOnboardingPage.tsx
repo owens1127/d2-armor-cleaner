@@ -121,8 +121,8 @@ export function RulesOnboardingPage() {
         <p className="mb-6 text-muted border border-border rounded-lg px-4 py-3 text-sm bg-surface-2">
           No armor in dupe scope at your minimum tier
           {lastParsedCount !== null ? ` (imported ${lastParsedCount} tiered pieces total)` : ''}.
-          We import any tiered armor (Tier 1-5); legacy and never-tiered pieces are skipped. Dupe
-          preview defaults to Tier 5 only. Change minimum tier in Settings to include lower tiers.
+          Imports tiered armor (T1–T5) only; legacy and untiered gear skipped. Preview uses Tier 5;
+          change minimum tier in Settings for lower tiers.
         </p>
       )}
 

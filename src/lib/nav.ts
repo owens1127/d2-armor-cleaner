@@ -1,13 +1,14 @@
 import { CLASSES } from '@/lib/constants';
 import { decodeBuildId } from '@/lib/coverage/buildIdCodec';
-import { getCalibrateNavPath } from '@/lib/onboarding/storage';
+import {
+  getCalibrateNavPath,
+  getOnboardingResumePath,
+  hasInProgressOnboarding,
+  isOnboardingComplete,
+} from '@/lib/onboarding/storage';
 import type { ClassType, DesiredBuild } from '@/types';
 
 export type ClassRouteSegment = 'dashboard' | 'browse' | 'combos' | 'duel' | 'dismantle';
-
-export function isHomePath(pathname: string): boolean {
-  return pathname === '/' || pathname === '/home';
-}
 
 export function navClassFromPath(pathname: string): ClassType | null {
   const match = pathname.match(
@@ -75,12 +76,19 @@ export type AppNavItem = {
   label: string;
   match: string;
   to: string;
-  home?: boolean;
 };
+
+/** Post-login landing: class dashboard or resume onboarding. */
+export function authenticatedLandingPath(activeClass: ClassType): string {
+  const complete = isOnboardingComplete();
+  if (complete && !hasInProgressOnboarding()) {
+    return `/dashboard/${activeClass}`;
+  }
+  return getOnboardingResumePath(complete);
+}
 
 export function buildAuthenticatedNavLinks(activeClass: ClassType): AppNavItem[] {
   return [
-    { label: 'Home', match: '/', to: '/', home: true },
     { label: 'Dashboard', match: '/dashboard', to: `/dashboard/${activeClass}` },
     { label: 'Calibrate', match: '/onboarding', to: getCalibrateNavPath(activeClass) },
     { label: 'Browse', match: '/browse', to: `/browse/${activeClass}` },
@@ -93,11 +101,10 @@ export function buildAuthenticatedNavLinks(activeClass: ClassType): AppNavItem[]
 }
 
 export function signedOutNavLinks(): AppNavItem[] {
-  return [{ label: 'Home', match: '/', to: '/', home: true }];
+  return [];
 }
 
 export function isNavLinkActive(pathname: string, item: AppNavItem): boolean {
-  if (item.home) return isHomePath(pathname);
   return pathname.startsWith(item.match);
 }
 

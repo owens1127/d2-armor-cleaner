@@ -243,3 +243,35 @@ export function formatPatternColumnComboTooltip(
 ): string {
   return `Eligible ${setName ? `${setName} ` : ''}${SLOT_LABELS[slot].toLowerCase()} for this roll column`;
 }
+
+export interface CollectRecommendedGridPiecesOptions {
+  /** Include near-match rows (DIM copy only; tag buttons are hidden on those rows). */
+  includeNearMatch?: boolean;
+}
+
+/**
+ * Unique displayed pieces across the recommended pattern grid.
+ * Uses each row's `displayPiece` (user representative or algorithm pick).
+ */
+export function collectRecommendedPatternGridPieces(
+  columns: readonly PatternLoadoutEntry[],
+  columnRowsByKey: PatternLoadoutGridData['columnRowsByKey'],
+  options?: CollectRecommendedGridPiecesOptions,
+): ArmorPiece[] {
+  const includeNearMatch = options?.includeNearMatch ?? false;
+  const seen = new Set<string>();
+  const pieces: ArmorPiece[] = [];
+
+  for (const column of columns) {
+    for (const row of columnRowsByKey[column.columnKey] ?? []) {
+      const piece = row.displayPiece;
+      if (!piece) continue;
+      if (!includeNearMatch && row.matchTier === 'near') continue;
+      if (seen.has(piece.instanceId)) continue;
+      seen.add(piece.instanceId);
+      pieces.push(piece);
+    }
+  }
+
+  return pieces;
+}

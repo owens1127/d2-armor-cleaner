@@ -21,8 +21,8 @@ export function MobileNav() {
   return (
     <nav className="md:hidden fixed bottom-0 inset-x-0 z-50 border-t border-border bg-surface-2/95 backdrop-blur">
       <div className="flex justify-around items-center h-16">
-        {navLinks.map(({ to, label, match, home }) => {
-          const active = isNavLinkActive(location.pathname, { label, match, to, home });
+        {navLinks.map(({ to, label, match }) => {
+          const active = isNavLinkActive(location.pathname, { label, match, to });
           return (
             <Link
               key={label}

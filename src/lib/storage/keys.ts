@@ -12,6 +12,8 @@ export const LS_MIGRATION_FLAG = 'dac-storage-migrated-v1';
 export const LS_MIGRATED_REDUNDANT_DUPE = 'dac-migrated-redundant-dupe-v1';
 /** Pending DIM tags to apply (survives reload and new tabs). */
 export const LS_REVIEW_TAGS = 'dac-review-tags';
+/** Locally applied DIM tags not yet visible in stale DIM profile fetches. */
+export const LS_LOCAL_DIM_TAG_OVERRIDES = 'dac-local-dim-tag-overrides';
 /** Clean session progress (queue, in-bucket junk/keep, tournament position). */
 export const LS_CLEAN_SESSION = 'dac-clean-session';
 

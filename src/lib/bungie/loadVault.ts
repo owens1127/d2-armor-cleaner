@@ -12,6 +12,12 @@ import { exchangeDimToken, fetchDimTags } from '@/lib/dim/auth';
 import {
   type DimItemTagState,
 } from '@/lib/dim/parseTags';
+import {
+  loadLocalDimTagOverrides,
+  mergeDimTagMapWithLocalOverrides,
+  pruneSyncedLocalOverrides,
+  saveLocalDimTagOverrides,
+} from '@/lib/dim/localTagOverrides';
 import { isDimConfigured } from '@/lib/dim/tags';
 import { clearVaultCache } from '@/lib/vault/cache';
 import {
@@ -72,6 +78,17 @@ export async function loadLiveVault(
     }
   } else if (Object.keys(dimTags).length > 0) {
     onProgress?.('Using cached DIM tags…');
+  }
+
+  const membershipId = membership.destinyMembershipId;
+  let localOverrides = loadLocalDimTagOverrides(membershipId);
+  const pruned = pruneSyncedLocalOverrides(dimTags, localOverrides);
+  if (pruned !== localOverrides) {
+    localOverrides = pruned;
+    saveLocalDimTagOverrides(membershipId, localOverrides);
+  }
+  if (Object.keys(localOverrides).length > 0) {
+    dimTags = mergeDimTagMapWithLocalOverrides(dimTags, localOverrides);
   }
 
   onProgress?.(`Parsing tiered armor (${rawItemCount} instanced)…`);

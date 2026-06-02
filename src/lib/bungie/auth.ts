@@ -2,7 +2,7 @@ const BUNGIE_AUTH_URL = 'https://www.bungie.net/en/OAuth/Authorize';
 const BUNGIE_TOKEN_URL = 'https://www.bungie.net/Platform/App/OAuth/token/';
 
 import {
-  BUNGIE_CLIENT_SECRET_ENV,
+  bungieCredentialsMissingMessage,
   getBungieApiKey,
   getBungieClientId,
   getBungieClientSecret,
@@ -48,7 +48,7 @@ function oauthErrorMessage(json: {
   const code = json.ErrorCode;
   if (code === 2108 || json.error === 'invalid_grant') {
     parts.push('Invalid or expired authorization code: sign in again.');
-  } else if (code === 2106) parts.push('Invalid API key: use the key from the same Bungie application.');
+  } else if (code === 2106) parts.push('Invalid application credentials. Try signing in again.');
   else if (code === 99) parts.push('Bungie session expired: try again.');
   else if (code && code !== 1 && parts.length === 0) parts.push(`Bungie error code ${code}`);
 
@@ -67,11 +67,8 @@ function tokenRequestHeaders(apiKey: string): HeadersInit {
 export function startBungieLogin() {
   const { clientId, redirectUri, apiKey } = getBungieConfig();
   const clientSecret = getBungieClientSecret();
-  if (!clientId || !apiKey) {
-    throw new Error('Bungie API key and client ID are required in .env');
-  }
-  if (!clientSecret) {
-    throw new Error(`${BUNGIE_CLIENT_SECRET_ENV} is required for confidential OAuth clients`);
+  if (!clientId || !apiKey || !clientSecret) {
+    throw new Error(bungieCredentialsMissingMessage());
   }
   const state = crypto.randomUUID();
   sessionStorage.setItem(SS_BUNGIE_OAUTH_STATE, state);
@@ -149,7 +146,7 @@ async function exchangeBungieCodeOnce(code: string): Promise<BungieTokenResponse
   const clientSecret = getBungieClientSecret();
   if (!apiKey || !clientId || !clientSecret) {
     sessionStorage.removeItem(usedKey);
-    throw new Error('Missing Bungie OAuth credentials in .env: restart dev server after editing.');
+    throw new Error(bungieCredentialsMissingMessage());
   }
 
   const body = new URLSearchParams({
@@ -228,7 +225,7 @@ export async function refreshBungieAccessToken(): Promise<string> {
   const { apiKey, clientId } = getBungieConfig();
   const clientSecret = getBungieClientSecret();
   if (!apiKey || !clientId || !clientSecret) {
-    throw new Error('Missing Bungie OAuth credentials in .env');
+    throw new Error(bungieCredentialsMissingMessage());
   }
 
   const body = new URLSearchParams({

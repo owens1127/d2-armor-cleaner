@@ -2,7 +2,7 @@ import { getBungieAuthItem } from '@/lib/bungie/authStorage';
 import { getBungieAccessToken } from '@/lib/bungie/client';
 import { exchangeDimToken } from '@/lib/dim/auth';
 import { isDimConfigured } from '@/lib/dim/tags';
-import { DIM_API_KEY_ENV } from '@/lib/env';
+import { dimSyncUnavailableMessage } from '@/lib/env';
 import { SS_DIM_TOKEN } from '@/lib/storage/keys';
 import type { BungieMembership } from '@/types';
 
@@ -11,7 +11,7 @@ export async function resolveDimToken(membership: BungieMembership): Promise<str
   if (cached) return cached;
 
   if (!isDimConfigured()) {
-    throw new Error(`Add ${DIM_API_KEY_ENV} to .env (see Settings for instructions)`);
+    throw new Error(dimSyncUnavailableMessage());
   }
 
   const bungieToken = getBungieAccessToken();

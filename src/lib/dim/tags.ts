@@ -1,4 +1,4 @@
-import { getDimApiKey } from '@/lib/env';
+import { dimSyncUnavailableMessage, getDimApiKey } from '@/lib/env';
 import type { TagValue } from '@/types';
 
 const DIM_API = 'https://api.destinyitemmanager.com';
@@ -26,7 +26,7 @@ export async function applyDimTags(
   tags: { instanceId: string; tag: TagValue | null }[],
 ): Promise<DimApplySummary> {
   const apiKey = getDimApiKey();
-  if (!apiKey) throw new Error('DIM API key not configured');
+  if (!apiKey) throw new Error(dimSyncUnavailableMessage());
 
   const res = await fetch(`${DIM_API}/profile`, {
     method: 'POST',

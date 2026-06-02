@@ -51,6 +51,16 @@ export function clearManifestArmorSetIcons(): void {
   manifestSetIcons = null;
 }
 
+/** Display name for an armor set hash (vault piece, then loaded manifest). */
+export function resolveArmorSetDisplayName(
+  setHash: number,
+  items: ArmorPiece[] = [],
+): string | undefined {
+  const fromVault = resolveArmorSetByHash(items, setHash)?.name;
+  if (fromVault) return fromVault;
+  return manifestSetIcons?.get(setHash)?.name;
+}
+
 export function resolveArmorSetByHash(
   items: ArmorPiece[],
   setHash: number,

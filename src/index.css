@@ -18,6 +18,12 @@
   --spacing-touch-sm: 2rem;
   --spacing-icon-sm: 1rem;
   --spacing-icon-md: 1.125rem;
+  /* Combo loadout grid — fixed action rail + column floor */
+  --loadout-action-rail: calc(4 * var(--spacing-touch-sm) + 5.5rem + 0.5rem);
+  /** Picker rows: DIM + 3 tags only (no Choose slot). */
+  --loadout-picker-action-rail: calc(4 * var(--spacing-touch-sm) + 0.5rem);
+  --loadout-left-cluster: 3.75rem;
+  --loadout-column-min: 30rem;
 }
 
 html,
