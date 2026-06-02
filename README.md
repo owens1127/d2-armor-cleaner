@@ -58,7 +58,6 @@ Connect the repo in the [Cloudflare dashboard](https://dash.cloudflare.com) (Pag
 
 - Build: `npm ci && npm run build` → output `dist/`
 - SPA routing: `public/_redirects` (`/* /index.html 200`)
-- Local CF preview: `npx wrangler pages dev dist` (after `npm run build`; `wrangler.toml` is local-only)
 
 ## Architecture
 

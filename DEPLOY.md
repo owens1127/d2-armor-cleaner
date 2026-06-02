@@ -27,7 +27,7 @@ SPA client routing: `public/_redirects` ships `/* /index.html 200` into `dist/` 
 8. In [Bungie API portal](https://www.bungie.net/en/Application), add the same redirect URI.
 9. Request a production DIM API key with your Pages origin (see [dim-api](https://github.com/DestinyItemManager/dim-api)).
 
-Cloudflare rebuilds automatically on each push; you do not need `CLOUDFLARE_API_TOKEN`, GitHub Actions, or Wrangler for production deploys.
+Cloudflare rebuilds automatically on each push; you do not need `CLOUDFLARE_API_TOKEN` or GitHub Actions for production deploys.
 
 ## Environment variables (Vite)
 
@@ -64,10 +64,8 @@ Cloudflare Pages → your project → **Custom domains** → add domain and foll
 npm ci
 npm run build
 npm run preview          # Vite preview of dist/
-npx wrangler pages dev dist   # Cloudflare Pages local preview (optional; wrangler.toml)
 ```
 
-`wrangler.toml` is for local `wrangler pages dev` only, not for CI or dashboard deploys.
 
 ## Local dev vs production
 
