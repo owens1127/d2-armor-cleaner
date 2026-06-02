@@ -1,37 +1,59 @@
 import { ARMOR_SLOTS, CLASSES } from '@/lib/constants';
 import type { ArmorPiece, ArmorSlot, ClassType, VaultKeepPreference } from '@/types';
 
+/** Nominal Destiny 2 vault capacity (post–vault expansion scale). */
+export const DEFAULT_VAULT_CAPACITY = 1300;
+
+/** Total Tier-5 armor keep goal across all classes for each trim preset. */
+export const VAULT_KEEP_TOTAL_TARGETS: Record<VaultKeepPreference, number> = {
+  lean: 360,
+  balanced: 600,
+  options: 840,
+  hoarder: 1200,
+};
+
+const TRIM_STYLE: Record<
+  VaultKeepPreference,
+  { label: string; blurb: string }
+> = {
+  lean: {
+    label: 'Lean',
+    blurb: 'Trim aggressively · clear most duplicate buckets',
+  },
+  balanced: {
+    label: 'Balanced',
+    blurb: 'Clear obvious dupes, keep variety for builds',
+  },
+  options: {
+    label: 'Keep options',
+    blurb: 'Keep extra stat rolls and set combos; lighter trimming',
+  },
+  hoarder: {
+    label: 'Hoarder',
+    blurb: 'Only trim blatant duplicates; maximize options',
+  },
+};
+
+function targetPerClassForPreference(id: VaultKeepPreference): number {
+  return Math.round(getKeepTargetTotal(id) / CLASSES.length);
+}
+
+function formatKeepOptionDescription(id: VaultKeepPreference): string {
+  const perClass = targetPerClassForPreference(id);
+  return `${TRIM_STYLE[id].blurb} (~${perClass} Tier 5 per class)`;
+}
+
 export const VAULT_KEEP_OPTIONS: {
   id: VaultKeepPreference;
   label: string;
   description: string;
   targetPerClass: number;
-}[] = [
-  {
-    id: 'lean',
-    label: 'Lean',
-    description: '~15 pieces per class: trim aggressively',
-    targetPerClass: 15,
-  },
-  {
-    id: 'balanced',
-    label: 'Balanced',
-    description: '~25 pieces per class: clear dupes, keep variety',
-    targetPerClass: 25,
-  },
-  {
-    id: 'options',
-    label: 'Keep options',
-    description: '~40 pieces per class: room for combos',
-    targetPerClass: 40,
-  },
-  {
-    id: 'hoarder',
-    label: 'Hoarder',
-    description: '~60 pieces per class: only obvious dupes',
-    targetPerClass: 60,
-  },
-];
+}[] = (['lean', 'balanced', 'options', 'hoarder'] as const).map((id) => ({
+  id,
+  label: TRIM_STYLE[id].label,
+  description: formatKeepOptionDescription(id),
+  targetPerClass: targetPerClassForPreference(id),
+}));
 
 const LOW_SLOT_COUNT = 3;
 const LOW_CLASS_RATIO = 0.4;
@@ -65,8 +87,14 @@ export interface VaultTrimEstimate {
   byClass: Record<ClassType, ClassTrimEstimate>;
 }
 
+export function getKeepTargetTotal(
+  preference: VaultKeepPreference = 'balanced',
+): number {
+  return VAULT_KEEP_TOTAL_TARGETS[preference] ?? VAULT_KEEP_TOTAL_TARGETS.balanced;
+}
+
 export function getKeepTarget(preference: VaultKeepPreference = 'balanced'): number {
-  return VAULT_KEEP_OPTIONS.find((o) => o.id === preference)?.targetPerClass ?? 25;
+  return targetPerClassForPreference(preference);
 }
 
 /** Thresholds for “large vault” dupe-rule suggestions: scales with keep preference. */
@@ -74,11 +102,11 @@ export function vaultHeavyThreshold(preference?: VaultKeepPreference): {
   totalT5: number;
   heavyBuckets: number;
 } {
-  const target = getKeepTarget(preference ?? 'balanced');
+  const totalTarget = getKeepTargetTotal(preference ?? 'balanced');
   const heavyBuckets =
     preference === 'lean' ? 5 : preference === 'hoarder' ? 12 : preference === 'options' ? 10 : 8;
   return {
-    totalT5: Math.round(target * CLASSES.length * 1.5),
+    totalT5: Math.round(totalTarget * 1.5),
     heavyBuckets,
   };
 }
@@ -155,7 +183,7 @@ export function estimateVaultTrim(
   preference: VaultKeepPreference,
 ): VaultTrimEstimate {
   const targetPerClass = getKeepTarget(preference);
-  const totalTarget = targetPerClass * CLASSES.length;
+  const totalTarget = getKeepTargetTotal(preference);
 
   const byClass = Object.fromEntries(
     CLASSES.map((c) => {

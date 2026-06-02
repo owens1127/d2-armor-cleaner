@@ -110,7 +110,7 @@ function calibrationInsightCopy(
   if (confidence === 'low') {
     return {
       title: 'Complete calibration',
-      detail: 'Low confidence — a few more picks sharpen dupe and combo suggestions',
+      detail: 'Low confidence · a few more picks sharpen dupe and combo suggestions',
       cta: 'Calibrate',
       tone: 'accent',
     };
@@ -118,7 +118,7 @@ function calibrationInsightCopy(
   if (confidence === 'medium') {
     return {
       title: 'Improve calibration',
-      detail: 'Medium confidence — more picks improve ranking and coverage hints',
+      detail: 'Medium confidence · more picks improve ranking and coverage hints',
       cta: 'Calibrate',
       tone: 'accent',
     };
@@ -126,7 +126,7 @@ function calibrationInsightCopy(
   if (stale) {
     return {
       title: 'Recalibrate preferences',
-      detail: 'Your last calibration was a while ago — vault rolls may have shifted',
+      detail: 'Your last calibration was a while ago · vault rolls may have shifted',
       cta: 'Recalibrate',
       tone: 'default',
     };
@@ -174,7 +174,7 @@ export function buildAddBuildsInsightAction(
     return {
       id: 'no-desired-builds',
       title: 'Set up combos',
-      detail: `Pick 2–4 priority stats per combo — ${countLabel}`,
+      detail: `Pick 2–4 priority stats per combo · ${countLabel}`,
       to,
       cta: 'Set up combos',
       tone: 'accent',
@@ -186,8 +186,8 @@ export function buildAddBuildsInsightAction(
     title: remaining === 1 ? 'Add another combo' : 'Add more combos',
     detail:
       remaining === 1
-        ? `${countLabel} combos — add 1 more`
-        : `${countLabel} — add ${remaining} more combos`,
+        ? `${countLabel} combos · add 1 more`
+        : `${countLabel} · add ${remaining} more combos`,
     to,
     cta: 'Add combos',
     tone: 'accent',

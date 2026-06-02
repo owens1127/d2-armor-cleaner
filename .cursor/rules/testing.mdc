@@ -29,7 +29,7 @@ alwaysApply: true
 
 - Unit/algorithm: colocated `*.test.ts` next to source.
 - Integration flows: `src/test/flows/*.integration.test.ts`.
-- E2e (Playwright): `e2e/` — live Bungie tests skip without credentials.
+- E2e (Playwright): `e2e/` - live Bungie tests skip without credentials.
 
 ## Code changes
 

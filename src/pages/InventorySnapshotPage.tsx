@@ -2,13 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { OnboardingStepActions } from '@/components/onboarding/OnboardingBackButton';
-import { SlotIcon } from '@/components/SlotIcon';
-import {
-  ARMOR_SLOTS,
-  CLASS_LABELS,
-  CLASSES,
-  SLOT_LABELS,
-} from '@/lib/constants';
 import { hasActiveSession, restoreMembership, clearSession } from '@/lib/bungie/loadVault';
 import { getBungieAccessToken } from '@/lib/bungie/client';
 import { resetBootstrapVaultLoad } from '@/lib/bungie/vaultBootstrap';
@@ -24,7 +17,7 @@ import {
   markInventoryComplete,
 } from '@/lib/onboarding/storage';
 import { useAuthStore, usePrefsStore, useSessionStore, useVaultStore, resetVaultStore } from '@/stores';
-import type { ClassType, VaultKeepPreference } from '@/types';
+import type { VaultKeepPreference } from '@/types';
 
 export function InventorySnapshotPage() {
   const navigate = useNavigate();
@@ -50,7 +43,7 @@ export function InventorySnapshotPage() {
 
   const snapshot = useMemo(() => buildVaultInventorySnapshot(allItems), [allItems]);
   const trim = useMemo(() => estimateVaultTrim(snapshot, preference), [snapshot, preference]);
-  const maxClassCount = Math.max(...CLASSES.map((c) => snapshot.byClass[c]), 1);
+  const tieredCount = allItems.length;
 
   function handleSignOutBack() {
     clearSession();
@@ -117,9 +110,27 @@ export function InventorySnapshotPage() {
 
   return (
     <Layout>
-      <h1 className="text-2xl font-bold mb-2">Your armor vault</h1>
+      <h1 className="text-2xl font-bold mb-2">Vault trim goal</h1>
       <p className="text-muted mb-8 max-w-2xl">
-        Tier 5 counts per class and slot (default dupe scope).
+        {tieredCount > 0 ? (
+          <>
+            Found <span className="text-white font-medium tabular-nums">{tieredCount}</span> tiered
+            armor {tieredCount === 1 ? 'piece' : 'pieces'}
+            {snapshot.totalT5 > 0 && (
+              <>
+                {' '}
+                (<span className="tabular-nums">{snapshot.totalT5}</span> at Tier 5)
+              </>
+            )}
+            .
+          </>
+        ) : (
+          <>
+            No tiered armor found
+            {lastParsedCount !== null ? ` (parsed ${lastParsedCount} items from vault)` : ''}. Imports
+            tiered armor (T1–T5) only; legacy and untiered gear is skipped.
+          </>
+        )}
       </p>
 
       {vaultRefreshing && (
@@ -128,63 +139,12 @@ export function InventorySnapshotPage() {
         </div>
       )}
 
-      {snapshot.totalT5 === 0 && !vaultLoading && !vaultRefreshing && (
-        <p className="mb-6 text-muted border border-border rounded-lg px-4 py-3 text-sm bg-surface-2">
-          No Tier 5 armor found
-          {lastParsedCount !== null ? ` (imported ${lastParsedCount} tiered pieces total)` : ''}.
-          Imports tiered armor (T1–T5) only; legacy and untiered gear skipped.
-        </p>
-      )}
-
-      <div className="grid sm:grid-cols-3 gap-4 mb-8 max-w-3xl">
-        <StatCard label="Total Tier 5" value={snapshot.totalT5} />
-        {CLASSES.map((c) => (
-          <StatCard key={c} label={CLASS_LABELS[c]} value={snapshot.byClass[c]} />
-        ))}
-      </div>
-
-      <section className="mb-8 max-w-3xl">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted mb-4">
-          Coverage by class
-        </h2>
-        <div className="space-y-6">
-          {CLASSES.map((classType) => (
-            <ClassCoverageBlock
-              key={classType}
-              classType={classType}
-              total={snapshot.byClass[classType]}
-              maxClassCount={maxClassCount}
-              bySlot={snapshot.byClassSlot[classType]}
-            />
-          ))}
-        </div>
-      </section>
-
-      {snapshot.gaps.length > 0 && (
-        <section className="mb-8 max-w-3xl p-4 border border-border rounded-xl bg-surface-2">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-muted mb-3">
-            Gaps to watch
-          </h2>
-          <ul className="text-sm space-y-2 text-muted">
-            {snapshot.gaps.slice(0, 8).map((gap, i) => (
-              <li key={i}>
-                <span className="text-white">{CLASS_LABELS[gap.classType]}</span>
-                {gap.armorSlot && ` · ${SLOT_LABELS[gap.armorSlot]}`}: {gap.message}
-              </li>
-            ))}
-            {snapshot.gaps.length > 8 && (
-              <li className="text-xs">+{snapshot.gaps.length - 8} more thin slots</li>
-            )}
-          </ul>
-        </section>
-      )}
-
       <section className="mb-8 max-w-2xl">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted mb-2">
           How much do you want to keep?
         </h2>
         <p className="text-sm text-muted mb-4">
-          Per-class keep target for trim estimates.
+          Sets how aggressively we suggest trimming duplicate Tier 5 armor during cleaning.
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
           {VAULT_KEEP_OPTIONS.map((opt) => (
@@ -205,15 +165,14 @@ export function InventorySnapshotPage() {
         </div>
         {snapshot.totalT5 > 0 && (
           <p className="mt-4 text-sm text-muted">
-            At this target: ~{trim.totalTarget} pieces total
+            Keep goal: about {trim.totalTarget} Tier 5 total (about {trim.targetPerClass} per class).
             {trim.excess > 0 ? (
               <>
                 {' '}
-               , roughly{' '}
-                <span className="text-white">{trim.excess}</span> above target
+                You have about <span className="text-white">{trim.excess}</span> above that goal.
               </>
             ) : (
-              <>; you're at or below target</>
+              <> You are at or below that goal.</>
             )}
           </p>
         )}
@@ -232,69 +191,5 @@ export function InventorySnapshotPage() {
         </button>
       </OnboardingStepActions>
     </Layout>
-  );
-}
-
-function StatCard({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="border border-border rounded-lg p-4 bg-surface-2">
-      <div className="text-2xl font-bold text-white tabular-nums">{value}</div>
-      <div className="text-xs text-muted">{label}</div>
-    </div>
-  );
-}
-
-function ClassCoverageBlock({
-  classType,
-  total,
-  maxClassCount,
-  bySlot,
-}: {
-  classType: ClassType;
-  total: number;
-  maxClassCount: number;
-  bySlot: Record<(typeof ARMOR_SLOTS)[number], number>;
-}) {
-  const barWidth = maxClassCount > 0 ? Math.round((total / maxClassCount) * 100) : 0;
-  const maxSlot = Math.max(...ARMOR_SLOTS.map((s) => bySlot[s]), 1);
-
-  return (
-    <div className="border border-border rounded-xl p-4 bg-surface-2">
-      <div className="flex items-baseline justify-between mb-2">
-        <span className="font-semibold text-white">{CLASS_LABELS[classType]}</span>
-        <span className="text-sm text-muted tabular-nums">{total} pieces</span>
-      </div>
-      <div className="h-1.5 rounded-full bg-white/5 mb-4 overflow-hidden">
-        <div
-          className="h-full rounded-full bg-white/40 transition-all"
-          style={{ width: `${barWidth}%` }}
-        />
-      </div>
-      <div className="grid grid-cols-5 gap-2">
-        {ARMOR_SLOTS.map((slot) => {
-          const count = bySlot[slot];
-          const slotBar = maxSlot > 0 ? Math.round((count / maxSlot) * 100) : 0;
-          const thin = count < 3;
-          return (
-            <div key={slot} className="text-center">
-              <div className="flex justify-center mb-1">
-                <SlotIcon slot={slot} size="md" />
-              </div>
-              <div
-                className={`text-sm font-semibold tabular-nums ${thin ? 'text-neutral-400' : 'text-white'}`}
-              >
-                {count}
-              </div>
-              <div className="h-1 rounded-full bg-white/5 mt-1 overflow-hidden">
-                <div
-                  className={`h-full rounded-full ${thin ? 'bg-white/20' : 'bg-white/50'}`}
-                  style={{ width: `${slotBar}%` }}
-                />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
   );
 }

@@ -1,7 +1,7 @@
 import { CLASSES, STATS } from '@/lib/constants';
 import type { ClassType, DesiredBuild, Stat, StatTarget } from '@/types';
 
-/** Reversible combo id prefix — version 1, URL-safe base64url payload. */
+/** Reversible combo id prefix - version 1, URL-safe base64url payload. */
 export const BUILD_ID_PREFIX = 'b1.';
 
 export const ENCODED_BUILD_ID_PATTERN = /^b1\.[A-Za-z0-9_-]+$/;

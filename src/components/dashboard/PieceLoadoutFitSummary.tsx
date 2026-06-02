@@ -39,14 +39,14 @@ function PieceRollDescriptor({
 export interface PieceLoadoutFitSummaryProps {
   piece: ArmorPiece;
   priorities: Stat[];
-  /** `compact` — roll descriptor only (alternatives list). */
+  /** `compact` - roll descriptor only (alternatives list). */
   variant?: 'default' | 'compact';
   className?: string;
 }
 
 /**
  * Plain-text roll summary for loadout rows.
- * Best-tier loadout pieces omit build-priority chips — shape is already optimal.
+ * Best-tier loadout pieces omit build-priority chips - shape is already optimal.
  */
 export function PieceLoadoutFitSummary({
   piece,

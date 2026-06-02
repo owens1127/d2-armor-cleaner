@@ -31,7 +31,7 @@ import type {
 
 export type HeatmapViewMode = 'armor' | 'archetype';
 
-/** Column header / row-label icons — larger than table chips, fits 6-col armor grid. */
+/** Column header / row-label icons - larger than table chips, fits 6-col armor grid. */
 const HEATMAP_HEADER_STAT_SIZE = 'md' as const;
 const HEATMAP_ROW_SLOT_SIZE = 'md' as const;
 

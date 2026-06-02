@@ -23,7 +23,7 @@ export function armorPiece(
   };
 }
 
-/** Two gunner helms per armor set — sameArmorSet splits into separate dupe buckets. */
+/** Two gunner helms per armor set - sameArmorSet splits into separate dupe buckets. */
 export function splitSetHelmVault(): ArmorPiece[] {
   const setA = { hash: 101, name: 'Set Alpha', perks: [] };
   const setB = { hash: 202, name: 'Set Beta', perks: [] };
@@ -35,7 +35,7 @@ export function splitSetHelmVault(): ArmorPiece[] {
   ];
 }
 
-/** Five gunner pieces with weapons/super optimal rolls — fills recommended loadout. */
+/** Five gunner pieces with weapons/super optimal rolls - fills recommended loadout. */
 export function weaponsSuperVault(classType: ArmorPiece['classType'] = 'hunter'): ArmorPiece[] {
   return ARMOR_SLOTS.map((armorSlot) =>
     armorPiece({

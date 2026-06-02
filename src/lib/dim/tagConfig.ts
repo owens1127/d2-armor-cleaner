@@ -1,7 +1,7 @@
 import type { TagValue } from '@/types';
 
 /**
- * DIM tag icons and labels — mirrors `tagConfig` in DIM
+ * DIM tag icons and labels - mirrors `tagConfig` in DIM
  * `src/app/inventory/dim-item-info.ts` and Font Awesome classes in
  * `src/app/shell/icons/Library.js`.
  *

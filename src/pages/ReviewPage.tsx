@@ -315,8 +315,7 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
                           />
                         ) : (
                           <span data-testid={`review-combo-${t.instanceId}`} className="text-muted">
-                            —
-                          </span>
+                            ·                           </span>
                         )}
                       </td>
                       <td className="px-3 py-2">

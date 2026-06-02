@@ -1,4 +1,4 @@
-/** Documented selectors mirrored in src/index.css — used by regression test. */
+/** Documented selectors mirrored in src/index.css - used by regression test. */
 export const INTERACTIVE_CURSOR_SELECTORS = [
   'button:not(:disabled)',
   'a[href]',

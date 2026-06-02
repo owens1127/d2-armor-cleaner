@@ -90,7 +90,7 @@ export function isBuildOptimalPiece(
 export interface SoleBuildOptimalBySlotAndBuild {
   /** Instance ids with no same-slot competitor for any matching enabled build. */
   soleInstanceIds: ReadonlySet<string>;
-  /** Per slot+build+set when combo has set targets — for column-scoped red exclusive badges. */
+  /** Per slot+build+set when combo has set targets - for column-scoped red exclusive badges. */
   soleBySetScope: ReadonlyMap<string, string>;
 }
 

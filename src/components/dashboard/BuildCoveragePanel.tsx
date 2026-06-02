@@ -283,7 +283,7 @@ function PatternPriorityStatChip({ stat, bonus }: { stat: Stat; bonus: number })
 function PatternIrrelevantSecondaryChip({ stat }: { stat: Stat }) {
   return (
     <span
-      title={`${STAT_LABELS[stat]} — not a combo priority`}
+      title={`${STAT_LABELS[stat]} · not a combo priority`}
       className={`${patternChipBaseClass} border-white/8 bg-transparent text-white/35`}
     >
       <StatIcon stat={stat} size="sm" variant="glyph" className="opacity-60" />
@@ -459,7 +459,7 @@ function ChevronIcon({ open, className = '' }: { open: boolean; className?: stri
 const PICKER_MENU_MAX_HEIGHT = 280;
 const PICKER_MENU_FALLBACK_WIDTH_PX = 480;
 
-/** Portaled menu — elevated above page (see DominatorPopover / BucketPanel). */
+/** Portaled menu - elevated above page (see DominatorPopover / BucketPanel). */
 const PICKER_MENU_BACKDROP_CLASS = 'fixed inset-0 z-[299] bg-black/45';
 const PICKER_MENU_PANEL_CLASS =
   'fixed z-[300] flex min-h-0 flex-col overflow-hidden rounded-md border border-white/15 bg-surface-3 ring-1 ring-white/10 shadow-[0_16px_48px_-12px_rgb(0_0_0/0.72),0_4px_16px_-4px_rgb(0_0_0/0.5)]';
@@ -861,7 +861,7 @@ function PatternLoadoutActionGrid({
               onClick={onToggleChoose}
               aria-haspopup="listbox"
               aria-expanded={pickerOpen}
-              aria-label={`Choose piece — ${eligibleCount} eligible`}
+              aria-label={`Choose piece · ${eligibleCount} eligible`}
               title={`${eligibleCount} eligible pieces in vault`}
               className={loadoutChooseBtnClass({ open: pickerOpen })}
             >
@@ -949,7 +949,7 @@ function PatternSlotRow({
               {formatEmptyPatternSlotMessage(slot)}
             </span>
             <div className={LOADOUT_META_LINE_CLASS} aria-hidden>
-              <span className="text-xs text-white/50">—</span>
+              <span className="text-xs text-white/50">-</span>
             </div>
           </div>
           <PatternLoadoutActionGrid
@@ -975,7 +975,7 @@ function PatternSlotRow({
 
   const rowTooltip =
     isNearMatch && nearMatchTitle
-      ? `${piece.name} — ${nearMatchTitle}`
+      ? `${piece.name} · ${nearMatchTitle}`
       : piece.name;
 
   return (
@@ -1653,12 +1653,12 @@ export function BuildCoveragePanel({
                     key={`vault-${entry.hash}-${entry.tier}`}
                     className="text-[11px] text-danger/90"
                   >
-                    {formatSetBonusVaultReachLabel(entry)} — not enough vault pieces
+                    {formatSetBonusVaultReachLabel(entry)} · not enough vault pieces
                   </p>
                 ))}
             {activeAnalysis.setBonusReadiness.conflictingSets && (
               <p className="text-[11px] text-danger/90">
-                These set targets need more than five armor pieces — adjust your combo.
+                These set targets need more than five armor pieces · adjust your combo.
               </p>
             )}
           </div>

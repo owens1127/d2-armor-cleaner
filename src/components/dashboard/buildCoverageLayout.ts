@@ -1,14 +1,14 @@
 import type { CSSProperties } from 'react';
 import type { PatternLoadoutEntry } from '@/lib/coverage/loadout';
 
-/** Fixed header row — keeps slot rows aligned across pattern columns. */
+/** Fixed header row - keeps slot rows aligned across pattern columns. */
 export const LOADOUT_HEADER_ROW_H = '4.5rem';
 
-/** Slot row shell — fills subgrid track, clips overflow. */
+/** Slot row shell - fills subgrid track, clips overflow. */
 export const LOADOUT_SLOT_ROW_SHELL =
   'box-border h-16 min-h-16 max-h-16 overflow-hidden';
 
-/** Fixed slot row track — subgrid keeps every column row-aligned. */
+/** Fixed slot row track - subgrid keeps every column row-aligned. */
 export const LOADOUT_SLOT_ROW_H = '4rem';
 
 /**
@@ -20,7 +20,7 @@ export const LOADOUT_ROW_INNER_CLASS =
 export const LOADOUT_LEFT_CLUSTER_CLASS =
   'flex w-[var(--loadout-left-cluster)] min-w-[var(--loadout-left-cluster)] max-w-[var(--loadout-left-cluster)] shrink-0 items-center gap-1 overflow-hidden';
 
-/** Name + meta — always two lines tall so rows do not shift when meta is empty. */
+/** Name + meta - always two lines tall so rows do not shift when meta is empty. */
 export const LOADOUT_TEXT_BLOCK_CLASS =
   'relative z-0 flex min-h-[2.375rem] min-w-0 flex-col justify-center overflow-hidden';
 
@@ -30,7 +30,7 @@ export const LOADOUT_NAME_CLASS =
 /** Second line: tier/set meta or near-match hint; min-height holds space when empty. */
 export const LOADOUT_META_LINE_CLASS = 'mt-0.5 flex min-h-[1.125rem] items-center gap-1.5';
 
-/** [DIM][keep][favorite][junk][Choose N] — fixed tracks, never omit a cell. */
+/** [DIM][keep][favorite][junk][Choose N] - fixed tracks, never omit a cell. */
 export const LOADOUT_ACTION_GRID_CLASS =
   'relative z-10 grid shrink-0 items-center justify-self-end gap-0.5';
 
@@ -43,7 +43,7 @@ export const LOADOUT_ACTION_CHOOSE_CELL_CLASS =
 /** Invisible placeholder occupying the same box as a real control. */
 export const LOADOUT_ACTION_PLACEHOLDER_CLASS = 'pointer-events-none invisible';
 
-/** Choose chip — fixed height; column 5 width comes from the action grid track. */
+/** Choose chip - fixed height; column 5 width comes from the action grid track. */
 export function loadoutChooseBtnClass(options: { open: boolean }): string {
   const base =
     'inline-flex h-[var(--spacing-touch-sm)] w-full min-w-0 max-w-full cursor-pointer items-center justify-center gap-0.5 overflow-hidden whitespace-nowrap rounded border px-1 text-[10px] font-medium leading-none transition-colors';
@@ -65,7 +65,7 @@ export function rollPatternLoadoutSetRowStyle(columnCount: number): CSSPropertie
   return rollPatternLoadoutColumnsStyle(columnCount);
 }
 
-/** Pattern column — fixed header + five slot rows (same template in every column). */
+/** Pattern column - fixed header + five slot rows (same template in every column). */
 export function rollPatternLoadoutColumnGridStyle(): CSSProperties {
   return {
     gridTemplateRows: rollPatternLoadoutColumnGridTemplateRows(),
@@ -79,7 +79,7 @@ export function rollPatternSlotRowInnerStyle(): CSSProperties {
   };
 }
 
-/** Picker list row — middle column grows; rail is 4 compact buttons only. */
+/** Picker list row - middle column grows; rail is 4 compact buttons only. */
 export function rollPatternPickerSlotRowInnerStyle(): CSSProperties {
   return {
     gridTemplateColumns:
@@ -116,7 +116,7 @@ function loadoutColumnTrack(): string {
   return `minmax(${LOADOUT_COLUMN_MIN_W}, 1fr)`;
 }
 
-/** Set-row grid shell — column tracks come from rollPatternLoadoutColumnsStyle (inline). */
+/** Set-row grid shell - column tracks come from rollPatternLoadoutColumnsStyle (inline). */
 export function rollPatternColumnsGridClass(): string {
   return 'w-full min-w-0';
 }

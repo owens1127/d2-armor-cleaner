@@ -455,7 +455,7 @@ export function advanceAfterResolve(
   return { champion: null, challengerQueue: [] };
 }
 
-/** Prefer loser with lives remaining — winner stays champion; loser re-queued at back. */
+/** Prefer loser with lives remaining - winner stays champion; loser re-queued at back. */
 export function advanceAfterPreferLoss(
   keep: ArmorPiece,
   loser: ArmorPiece,
@@ -470,7 +470,7 @@ export function advanceAfterPreferLoss(
   return { champion: keep, challengerQueue: [...rest, loser] };
 }
 
-/** Keep one side — kept exits duel pool; other continues as champion. */
+/** Keep one side - kept exits duel pool; other continues as champion. */
 export function advanceAfterKeepSide(
   kept: ArmorPiece,
   other: ArmorPiece,
@@ -482,7 +482,7 @@ export function advanceAfterKeepSide(
   return { champion: other, challengerQueue: rest };
 }
 
-/** Pass this pair — neither tagged; both return to the back of the bracket queue. */
+/** Pass this pair - neither tagged; both return to the back of the bracket queue. */
 export function rotatePairToBack(
   champion: ArmorPiece,
   challenger: ArmorPiece,

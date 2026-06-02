@@ -54,7 +54,7 @@ Open **https://localhost:5173** and click **Sign in with Bungie.net**.
 
 ### Cloudflare Pages (recommended)
 
-Connect the repo in the [Cloudflare dashboard](https://dash.cloudflare.com) (Pages → Connect to Git). Cloudflare builds on push—no GitHub Actions workflow. See **[DEPLOY.md](./DEPLOY.md)** for build settings, environment variables, and Bungie/DIM portal steps.
+Connect the repo in the [Cloudflare dashboard](https://dash.cloudflare.com) (Pages → Connect to Git). Cloudflare builds on push, no GitHub Actions workflow. See **[DEPLOY.md](./DEPLOY.md)** for build settings, environment variables, and Bungie/DIM portal steps.
 
 - Build: `npm ci && npm run build` → output `dist/`
 - SPA routing: `public/_redirects` (`/* /index.html 200`)

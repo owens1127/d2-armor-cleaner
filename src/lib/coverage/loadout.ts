@@ -31,7 +31,7 @@ import {
 } from '@/lib/coverage/setBonus';
 
 /**
- * ## Combo grid spec — set-bonus combos (2+2 mix)
+ * ## Combo grid spec - set-bonus combos (2+2 mix)
  *
  * ### A. Column identity
  * Each column = **roll pattern** (archetype + tertiary + tuning) × **armor set** (when set bonus
@@ -42,7 +42,7 @@ import {
  * - **Hard:** `piece.tuningStat === pattern.tuningStat`
  * - **Hard:** `piece.armorSet.hash === setHash` when the column is set-scoped
  * - **Hard:** `pieceLoadoutContribution(piece, priorities) > 0` for set columns
- * - **Exact match:** full roll pattern + `isBestTierLoadoutPiece` — preferred auto-pick
+ * - **Exact match:** full roll pattern + `isBestTierLoadoutPiece` - preferred auto-pick
  * - **Set column (shape match):** archetype + tertiary + tuning must match the column pattern;
  *   `pieceLoadoutContribution > 0`; best-tier not required. Enforced in
  *   {@link pieceEligibleForSetPatternColumnSlot}.
@@ -59,7 +59,7 @@ import {
  * Eligibility hard-gates tuning per column; a piece cannot satisfy both weapons and grenade tuning.
  *
  * ### E. Empty slot copy
- * {@link formatEmptyPatternSlotMessage} — short per-row label; pattern context lives in the
+ * {@link formatEmptyPatternSlotMessage} - short per-row label; pattern context lives in the
  * column header. {@link formatEmptyPatternSlotAriaLabel} carries the full hunt hint for AT.
  */
 export interface ColumnSlotContext {
@@ -212,7 +212,7 @@ export function formatNearMatchTooltip(
 ): string {
   const expected = STAT_LABELS[pattern.tuningStat];
   const actual = item.tuningStat ? STAT_LABELS[item.tuningStat] : 'none';
-  return `Wrong tuning — has ${actual}, need ${expected}`;
+  return `Wrong tuning · has ${actual}, need ${expected}`;
 }
 
 /** Label for acceptable tuning on multi-priority builds (any priority stat). */
@@ -243,7 +243,7 @@ export interface RollPatternStatBonus {
   role: RollStatRole;
 }
 
-/** Display chips/labels for a pattern's tertiary and tuning — merged when same stat. */
+/** Display chips/labels for a pattern's tertiary and tuning - merged when same stat. */
 export function rollPatternStatBonuses(
   tertiaryStat: Stat,
   tuningStat: Stat,
@@ -323,7 +323,7 @@ export function archetypePriorityIntrinsicTotal(
   );
 }
 
-/** Archetype group header — name only; roll details appear on stat chips. */
+/** Archetype group header - name only; roll details appear on stat chips. */
 export function formatArchetypeGroupLabel(archetype: Archetype, _priorities: Stat[]): string {
   return ARCHETYPE_LABELS[archetype];
 }
@@ -394,17 +394,17 @@ export function formatOptimalRollArchetypeLegend(archetypes: Archetype[]): strin
 }
 
 /**
- * Intro line when a build has multiple priorities — clarifies each listed shape
+ * Intro line when a build has multiple priorities - clarifies each listed shape
  * still covers the full build and any slot can use any shape.
  */
 export function formatOptimalRollBannerIntro(priorities: Stat[]): string {
   if (priorities.length <= 1) return '';
   const names = priorities.map((s) => STAT_LABELS[s]).join(' and ');
-  return `Any slot — each pattern below covers ${names}.`;
+  return `Any slot · each pattern below covers ${names}.`;
 }
 
 export interface EmptyPatternMessageOptions {
-  /** Build priority stats — archetype chip context in column headers. */
+  /** Build priority stats - archetype chip context in column headers. */
   priorities?: Stat[];
   /** Armor set name when the column is set-scoped. */
   setName?: string;
@@ -432,10 +432,10 @@ export function formatEmptyPatternRollContext(
 
 /** Short visible label for an empty slot row (pattern details are in the column header). */
 export function formatEmptyPatternSlotMessage(slot: ArmorSlot): string {
-  return `${SLOT_LABELS[slot]} — no match`;
+  return `${SLOT_LABELS[slot]} · no match`;
 }
 
-/** Full hunt hint for empty slot rows — screen readers and row tooltips. */
+/** Full hunt hint for empty slot rows - screen readers and row tooltips. */
 export function formatEmptyPatternSlotAriaLabel(
   slot: ArmorSlot,
   pattern: OptimalRollPattern,
@@ -465,7 +465,7 @@ export function formatEmptyPatternColumnMessage(
 }
 
 /**
- * Best-tier roll shapes to hunt for a priority list — mirrors `isBestTierLoadoutPiece`.
+ * Best-tier roll shapes to hunt for a priority list - mirrors `isBestTierLoadoutPiece`.
  *
  * Single priority: tertiary + tuning on that stat (any archetype).
  * Multi priority: each max-budget shape × each valid priority tuning stat.
@@ -529,7 +529,7 @@ function formatPrioritySupportLabel(stat: Stat, fit: ReturnType<typeof pieceTuni
 
 /**
  * One-line summary: piece roll, then how each build priority is supported.
- * Priorities use tuning/tertiary/archetype — not separate tuning stats on the piece.
+ * Priorities use tuning/tertiary/archetype - not separate tuning stats on the piece.
  */
 export function formatPieceLoadoutFitLabel(item: ArmorPiece, priorities: Stat[]): string {
   const roll = formatPieceRollSummary(item);
@@ -841,7 +841,7 @@ export function formatLoadoutVerdictSummary(
     return 'No vault pieces roll your priority stats yet.';
   }
   if (slotsFilled === slotsTotal) {
-    return `Complete loadout — best piece per slot (${slotsTotal}/${slotsTotal}).`;
+    return `Complete loadout · best piece per slot (${slotsTotal}/${slotsTotal}).`;
   }
   const emptySlots = slotsTotal - slotsFilled;
   return `${slotsFilled}/${slotsTotal} slots filled · ${emptySlots} slot${emptySlots === 1 ? '' : 's'} still need a fit.`;
@@ -960,7 +960,7 @@ function pieceMatchesSetColumnFilter(piece: ArmorPiece, setHash?: number): boole
   return setHash === undefined || piece.armorSet?.hash === setHash;
 }
 
-/** Rank-1 eligible piece in a column slot — used for column-scoped red exclusive badge. */
+/** Rank-1 eligible piece in a column slot - used for column-scoped red exclusive badge. */
 export function topGoldColumnPiece(
   items: readonly ArmorPiece[],
   slot: ArmorSlot,
@@ -1688,7 +1688,7 @@ export function migrateTuningToRollPatternRepresentatives(
   return Object.keys(out).length > 0 ? out : undefined;
 }
 
-/** Derive roll-pattern reps from legacy slot picks — best piece per pattern. */
+/** Derive roll-pattern reps from legacy slot picks - best piece per pattern. */
 export function migrateSlotToRollPatternRepresentatives(
   items: ArmorPiece[],
   slotRepresentatives: Partial<Record<ArmorSlot, string>> | undefined,
@@ -1875,7 +1875,7 @@ export function formatPatternLoadoutVerdictSummary(
     return 'No vault pieces roll these optimal patterns yet.';
   }
   if (columnsFilled === columnsTotal) {
-    return `Complete pattern coverage — one piece per roll (${columnsTotal}/${columnsTotal}).`;
+    return `Complete pattern coverage · one piece per roll (${columnsTotal}/${columnsTotal}).`;
   }
   const empty = columnsTotal - columnsFilled;
   return `${columnsFilled}/${columnsTotal} roll patterns covered · ${empty} pattern${empty === 1 ? '' : 's'} still need a fit.`;

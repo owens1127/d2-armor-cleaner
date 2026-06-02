@@ -14,7 +14,7 @@ const VARIANT_CLASS: Record<BuildOptimalIndicatorVariant, string> = {
   sole: 'bg-rose-400 text-surface shadow-[0_0_4px_rgba(251,113,133,0.62)]',
 };
 
-/** Build-target count badge — distinct from DIM tags (bottom-right) and copy count (top-left). */
+/** Build-target count badge - distinct from DIM tags (bottom-right) and copy count (top-left). */
 export function BuildOptimalIndicator({
   count,
   title,

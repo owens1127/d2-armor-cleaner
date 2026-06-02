@@ -4,7 +4,7 @@ import type { TagValue } from '@/types';
 export type DimPrimaryTag = Exclude<TagValue, 'favorite'>;
 
 export interface DimItemTagState {
-  /** keep / junk / infuse / archive — never `favorite`. */
+  /** keep / junk / infuse / archive - never `favorite`. */
   dimTag: DimPrimaryTag | null;
   dimFavorite: boolean;
 }

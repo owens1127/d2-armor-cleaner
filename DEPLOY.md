@@ -1,8 +1,8 @@
 # Deploy to Cloudflare Pages
 
-Static Vite + React SPA. No Cloudflare Workers are required for Bungie OAuth or DIM Sync—the browser calls `bungie.net` and `api.destinyitemmanager.com` directly (same as local HTTPS dev and Vercel). If token exchange fails with a CORS error in production only, you would need a small OAuth proxy Worker; that has not been required for this app’s existing client-only flow.
+Static Vite + React SPA. No Cloudflare Workers are required for Bungie OAuth or DIM Sync, the browser calls `bungie.net` and `api.destinyitemmanager.com` directly (same as local HTTPS dev and Vercel). If token exchange fails with a CORS error in production only, you would need a small OAuth proxy Worker; that has not been required for this app’s existing client-only flow.
 
-**No GitHub workflow needed** — connect the repo in the Cloudflare dashboard; Cloudflare builds and deploys on every push to your production branch.
+**No GitHub workflow needed** - connect the repo in the Cloudflare dashboard; Cloudflare builds and deploys on every push to your production branch.
 
 ## Build settings
 
@@ -52,7 +52,7 @@ Copy `.env.example` for local development. **Do not commit** `.env`.
 3. Add the same URL in Bungie.net → your application → **OAuth Client Properties**.
 4. Trigger a new build/deploy.
 
-If `VITE_D2_ARMOR_CLEANER_BUNGIE_REDIRECT_URI` is unset at build time, the app falls back to `window.location.origin + '/oauth/callback'` at runtime—which works only if that origin is registered in Bungie.
+If `VITE_D2_ARMOR_CLEANER_BUNGIE_REDIRECT_URI` is unset at build time, the app falls back to `window.location.origin + '/oauth/callback'` at runtime, which works only if that origin is registered in Bungie.
 
 ## Custom domain (optional)
 

@@ -196,7 +196,7 @@ export interface SetBonusProgress {
   hash: number;
   /** Display name when known from vault. */
   name: string;
-  /** 2 or 4 — set bonus tier this row tracks. */
+  /** 2 or 4 - set bonus tier this row tracks. */
   tier: 2 | 4;
   /** Pieces required to activate this tier. */
   required: number;
@@ -245,7 +245,7 @@ export interface CoverageAnalysis {
   /** Best piece per slot maximizing the combined priority stat set. */
   recommendedLoadout: RecommendedLoadout;
   loadoutVerdict: LoadoutVerdict;
-  /** @deprecated Per-stat tuning rows — use recommendedLoadout instead. */
+  /** @deprecated Per-stat tuning rows - use recommendedLoadout instead. */
   statAchievability: StatAchievability[];
   slotsCovered: number;
   slotCoverage: SlotBuildCoverage[];
@@ -621,5 +621,5 @@ export function analyzeBuildBalance(analyses: CoverageAnalysis[]): BuildBalanceI
 }
 
 export function formatSlotCoverageLabel(slot: ArmorSlot, covered: boolean): string {
-  return `${SLOT_LABELS[slot]} — ${covered ? 'covered' : 'gap'}`;
+  return `${SLOT_LABELS[slot]} · ${covered ? 'covered' : 'gap'}`;
 }

@@ -133,7 +133,7 @@ export function sameRollHelperCopy(a: ArmorPiece, b: ArmorPiece): string {
   return 'Identical roll. Pick either one.';
 }
 
-/** Duel banner summary — omits power; emphasizes set and roll differences. */
+/** Duel banner summary - omits power; emphasizes set and roll differences. */
 export function diffSummary(a: ArmorPiece, b: ArmorPiece): string {
   const lines = armorDiffLines(a, b).filter((l) => l.kind !== 'power');
   const setA = a.armorSet?.name ?? 'No set';

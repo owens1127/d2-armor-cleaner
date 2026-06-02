@@ -379,7 +379,7 @@ function ComboEditView({
                     build.setBonus2pc,
                     build.setBonus4pc,
                     vaultItems,
-                  ) || '—'}
+                  ) || '-'}
                   {isDualTwoPieceMix(build.setBonus2pc, build.setBonus4pc) && (
                     <span className="text-muted"> · 2+2 mix</span>
                   )}
@@ -420,7 +420,7 @@ interface DesiredBuildsSectionProps {
   defaultClass?: ClassType;
   /** Hide link back to combo coverage when already on that page. */
   hideCoverageLink?: boolean;
-  /** Vault items for this class — used to populate armor set pickers. */
+  /** Vault items for this class - used to populate armor set pickers. */
   vaultItems?: ArmorPiece[];
 }
 
@@ -571,11 +571,11 @@ export function DesiredBuildsSection({
         {editingId !== null ? (
           hasUnsavedChanges ? (
             <p className="mt-2 text-xs text-amber-200/90">
-              Unsaved changes — save or cancel to return to the read-only view.
+              Unsaved changes · save or cancel to return to the read-only view.
             </p>
           ) : (
             <p className="mt-2 text-xs text-muted">
-              Editing combo — save or cancel when finished.
+              Editing combo · save or cancel when finished.
             </p>
           )
         ) : savedBuilds.length > 0 ? (

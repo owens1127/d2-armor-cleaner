@@ -109,7 +109,7 @@ interface ArmorCardProps {
   dupeRules?: DupeRuleConfig;
   /** Duel: ids to omit from only-roll peer count (junked/eliminated this bucket). */
   excludeInstanceIds?: string[];
-  /** Identical roll copies in scope — badge on icon top-left when > 1. */
+  /** Identical roll copies in scope - badge on icon top-left when > 1. */
   copyCount?: number;
   copyCountTitle?: string;
   className?: string;

@@ -88,7 +88,7 @@ export function buildPatternLoadoutGridData(
     setBonuses,
   );
   // Per-set pattern columns pick independently (see selectRecommendedPatternLoadout).
-  // Do not pin the global recommended loadout onto every column — that surfaces wrong
+  // Do not pin the global recommended loadout onto every column - that surfaces wrong
   // archetype/set pieces and inflates slotEntry counts vs what we display.
   const slotAssignment = undefined;
   const loadoutSetRows = groupPatternLoadoutColumnsBySet(recommendedPatternLoadout.columns);

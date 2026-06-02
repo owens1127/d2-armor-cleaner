@@ -58,7 +58,7 @@ export interface ArmorPiece {
   isMasterwork: boolean;
   /** keep / junk / infuse / archive from DIM Sync (not favorite). */
   dimTag?: TagValue | null;
-  /** Heart overlay — set when DIM tag is `favorite`. */
+  /** Heart overlay - set when DIM tag is `favorite`. */
   dimFavorite?: boolean;
   statConfigurations?: Partial<Record<Stat, number>>[];
   isDupe?: boolean;
@@ -141,7 +141,7 @@ export type BuildTargetMode = 'priority' | 'custom';
 /** Tier cutoffs (200/150/100/80) or per-stat custom totals. */
 export type StatPriorityTargetsMode = 'tier' | 'custom';
 
-/** Ordered stat priorities (2–4 lines) for vault achievability — not a full loadout. */
+/** Ordered stat priorities (2–4 lines) for vault achievability - not a full loadout. */
 export interface DesiredBuild {
   id: string;
   /** Previous slug/ULID id kept for bookmarked URLs after migration to encoded ids. */

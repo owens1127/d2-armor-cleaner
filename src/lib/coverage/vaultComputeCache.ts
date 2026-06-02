@@ -6,7 +6,7 @@ import type { ArmorPiece, ClassPreferenceProfile, ClassType, DupeBucket, Stat } 
 
 const MAX_CACHE_ENTRIES = 24;
 
-/** FNV-1a 32-bit — fast, stable enough for cache keys. */
+/** FNV-1a 32-bit - fast, stable enough for cache keys. */
 function fnv1aUpdate(hash: number, text: string): number {
   let h = hash;
   for (let i = 0; i < text.length; i++) {
@@ -28,7 +28,7 @@ function mixPiece(hash: number, piece: ArmorPiece): number {
   return h;
 }
 
-/** Vault armor fingerprint — invalidates when pieces or roll-relevant fields change. */
+/** Vault armor fingerprint - invalidates when pieces or roll-relevant fields change. */
 export function fingerprintArmorItems(items: readonly ArmorPiece[]): string {
   let h = 0x811c9dc5;
   for (const piece of items) {
@@ -49,7 +49,7 @@ export function fingerprintDupeBuckets(buckets: readonly DupeBucket[]): string {
   return h.toString(36);
 }
 
-/** Combo prefs fingerprint — desired builds and per-slot representatives. */
+/** Combo prefs fingerprint - desired builds and per-slot representatives. */
 export function fingerprintCoveragePrefs(prefs: ClassPreferenceProfile): string {
   return JSON.stringify({
     desiredBuilds: prefs.desiredBuilds,

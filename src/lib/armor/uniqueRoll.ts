@@ -67,7 +67,7 @@ export function isSingletonRoll(
 
 /**
  * Count vault pieces sharing roll profile and altar gear tier with `item`.
- * Ignores dupe min-tier scope — tier is the explicit peer boundary.
+ * Ignores dupe min-tier scope - tier is the explicit peer boundary.
  */
 export function countTierRollProfilePeers(
   item: ArmorPiece,

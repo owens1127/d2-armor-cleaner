@@ -48,7 +48,7 @@ export interface DuelComparePanelProps {
   classPrefs: ClassPreferenceProfile;
   allItems: ArmorPiece[];
   dupeRules: DupeRuleConfig;
-  /** Junked / eliminated this bucket — omitted from vault peer counts. */
+  /** Junked / eliminated this bucket - omitted from vault peer counts. */
   excludeInstanceIds?: string[];
   /** Prefer losses recorded this bucket (double elimination). */
   lossCountLeft?: number;

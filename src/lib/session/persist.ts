@@ -15,7 +15,7 @@ export interface PersistedSession {
   /** Prefer loss counts this bucket (double elimination before bucketEliminatedIds). */
   bucketLossCounts?: Record<string, number>;
   bucketKeptBothIds: string[];
-  /** Keep-one-side picks — stay in duels; protected from tournament auto-junk when advancing. */
+  /** Keep-one-side picks - stay in duels; protected from tournament auto-junk when advancing. */
   bucketKeptSideIds?: string[];
   /** Current tournament champion within the active duplicate group (survives remount). */
   bucketChampionId?: string | null;

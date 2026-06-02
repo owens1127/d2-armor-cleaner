@@ -2,7 +2,7 @@ import type { Page } from '@playwright/test';
 
 const BUNGIE_API_BASE = 'https://www.bungie.net';
 
-/** Session storage keys — must match src/lib/storage/keys.ts */
+/** Session storage keys - must match src/lib/storage/keys.ts */
 const SS_BUNGIE_TOKEN = 'dac-bungie-token';
 const SS_BUNGIE_REFRESH = 'dac-bungie-refresh-token';
 const SS_BUNGIE_EXPIRES = 'dac-bungie-token-expires';

@@ -13,12 +13,12 @@
   --color-amber: #a3a3a3;
   --font-display: 'Inter', system-ui, -apple-system, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  /* Touch targets & icon glyphs — use via .ui-icon-btn / .ui-icon-glyph */
+  /* Touch targets & icon glyphs - use via .ui-icon-btn / .ui-icon-glyph */
   --spacing-touch: 2.25rem;
   --spacing-touch-sm: 2rem;
   --spacing-icon-sm: 1rem;
   --spacing-icon-md: 1.125rem;
-  /* Combo loadout grid — fixed action rail + column floor */
+  /* Combo loadout grid - fixed action rail + column floor */
   --loadout-action-rail: calc(4 * var(--spacing-touch-sm) + 5.5rem + 0.5rem);
   /** Picker rows: DIM + 3 tags only (no Choose slot). */
   --loadout-picker-action-rail: calc(4 * var(--spacing-touch-sm) + 0.5rem);
@@ -41,7 +41,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Pointer on all primary interactives — div/li click targets still need cursor-pointer in className */
+/* Pointer on all primary interactives - div/li click targets still need cursor-pointer in className */
 button:not(:disabled),
 a[href],
 [role='button']:not([aria-disabled='true']),
@@ -291,7 +291,7 @@ h3,
   font-size: 0.875rem;
 }
 
-/** Icon-only control — 36×36px hit area; pair glyphs with .ui-icon-glyph */
+/** Icon-only control - 36×36px hit area; pair glyphs with .ui-icon-glyph */
 .ui-icon-btn {
   display: inline-flex;
   align-items: center;

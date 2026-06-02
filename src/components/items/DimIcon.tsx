@@ -1,5 +1,5 @@
 /**
- * DIM brand mark — paths from Destiny Item Manager `apple-touch-icon-release.svg` (MIT).
+ * DIM brand mark - paths from Destiny Item Manager `apple-touch-icon-release.svg` (MIT).
  * 500×500 viewBox is tuned for favicon / small-icon rendering.
  */
 const DIM_LOGO_VIEW_BOX = '0 0 500 500';

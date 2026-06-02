@@ -8,7 +8,7 @@ import type { TagValue } from '@/types';
 
 export type ItemTagIndicatorSize = 'xs' | 'sm' | 'md' | 'lg';
 
-/** Tile widths used by `ItemIcon` — glyph size follows DIM (`tile / 5`). */
+/** Tile widths used by `ItemIcon` - glyph size follows DIM (`tile / 5`). */
 const TILE_PX: Record<ItemTagIndicatorSize, number> = {
   xs: 42,
   sm: 48,

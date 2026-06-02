@@ -9,7 +9,7 @@ import type { Archetype, ArmorPiece, ArmorSlot, Stat, StatTarget } from '@/types
 
 /**
  * Canonical T5 intrinsic roll-line budgets (verified in armor fixtures: 30 / 25 / 20).
- * Re-exported for UI pattern labels via loadout.ts OPTIMAL_ROLL_* aliases — do not hardcode elsewhere.
+ * Re-exported for UI pattern labels via loadout.ts OPTIMAL_ROLL_* aliases - do not hardcode elsewhere.
  */
 export const T5_CANONICAL_PRIMARY = 30;
 export const T5_CANONICAL_SECONDARY = 25;
@@ -69,7 +69,7 @@ export function tuningFitScore(level: TuningFitLevel): number {
 /**
  * Relevant tuning: a piece supports a priority stat when the stat appears in its
  * roll identity (archetype pair, tertiary, tuning). Alignment means tertiary
- * and/or tuning stat match the priority — ideal when both do.
+ * and/or tuning stat match the priority - ideal when both do.
  */
 export function pieceTuningFit(item: ArmorPiece, stat: Stat): TuningFit {
   const [primary, secondary] = ARCHETYPE_STATS[item.archetype];

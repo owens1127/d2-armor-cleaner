@@ -37,7 +37,7 @@ const CLASS_PATH_SEGMENT_RE =
 
 /**
  * Target path when switching guardian class from the header picker.
- * Returns null on class-agnostic routes (review, settings, home, etc.) — caller
+ * Returns null on class-agnostic routes (review, settings, home, etc.) - caller
  * should update session activeNavClass only, without navigating.
  */
 export function classSwitchPath(
