@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Link, Navigate, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
+import { RedundantRollsBrowse } from '@/components/browse/RedundantRollsBrowse';
 import { ArmorCard } from '@/components/duel/ArmorCard';
 import {
   ARCHETYPE_LABELS,
@@ -10,7 +11,13 @@ import {
   ARMOR_SLOTS,
   SLOT_LABELS,
 } from '@/lib/constants';
-import { allDismantleCandidates } from '@/lib/dupes/dismantle';
+import {
+  allDismantleCandidates,
+  countDismantleCandidates,
+  findDismantleBySlot,
+  groupDismantleCandidatesForDisplay,
+  type DismantleDisplayEntry,
+} from '@/lib/dupes/dismantle';
 import { sortBrowseItems, type BrowseSortOrder } from '@/lib/armor/sort';
 import {
   filterBrowseRedundantOnly,
@@ -138,14 +145,47 @@ export function BrowsePage() {
     [runDirectTag],
   );
 
+  const matchesItemFilters = useCallback(
+    (item: ArmorPiece) => {
+      const q = query.trim().toLowerCase();
+      if ((item.tier ?? 0) < globalDupeRules.minTier) return false;
+      if (slot !== 'all' && item.armorSlot !== slot) return false;
+      if (archetype !== 'all' && item.archetype !== archetype) return false;
+      if (setFilter !== 'all' && item.armorSet?.hash !== setFilter) return false;
+      if (dimTag === 'untagged' && (item.dimTag || item.dimFavorite)) return false;
+      if (dimTag === 'favorite' && !item.dimFavorite && item.dimTag !== 'favorite') return false;
+      if (
+        dimTag !== 'all' &&
+        dimTag !== 'untagged' &&
+        dimTag !== 'favorite' &&
+        item.dimTag !== dimTag
+      ) {
+        return false;
+      }
+      if (dupesOnly && !item.isDupe) return false;
+      if (q && !item.name.toLowerCase().includes(q)) return false;
+      return true;
+    },
+    [
+      query,
+      slot,
+      archetype,
+      setFilter,
+      dimTag,
+      dupesOnly,
+      globalDupeRules.minTier,
+    ],
+  );
+
   const dominatorsBySlot = useMemo(() => {
+    if (redundantOnly) return new Map<ArmorSlot, ReturnType<typeof findDominatorsMap>>();
     const bySlot = new Map<ArmorSlot, ReturnType<typeof findDominatorsMap>>();
-    for (const slot of ARMOR_SLOTS) {
-      const slotItems = classItems.filter((i) => i.armorSlot === slot);
-      bySlot.set(slot, findDominatorsMap(slotItems, redundantPeerScope, classPrefs));
+    for (const armorSlot of ARMOR_SLOTS) {
+      const slotItems = classItems.filter((i) => i.armorSlot === armorSlot);
+      bySlot.set(armorSlot, findDominatorsMap(slotItems, redundantPeerScope, classPrefs));
     }
     return bySlot;
-  }, [classItems, redundantPeerScope, classPrefs]);
+  }, [classItems, redundantPeerScope, classPrefs, redundantOnly]);
 
   const dismantleExclusions = useMemo(
     () => ({ bucketJunkedIds, bucketKeptBothIds, pendingTags }),
@@ -164,19 +204,77 @@ export function BrowsePage() {
   }, [allItems, classType, redundantPeerScope, classPrefs, dismantleExclusions]);
 
   const tuningRedundantBySlot = useMemo(() => {
+    if (redundantOnly) return new Map<ArmorSlot, ReturnType<typeof findTuningRedundantMap>>();
     const bySlot = new Map<ArmorSlot, ReturnType<typeof findTuningRedundantMap>>();
-    for (const slot of ARMOR_SLOTS) {
-      const slotItems = classItems.filter((i) => i.armorSlot === slot);
+    for (const armorSlot of ARMOR_SLOTS) {
+      const slotItems = classItems.filter((i) => i.armorSlot === armorSlot);
       const statLowerIds = new Set(
-        (dominatorsBySlot.get(slot) ?? new Map()).keys(),
+        (dominatorsBySlot.get(armorSlot) ?? new Map()).keys(),
       );
       bySlot.set(
-        slot,
+        armorSlot,
         findTuningRedundantMap(slotItems, statLowerIds, redundantPeerScope, classPrefs),
       );
     }
     return bySlot;
-  }, [classItems, dominatorsBySlot, redundantPeerScope, classPrefs]);
+  }, [classItems, dominatorsBySlot, redundantPeerScope, classPrefs, redundantOnly]);
+
+  const totalRedundantCount = useMemo(
+    () =>
+      countDismantleCandidates(
+        allItems,
+        classType,
+        redundantPeerScope,
+        classPrefs,
+        dismantleExclusions,
+      ),
+    [allItems, classType, redundantPeerScope, classPrefs, dismantleExclusions],
+  );
+
+  const redundantEntriesBySlot = useMemo(() => {
+    if (!redundantOnly) return new Map<ArmorSlot, DismantleDisplayEntry[]>();
+    const raw = findDismantleBySlot(
+      allItems,
+      classType,
+      redundantPeerScope,
+      classPrefs,
+      dismantleExclusions,
+    );
+    const out = new Map<ArmorSlot, DismantleDisplayEntry[]>();
+    for (const [armorSlot, candidates] of raw) {
+      const grouped = groupDismantleCandidatesForDisplay(candidates, redundantPeerScope);
+      const visible = grouped.filter((entry) => {
+        if (!matchesItemFilters(entry.item)) return false;
+        if (strictlyLowerOnly && entry.reason !== 'stat-lower') return false;
+        return true;
+      });
+      if (visible.length > 0) out.set(armorSlot, visible);
+    }
+    return out;
+  }, [
+    redundantOnly,
+    allItems,
+    classType,
+    redundantPeerScope,
+    classPrefs,
+    dismantleExclusions,
+    matchesItemFilters,
+    strictlyLowerOnly,
+  ]);
+
+  const redundantFilteredCount = useMemo(() => {
+    let n = 0;
+    for (const list of redundantEntriesBySlot.values()) n += list.length;
+    return n;
+  }, [redundantEntriesBySlot]);
+
+  const redundantFiltersActive =
+    slot !== 'all' ||
+    archetype !== 'all' ||
+    setFilter !== 'all' ||
+    dimTag !== 'all' ||
+    query.trim().length > 0 ||
+    strictlyLowerOnly;
 
   const activeBuildProfile = useMemo(() => {
     if (buildFilter === 'all') return null;
@@ -265,45 +363,120 @@ export function BrowsePage() {
   const state = classStates[classType];
 
   async function copyFilteredIds() {
-    await navigator.clipboard.writeText(
-      dimIdQuery(
-        filtered.map((i) => ({
+    const rows = redundantOnly
+      ? [...redundantEntriesBySlot.values()].flatMap((entries) =>
+          entries.flatMap((entry) =>
+            entry.instanceIds.map((instanceId) => {
+              const item = classItems.find((i) => i.instanceId === instanceId) ?? entry.item;
+              return {
+                instanceId,
+                tag: null,
+                itemName: item.name,
+                classType: item.classType,
+              };
+            }),
+          ),
+        )
+      : filtered.map((i) => ({
           instanceId: i.instanceId,
           tag: null,
           itemName: i.name,
           classType: i.classType,
-        })),
-      ),
-    );
+        }));
+    await navigator.clipboard.writeText(dimIdQuery(rows));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }
 
-  return (
-    <Layout>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">
-          {redundantOnly
-            ? `Redundant rolls: ${CLASS_LABELS[classType]}`
-            : `Browse ${CLASS_LABELS[classType]} armor`}
-        </h1>
-        <p className="text-muted text-sm mt-1 max-w-2xl">
-          {redundantOnly ? (
-            <>
-              Stat-lower or same-after-tuning vs another roll in the slot · {filtered.length} of{' '}
-              {redundantRollIds.size} candidates · review before dismantling in-game
-            </>
-          ) : (
-            <>
-              {filtered.length} of{' '}
-              {classItems.filter((i) => (i.tier ?? 0) >= globalDupeRules.minTier).length} pieces ·{' '}
-              {browseSortLabel(sortOrder)}
-            </>
-          )}
-        </p>
-      </div>
+  const redundantFilterBar = (
+    <div className="flex flex-wrap gap-3 mb-6 p-4 border border-border rounded-xl bg-surface-2">
+      <label className="flex flex-col gap-1 text-xs text-muted">
+        Slot
+        <select
+          value={slot}
+          onChange={(e) => setSlot(e.target.value as ArmorSlot | 'all')}
+          className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
+        >
+          <option value="all">All slots</option>
+          {ARMOR_SLOTS.map((s) => (
+            <option key={s} value={s}>
+              {SLOT_LABELS[s]}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="flex flex-col gap-1 text-xs text-muted">
+        Archetype
+        <select
+          value={archetype}
+          onChange={(e) => setArchetype(e.target.value as Archetype | 'all')}
+          className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
+        >
+          <option value="all">All archetypes</option>
+          {ARCHETYPES.map((a) => (
+            <option key={a} value={a}>
+              {ARCHETYPE_LABELS[a]}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="flex flex-col gap-1 text-xs text-muted flex-1 min-w-[160px]">
+        Search
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Armor name…"
+          className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
+        />
+      </label>
+      <label className="flex flex-col gap-1 text-xs text-muted min-w-[140px]">
+        Armor set
+        <select
+          value={setFilter === 'all' ? 'all' : String(setFilter)}
+          onChange={(e) =>
+            setSetFilter(e.target.value === 'all' ? 'all' : Number(e.target.value))
+          }
+          className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
+        >
+          <option value="all">All sets</option>
+          {armorSets.map(([hash, name]) => (
+            <option key={hash} value={hash}>
+              {name}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="flex flex-col gap-1 text-xs text-muted">
+        DIM tag
+        <select
+          value={dimTag}
+          onChange={(e) => setDimTag(e.target.value as typeof dimTag)}
+          className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
+        >
+          <option value="all">Any</option>
+          <option value="untagged">Untagged</option>
+          <option value="keep">Keep</option>
+          <option value="junk">Junk</option>
+          <option value="favorite">Favorite</option>
+          <option value="infuse">Infuse</option>
+          <option value="archive">Archive</option>
+        </select>
+      </label>
+      <label className="flex items-end gap-2 text-sm pb-1.5 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={strictlyLowerOnly}
+          onChange={(e) => setStrictlyLowerOnly(e.target.checked)}
+          className="rounded"
+        />
+        Stat-lower only
+      </label>
+    </div>
+  );
 
-      <div className="flex flex-wrap gap-3 mb-6 p-4 border border-border rounded-xl bg-surface-2">
+  const fullBrowseFilterBar = (
+    <div className="flex flex-wrap gap-3 mb-6 p-4 border border-border rounded-xl bg-surface-2">
         <label className="flex flex-col gap-1 text-xs text-muted">
           Sort
           <select
@@ -456,111 +629,155 @@ export function BrowsePage() {
           </label>
         )}
       </div>
+  );
 
-      {filtered.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-4">
-          <button
-            type="button"
-            onClick={copyFilteredIds}
-            className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5"
-          >
-            {copied ? 'Copied!' : `Copy ${filtered.length} id: query`}
-          </button>
-          {pendingTags.length > 0 && (
-            <Link to="/review" className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5">
-              Review compare/triage tags ({pendingTags.length})
-            </Link>
-          )}
-        </div>
-      )}
-
+  return (
+    <Layout>
       {!state && (
-        <p className="text-muted">Load your vault from the dashboard first.</p>
+        <p className="text-muted mb-4">Load your vault from the dashboard first.</p>
       )}
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 armor-card-grid">
-        {filtered.map((item) => {
-          const breakdown = scoreItem(item, classPrefs, classItems);
-          const label = wantScoreLabel(item, classItems);
-          const dominatorResult = dominatorsBySlot.get(item.armorSlot)?.get(item.instanceId);
-          const tuningCoverage = tuningRedundantBySlot
-            .get(item.armorSlot)
-            ?.get(item.instanceId);
-          const popoverResult = dominatorResult
-            ? {
-                result: dominatorResult,
-                reason: 'stat-lower' as const,
-                tuningMutual: false,
-              }
-            : tuningCoverage
-              ? {
-                  result: tuningCoverageToDominatorResult(item, tuningCoverage),
-                  reason: 'tuning-equivalent' as const,
-                  tuningMutual: tuningCoverage.mutual,
-                }
-              : null;
-          return (
-            <div key={item.instanceId} className="armor-card-grid-cell relative h-full">
-              {popoverResult ? (
-                <DominatorPopover
-                  candidate={item}
-                  result={popoverResult.result}
-                  classPrefs={classPrefs}
-                  classItems={classItems}
-                  reason={popoverResult.reason}
-                  tuningMutual={popoverResult.tuningMutual}
+      {redundantOnly ? (
+        <>
+          {redundantFilterBar}
+          <RedundantRollsBrowse
+            classType={classType}
+            searchParams={searchParams}
+            entriesBySlot={redundantEntriesBySlot}
+            totalCandidateCount={totalRedundantCount}
+            filteredCount={redundantFilteredCount}
+            filtersActive={redundantFiltersActive}
+            onToggleKeep={toggleKeep}
+            onToggleFavorite={toggleFavorite}
+            onToggleJunk={toggleJunk}
+            onCopyAllIds={copyFilteredIds}
+            copiedAll={copied}
+          />
+        </>
+      ) : (
+        <>
+          <div className="mb-6">
+            <h1 className="text-2xl font-bold">Browse {CLASS_LABELS[classType]} armor</h1>
+            <p className="text-muted text-sm mt-1 max-w-2xl">
+              {filtered.length} of{' '}
+              {classItems.filter((i) => (i.tier ?? 0) >= globalDupeRules.minTier).length}{' '}
+              pieces · {browseSortLabel(sortOrder)}
+              {redundantRollIds.size > 0 && (
+                <>
+                  {' '}
+                  ·{' '}
+                  <Link
+                    to={`/browse/${classType}?redundant=1`}
+                    className="text-white/80 hover:text-white underline"
+                  >
+                    {redundantRollIds.size} redundant rolls
+                  </Link>
+                </>
+              )}
+            </p>
+          </div>
+
+          {fullBrowseFilterBar}
+
+          {filtered.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              <button
+                type="button"
+                onClick={copyFilteredIds}
+                className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5"
+              >
+                {copied ? 'Copied!' : `Copy ${filtered.length} id: query`}
+              </button>
+              {pendingTags.length > 0 && (
+                <Link
+                  to="/review"
+                  className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5"
                 >
-                  <div className="armor-card-grid-cell__card relative flex flex-col flex-1 h-full min-h-0">
-                    {item.isDupe && (
-                      <span className="absolute top-2 right-2 z-10 text-[10px] bg-white/10 text-white/80 px-1.5 py-0.5 rounded-md">
-                        dupe
-                      </span>
-                    )}
-                    <ArmorCard
-                      piece={item}
-                      breakdown={breakdown}
-                      wantLabel={label}
-                      variant="browse"
-                      static
-                      className="flex-1 h-full"
-                      onToggleKeep={toggleKeep}
-                      onToggleFavorite={toggleFavorite}
-                      onToggleJunk={toggleJunk}
-                    />
-                  </div>
-                </DominatorPopover>
-              ) : (
-                <div className="armor-card-grid-cell__card relative flex flex-col flex-1 h-full min-h-0">
-                  {item.isDupe && (
-                    <span className="absolute top-2 right-2 z-10 text-[10px] bg-white/10 text-white/80 px-1.5 py-0.5 rounded-md">
-                      dupe
-                    </span>
-                  )}
-                  <ArmorCard
-                    piece={item}
-                    breakdown={breakdown}
-                    wantLabel={label}
-                    variant="browse"
-                    className="flex-1 h-full"
-                    onToggleKeep={toggleKeep}
-                    onToggleFavorite={toggleFavorite}
-                    onToggleJunk={toggleJunk}
-                  />
-                </div>
+                  Review compare/triage tags ({pendingTags.length})
+                </Link>
               )}
             </div>
-          );
-        })}
-      </div>
+          )}
 
-      {filtered.length === 0 && state && (
-        <p className="text-muted text-center py-12">
-          {redundantOnly
-            ? redundantRollIds.size === 0
-              ? 'No redundant rolls for this class with your current rules.'
-              : 'No redundant rolls match these filters.'
-            : 'No items match these filters.'}
-        </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 armor-card-grid">
+            {filtered.map((item) => {
+              const breakdown = scoreItem(item, classPrefs, classItems);
+              const label = wantScoreLabel(item, classItems);
+              const dominatorResult = dominatorsBySlot.get(item.armorSlot)?.get(item.instanceId);
+              const tuningCoverage = tuningRedundantBySlot
+                .get(item.armorSlot)
+                ?.get(item.instanceId);
+              const popoverResult = dominatorResult
+                ? {
+                    result: dominatorResult,
+                    reason: 'stat-lower' as const,
+                    tuningMutual: false,
+                  }
+                : tuningCoverage
+                  ? {
+                      result: tuningCoverageToDominatorResult(item, tuningCoverage),
+                      reason: 'tuning-equivalent' as const,
+                      tuningMutual: tuningCoverage.mutual,
+                    }
+                  : null;
+              return (
+                <div key={item.instanceId} className="armor-card-grid-cell relative h-full">
+                  {popoverResult ? (
+                    <DominatorPopover
+                      candidate={item}
+                      result={popoverResult.result}
+                      classPrefs={classPrefs}
+                      classItems={classItems}
+                      reason={popoverResult.reason}
+                      tuningMutual={popoverResult.tuningMutual}
+                    >
+                      <div className="armor-card-grid-cell__card relative flex flex-col flex-1 h-full min-h-0">
+                        {item.isDupe && (
+                          <span className="absolute top-2 right-2 z-10 text-[10px] bg-white/10 text-white/80 px-1.5 py-0.5 rounded-md">
+                            dupe
+                          </span>
+                        )}
+                        <ArmorCard
+                          piece={item}
+                          breakdown={breakdown}
+                          wantLabel={label}
+                          variant="browse"
+                          static
+                          className="flex-1 h-full"
+                          onToggleKeep={toggleKeep}
+                          onToggleFavorite={toggleFavorite}
+                          onToggleJunk={toggleJunk}
+                        />
+                      </div>
+                    </DominatorPopover>
+                  ) : (
+                    <div className="armor-card-grid-cell__card relative flex flex-col flex-1 h-full min-h-0">
+                      {item.isDupe && (
+                        <span className="absolute top-2 right-2 z-10 text-[10px] bg-white/10 text-white/80 px-1.5 py-0.5 rounded-md">
+                          dupe
+                        </span>
+                      )}
+                      <ArmorCard
+                        piece={item}
+                        breakdown={breakdown}
+                        wantLabel={label}
+                        variant="browse"
+                        className="flex-1 h-full"
+                        onToggleKeep={toggleKeep}
+                        onToggleFavorite={toggleFavorite}
+                        onToggleJunk={toggleJunk}
+                      />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {filtered.length === 0 && state && (
+            <p className="text-muted text-center py-12">No items match these filters.</p>
+          )}
+        </>
       )}
 
       <div className="mt-8">
