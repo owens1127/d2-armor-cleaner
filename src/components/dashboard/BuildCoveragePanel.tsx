@@ -121,6 +121,7 @@ function TagActionButton({
   active,
   locked,
   disabled,
+  compact,
   title,
   onClick,
 }: {
@@ -129,6 +130,7 @@ function TagActionButton({
   /** Applied in DIM but not removable from this control (favorite). */
   locked?: boolean;
   disabled?: boolean;
+  compact?: boolean;
   title: string;
   onClick: () => void;
 }) {
@@ -141,9 +143,9 @@ function TagActionButton({
       title={title}
       aria-label={title}
       aria-pressed={active}
-      className={tagActionIconBtnClass(tag, active, { locked })}
+      className={tagActionIconBtnClass(tag, active, { locked, compact })}
     >
-      <TagActionGlyph tag={tag} />
+      <TagActionGlyph tag={tag} px={compact ? 14 : TAG_ACTION_GLYPH_PX} />
     </button>
   );
 }
@@ -398,7 +400,7 @@ function PiecePickerMetaLine({
       )}
       {setName && (
         <span
-          className={`inline-flex items-center gap-1 truncate min-w-0 ${isSetTarget ? 'text-accent-dim font-medium' : ''}`}
+          className={`inline-flex min-w-0 items-center gap-1 ${isSetTarget ? 'text-accent-dim font-medium' : ''}`}
           title={setName}
         >
           <ArmorSetIcons
@@ -616,7 +618,7 @@ function SlotColumn({ slot }: { slot: ArmorPiece['armorSlot'] }) {
   const slotLabel = SLOT_LABELS[slot];
   return (
     <div
-      className="flex items-center justify-center w-8 shrink-0 self-center"
+      className="flex items-center justify-center w-7 shrink-0 self-center"
       title={slotLabel}
     >
       <SlotIcon slot={slot} size="sm" />
@@ -736,14 +738,14 @@ function PatternSlotRow({
       className={`flex h-full min-h-0 flex-col overflow-hidden border-b border-white/10 last:border-b-0 ${LOADOUT_SLOT_MAIN_H}`}
     >
       <div
-        className={`flex min-h-0 flex-1 items-center gap-2 px-3 transition-colors ${rowSurfaceClass}`}
+        className={`flex min-h-0 flex-1 items-center gap-1.5 px-3 transition-colors ${rowSurfaceClass}`}
         title={isNearMatch ? rowTooltip : undefined}
       >
         <SlotColumn slot={slot} />
         <div className={isNearMatch ? 'shrink-0 opacity-45' : 'shrink-0'}>
           <ItemIcon
             piece={piece}
-            size="sm"
+            size="xs"
             buildOptimal={showColumnComboBadge}
             buildOptimalCount={showColumnComboBadge ? Math.max(1, columnComboBadgeCount) : 0}
             buildOptimalVariant={isTopGoldColumnPiece ? 'sole' : 'default'}
@@ -756,16 +758,21 @@ function PatternSlotRow({
         </div>
 
         {isNearMatch ? (
-          <div className="flex min-w-0 flex-1 items-center gap-1 overflow-hidden" title={rowTooltip}>
-            <span className="min-w-0 flex-1 truncate text-[11px] font-medium leading-none text-white/92">
-              {piece.name}
-            </span>
-            <NearMatchTuneIndicator title={nearMatchTitle} />
+          <div className="flex min-w-0 flex-1 flex-col justify-center gap-0.5" title={rowTooltip}>
+            <div className="flex min-w-0 items-start gap-1">
+              <span
+                className="line-clamp-2 min-w-0 flex-1 break-words text-[11px] font-medium leading-snug text-white/92"
+                title={piece.name}
+              >
+                {piece.name}
+              </span>
+              <NearMatchTuneIndicator title={nearMatchTitle} />
+            </div>
           </div>
         ) : (
-          <div className="flex min-w-0 flex-1 flex-col justify-center overflow-hidden">
+          <div className="flex min-w-0 flex-1 flex-col justify-center">
             <span
-              className="line-clamp-2 min-w-0 text-[11px] font-medium leading-snug text-white"
+              className="line-clamp-2 min-w-0 break-words text-[11px] font-medium leading-snug text-white"
               title={piece.name}
             >
               {piece.name}
@@ -776,21 +783,31 @@ function PatternSlotRow({
 
         {isNearMatch ? (
           <div className="flex shrink-0 items-center self-center opacity-55">
-            <CopyDimQueryButton instanceId={piece.instanceId} itemName={piece.name} />
+            <CopyDimQueryButton
+              compact
+              instanceId={piece.instanceId}
+              itemName={piece.name}
+            />
           </div>
         ) : (
         <div
-          className={`flex min-h-0 shrink-0 flex-col items-end justify-between self-stretch py-1 ${LOADOUT_ACTION_COL_W}`}
+          className={`flex min-h-0 shrink-0 flex-col items-end justify-between self-stretch py-0.5 ${LOADOUT_ACTION_COL_W}`}
         >
           <div className="flex items-center gap-0.5">
-            <CopyDimQueryButton instanceId={piece.instanceId} itemName={piece.name} />
+            <CopyDimQueryButton
+              compact
+              instanceId={piece.instanceId}
+              itemName={piece.name}
+            />
             <TagActionButton
+              compact
               tag="keep"
               active={isTaggedKeep}
               title={isTaggedKeep ? 'Remove keep tag in DIM' : 'Tag keep in DIM'}
               onClick={() => onToggleKeep(piece)}
             />
             <TagActionButton
+              compact
               tag="favorite"
               active={dimFavorite}
               locked={dimFavorite}
@@ -798,6 +815,7 @@ function PatternSlotRow({
               onClick={() => onToggleFavorite(piece)}
             />
             <TagActionButton
+              compact
               tag="junk"
               active={isTaggedJunk}
               title={isTaggedJunk ? 'Remove junk tag in DIM' : 'Tag junk in DIM'}

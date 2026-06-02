@@ -119,24 +119,28 @@ export type TagActionKind = 'keep' | 'favorite' | 'junk';
 /** SVG glyph size inside `.ui-icon-btn` tag actions (combos, loadout rows). */
 export const TAG_ACTION_GLYPH_PX = 16;
 
-const tagActionIconBtnBase = 'ui-icon-btn rounded border shrink-0 transition-colors';
+function tagActionIconBtnShell(compact?: boolean): string {
+  return `${compact ? 'ui-icon-btn ui-icon-btn--compact' : 'ui-icon-btn'} rounded border shrink-0 transition-colors`;
+}
 
 const tagActionIconBtnDisabled =
   'disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed';
 
-/** Shared active / inactive classes — keep and favorite use the same green treatment. */
-export const TAG_ACTION_ICON_BTN = {
-  keepFamily: {
-    active: `${tagActionIconBtnBase} cursor-pointer border-keep/45 bg-keep/15 text-keep hover:bg-keep/20`,
-    activeLocked: `${tagActionIconBtnBase} border-keep/45 bg-keep/15 text-keep pointer-events-none cursor-default`,
-    inactive: `${tagActionIconBtnBase} cursor-pointer border-border text-keep/70 hover:text-keep hover:border-keep/30 hover:bg-keep/5 ${tagActionIconBtnDisabled}`,
-  },
-  junk: {
-    active: `${tagActionIconBtnBase} cursor-pointer border-danger/45 bg-danger/15 text-danger hover:bg-danger/20`,
-    activeLocked: `${tagActionIconBtnBase} border-danger/45 bg-danger/15 text-danger pointer-events-none cursor-default`,
-    inactive: `${tagActionIconBtnBase} cursor-pointer border-border text-danger/70 hover:text-danger hover:border-danger/30 hover:bg-danger/5 ${tagActionIconBtnDisabled}`,
-  },
-} as const;
+function tagActionIconBtnVariants(compact?: boolean) {
+  const shell = tagActionIconBtnShell(compact);
+  return {
+    keepFamily: {
+      active: `${shell} cursor-pointer border-keep/45 bg-keep/15 text-keep hover:bg-keep/20`,
+      activeLocked: `${shell} border-keep/45 bg-keep/15 text-keep pointer-events-none cursor-default`,
+      inactive: `${shell} cursor-pointer border-border text-keep/70 hover:text-keep hover:border-keep/30 hover:bg-keep/5 ${tagActionIconBtnDisabled}`,
+    },
+    junk: {
+      active: `${shell} cursor-pointer border-danger/45 bg-danger/15 text-danger hover:bg-danger/20`,
+      activeLocked: `${shell} border-danger/45 bg-danger/15 text-danger pointer-events-none cursor-default`,
+      inactive: `${shell} cursor-pointer border-border text-danger/70 hover:text-danger hover:border-danger/30 hover:bg-danger/5 ${tagActionIconBtnDisabled}`,
+    },
+  };
+}
 
 export function tagActionKeepActive(
   piece: Pick<{ dimTag?: TagValue | null }, 'dimTag'>,
@@ -160,18 +164,15 @@ export function tagActionJunkActive(
 export function tagActionIconBtnClass(
   tag: TagActionKind,
   active: boolean,
-  options?: { locked?: boolean },
+  options?: { locked?: boolean; compact?: boolean },
 ): string {
+  const btns = tagActionIconBtnVariants(options?.compact);
   if (tag === 'junk') {
-    if (!active) return TAG_ACTION_ICON_BTN.junk.inactive;
-    return options?.locked
-      ? TAG_ACTION_ICON_BTN.junk.activeLocked
-      : TAG_ACTION_ICON_BTN.junk.active;
+    if (!active) return btns.junk.inactive;
+    return options?.locked ? btns.junk.activeLocked : btns.junk.active;
   }
-  if (!active) return TAG_ACTION_ICON_BTN.keepFamily.inactive;
-  return options?.locked
-    ? TAG_ACTION_ICON_BTN.keepFamily.activeLocked
-    : TAG_ACTION_ICON_BTN.keepFamily.active;
+  if (!active) return btns.keepFamily.inactive;
+  return options?.locked ? btns.keepFamily.activeLocked : btns.keepFamily.active;
 }
 
 /** Text keep / junk action buttons on dashboard bucket cards. */

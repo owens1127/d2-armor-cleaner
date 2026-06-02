@@ -50,24 +50,21 @@ Open **https://localhost:5173** and click **Sign in with Bungie.net**.
 | `npm test` | Unit tests (vitest) |
 | `npm run test:e2e` | Playwright smoke tests |
 
-## Deploy (Vercel)
+## Deploy
 
-1. Connect repo to [Vercel](https://vercel.com)
-2. Set environment variables from `.env.example`
-3. Update Bungie redirect URI to your production URL + `/oauth/callback`
-4. Request production DIM API key (see [dim-api](https://github.com/DestinyItemManager/dim-api))
+### Cloudflare Pages (recommended)
 
-`vercel.json` includes SPA rewrites.
+Connect the repo in the [Cloudflare dashboard](https://dash.cloudflare.com) (Pages → Connect to Git). Cloudflare builds on push—no GitHub Actions workflow. See **[DEPLOY.md](./DEPLOY.md)** for build settings, environment variables, and Bungie/DIM portal steps.
+
+- Build: `npm ci && npm run build` → output `dist/`
+- SPA routing: `public/_redirects` (`/* /index.html 200`)
+- Local CF preview: `npx wrangler pages dev dist` (after `npm run build`; `wrangler.toml` is local-only)
 
 ## Architecture
 
 - **Client-only SPA**: Vite, React 19, TypeScript, Tailwind 4, Zustand
 - **APIs**: Bungie.net (inventory) + DIM Sync (tags)
 - **Storage**: localStorage (prefs, dupe rules), sessionStorage (OAuth, clean session), IndexedDB (manifest + vault cache under `d2-armor-cleaner`). On first load after upgrade, legacy `vc-*`, `vault-cleaner-*`, and `dupewise-vault` data is copied to new keys automatically.
-
-## Project docs
-
-- **[PLAN.md](./PLAN.md)**: full spec: data models, dupe engine, scoring, UI, phases, testing
 
 ## License
 

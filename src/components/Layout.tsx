@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { HeaderClassPicker } from '@/components/HeaderClassPicker';
 import { MobileNav } from '@/components/MobileNav';
+import { SiteFooter } from '@/components/SiteFooter';
 import { VaultStatusBanner } from '@/components/VaultStatusBanner';
 import { BuildOptimalProvider } from '@/components/items/BuildOptimalProvider';
 import { PendingTagsProvider } from '@/components/items/PendingTagsProvider';
@@ -97,11 +98,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </div>
         <div className="ui-divider max-w-7xl mx-auto" />
       </header>
-      <main className="flex flex-1 flex-col min-h-0 max-w-7xl w-full mx-auto px-4 py-6 pb-24 md:pb-6">
+      <main className="flex flex-1 flex-col min-h-0 max-w-7xl w-full mx-auto px-4 py-6 pb-6">
         <BuildOptimalProvider>
           <PendingTagsProvider>{children}</PendingTagsProvider>
         </BuildOptimalProvider>
       </main>
+      <SiteFooter />
       <MobileNav />
     </div>
   );

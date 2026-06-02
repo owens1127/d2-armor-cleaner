@@ -13,12 +13,12 @@ export const LOADOUT_SLOT_MAIN_H = 'h-[5.5rem] pb-2';
 /** Outer row track size for subgrid alignment (matches LOADOUT_SLOT_MAIN_H). */
 export const LOADOUT_SLOT_ROW_H = '5.5rem';
 
-/** Fits copy + 3×36px tag icon buttons with gap-0.5. */
-export const LOADOUT_ACTION_COL_W = 'w-[9.5rem] min-w-[9.5rem]';
-export const LOADOUT_CHOOSE_BTN_H = 'h-8 min-h-8';
+/** Fits copy + 4×32px compact icon buttons with gap-0.5. */
+export const LOADOUT_ACTION_COL_W = 'w-[8.5rem] min-w-[8.5rem]';
+export const LOADOUT_CHOOSE_BTN_H = 'h-7 min-h-7';
 
 /** Minimum pattern column width; columns grow with 1fr to fill the set row. */
-export const LOADOUT_COLUMN_MIN_W = '16rem';
+export const LOADOUT_COLUMN_MIN_W = '20rem';
 
 export function rollPatternLoadoutGridTemplateRows(): string {
   return `minmax(${LOADOUT_HEADER_ROW_MIN_H},auto) repeat(5,minmax(${LOADOUT_SLOT_ROW_H},auto))`;

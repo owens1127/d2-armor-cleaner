@@ -6,16 +6,18 @@ import {
 } from '@/lib/dim/tagConfig';
 import type { TagValue } from '@/types';
 
-export type ItemTagIndicatorSize = 'sm' | 'md' | 'lg';
+export type ItemTagIndicatorSize = 'xs' | 'sm' | 'md' | 'lg';
 
 /** Tile widths used by `ItemIcon` — glyph size follows DIM (`tile / 5`). */
 const TILE_PX: Record<ItemTagIndicatorSize, number> = {
+  xs: 42,
   sm: 48,
   md: 64,
   lg: 80,
 };
 
 const INLINE_GLYPH_PX: Record<ItemTagIndicatorSize, number> = {
+  xs: 11,
   sm: 12,
   md: 14,
   lg: 16,

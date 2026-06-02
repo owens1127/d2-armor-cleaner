@@ -2,6 +2,7 @@ import type { ItemTagIndicatorSize } from '@/components/items/ItemTagIndicator';
 import type { BuildOptimalIndicatorVariant } from '@/lib/coverage/buildOptimal';
 
 const SIZE_CLASS: Record<ItemTagIndicatorSize, string> = {
+  xs: 'text-[8px] min-w-[13px] h-[13px] px-0.5',
   sm: 'text-[9px] min-w-[14px] h-[14px] px-0.5',
   md: 'text-[10px] min-w-[16px] h-[16px] px-0.5',
   lg: 'text-[11px] min-w-[18px] h-[18px] px-0.5',

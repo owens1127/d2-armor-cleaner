@@ -23,7 +23,7 @@ interface ItemIconProps {
     | 'tertiaryStat'
     | 'tuningStat'
   >;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   /** When set, skips session-store lookup for pending tags. */
   pendingTag?: TagValue | null;
   /** Identical roll copies in scope (vault, bucket, etc.). Shown top-left when > 1. */
@@ -39,7 +39,7 @@ interface ItemIconProps {
   buildOptimalSetScope?: number;
 }
 
-const SIZE = { sm: 48, md: 64, lg: 80 } as const;
+const SIZE = { xs: 42, sm: 48, md: 64, lg: 80 } as const;
 
 function CopyCountBadge({ count, title }: { count: number; title: string }) {
   return (
