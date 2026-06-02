@@ -11,13 +11,20 @@ import { AutoFiltersPage } from '@/pages/AutoFiltersPage';
 import { SettingsPage } from '@/pages/SettingsPage';
 import { BrowsePage } from '@/pages/BrowsePage';
 import { BuildPage } from '@/pages/BuildPage';
-import { DismantlePage } from '@/pages/DismantlePage';
+import { BROWSE_REDUNDANT_QUERY } from '@/lib/nav';
 import { OAuthCallbackPage } from '@/pages/OAuthCallbackPage';
+import { settingsPath } from '@/lib/nav';
+import { useSessionStore } from '@/stores';
 
 function LegacyCleanRedirect() {
   const { class: classParam } = useParams<{ class: string }>();
   const location = useLocation();
   return <Navigate to={`/duel/${classParam ?? 'hunter'}${location.search}`} replace />;
+}
+
+function SettingsRedirect() {
+  const activeNavClass = useSessionStore((s) => s.activeNavClass);
+  return <Navigate to={settingsPath(activeNavClass)} replace />;
 }
 
 function LegacyBuildRedirect() {
@@ -29,6 +36,17 @@ function LegacyBuildRedirect() {
       to={`/combos/${classParam ?? 'hunter'}${hash}${location.search}`}
       replace
     />
+  );
+}
+
+function LegacyDismantleRedirect() {
+  const { class: classParam } = useParams<{ class: string }>();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  params.set(BROWSE_REDUNDANT_QUERY, '1');
+  const query = params.toString();
+  return (
+    <Navigate to={`/browse/${classParam ?? 'hunter'}?${query}`} replace />
   );
 }
 
@@ -49,10 +67,11 @@ export default function App() {
       <Route path="/browse/:class" element={<BrowsePage />} />
       <Route path="/combos/:class" element={<BuildPage />} />
       <Route path="/build/:class" element={<LegacyBuildRedirect />} />
-      <Route path="/dismantle/:class" element={<DismantlePage />} />
+      <Route path="/dismantle/:class" element={<LegacyDismantleRedirect />} />
       <Route path="/review" element={<ReviewPage />} />
       <Route path="/auto-filters" element={<AutoFiltersPage />} />
-      <Route path="/settings" element={<SettingsPage />} />
+      <Route path="/settings" element={<SettingsRedirect />} />
+      <Route path="/settings/:class" element={<SettingsPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>

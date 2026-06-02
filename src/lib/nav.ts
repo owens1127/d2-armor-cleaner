@@ -8,11 +8,23 @@ import {
 } from '@/lib/onboarding/storage';
 import type { ClassType, DesiredBuild } from '@/types';
 
-export type ClassRouteSegment = 'dashboard' | 'browse' | 'combos' | 'duel' | 'dismantle';
+export type ClassRouteSegment =
+  | 'dashboard'
+  | 'browse'
+  | 'combos'
+  | 'duel'
+  | 'settings';
+
+/** Browse query: stat-lower and tuning-duplicate redundant rolls. */
+export const BROWSE_REDUNDANT_QUERY = 'redundant';
+
+export function browseRedundantPath(classType: ClassType): string {
+  return `/browse/${classType}?${BROWSE_REDUNDANT_QUERY}=1`;
+}
 
 export function navClassFromPath(pathname: string): ClassType | null {
   const match = pathname.match(
-    /\/(?:dashboard|browse|combos|duel|dismantle)\/(titan|hunter|warlock)/,
+    /\/(?:dashboard|browse|combos|duel|settings)\/(titan|hunter|warlock)/,
   );
   if (match && CLASSES.includes(match[1] as ClassType)) {
     return match[1] as ClassType;
@@ -33,12 +45,17 @@ export function resolveActiveNavClass(pathname: string, search: string, stored: 
 }
 
 const CLASS_PATH_SEGMENT_RE =
-  /^\/(dashboard|browse|combos|duel|dismantle)\/(titan|hunter|warlock)$/;
+  /^\/(dashboard|browse|combos|duel|settings)\/(titan|hunter|warlock)$/;
+
+/** Class-scoped settings page. */
+export function settingsPath(classType: ClassType): string {
+  return `/settings/${classType}`;
+}
 
 /**
  * Target path when switching guardian class from the header picker.
- * Returns null on class-agnostic routes (review, settings, home, etc.) - caller
- * should update session activeNavClass only, without navigating.
+ * Returns null on class-agnostic routes (review, home, etc.) - caller should
+ * update session activeNavClass only, without navigating.
  */
 export function classSwitchPath(
   pathname: string,
@@ -96,7 +113,7 @@ export function buildAuthenticatedNavLinks(activeClass: ClassType): AppNavItem[]
     { label: 'Compare', match: '/duel', to: `/duel/${activeClass}` },
     { label: 'Review', match: '/review', to: '/review' },
     { label: 'Auto filters', match: '/auto-filters', to: '/auto-filters' },
-    { label: 'Settings', match: '/settings', to: '/settings' },
+    { label: 'Settings', match: '/settings', to: settingsPath(activeClass) },
   ];
 }
 

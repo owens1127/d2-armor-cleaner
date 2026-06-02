@@ -19,6 +19,7 @@ import { formatParseSkipReason, type ParseSkipReasons } from '@/lib/armor/parse'
 import { countDismantleCandidates } from '@/lib/dupes/dismantle';
 import { countDashboardItems } from '@/lib/dashboard/items';
 import { getClassPrefs } from '@/lib/prefs/profile';
+import { browseRedundantPath } from '@/lib/nav';
 import { redundantPeerScopeFromDupeRules } from '@/lib/scoring/peerScope';
 import {
   getOnboardingResumePath,
@@ -184,6 +185,7 @@ export function DashboardPage() {
         classType={classType}
         prefs={getClassPrefs(profile, classType)}
         redundantRollCount={redundantRollCount}
+        autoFilterRules={profile.autoFilterRules}
       />
       <BuildPageLinkCard classType={classType} prefs={getClassPrefs(profile, classType)} />
 
@@ -193,7 +195,7 @@ export function DashboardPage() {
         </Link>
         {redundantRollCount > 0 && (
           <Link
-            to={`/dismantle/${classType}`}
+            to={browseRedundantPath(classType)}
             className="touch-manipulation hover:text-danger text-danger/80"
             onClick={() => setSelectedBucket(null)}
           >

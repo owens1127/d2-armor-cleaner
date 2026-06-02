@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+import { settingsPath } from '@/lib/nav';
 import { vaultErrorHint } from '@/lib/vault/errors';
-import { useVaultStore } from '@/stores';
+import { useSessionStore, useVaultStore } from '@/stores';
 
 function isAuthVaultError(message: string): boolean {
   const lower = message.toLowerCase();
@@ -12,6 +13,7 @@ function isAuthVaultError(message: string): boolean {
 }
 
 export function VaultStatusBanner() {
+  const activeNavClass = useSessionStore((s) => s.activeNavClass);
   const { vaultError, vaultLoading, vaultRefreshing, clearVaultError, loadLiveVault } =
     useVaultStore();
 
@@ -40,7 +42,7 @@ export function VaultStatusBanner() {
           </button>
           {isAuthVaultError(vaultError) && (
             <Link
-              to="/settings"
+              to={settingsPath(activeNavClass)}
               className="text-xs px-2 py-1 rounded border border-border hover:bg-white/5"
             >
               Sign out in Settings

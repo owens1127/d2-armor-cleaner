@@ -1,9 +1,8 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { useScrollToLocationHash } from '@/lib/nav/useScrollToLocationHash';
+import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { DupeRulesImpact } from '@/components/DupeRulesImpact';
-import { DesiredBuildsSection } from '@/components/settings/DesiredBuildsSection';
-import { ClassSwitcher } from '@/components/ClassSwitcher';
 import { Layout } from '@/components/Layout';
+import { desiredBuildsEditorPath, settingsPath } from '@/lib/nav';
+import { COMBOS_SECTION_ID, normalizeHashTargetId } from '@/lib/nav/hashScroll';
 import { DUPE_MIN_TIER_VALUES, DUPE_PRESETS, formatDupeMinTierLabel } from '@/lib/constants';
 import { isBungieConfigured } from '@/lib/bungie/auth';
 import { getDimApiKey } from '@/lib/dim/tags';
@@ -17,10 +16,10 @@ import {
   getCalibrationChoiceCount,
   getCalibrationConfidence,
 } from '@/lib/prefs/calibrationChoices';
-import { ARCHETYPE_LABELS, STAT_LABELS, STATS } from '@/lib/constants';
-import type { ClassType } from '@/types';
+import { ARCHETYPE_LABELS, CLASS_LABELS, CLASSES, STAT_LABELS, STATS } from '@/lib/constants';
 import { parseImportedPrefs } from '@/lib/prefs/storage';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { ClassType } from '@/types';
 
 const DUPE_GROUPING_TOGGLES = [
   {
@@ -41,8 +40,11 @@ const DUPE_TAG_TOGGLES = [
 ] as const;
 
 export function SettingsPage() {
-  useScrollToLocationHash();
+  const { class: classParam } = useParams<{ class: string }>();
+  const location = useLocation();
   const navigate = useNavigate();
+  const classType = (classParam ?? 'hunter') as ClassType;
+  const validClass = CLASSES.includes(classType);
   const { membership, setMembership } = useAuthStore();
   const {
     globalDupeRules,
@@ -55,12 +57,19 @@ export function SettingsPage() {
   const { profile, updateProfile, setProfile } = usePrefsStore();
   const pendingTagCount = useSessionStore((s) => s.pendingTags.length);
   const clearPendingTags = useSessionStore((s) => s.clearPendingTags);
-  const [prefsClass, setPrefsClass] = useState<ClassType>('hunter');
-  const [dupeOverrideClass, setDupeOverrideClass] = useState<ClassType>('hunter');
   const importInputRef = useRef<HTMLInputElement>(null);
   const [importMsg, setImportMsg] = useState<string | null>(null);
 
-  const classPrefs = getClassPrefs(profile, prefsClass);
+  useEffect(() => {
+    if (!location.hash) return;
+    if (normalizeHashTargetId(location.hash) === COMBOS_SECTION_ID) {
+      navigate(desiredBuildsEditorPath(classType), { replace: true });
+    }
+  }, [location.hash, classType, navigate]);
+
+  if (!validClass) return <Navigate to={settingsPath('hunter')} replace />;
+
+  const classPrefs = getClassPrefs(profile, classType);
   const topStats = [...STATS]
     .sort((a, b) => (classPrefs.statWeights[b] ?? 0) - (classPrefs.statWeights[a] ?? 0))
     .slice(0, 3);
@@ -155,19 +164,15 @@ export function SettingsPage() {
       </section>
 
       <section className="mb-10 max-w-xl">
-        <h2 className="text-sm font-semibold uppercase text-muted mb-3">Preferences</h2>
+        <h2 className="text-sm font-semibold uppercase text-muted mb-3">
+          {CLASS_LABELS[classType]} preferences
+        </h2>
         <p className="text-xs text-muted mb-3">
-          Per-class stat and archetype weights from calibration. Dupe rules are shared unless
-          overridden per class.
+          Using {CLASS_LABELS[classType]} (change class in header). Per-class stat and
+          archetype weights from calibration. Dupe rules are shared unless overridden per class.
         </p>
-        <ClassSwitcher
-          mode="button"
-          active={prefsClass}
-          onSelect={setPrefsClass}
-          className="mb-4"
-        />
-        <p className="text-sm text-muted mb-3 capitalize">
-          {prefsClass}: {getCalibrationChoiceCount(classPrefs)} calibrations · confidence{' '}
+        <p className="text-sm text-muted mb-3">
+          {getCalibrationChoiceCount(classPrefs)} calibrations · confidence{' '}
           {getCalibrationConfidence(classPrefs)}
         </p>
         <div className="text-sm space-y-2">
@@ -181,10 +186,10 @@ export function SettingsPage() {
           </p>
         </div>
         <Link
-          to={`/onboarding/calibrate?class=${prefsClass}`}
+          to={`/onboarding/calibrate?class=${classType}`}
           className="inline-block mt-3 text-sm text-accent-dim hover:underline"
         >
-          Recalibrate {prefsClass}
+          Recalibrate {CLASS_LABELS[classType]}
         </Link>
         <div className="flex flex-wrap gap-2 mt-4">
           <button
@@ -235,15 +240,15 @@ export function SettingsPage() {
             onClick={() => {
               if (
                 confirm(
-                  `Reset ${prefsClass} preferences to defaults? Stat weights, calibration choices, and learned weights for this class will be cleared.`,
+                  `Reset ${CLASS_LABELS[classType]} preferences to defaults? Stat weights, calibration choices, and learned weights for this class will be cleared.`,
                 )
               ) {
-                updateProfile((p) => resetClassPrefs(p, prefsClass));
+                updateProfile((p) => resetClassPrefs(p, classType));
               }
             }}
             className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5 text-danger/80"
           >
-            Reset {prefsClass} preferences
+            Reset {CLASS_LABELS[classType]} preferences
           </button>
           <button
             type="button"
@@ -265,22 +270,19 @@ export function SettingsPage() {
       </section>
 
       <section className="mb-10 max-w-xl">
-        <h2 className="text-sm font-semibold uppercase text-muted mb-3">Per-class dupe rules</h2>
+        <h2 className="text-sm font-semibold uppercase text-muted mb-3">
+          {CLASS_LABELS[classType]} dupe rules
+        </h2>
         <p className="text-xs text-muted mb-3">
-          Classes share global rules by default. Apply a preset to one class without changing others.
+          Using {CLASS_LABELS[classType]} (change class in header). Classes share global rules
+          by default. Apply a preset to one class without changing others.
         </p>
-        <ClassSwitcher
-          mode="button"
-          active={dupeOverrideClass}
-          onSelect={setDupeOverrideClass}
-          className="mb-3"
-        />
-        {classRuleOverrides[dupeOverrideClass] && (
+        {classRuleOverrides[classType] && (
           <p className="text-xs text-accent-dim mb-2">
-            {dupeOverrideClass} uses custom rules ·{' '}
+            {CLASS_LABELS[classType]} uses custom rules ·{' '}
             <button
               type="button"
-              onClick={() => resetClassDupeRules(dupeOverrideClass)}
+              onClick={() => resetClassDupeRules(classType)}
               className="underline hover:text-white"
             >
               reset to global
@@ -292,7 +294,7 @@ export function SettingsPage() {
             <button
               key={id}
               type="button"
-              onClick={() => applyPreset(id, dupeOverrideClass)}
+              onClick={() => applyPreset(id, classType)}
               className="text-xs px-3 py-1.5 rounded-full border border-border hover:bg-white/5"
             >
               {label}
@@ -321,7 +323,7 @@ export function SettingsPage() {
         <div>
           <h2 className="text-sm font-semibold uppercase text-muted mb-2">Dupe rules</h2>
           <p className="text-sm text-muted max-w-lg">
-            Shared rules for heatmap, compare, browse, and dismantle lists.
+            Shared rules for heatmap, compare, browse, and redundant-roll lists.
           </p>
         </div>
 
@@ -398,8 +400,6 @@ export function SettingsPage() {
           <DupeRulesImpact rules={globalDupeRules} classType="hunter" />
         </div>
       </section>
-
-      <DesiredBuildsSection />
 
       <Link to="/dashboard/hunter" className="block mt-8 text-sm text-muted hover:text-white">
         Dashboard

@@ -10,9 +10,10 @@ import {
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useVaultInteractionHold } from '@/hooks/useVaultRefreshGuard';
 import { BUILD_QUERY_PARAM, desiredBuildsEditorPath, resolveCombosBuildId } from '@/lib/nav';
+import { COMBOS_SECTION_ID, scrollToHashElement } from '@/lib/nav/hashScroll';
 import {
   formatSetBonusTargetsSummary,
   isSetTargetPiece,
@@ -1170,6 +1171,16 @@ export function BuildCoveragePanel({
     [classState.items],
   );
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const scrollToCombosEditor = useCallback(() => {
+    const combosPath = `/combos/${classType}`;
+    if (location.pathname === combosPath) {
+      scrollToHashElement(`#${COMBOS_SECTION_ID}`);
+      return;
+    }
+    navigate(desiredBuildsEditorPath(classType));
+  }, [classType, location.pathname, navigate]);
   const enabledBuilds = useMemo(
     () => normalizeDesiredBuilds(prefs.desiredBuilds, classType).filter((b) => b.enabled !== false),
     [prefs.desiredBuilds, classType],
@@ -1507,16 +1518,9 @@ export function BuildCoveragePanel({
       <section className="mb-10 rounded-2xl bg-surface/60 px-5 py-4 ring-1 ring-white/8">
         <h2 className="text-base font-semibold tracking-tight text-white">Your combos</h2>
         <div className="mt-4 rounded-xl bg-black/15 px-4 py-4 ring-1 ring-white/10">
-          <p className="text-sm font-medium text-white">No combos yet</p>
-          <p className="mt-2 max-w-lg text-sm text-muted">
-            Add 2–4 stat priorities. Best vault piece per roll pattern.
+          <p className="max-w-lg text-sm text-muted">
+            No combos yet. Add 2–4 stat priorities in the Combos section below.
           </p>
-          <Link
-            to={desiredBuildsEditorPath(classType)}
-            className="inline-block mt-4 cursor-pointer text-sm text-accent-dim hover:text-white underline-offset-2 hover:underline"
-          >
-            Add combo
-          </Link>
         </div>
       </section>
     );
@@ -1531,12 +1535,13 @@ export function BuildCoveragePanel({
             Best piece per slot for each optimal roll pattern (archetype + tertiary + tuning)
           </p>
         </div>
-        <Link
-          to={desiredBuildsEditorPath(classType)}
+        <button
+          type="button"
+          onClick={scrollToCombosEditor}
           className="cursor-pointer text-[11px] text-white/70 hover:text-white shrink-0 underline-offset-2 hover:underline"
         >
           Edit combos
-        </Link>
+        </button>
       </div>
 
       <div className="mb-4 flex flex-wrap gap-2">

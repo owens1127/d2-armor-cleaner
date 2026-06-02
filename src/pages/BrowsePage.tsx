@@ -10,7 +10,9 @@ import {
   ARMOR_SLOTS,
   SLOT_LABELS,
 } from '@/lib/constants';
+import { allDismantleCandidates } from '@/lib/dupes/dismantle';
 import { sortBrowseItems, type BrowseSortOrder } from '@/lib/armor/sort';
+import { BROWSE_REDUNDANT_QUERY } from '@/lib/nav';
 import { buildFitTotal, getDesiredBuilds, resolveDesiredBuild } from '@/lib/coverage/analyze';
 import { resolveDesiredBuildFromParam } from '@/lib/coverage/builds';
 import { getClassPrefs } from '@/lib/prefs/profile';
@@ -71,7 +73,8 @@ export function BrowsePage() {
     classStates[classType]?.activeDupeRules ??
     globalDupeRules;
   const redundantPeerScope = redundantPeerScopeFromDupeRules(classDupeRules);
-  const { applyTagDirect, pendingTags } = useSessionStore();
+  const { applyTagDirect, pendingTags, bucketJunkedIds, bucketKeptBothIds } = useSessionStore();
+  const redundantFromUrl = searchParams.get(BROWSE_REDUNDANT_QUERY) === '1';
 
   const [slot, setSlot] = useState<ArmorSlot | 'all'>('all');
   const [archetype, setArchetype] = useState<Archetype | 'all'>('all');
@@ -79,6 +82,7 @@ export function BrowsePage() {
   const [dimTag, setDimTag] = useState<TagValue | 'all' | 'untagged'>('all');
   const [dupesOnly, setDupesOnly] = useState(false);
   const [strictlyLowerOnly, setStrictlyLowerOnly] = useState(false);
+  const [redundantOnly, setRedundantOnly] = useState(redundantFromUrl);
   const [buildFilter, setBuildFilter] = useState<string>(initialBuildFilter);
   const [buildFitOnly, setBuildFitOnly] = useState(Boolean(searchParams.get('build')));
   const [query, setQuery] = useState('');
@@ -113,6 +117,22 @@ export function BrowsePage() {
     }
     return bySlot;
   }, [classItems, redundantPeerScope, classPrefs]);
+
+  const dismantleExclusions = useMemo(
+    () => ({ bucketJunkedIds, bucketKeptBothIds, pendingTags }),
+    [bucketJunkedIds, bucketKeptBothIds, pendingTags],
+  );
+
+  const redundantRollIds = useMemo(() => {
+    const candidates = allDismantleCandidates(
+      allItems,
+      classType,
+      redundantPeerScope,
+      classPrefs,
+      dismantleExclusions,
+    );
+    return new Set(candidates.map((c) => c.item.instanceId));
+  }, [allItems, classType, redundantPeerScope, classPrefs, dismantleExclusions]);
 
   const tuningRedundantBySlot = useMemo(() => {
     const bySlot = new Map<ArmorSlot, ReturnType<typeof findTuningRedundantMap>>();
@@ -172,6 +192,7 @@ export function BrowsePage() {
         if (!strictlyLowerOnly) return true;
         return dominatorsBySlot.get(i.armorSlot)?.has(i.instanceId) ?? false;
       })
+      .filter((i) => !redundantOnly || redundantRollIds.has(i.instanceId))
       .filter((i) => {
         if (!buildFitOnly || !activeBuildProfile) return true;
         return buildFitTotal(i, activeBuildProfile.statTargets) > 0;
@@ -188,6 +209,8 @@ export function BrowsePage() {
     dimTag,
     dupesOnly,
     strictlyLowerOnly,
+    redundantOnly,
+    redundantRollIds,
     dominatorsBySlot,
     query,
     globalDupeRules.minTier,
@@ -224,9 +247,24 @@ export function BrowsePage() {
   return (
     <Layout>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">Browse {CLASS_LABELS[classType]} armor</h1>
-        <p className="text-muted text-sm mt-1">
-          {filtered.length} of {classItems.filter((i) => (i.tier ?? 0) >= globalDupeRules.minTier).length} pieces · {browseSortLabel(sortOrder)}
+        <h1 className="text-2xl font-bold">
+          {redundantOnly
+            ? `Redundant rolls: ${CLASS_LABELS[classType]}`
+            : `Browse ${CLASS_LABELS[classType]} armor`}
+        </h1>
+        <p className="text-muted text-sm mt-1 max-w-2xl">
+          {redundantOnly ? (
+            <>
+              Stat-lower or same-after-tuning vs another roll in the slot · {filtered.length} of{' '}
+              {redundantRollIds.size} candidates · review before dismantling in-game
+            </>
+          ) : (
+            <>
+              {filtered.length} of{' '}
+              {classItems.filter((i) => (i.tier ?? 0) >= globalDupeRules.minTier).length} pieces ·{' '}
+              {browseSortLabel(sortOrder)}
+            </>
+          )}
         </p>
       </div>
 
@@ -357,6 +395,15 @@ export function BrowsePage() {
             className="rounded"
           />
           Strictly lower only
+        </label>
+        <label className="flex items-end gap-2 text-sm pb-1.5 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={redundantOnly}
+            onChange={(e) => setRedundantOnly(e.target.checked)}
+            className="rounded"
+          />
+          Redundant rolls only
         </label>
         {activeBuildProfile && (
           <label className="flex items-end gap-2 text-sm pb-1.5 cursor-pointer">

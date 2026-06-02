@@ -72,6 +72,7 @@ import {
   type CalibrateProgress,
   type CalibrateStep,
 } from '@/lib/onboarding/storage';
+import { SS_CALIBRATE_SET_BONUS_DETAILS } from '@/lib/storage/keys';
 import { usePrefsStore, useVaultStore } from '@/stores';
 import type {
   Archetype,
@@ -94,6 +95,25 @@ const STEP_LABELS: Record<CalibrateStep, string> = {
   sets: 'Armor sets',
 };
 
+function loadShowSetBonusDetails(): boolean {
+  try {
+    const stored = sessionStorage.getItem(SS_CALIBRATE_SET_BONUS_DETAILS);
+    if (stored === 'false') return false;
+    if (stored === 'true') return true;
+  } catch {
+    /* private mode */
+  }
+  return true;
+}
+
+function persistShowSetBonusDetails(show: boolean): void {
+  try {
+    sessionStorage.setItem(SS_CALIBRATE_SET_BONUS_DETAILS, String(show));
+  } catch {
+    /* quota / private mode */
+  }
+}
+
 export function CalibratePage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -104,6 +124,7 @@ export function CalibratePage() {
     getCalibrateProgressForMount({ searchParams }),
   );
   const [pickFeedback, setPickFeedback] = useState<string | null>(null);
+  const [showSetBonusDetails, setShowSetBonusDetails] = useState(loadShowSetBonusDetails);
 
   const {
     step,
@@ -878,14 +899,27 @@ export function CalibratePage() {
             }
             contextLabel="Armor set preferences"
           />
+          <CalibrateSetBonusDetailsToggle
+            checked={showSetBonusDetails}
+            onChange={(show) => {
+              setShowSetBonusDetails(show);
+              persistShowSetBonusDetails(show);
+            }}
+          />
           <RankedReorderList
             items={effectiveSetOrder}
             getKey={(hash) => hash}
             getLabel={(hash) => resolveArmorSetDisplayName(hash, classItems) ?? 'Unknown set'}
             getLeadingVisual={(hash) => <ArmorSetIcons setHash={hash} items={classItems} size="sm" maxIcons={1} />}
-            renderDetails={(hash) => (
-              <RankedSetBonusDetails setInfo={resolveArmorSetInfoForHash(hash, classItems)} />
-            )}
+            renderDetails={
+              showSetBonusDetails
+                ? (hash) => (
+                    <RankedSetBonusDetails
+                      setInfo={resolveArmorSetInfoForHash(hash, classItems)}
+                    />
+                  )
+                : undefined
+            }
             onReorder={(next) => persistProgress({ setOrder: next })}
             onMove={moveSet}
           />
@@ -966,6 +1000,26 @@ function CalibrateStepHeader({
         </div>
       )}
     </div>
+  );
+}
+
+function CalibrateSetBonusDetailsToggle({
+  checked,
+  onChange,
+}: {
+  checked: boolean;
+  onChange: (show: boolean) => void;
+}) {
+  return (
+    <label className="mb-4 flex cursor-pointer items-center gap-2 text-xs text-muted">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+        className="accent-accent"
+      />
+      <span>Show bonus details</span>
+    </label>
   );
 }
 

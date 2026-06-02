@@ -34,6 +34,8 @@ export const SS_BUNGIE_OAUTH_CODE_USED = 'dac-bungie-oauth-code-used';
 export const SS_DIM_TOKEN = 'dac-dim-token';
 /** In-progress calibrate step/ledger when onboarding progress is not persisted. */
 export const SS_CALIBRATE_SESSION = 'dac-calibrate-session';
+/** Calibrate sets step: show 2pc/4pc bonus descriptions in ranked list. */
+export const SS_CALIBRATE_SET_BONUS_DETAILS = 'dac-calibrate-set-bonus-details';
 /** Browse page sort order (preference vs match %). */
 export const SS_BROWSE_SORT = 'dac-browse-sort';
 

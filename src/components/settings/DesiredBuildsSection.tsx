@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ClassSwitcher } from '@/components/ClassSwitcher';
 import { ArmorSetIcons } from '@/components/ArmorSetIcons';
 import { StatIcon } from '@/components/StatIcon';
 import { STAT_LABELS, STATS } from '@/lib/constants';
@@ -29,8 +28,9 @@ import {
   startBuildEdit,
   type DesiredBuildEditSession,
 } from '@/lib/coverage/desiredBuildEditor';
+import { COMBOS_SECTION_ID, restoreScrollY } from '@/lib/nav/hashScroll';
 import { getClassPrefs, updateClassPrefs } from '@/lib/prefs/profile';
-import { usePrefsStore } from '@/stores';
+import { usePrefsStore, useSessionStore } from '@/stores';
 import type { ArmorPiece, ClassType, DesiredBuild, Stat, StatTarget } from '@/types';
 
 const MAX_BUILDS = 8;
@@ -430,14 +430,11 @@ export function DesiredBuildsSection({
   vaultItems = [],
 }: DesiredBuildsSectionProps = {}) {
   const { profile, updateProfile } = usePrefsStore();
-  const [classType, setClassType] = useState<ClassType>(defaultClass ?? 'hunter');
+  const activeNavClass = useSessionStore((s) => s.activeNavClass);
+  const classType = defaultClass ?? activeNavClass;
   const [editSession, setEditSession] = useState<DesiredBuildEditSession>(
     createDesiredBuildEditSession(),
   );
-
-  useEffect(() => {
-    if (defaultClass) setClassType(defaultClass);
-  }, [defaultClass]);
 
   useEffect(() => {
     setEditSession(createDesiredBuildEditSession());
@@ -555,13 +552,15 @@ export function DesiredBuildsSection({
 
   function addBuild() {
     if (savedBuilds.length >= MAX_BUILDS) return;
+    const scrollY = window.scrollY;
     const nextBuild = createDesiredBuild(classPrefs, classType, undefined, 'tier', savedBuilds);
     saveBuilds([...savedBuilds, nextBuild]);
     setEditSession((session) => startBuildEdit(session, nextBuild.id));
+    restoreScrollY(scrollY);
   }
 
   return (
-    <section id="combos" className="mb-10 max-w-xl space-y-4 scroll-mt-6">
+    <section id={COMBOS_SECTION_ID} className="mb-10 max-w-xl space-y-4 scroll-mt-6">
       <div>
         <h2 className="text-sm font-semibold uppercase text-muted mb-2">Combos</h2>
         <p className="text-sm text-muted max-w-lg">
@@ -584,12 +583,6 @@ export function DesiredBuildsSection({
           </p>
         ) : null}
       </div>
-      <ClassSwitcher
-        mode="button"
-        active={classType}
-        onSelect={setClassType}
-        className="mb-4"
-      />
 
       {savedBuilds.length === 0 ? (
         <p className="text-sm text-muted rounded-xl border border-border bg-surface-2/50 px-4 py-3">

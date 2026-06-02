@@ -108,7 +108,7 @@ interface SessionStore {
   queueForReview: (items: ArmorPiece[], tag: TagValue) => void;
   /** @deprecated Use queueForReview or applyTagDirect. */
   queueItemTags: (items: ArmorPiece[], tag: TagValue) => void;
-  /** Apply tags to DIM immediately (browse, heatmap, build picker, dismantle). */
+  /** Apply tags to DIM immediately (browse, heatmap, build picker). */
   applyTagDirect: (
     items: ArmorPiece[],
     tag: TagValue | null,

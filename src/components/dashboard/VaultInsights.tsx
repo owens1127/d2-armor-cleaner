@@ -5,13 +5,19 @@ import {
   type VaultInsightAction,
 } from '@/lib/dashboard/vaultInsightsActions';
 import { useSessionStore } from '@/stores';
-import type { ClassPreferenceProfile, ClassVaultState, ClassType } from '@/types';
+import type {
+  AutoFilterRule,
+  ClassPreferenceProfile,
+  ClassVaultState,
+  ClassType,
+} from '@/types';
 
 interface VaultInsightsProps {
   classState: ClassVaultState;
   classType: ClassType;
   prefs: ClassPreferenceProfile;
   redundantRollCount: number;
+  autoFilterRules?: AutoFilterRule[];
 }
 
 export function VaultInsights({
@@ -19,6 +25,7 @@ export function VaultInsights({
   classType,
   prefs,
   redundantRollCount,
+  autoFilterRules,
 }: VaultInsightsProps) {
   const pendingTags = useSessionStore((s) => s.pendingTags);
   const bucketJunkedIds = useSessionStore((s) => s.bucketJunkedIds);
@@ -32,8 +39,17 @@ export function VaultInsights({
         redundantRollCount,
         pendingTags,
         bucketJunkedIds,
+        autoFilterRules,
       }),
-    [classState, classType, prefs, redundantRollCount, pendingTags, bucketJunkedIds],
+    [
+      classState,
+      classType,
+      prefs,
+      redundantRollCount,
+      pendingTags,
+      bucketJunkedIds,
+      autoFilterRules,
+    ],
   );
 
   if (actions.length === 0) {

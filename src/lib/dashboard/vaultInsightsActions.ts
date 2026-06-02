@@ -17,11 +17,12 @@ import {
   getCalibrationChoiceCount,
   getCalibrationConfidence,
 } from '@/lib/prefs/calibrationChoices';
-import { combosPagePath, desiredBuildsEditorPath } from '@/lib/nav';
+import { browseRedundantPath, combosPagePath, desiredBuildsEditorPath } from '@/lib/nav';
 import { buildCleanPath } from '@/lib/session/cleanUrl';
 import { SLOT_LABELS } from '@/lib/constants';
 import type {
   ArmorPiece,
+  AutoFilterRule,
   ClassPreferenceProfile,
   ClassType,
   ClassVaultState,
@@ -160,6 +161,22 @@ export function desiredBuildsNudgeNeeded(
   return getDesiredBuilds(prefs, classType).length < RECOMMENDED_DESIRED_BUILD_COUNT;
 }
 
+/** True when at least one auto-filter rule is enabled (vault triage on load). */
+export function hasConfiguredAutoFilters(rules: AutoFilterRule[] | undefined): boolean {
+  return (rules ?? []).some((rule) => rule.enabled);
+}
+
+export function buildSetupAutoFiltersInsightAction(): VaultInsightAction {
+  return {
+    id: 'setup-auto-filters',
+    title: 'Set up auto filters',
+    detail: 'Queue junk tags on vault load for rolls you never want to keep',
+    to: '/auto-filters',
+    cta: 'Set up filters',
+    tone: 'accent',
+  };
+}
+
 export function buildAddBuildsInsightAction(
   enabledCount: number,
   classType: ClassType,
@@ -242,19 +259,13 @@ function browseBuildPriority(analysis: CoverageAnalysis): number {
   );
 }
 
-export function buildBuildInsightActions(
+export function buildCoverageAndBrowseInsightActions(
   items: ArmorPiece[],
   buckets: DupeBucket[],
   prefs: ClassPreferenceProfile,
   classType: ClassType,
 ): VaultInsightAction[] {
   const actions: VaultInsightAction[] = [];
-  const enabledBuildCount = getDesiredBuilds(prefs, classType).length;
-  const addBuildsAction = buildAddBuildsInsightAction(enabledBuildCount, classType);
-  if (addBuildsAction) {
-    actions.push(addBuildsAction);
-  }
-
   const analyses = getCachedDesiredBuildAnalyses(items, buckets, prefs, classType);
   const fixCandidates = analyses
     .filter(buildCoverageNeedsFix)
@@ -299,6 +310,26 @@ export function buildBuildInsightActions(
   return actions;
 }
 
+export function buildBuildInsightActions(
+  items: ArmorPiece[],
+  buckets: DupeBucket[],
+  prefs: ClassPreferenceProfile,
+  classType: ClassType,
+  autoFilterRules?: AutoFilterRule[],
+): VaultInsightAction[] {
+  const actions: VaultInsightAction[] = [];
+  const enabledBuildCount = getDesiredBuilds(prefs, classType).length;
+  const addBuildsAction = buildAddBuildsInsightAction(enabledBuildCount, classType);
+  if (addBuildsAction) {
+    actions.push(addBuildsAction);
+  }
+  if (!hasConfiguredAutoFilters(autoFilterRules)) {
+    actions.push(buildSetupAutoFiltersInsightAction());
+  }
+  actions.push(...buildCoverageAndBrowseInsightActions(items, buckets, prefs, classType));
+  return actions;
+}
+
 export function buildVaultInsightActions(input: {
   classState: ClassVaultState;
   classType: ClassType;
@@ -306,6 +337,7 @@ export function buildVaultInsightActions(input: {
   redundantRollCount: number;
   pendingTags: PendingTag[];
   bucketJunkedIds: string[];
+  autoFilterRules?: AutoFilterRule[];
   /** Test hook: avoid reading onboarding flags from localStorage. */
   calibrationContext?: CalibrationInsightContext;
 }): VaultInsightAction[] {
@@ -316,6 +348,7 @@ export function buildVaultInsightActions(input: {
     redundantRollCount,
     pendingTags,
     bucketJunkedIds,
+    autoFilterRules,
     calibrationContext,
   } = input;
   const { profile, buckets } = classState;
@@ -338,13 +371,13 @@ export function buildVaultInsightActions(input: {
         }
       : null;
 
-  const actions: VaultInsightAction[] = [
-    buildCalibrationInsightAction(
-      prefs,
-      classType,
-      calibrationContext ?? getCalibrationInsightContext(),
-    ),
-  ];
+  const calibrationAction = buildCalibrationInsightAction(
+    prefs,
+    classType,
+    calibrationContext ?? getCalibrationInsightContext(),
+  );
+
+  const actions: VaultInsightAction[] = [];
 
   if (largest) {
     actions.push({
@@ -362,14 +395,20 @@ export function buildVaultInsightActions(input: {
       id: 'redundant-rolls',
       title: 'Review redundant rolls',
       detail: `${redundantRollCount} piece${redundantRollCount === 1 ? '' : 's'} strictly worse than another roll you keep`,
-      to: `/dismantle/${classType}`,
+      to: browseRedundantPath(classType),
       cta: 'Open list',
       tone: 'danger',
     });
   }
 
   actions.push(
-    ...buildBuildInsightActions(classState.items, classState.buckets, prefs, classType),
+    ...buildBuildInsightActions(
+      classState.items,
+      classState.buckets,
+      prefs,
+      classType,
+      autoFilterRules,
+    ),
   );
 
   if (profile.taggedKeepInDupes > 0) {
@@ -392,6 +431,8 @@ export function buildVaultInsightActions(input: {
       tone: 'accent',
     });
   }
+
+  actions.push(calibrationAction);
 
   return actions;
 }

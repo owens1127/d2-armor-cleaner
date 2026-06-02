@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { ARMOR_SLOTS } from '@/lib/constants';
+import { createAutoFilterRule } from '@/lib/auto-filter/match';
 import { analyzeDesiredBuilds } from '@/lib/coverage/analyze';
 import { encodeDesiredBuildId } from '@/lib/coverage/builds';
 import { groupIntoBuckets } from '@/lib/dupes/group';
@@ -8,7 +9,9 @@ import { buildClassVaultState } from '@/lib/dupes/suggest';
 import {
   buildBuildInsightActions,
   buildCalibrationInsightAction,
+  buildSetupAutoFiltersInsightAction,
   buildVaultInsightActions,
+  hasConfiguredAutoFilters,
 } from '@/lib/dashboard/vaultInsightsActions';
 import { recordCalibrationChoice } from '@/lib/prefs/calibrationChoices';
 import { calibrationKeyStats } from '@/lib/onboarding/calibrateSession';
@@ -62,12 +65,14 @@ describe('vault insight actions across user steps', () => {
       to: '/combos/hunter#combos',
       cta: 'Set up combos',
     });
+    expect(buildActions[1]).toMatchObject(buildSetupAutoFiltersInsightAction());
 
     prefs = { ...prefs, desiredBuilds: [meleeBuild()] };
     buildActions = buildBuildInsightActions(sparse, buckets, prefs, 'hunter');
     const meleeId = encodeDesiredBuildId(meleeBuild(), 'hunter');
     expect(buildActions.map((a) => a.id)).toEqual([
       'add-desired-builds',
+      'setup-auto-filters',
       `fix-coverage-${meleeId}`,
     ]);
     expect(buildActions.find((a) => a.id === `fix-coverage-${meleeId}`)).toMatchObject({
@@ -79,8 +84,7 @@ describe('vault insight actions across user steps', () => {
     const fullVault = fullBrawlerVault();
     buckets = groupIntoBuckets(fullVault, mergeDupeRules());
     buildActions = buildBuildInsightActions(fullVault, buckets, prefs, 'hunter');
-    expect(buildActions).toHaveLength(1);
-    expect(buildActions[0]?.id).toBe('add-desired-builds');
+    expect(buildActions.map((a) => a.id)).toEqual(['add-desired-builds', 'setup-auto-filters']);
 
     prefs = {
       ...prefs,
@@ -106,7 +110,9 @@ describe('vault insight actions across user steps', () => {
         },
       ],
     };
-    buildActions = buildBuildInsightActions(fullVault, buckets, prefs, 'hunter');
+    buildActions = buildBuildInsightActions(fullVault, buckets, prefs, 'hunter', [
+      createAutoFilterRule({ classType: 'hunter' }),
+    ]);
     expect(buildActions).toHaveLength(0);
 
     const analyses = analyzeDesiredBuilds(fullVault, buckets, prefs, 'hunter');
@@ -166,6 +172,28 @@ describe('vault insight actions across user steps', () => {
     expect(compare?.to).toContain('/duel/hunter');
 
     expect(actions.filter((a) => a.id === 'calibration')).toHaveLength(1);
-    expect(actions[0]?.id).toBe('calibration');
+    expect(actions.at(-1)?.id).toBe('calibration');
+
+    const comboIdx = actions.findIndex((a) => a.id === 'no-desired-builds' || a.id.startsWith('add-'));
+    const filterIdx = actions.findIndex((a) => a.id === 'setup-auto-filters');
+    if (comboIdx >= 0 && filterIdx >= 0) {
+      expect(filterIdx).toBeGreaterThan(comboIdx);
+    }
+  });
+
+  it('omits auto-filter nudge when enabled rules exist', () => {
+    expect(hasConfiguredAutoFilters([])).toBe(false);
+    expect(
+      hasConfiguredAutoFilters([createAutoFilterRule({ classType: 'hunter', enabled: false })]),
+    ).toBe(false);
+    expect(hasConfiguredAutoFilters([createAutoFilterRule({ classType: 'hunter' })])).toBe(true);
+
+    const sparse = [armorPiece({ instanceId: '1', armorSlot: 'chest' })];
+    const buckets = groupIntoBuckets(sparse, mergeDupeRules());
+    const prefs = defaultClassPreferenceProfile();
+    const withFilters = buildBuildInsightActions(sparse, buckets, prefs, 'hunter', [
+      createAutoFilterRule({ classType: 'hunter' }),
+    ]);
+    expect(withFilters.some((a) => a.id === 'setup-auto-filters')).toBe(false);
   });
 });

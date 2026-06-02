@@ -21,9 +21,11 @@ vi.stubGlobal('localStorage', localStorageMock);
 import { encodeBuildId } from '@/lib/coverage/buildIdCodec';
 import {
   authenticatedLandingPath,
+  browseRedundantPath,
   buildAuthenticatedNavLinks,
   classSwitchPath,
   resolveCombosBuildId,
+  settingsPath,
 } from './nav';
 import { LS_ONBOARDING } from '@/lib/storage/keys';
 import type { DesiredBuild } from '@/types';
@@ -67,6 +69,11 @@ describe('buildAuthenticatedNavLinks', () => {
       match: '/dashboard',
       to: '/dashboard/warlock',
     });
+    expect(links.find((l) => l.label === 'Settings')).toEqual({
+      label: 'Settings',
+      match: '/settings',
+      to: settingsPath('warlock'),
+    });
   });
 });
 
@@ -97,7 +104,7 @@ describe('classSwitchPath', () => {
       ),
     ).toBe(`/browse/hunter?build=${encodeURIComponent(FERRO_ID)}`);
     expect(classSwitchPath('/duel/titan', '', '', 'warlock')).toBe('/duel/warlock');
-    expect(classSwitchPath('/dismantle/hunter', '', '', 'titan')).toBe('/dismantle/titan');
+    expect(classSwitchPath('/settings/warlock', '', '', 'hunter')).toBe('/settings/hunter');
   });
 
   it('maps legacy clean and build routes to duel and combos', () => {
@@ -121,11 +128,17 @@ describe('classSwitchPath', () => {
   });
 
   it('returns null on class-agnostic routes so the page type is preserved', () => {
-    for (const pathname of ['/review', '/settings', '/auto-filters', '/', '/home']) {
+    for (const pathname of ['/review', '/auto-filters', '/', '/home']) {
       expect(classSwitchPath(pathname, '', '', 'titan')).toBeNull();
     }
     expect(classSwitchPath('/onboarding/rules', '', '', 'warlock')).toBeNull();
     expect(classSwitchPath('/onboarding/inventory', '', '', 'hunter')).toBeNull();
+  });
+});
+
+describe('browseRedundantPath', () => {
+  it('links browse with redundant query', () => {
+    expect(browseRedundantPath('hunter')).toBe('/browse/hunter?redundant=1');
   });
 });
 
