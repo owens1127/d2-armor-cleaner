@@ -11,3 +11,6 @@ playwright-report/
 *.png
 screenshots/
 
+
+# TypeScript incremental build
+*.tsbuildinfo
