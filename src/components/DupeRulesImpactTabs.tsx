@@ -5,9 +5,10 @@ import type { ClassType, DupeRuleConfig } from '@/types';
 
 interface DupeRulesImpactTabsProps {
   rules: DupeRuleConfig;
+  plainLanguage?: boolean;
 }
 
-export function DupeRulesImpactTabs({ rules }: DupeRulesImpactTabsProps) {
+export function DupeRulesImpactTabs({ rules, plainLanguage }: DupeRulesImpactTabsProps) {
   const [classType, setClassType] = useState<ClassType>('hunter');
 
   return (
@@ -26,7 +27,7 @@ export function DupeRulesImpactTabs({ rules }: DupeRulesImpactTabsProps) {
           </button>
         ))}
       </div>
-      <DupeRulesImpact rules={rules} classType={classType} />
+      <DupeRulesImpact rules={rules} classType={classType} plainLanguage={plainLanguage} />
     </div>
   );
 }

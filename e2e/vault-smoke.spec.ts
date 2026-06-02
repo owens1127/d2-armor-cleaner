@@ -11,8 +11,12 @@ test.describe('live Bungie vault', () => {
     await authenticateLiveVault(page);
     await waitForLiveVaultReady(page);
 
-    await expect(page.getByRole('heading', { name: 'Dupe rules' })).toBeVisible();
-    await expect(page.getByText(/\(\s*scanned \d+ from inventory\s*\)/)).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /How should duplicates match/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByText(/About \d+ duplicate|No duplicate groups|roughly \d+ roll/),
+    ).toBeVisible();
   });
 
   test('loads vault and reaches dashboard when onboarding is complete', async ({ page }) => {

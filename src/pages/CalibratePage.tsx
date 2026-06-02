@@ -12,8 +12,11 @@ import {
   CLASS_LABELS,
   CLASSES,
   formatArchetypeStatsLabel,
+  formatArmorSetPerkTierLabel,
+  getArmorSetPerkLines,
   STAT_LABELS,
 } from '@/lib/constants';
+import { resolveArmorSetDisplayName, resolveArmorSetInfoForHash } from '@/lib/items/setIcons';
 import { moveRankedItem, reorderRankedItems } from '@/lib/onboarding/rankedOrder';
 import {
   buildTertiaryRanker,
@@ -25,7 +28,6 @@ import {
   defaultArchetypeOrder,
   defaultSetOrderHashes,
   normalizeArchetypeOrder,
-  resolveArmorSetInfo,
 } from '@/lib/scoring/calibrate';
 import { getClassPrefs, updateClassPrefs } from '@/lib/prefs/profile';
 import { savePrefs } from '@/lib/prefs/storage';
@@ -73,7 +75,7 @@ import {
 import { usePrefsStore, useVaultStore } from '@/stores';
 import type {
   Archetype,
-  ArmorPiece,
+  ArmorSetInfo,
   ClassPreferenceProfile,
   ClassType,
   Stat,
@@ -305,14 +307,6 @@ export function CalibratePage() {
     tuningOrderByArchetype,
     tuningStats,
   ]);
-
-  const setPieceByHash = useMemo(() => {
-    const map = new Map<number, ArmorPiece>();
-    for (const piece of setPieces) {
-      map.set(piece.armorSet!.hash, piece);
-    }
-    return map;
-  }, [setPieces]);
 
   const stepIndex = STEPS.indexOf(step);
   const classSelected = step !== 'class';
@@ -868,7 +862,7 @@ export function CalibratePage() {
       )}
 
       {step === 'sets' && setPieces.length >= 2 && (
-        <div className="max-w-md">
+        <div className="w-full max-w-2xl">
           <CalibrateStepHeader
             step="sets"
             calibrateClass={calibrateClass}
@@ -887,12 +881,11 @@ export function CalibratePage() {
           <RankedReorderList
             items={effectiveSetOrder}
             getKey={(hash) => hash}
-            getLabel={(hash) => {
-              const piece = setPieceByHash.get(hash);
-              const setInfo = piece ? resolveArmorSetInfo(classItems, piece) : undefined;
-              return setInfo?.name ?? piece?.armorSet?.name ?? 'Unknown set';
-            }}
+            getLabel={(hash) => resolveArmorSetDisplayName(hash, classItems) ?? 'Unknown set'}
             getLeadingVisual={(hash) => <ArmorSetIcons setHash={hash} items={classItems} size="sm" maxIcons={1} />}
+            renderDetails={(hash) => (
+              <RankedSetBonusDetails setInfo={resolveArmorSetInfoForHash(hash, classItems)} />
+            )}
             onReorder={(next) => persistProgress({ setOrder: next })}
             onMove={moveSet}
           />
@@ -964,7 +957,13 @@ function CalibrateStepHeader({
         </div>
       )}
       {instruction && (
-        <div className="text-sm text-muted space-y-1">{instruction}</div>
+        <div className="space-y-2 text-sm">
+          {typeof instruction === 'string' ? (
+            <p className="text-muted">{instruction}</p>
+          ) : (
+            instruction
+          )}
+        </div>
       )}
     </div>
   );
@@ -988,12 +987,37 @@ function RankDragHandle() {
   );
 }
 
+function RankedSetBonusDetails({ setInfo }: { setInfo: ArmorSetInfo | undefined }) {
+  const perks = getArmorSetPerkLines(setInfo);
+  if (perks.length === 0) {
+    return <p className="mt-2 text-xs text-muted">Bonus details unavailable</p>;
+  }
+  return (
+    <div className="mt-2 space-y-2.5">
+      {perks.map((perk) => (
+        <div key={perk.prefix}>
+          <div className="text-[10px] font-medium uppercase tracking-wider text-muted">
+            {formatArmorSetPerkTierLabel(perk.prefix)}
+          </div>
+          <p
+            className="mt-0.5 text-xs leading-snug text-neutral-400 line-clamp-3"
+            title={perk.text}
+          >
+            {perk.text}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function RankedReorderList<T extends string | number>({
   items,
   getKey,
   getLabel,
   getLeadingVisual,
   getSecondaryLabel,
+  renderDetails,
   emphasizeLabel,
   onReorder,
   onMove,
@@ -1003,6 +1027,7 @@ function RankedReorderList<T extends string | number>({
   getLabel: (item: T) => string;
   getLeadingVisual?: (item: T) => ReactNode;
   getSecondaryLabel?: (item: T) => string;
+  renderDetails?: (item: T) => ReactNode;
   emphasizeLabel?: boolean;
   onReorder: (next: T[]) => void;
   onMove: (index: number, dir: -1 | 1) => void;
@@ -1023,12 +1048,35 @@ function RankedReorderList<T extends string | number>({
         const label = getLabel(item);
         const key = getKey(item);
         const secondary = getSecondaryLabel?.(item);
+        const details = renderDetails?.(item);
+        const moveButtons = (
+          <div className="flex shrink-0 items-center gap-0.5 self-start">
+            <button
+              type="button"
+              onClick={() => onMove(i, -1)}
+              disabled={i === 0}
+              className="ui-icon-btn--compact border border-transparent text-base text-muted hover:border-white/15 hover:bg-white/5 hover:text-white disabled:pointer-events-none disabled:opacity-30"
+              aria-label={`Move ${label} up`}
+            >
+              ↑
+            </button>
+            <button
+              type="button"
+              onClick={() => onMove(i, 1)}
+              disabled={i === items.length - 1}
+              className="ui-icon-btn--compact border border-transparent text-base text-muted hover:border-white/15 hover:bg-white/5 hover:text-white disabled:pointer-events-none disabled:opacity-30"
+              aria-label={`Move ${label} down`}
+            >
+              ↓
+            </button>
+          </div>
+        );
         return (
           <li
             key={key}
-            className={`flex items-center gap-3 rounded-lg border border-border bg-surface-2 px-3 py-2.5 transition-colors hover:border-white/15 ${
-              draggingKey === key ? 'border-white/20 opacity-80' : ''
-            }`}
+            className={`rounded-lg border border-border bg-surface-2 px-3 py-2.5 transition-colors hover:border-white/15 ${
+              details ? '' : 'flex items-center gap-3'
+            } ${draggingKey === key ? 'border-white/20 opacity-80' : ''}`}
             draggable
             onDragStart={() => setDraggingKey(key)}
             onDragEnd={() => setDraggingKey(null)}
@@ -1039,43 +1087,54 @@ function RankedReorderList<T extends string | number>({
             }}
             aria-label={`Rank ${i + 1}: ${label}${secondary ? `, ${secondary}` : ''}`}
           >
-            <RankDragHandle />
-            <span className="w-5 shrink-0 text-xs tabular-nums text-muted">{i + 1}</span>
-            {getLeadingVisual && (
-              <span className="inline-flex shrink-0 items-center justify-center">
-                {getLeadingVisual(item)}
-              </span>
-            )}
-            <div className="min-w-0 flex-1">
-              <div
-                className={`truncate text-white ${
-                  emphasizeLabel ? 'text-base font-semibold' : 'text-sm font-medium'
-                }`}
-              >
-                {label}
+            {details ? (
+              <div className="flex items-start gap-3">
+                <RankDragHandle />
+                <span className="w-5 shrink-0 pt-0.5 text-xs tabular-nums text-muted">{i + 1}</span>
+                {getLeadingVisual && (
+                  <span className="inline-flex shrink-0 items-center justify-center pt-0.5">
+                    {getLeadingVisual(item)}
+                  </span>
+                )}
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <div
+                        className={`text-white ${
+                          emphasizeLabel ? 'text-base font-semibold' : 'text-sm font-medium'
+                        }`}
+                      >
+                        {label}
+                      </div>
+                      {secondary && <div className="text-xs text-muted">{secondary}</div>}
+                    </div>
+                    {moveButtons}
+                  </div>
+                  {details}
+                </div>
               </div>
-              {secondary && <div className="truncate text-xs text-muted">{secondary}</div>}
-            </div>
-            <div className="flex shrink-0 items-center gap-0.5">
-              <button
-                type="button"
-                onClick={() => onMove(i, -1)}
-                disabled={i === 0}
-                className="ui-icon-btn--compact border border-transparent text-base text-muted hover:border-white/15 hover:bg-white/5 hover:text-white disabled:pointer-events-none disabled:opacity-30"
-                aria-label={`Move ${label} up`}
-              >
-                ↑
-              </button>
-              <button
-                type="button"
-                onClick={() => onMove(i, 1)}
-                disabled={i === items.length - 1}
-                className="ui-icon-btn--compact border border-transparent text-base text-muted hover:border-white/15 hover:bg-white/5 hover:text-white disabled:pointer-events-none disabled:opacity-30"
-                aria-label={`Move ${label} down`}
-              >
-                ↓
-              </button>
-            </div>
+            ) : (
+              <>
+                <RankDragHandle />
+                <span className="w-5 shrink-0 text-xs tabular-nums text-muted">{i + 1}</span>
+                {getLeadingVisual && (
+                  <span className="inline-flex shrink-0 items-center justify-center">
+                    {getLeadingVisual(item)}
+                  </span>
+                )}
+                <div className="min-w-0 flex-1">
+                  <div
+                    className={`truncate text-white ${
+                      emphasizeLabel ? 'text-base font-semibold' : 'text-sm font-medium'
+                    }`}
+                  >
+                    {label}
+                  </div>
+                  {secondary && <div className="truncate text-xs text-muted">{secondary}</div>}
+                </div>
+                {moveButtons}
+              </>
+            )}
           </li>
         );
       })}
@@ -1109,6 +1168,25 @@ function ArchetypePairIcons({
   );
 }
 
+function CalibrateInstructionChip({
+  children,
+  className = '',
+  title,
+}: {
+  children: ReactNode;
+  className?: string;
+  title?: string;
+}) {
+  return (
+    <span
+      title={title}
+      className={`inline-flex items-center gap-1.5 rounded-md border border-border bg-surface-2 px-2 py-1 text-sm text-white/90 ${className}`}
+    >
+      {children}
+    </span>
+  );
+}
+
 function CalibrateRollRankInstruction({
   archetype,
   archetypeIndex,
@@ -1122,26 +1200,46 @@ function CalibrateRollRankInstruction({
   role: 'tertiary' | 'tuning';
   vaultStats: Stat[];
 }) {
-  const [primaryStat] = ARCHETYPE_STATS[archetype];
-  const rolePhrase = role === 'tertiary' ? 'Rank tertiary stats.' : 'Rank tuning stats.';
+  const roleLabel = role === 'tertiary' ? 'tertiary stats' : 'tuning stats';
+  const vaultStatLabels = vaultStats.map((stat) => STAT_LABELS[stat]).join(', ');
+  const progressLabel =
+    archetypeCount > 1 ? `${archetypeIndex + 1} of ${archetypeCount} archetypes` : '';
+  const contextSummary = `${ARCHETYPE_LABELS[archetype]}${progressLabel ? `, ${progressLabel}` : ''}`;
+  const ariaLabel =
+    vaultStats.length > 0
+      ? `${contextSummary}. Rank ${roleLabel}: ${vaultStatLabels}.`
+      : `${contextSummary}. Rank ${roleLabel}.`;
+
   return (
-    <>
-      <span className="block font-medium text-foreground/90">
-        {ARCHETYPE_LABELS[archetype]} · primary {STAT_LABELS[primaryStat]}. {rolePhrase}
+    <div className="space-y-2" aria-label={ariaLabel}>
+      <div className="flex flex-wrap items-center gap-2">
+        <CalibrateInstructionChip>
+          <ArchetypePairIcons archetype={archetype} size="sm" />
+          <span className="font-medium">{ARCHETYPE_LABELS[archetype]}</span>
+        </CalibrateInstructionChip>
         {archetypeCount > 1 && (
-          <span className="font-normal text-muted">
-            {' '}
-            · {archetypeIndex + 1}/{archetypeCount}
-          </span>
+          <CalibrateInstructionChip className="tabular-nums text-xs text-muted">
+            {archetypeIndex + 1}/{archetypeCount}
+          </CalibrateInstructionChip>
         )}
-      </span>
+      </div>
       {vaultStats.length > 0 && (
-        <span className="block text-muted">
-          From your vault: {vaultStats.map((s) => STAT_LABELS[s]).join(', ')}.
-        </span>
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+          <span className="shrink-0 text-xs font-medium text-muted">Rank these stats:</span>
+          <span className="inline-flex flex-wrap items-center gap-x-2.5 gap-y-1">
+            {vaultStats.map((stat) => (
+              <span key={stat} className="inline-flex items-center gap-1 text-neutral-300">
+                <StatIcon stat={stat} size="sm" variant="glyph" />
+                <span className="text-xs">{STAT_LABELS[stat]}</span>
+              </span>
+            ))}
+          </span>
+        </div>
       )}
-      <span className="block pt-1 text-muted">Drag rows or use the arrows. Most important at the top.</span>
-    </>
+      <p className="text-xs text-muted">
+        Drag rows or use the arrows. Most important at the top.
+      </p>
+    </div>
   );
 }
 

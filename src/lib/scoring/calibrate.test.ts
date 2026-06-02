@@ -6,7 +6,9 @@ import {
   calibrationSetPieces,
   calibrationTertiaryStats,
   calibrationTuningStats,
+  defaultArchetypeOrder,
   defaultSetOrderHashes,
+  normalizeArchetypeOrder,
 } from './calibrate';
 import type { ArmorPiece, Archetype, Stat } from '@/types';
 
@@ -35,6 +37,15 @@ function piece(
 }
 
 describe('default order helpers', () => {
+  it('normalizeArchetypeOrder dedupes and fills missing archetypes', () => {
+    const base = defaultArchetypeOrder();
+    expect(
+      normalizeArchetypeOrder(['gunner', 'gunner', 'grenadier', 'paragon', 'brawler', 'bulwark']),
+    ).toEqual(['gunner', 'grenadier', 'paragon', 'brawler', 'bulwark', 'specialist']);
+    expect(normalizeArchetypeOrder(base)).toEqual(base);
+    expect(normalizeArchetypeOrder(['gunner'])).toEqual(base);
+  });
+
   it('defaultSetOrderHashes follows vault frequency ordering', () => {
     const items = [
       piece('a', 'gunner', 'melee', {

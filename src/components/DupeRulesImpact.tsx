@@ -7,12 +7,15 @@ interface DupeRulesImpactProps {
   rules: DupeRuleConfig;
   classType?: ClassType;
   className?: string;
+  /** Plain copy for onboarding; default keeps compact stats line. */
+  plainLanguage?: boolean;
 }
 
 export function DupeRulesImpact({
   rules,
   classType = 'hunter',
   className = '',
+  plainLanguage = false,
 }: DupeRulesImpactProps) {
   const classStates = useVaultStore((s) => s.classStates);
   const state = classStates[classType];
@@ -29,6 +32,17 @@ export function DupeRulesImpact({
 
   if (!impact) {
     return <p className={`text-sm text-muted ${className}`}>Load vault to preview impact.</p>;
+  }
+
+  if (plainLanguage) {
+    const classLabel = classType.charAt(0).toUpperCase() + classType.slice(1);
+    const groupWord = impact.buckets === 1 ? 'group' : 'groups';
+    const rollWord = impact.review === 1 ? 'roll' : 'rolls';
+    const line =
+      impact.buckets === 0
+        ? `No duplicate groups for ${classLabel} at this tier.`
+        : `About ${impact.buckets} duplicate ${groupWord} · roughly ${impact.review} ${rollWord} to compare`;
+    return <p className={`text-sm text-muted ${className}`}>{line}</p>;
   }
 
   return (

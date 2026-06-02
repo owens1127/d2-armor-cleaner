@@ -6,6 +6,7 @@ export interface ResolvedArmorSetIcon {
   pieces: 2 | 4;
   icon?: string;
   name?: string;
+  description?: string;
 }
 
 interface ManifestSetEntry {
@@ -36,6 +37,7 @@ export function setManifestArmorSetIcons(
         pieces: perkPiecesFromSetEntry(entry.requiredSetCount, index),
         icon: perk?.displayProperties.icon,
         name: perk?.displayProperties.name,
+        description: perk?.displayProperties.description,
       };
     });
     map.set(Number(hashStr), {
@@ -73,6 +75,49 @@ export function resolveArmorSetByHash(
     }
   }
   return best;
+}
+
+function perksFromManifestEntry(entry: ManifestSetEntry): ArmorSetInfo['perks'] {
+  return entry.perks.map((perk) => ({
+    name: perk.name ?? `${perk.pieces}pc`,
+    description: perk.description?.trim() ?? '',
+    icon: perk.icon,
+    pieces: perk.pieces,
+  }));
+}
+
+function mergeSetPerks(
+  vaultPerks: ArmorSetInfo['perks'],
+  manifestPerks: ArmorSetInfo['perks'],
+): ArmorSetInfo['perks'] {
+  if (manifestPerks.length === 0) return vaultPerks;
+  if (vaultPerks.length === 0) return manifestPerks;
+
+  return vaultPerks.map((vaultPerk, index) => {
+    if (vaultPerk.description.trim()) return vaultPerk;
+    const manifestPerk =
+      manifestPerks.find((p) => p.pieces === vaultPerk.pieces) ?? manifestPerks[index];
+    if (!manifestPerk?.description.trim()) return vaultPerk;
+    return { ...vaultPerk, description: manifestPerk.description };
+  });
+}
+
+/** Richest armor set info for a hash (vault pieces, manifest cache for names/perks). */
+export function resolveArmorSetInfoForHash(
+  setHash: number,
+  items: ArmorPiece[] = [],
+): ArmorSetInfo | undefined {
+  const vault = resolveArmorSetByHash(items, setHash);
+  const manifest = manifestSetIcons?.get(setHash);
+  const name = vault?.name ?? manifest?.name;
+  if (!name) return undefined;
+
+  const vaultPerks = vault?.perks ?? [];
+  const manifestPerks = manifest ? perksFromManifestEntry(manifest) : [];
+  const perks = mergeSetPerks(vaultPerks, manifestPerks);
+
+  if (perks.length === 0 && !vault) return undefined;
+  return { hash: setHash, name, perks };
 }
 
 function iconsFromSetInfo(setInfo: ArmorSetInfo | undefined): ResolvedArmorSetIcon[] {

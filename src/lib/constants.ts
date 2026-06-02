@@ -91,11 +91,18 @@ export interface ArmorSetPerkLine {
   text: string;
 }
 
+/** "2pc" → "2-piece" for compact rank cards */
+export function formatArmorSetPerkTierLabel(prefix: string): string {
+  const match = prefix.match(/^(\d+)\s*pc$/i);
+  if (match) return `${match[1]}-piece`;
+  return prefix;
+}
+
 function resolveArmorSetPerkLine(
-  perk: { name: string; description: string },
+  perk: { name: string; description: string; pieces?: 2 | 4 },
   index: number,
 ): { prefix: string; rawText: string } {
-  const pieceCount = `${(index + 1) * 2}pc`;
+  const pieceCount = perk.pieces ? `${perk.pieces}pc` : `${(index + 1) * 2}pc`;
   const name = perk.name.trim();
   const description = perk.description.trim();
 

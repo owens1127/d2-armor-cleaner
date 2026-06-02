@@ -1,5 +1,6 @@
 import type { ArmorPiece, Archetype, ArmorSetInfo, Stat } from '@/types';
 import { ARCHETYPES, STATS, tertiaryStatsForArchetype } from '@/lib/constants';
+import { resolveArmorSetInfoForHash } from '@/lib/items/setIcons';
 import type { PairwiseDecision } from '@/lib/onboarding/storage';
 import {
   greedyPairwiseCap,
@@ -49,6 +50,24 @@ export function calibrationArchetypes(): Archetype[] {
 /** Default archetype rank list (all six, vault frequency not applied). */
 export function defaultArchetypeOrder(): Archetype[] {
   return calibrationArchetypes();
+}
+
+/** Full six-archetype list with duplicates removed and any missing entries appended. */
+export function normalizeArchetypeOrder(order: readonly Archetype[]): Archetype[] {
+  const expected = defaultArchetypeOrder();
+  if (order.length !== expected.length) return [...expected];
+
+  const seen = new Set<Archetype>();
+  const deduped: Archetype[] = [];
+  for (const arch of order) {
+    if (!ARCHETYPES.includes(arch) || seen.has(arch)) continue;
+    seen.add(arch);
+    deduped.push(arch);
+  }
+  for (const arch of expected) {
+    if (!seen.has(arch)) deduped.push(arch);
+  }
+  return deduped.length === expected.length ? deduped : [...expected];
 }
 
 /** Default set hash rank list from vault frequency. */
@@ -160,22 +179,14 @@ export function maxTuningComparisons(statCount: number): number {
   return greedyPairwiseCap(statCount, TUNING_COMPARISON_CAP);
 }
 
-/** Prefer the richest perk list for a set hash across vault pieces */
+/** Prefer the richest perk list for a set hash across vault pieces (manifest fallback). */
 export function resolveArmorSetInfo(
   items: ArmorPiece[],
   piece: ArmorPiece,
 ): ArmorSetInfo | undefined {
   const hash = piece.armorSet?.hash;
   if (!hash) return undefined;
-
-  let best = piece.armorSet;
-  for (const item of items) {
-    if (item.armorSet?.hash !== hash) continue;
-    if ((item.armorSet.perks.length ?? 0) > (best?.perks.length ?? 0)) {
-      best = item.armorSet;
-    }
-  }
-  return best;
+  return resolveArmorSetInfoForHash(hash, items);
 }
 
 /** Piece count per armor set hash in the vault. */

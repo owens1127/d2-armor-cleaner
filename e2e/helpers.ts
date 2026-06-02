@@ -28,14 +28,14 @@ export async function authenticateLiveVault(page: Page, options?: { onboardingCo
 
 /** Wait until live vault load finishes (onboarding or dashboard). */
 export async function waitForLiveVaultReady(page: Page) {
-  const onboarding = page.getByRole('heading', { name: 'Dupe rules' });
+  const onboarding = page.getByRole('heading', { name: /How should duplicates match/i });
   const dashboard = page.getByRole('heading', { name: /Hunter vault/i });
 
   await expect(onboarding.or(dashboard)).toBeVisible({ timeout: 180_000 });
 
   await expect(
     page.getByText(
-      /\d+ Edge of Fate armor \(account\)|\(\s*scanned \d+ from inventory\s*\)/,
+      /\d+ Edge of Fate armor \(account\)|About \d+ duplicate|No duplicate groups/,
     ),
   ).toBeVisible({ timeout: 180_000 });
 }
