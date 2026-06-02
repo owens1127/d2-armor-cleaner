@@ -1,0 +1,74 @@
+# D2 Armor Cleaner
+
+Destiny 2 armor tool for gear you have tiered in-game (Tier 1-5). Set dupe rules (Tier 5 by default, or Tier 4+), compare duplicate rolls, queue keep/junk tags, and sync to [DIM](https://destinyitemmanager.com).
+
+Inspired by [tier5.report](https://tier5.report/): extended with preference learning and batch tagging.
+
+## Quick start
+
+```bash
+npm install
+npm run dev
+```
+
+Open **https://localhost:5173** and click **Sign in with Bungie.net**.
+
+> **HTTPS:** Bungie OAuth requires `https://localhost`. The dev server uses a self-signed cert: your browser will warn once; click **Advanced → Proceed to localhost**.
+
+### Live Bungie login
+
+1. Copy `.env.example` → `.env`
+2. Register at [bungie.net/en/Application](https://www.bungie.net/en/Application) with redirect URL **`https://localhost:5173/oauth/callback`** (path unchanged: no Bungie portal update needed unless you change host/port)
+3. Request a localhost DIM key via [DIM new app](https://api.destinyitemmanager.com/new_app) (origin `https://localhost:5173`)
+4. Fill `.env` using names from `.env.example` (`VITE_D2_ARMOR_CLEANER_*`). Legacy `VITE_BUNGIE_*` / `VITE_DIM_API_KEY` still work for one release.
+5. Click **Sign in with Bungie.net**
+
+> **DIM app name:** If you registered DIM before the rename, your production API key may still be tied to an app named `vaultcleaner` (or similar). That is fine: only the origin and key matter, not the display name. No `.env` changes needed.
+
+## What's built (v0.1)
+
+| Feature | Status |
+|---------|--------|
+| Bungie OAuth + live vault load | ✅ |
+| Dupe rule onboarding + vault-aware suggestions | ✅ |
+| 6-step preference calibration (swipe + drag) | ✅ |
+| Per-class dashboard heatmap (armor + archetype views) | ✅ |
+| Want-score overlay + vault insights | ✅ |
+| Dupe duels (tournament, keyboard + swipe) | ✅ |
+| Safe dismantle (tuning-aware stat-lower) | ✅ |
+| Browse all + mark keep/junk | ✅ |
+| Review + partial DIM apply + retry | ✅ |
+| Settings: dupe presets, per-class overrides, import/export prefs | ✅ |
+| Session persistence + focus refresh (90s) | ✅ |
+
+## Scripts
+
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Dev server (HTTPS :5173) |
+| `npm run build` | Production build |
+| `npm test` | Unit tests (vitest) |
+| `npm run test:e2e` | Playwright smoke tests |
+
+## Deploy (Vercel)
+
+1. Connect repo to [Vercel](https://vercel.com)
+2. Set environment variables from `.env.example`
+3. Update Bungie redirect URI to your production URL + `/oauth/callback`
+4. Request production DIM API key (see [dim-api](https://github.com/DestinyItemManager/dim-api))
+
+`vercel.json` includes SPA rewrites.
+
+## Architecture
+
+- **Client-only SPA**: Vite, React 19, TypeScript, Tailwind 4, Zustand
+- **APIs**: Bungie.net (inventory) + DIM Sync (tags)
+- **Storage**: localStorage (prefs, dupe rules), sessionStorage (OAuth, clean session), IndexedDB (manifest + vault cache under `d2-armor-cleaner`). On first load after upgrade, legacy `vc-*`, `vault-cleaner-*`, and `dupewise-vault` data is copied to new keys automatically.
+
+## Project docs
+
+- **[PLAN.md](./PLAN.md)**: full spec: data models, dupe engine, scoring, UI, phases, testing
+
+## License
+
+TBD

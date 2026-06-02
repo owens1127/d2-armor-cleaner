@@ -1,0 +1,107 @@
+{
+  "description": "Iron Panoply Strides T5 — bulk profile lacks hidden roll plugs; sparse 304 yields impossible 0/0/5 without enrichment",
+  "rawItems": [
+    {
+      "itemHash": 900300,
+      "itemInstanceId": "fixture-sparse-strides-bulk",
+      "bucketHash": 138197802,
+      "location": 2
+    }
+  ],
+  "componentsBulk": {
+    "instances": {
+      "fixture-sparse-strides-bulk": {
+        "gearTier": 5,
+        "primaryStat": { "value": 450 },
+        "isMasterwork": false
+      }
+    },
+    "sockets": {
+      "fixture-sparse-strides-bulk": {
+        "sockets": [{ "plugHash": 1807652646, "isVisible": true }]
+      }
+    },
+    "stats": {
+      "fixture-sparse-strides-bulk": {
+        "stats": {
+          "0": { "statHash": 2996146975, "value": 0 },
+          "1": { "statHash": 1735777505, "value": 0 },
+          "2": { "statHash": 144602215, "value": 5 }
+        }
+      }
+    },
+    "reusablePlugs": {}
+  },
+  "componentsEnriched": {
+    "instances": {
+      "fixture-sparse-strides-bulk": {
+        "gearTier": 5,
+        "primaryStat": { "value": 450 },
+        "isMasterwork": false
+      }
+    },
+    "sockets": {
+      "fixture-sparse-strides-bulk": {
+        "sockets": [
+          { "plugHash": 1807652646, "isVisible": true },
+          { "plugHash": 910301, "isVisible": false },
+          { "plugHash": 910302, "isVisible": false },
+          { "plugHash": 910303, "isVisible": false }
+        ]
+      }
+    },
+    "stats": {
+      "fixture-sparse-strides-bulk": {
+        "stats": {
+          "0": { "statHash": 2996146975, "value": 30 },
+          "1": { "statHash": 1735777505, "value": 25 },
+          "2": { "statHash": 144602215, "value": 20 }
+        }
+      }
+    },
+    "reusablePlugs": {}
+  },
+  "manifest": {
+    "items": {
+      "900300": {
+        "displayProperties": {
+          "name": "Iron Panoply Strides",
+          "icon": "/common/destiny2_content/icons/172009eaee2bb314b70bc95565ba82ad.jpg"
+        },
+        "classType": 1,
+        "inventory": { "bucketTypeHash": 20886954, "tierType": 5 },
+        "sockets": {
+          "socketEntries": [{ "reusablePlugSetHash": 1155052024 }]
+        }
+      },
+      "1807652646": {
+        "displayProperties": { "name": "Gunner" },
+        "classType": 3
+      },
+      "910301": {
+        "displayProperties": { "name": "Roll Weapons" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 2996146975, "value": 30 }]
+      },
+      "910302": {
+        "displayProperties": { "name": "Roll Grenade" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 1735777505, "value": 25 }]
+      },
+      "910303": {
+        "displayProperties": { "name": "Roll Super" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 144602215, "value": 20 }]
+      }
+    },
+    "itemSets": {},
+    "sandboxPerks": {},
+    "stats": {}
+  },
+  "expectedEnriched": {
+    "baseStats": { "weapons": 30, "grenade": 25, "super": 20 },
+    "archetype": "gunner",
+    "tertiaryStat": "super",
+    "armorSlot": "legs"
+  }
+}

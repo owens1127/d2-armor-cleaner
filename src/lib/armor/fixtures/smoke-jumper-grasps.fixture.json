@@ -1,0 +1,89 @@
+{
+  "description": "Smoke Jumper Grasps — altar-tier Edge of Fate armor with tuning socket and gearTier 4",
+  "rawItems": [
+    {
+      "itemHash": 900301,
+      "itemInstanceId": "fixture-smoke-jumper-arms-001",
+      "bucketHash": 138197802,
+      "location": 2
+    }
+  ],
+  "components": {
+    "instances": {
+      "fixture-smoke-jumper-arms-001": {
+        "gearTier": 4,
+        "primaryStat": { "value": 450 },
+        "isMasterwork": false
+      }
+    },
+    "sockets": {
+      "fixture-smoke-jumper-arms-001": {
+        "sockets": [{ "plugHash": 1807652646, "isVisible": true }]
+      }
+    },
+    "stats": {
+      "fixture-smoke-jumper-arms-001": {
+        "stats": {
+          "0": { "statHash": 2996146975, "value": 28 },
+          "1": { "statHash": 1735777505, "value": 23 },
+          "2": { "statHash": 144602215, "value": 20 }
+        }
+      }
+    },
+    "reusablePlugs": {
+      "fixture-smoke-jumper-arms-001": {
+        "plugs": {
+          "0": [{ "plugItemHash": 691392383 }]
+        }
+      }
+    }
+  },
+  "manifest": {
+    "items": {
+      "900301": {
+        "displayProperties": {
+          "name": "Smoke Jumper Grasps",
+          "icon": "/common/destiny2_content/icons/249813e647271a8227bae0d8a39ed505.jpg"
+        },
+        "classType": 1,
+        "inventory": { "bucketTypeHash": 3551918588, "tierType": 5 },
+        "equippingBlock": { "equipableItemSetHash": 900006 },
+        "sockets": {
+          "socketEntries": [
+            { "reusablePlugSetHash": 3899745242, "singleInitialItemHash": 3820147479 },
+            { "reusablePlugSetHash": 1155052024, "singleInitialItemHash": 2121121504 }
+          ]
+        }
+      },
+      "1807652646": {
+        "displayProperties": { "name": "Gunner" },
+        "classType": 3
+      }
+    },
+    "itemSets": {
+      "900006": {
+        "displayProperties": { "name": "Smoke Jumper Set" },
+        "setPerks": [{ "sandboxPerkHash": 800006 }]
+      }
+    },
+    "sandboxPerks": {
+      "800006": {
+        "displayProperties": {
+          "name": "Smoke Jumper perk",
+          "description": "Fixture set perk"
+        }
+      }
+    },
+    "stats": {}
+  },
+  "expected": {
+    "instanceId": "fixture-smoke-jumper-arms-001",
+    "classType": "hunter",
+    "armorSlot": "arms",
+    "archetype": "gunner",
+    "tertiaryStat": "super",
+    "tuningStat": "weapons",
+    "tier": 4,
+    "armorSetName": "Smoke Jumper Set"
+  }
+}

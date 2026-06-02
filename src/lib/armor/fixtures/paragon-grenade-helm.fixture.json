@@ -1,0 +1,84 @@
+{
+  "description": "Paragon helmet T5 Grenade tertiary — melee hidden plug uses Strength hash 4244567218 (must not map to class)",
+  "rawItems": [
+    {
+      "itemHash": 4248888201,
+      "itemInstanceId": "fixture-paragon-grenade-helm",
+      "bucketHash": 138197802,
+      "location": 2
+    }
+  ],
+  "components": {
+    "instances": {
+      "fixture-paragon-grenade-helm": {
+        "gearTier": 5,
+        "primaryStat": { "value": 450 },
+        "isMasterwork": false
+      }
+    },
+    "sockets": {
+      "fixture-paragon-grenade-helm": {
+        "sockets": [
+          { "plugHash": 4227065942, "isVisible": true },
+          { "plugHash": 910021, "isVisible": false },
+          { "plugHash": 910022, "isVisible": false },
+          { "plugHash": 910023, "isVisible": false }
+        ]
+      }
+    },
+    "stats": {
+      "fixture-paragon-grenade-helm": {
+        "stats": {
+          "0": { "statHash": 144602215, "value": 30 },
+          "1": { "statHash": 4244567218, "value": 25 },
+          "2": { "statHash": 1735777505, "value": 20 }
+        }
+      }
+    },
+    "reusablePlugs": {}
+  },
+  "manifest": {
+    "items": {
+      "4248888201": {
+        "displayProperties": {
+          "name": "Fixture Paragon Helm",
+          "icon": "/common/destiny2_content/icons/172009eaee2bb314b70bc95565ba82ad.jpg"
+        },
+        "classType": 1,
+        "inventory": { "bucketTypeHash": 3448274439, "tierType": 5 },
+        "sockets": {
+          "socketEntries": [
+            { "reusablePlugSetHash": 1155052024, "singleInitialItemHash": 2121121504 }
+          ]
+        }
+      },
+      "4227065942": {
+        "displayProperties": { "name": "Paragon" },
+        "classType": 3
+      },
+      "910021": {
+        "displayProperties": { "name": "Roll Super" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 144602215, "value": 30 }]
+      },
+      "910022": {
+        "displayProperties": { "name": "Roll Melee" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 4244567218, "value": 25 }]
+      },
+      "910023": {
+        "displayProperties": { "name": "Roll Grenade" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 1735777505, "value": 20 }]
+      }
+    },
+    "itemSets": {},
+    "sandboxPerks": {},
+    "stats": {}
+  },
+  "expected": {
+    "archetype": "paragon",
+    "tertiaryStat": "grenade",
+    "baseStats": { "super": 30, "melee": 25, "grenade": 20 }
+  }
+}

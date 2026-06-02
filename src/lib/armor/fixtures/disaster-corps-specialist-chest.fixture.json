@@ -1,0 +1,140 @@
+{
+  "description": "Regression: two Disaster Corps Vest specialist chests — MW+mod piece must not stat-lower dominate cleaner intrinsic roll",
+  "rawItems": [
+    {
+      "itemHash": 4248888200,
+      "itemInstanceId": "fixture-disaster-chest-candidate",
+      "bucketHash": 138197802,
+      "location": 2
+    },
+    {
+      "itemHash": 4248888200,
+      "itemInstanceId": "fixture-disaster-chest-dominator",
+      "bucketHash": 138197802,
+      "location": 2
+    }
+  ],
+  "components": {
+    "instances": {
+      "fixture-disaster-chest-candidate": {
+        "gearTier": 5,
+        "primaryStat": { "value": 505 },
+        "isMasterwork": false
+      },
+      "fixture-disaster-chest-dominator": {
+        "gearTier": 5,
+        "primaryStat": { "value": 493 },
+        "isMasterwork": true
+      }
+    },
+    "sockets": {
+      "fixture-disaster-chest-candidate": {
+        "sockets": [
+          { "plugHash": 2230428468, "isVisible": true },
+          { "plugHash": 910031, "isVisible": false },
+          { "plugHash": 910032, "isVisible": false }
+        ]
+      },
+      "fixture-disaster-chest-dominator": {
+        "sockets": [
+          { "plugHash": 2230428468, "isVisible": true },
+          { "plugHash": 900010, "isVisible": true },
+          { "plugHash": 910041, "isVisible": false },
+          { "plugHash": 910042, "isVisible": false }
+        ]
+      }
+    },
+    "stats": {
+      "fixture-disaster-chest-candidate": {
+        "stats": {
+          "0": { "statHash": 2996146975, "value": 25 },
+          "1": { "statHash": 144602215, "value": 20 }
+        }
+      },
+      "fixture-disaster-chest-dominator": {
+        "stats": {
+          "0": { "statHash": 2996146975, "value": 32 },
+          "1": { "statHash": 144602215, "value": 27 }
+        }
+      }
+    },
+    "reusablePlugs": {}
+  },
+  "manifest": {
+    "items": {
+      "4248888200": {
+        "displayProperties": {
+          "name": "Disaster Corps Vest",
+          "icon": "/common/destiny2_content/icons/ec88f1ed1bc957aded9fe08e92c138be.jpg"
+        },
+        "classType": 0,
+        "inventory": { "bucketTypeHash": 14239492, "tierType": 5 },
+        "equippingBlock": { "equipableItemSetHash": 900003 },
+        "sockets": {
+          "socketEntries": [
+            { "reusablePlugSetHash": 1155052024, "singleInitialItemHash": 2121121504 }
+          ]
+        }
+      },
+      "2230428468": {
+        "displayProperties": { "name": "Specialist" },
+        "classType": 3
+      },
+      "900010": {
+        "displayProperties": { "name": "+10 Weapons Mod" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 2996146975, "value": 10 }]
+      },
+      "910031": {
+        "displayProperties": { "name": "Roll Weapons" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 2996146975, "value": 25 }]
+      },
+      "910032": {
+        "displayProperties": { "name": "Roll Super" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 144602215, "value": 20 }]
+      },
+      "910041": {
+        "displayProperties": { "name": "Roll Weapons" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 2996146975, "value": 20 }]
+      },
+      "910042": {
+        "displayProperties": { "name": "Roll Super" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 144602215, "value": 25 }]
+      }
+    },
+    "itemSets": {
+      "900003": {
+        "displayProperties": { "name": "Disaster Corps" },
+        "setPerks": [{ "sandboxPerkHash": 800003 }]
+      }
+    },
+    "sandboxPerks": {
+      "800003": {
+        "displayProperties": {
+          "name": "Disaster perk",
+          "description": "Fixture set perk"
+        }
+      }
+    },
+    "stats": {}
+  },
+  "expected": {
+    "candidate": {
+      "power": 505,
+      "baseStats": { "weapons": 25, "super": 20 },
+      "tertiaryStat": "super",
+      "effective": { "weapons": 25, "super": 20 }
+    },
+    "dominator": {
+      "power": 493,
+      "baseStats": { "weapons": 20, "super": 25 },
+      "modStats": { "weapons": 10 },
+      "tertiaryStat": "super",
+      "effective": { "weapons": 32, "super": 27 }
+    }
+  }
+}

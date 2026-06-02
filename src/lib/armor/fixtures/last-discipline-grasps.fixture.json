@@ -1,0 +1,152 @@
+{
+  "description": "Last Discipline Grasps grenadier arms — same worn 30/25/20, MW+mod vs plain; intrinsic rolls match after parse",
+  "rawItems": [
+    {
+      "itemHash": 900100,
+      "itemInstanceId": "fixture-discipline-arms-plain",
+      "bucketHash": 138197802,
+      "location": 2
+    },
+    {
+      "itemHash": 900100,
+      "itemInstanceId": "fixture-discipline-arms-mw",
+      "bucketHash": 138197802,
+      "location": 2
+    }
+  ],
+  "components": {
+    "instances": {
+      "fixture-discipline-arms-plain": {
+        "gearTier": 5,
+        "primaryStat": { "value": 453 },
+        "isMasterwork": false
+      },
+      "fixture-discipline-arms-mw": {
+        "gearTier": 5,
+        "primaryStat": { "value": 494 },
+        "isMasterwork": false
+      }
+    },
+    "sockets": {
+      "fixture-discipline-arms-plain": {
+        "sockets": [
+          { "plugHash": 2937665788, "isVisible": true },
+          { "plugHash": 900020, "isVisible": true },
+          { "plugHash": 910021, "isVisible": false },
+          { "plugHash": 910022, "isVisible": false },
+          { "plugHash": 910023, "isVisible": false }
+        ]
+      },
+      "fixture-discipline-arms-mw": {
+        "sockets": [
+          { "plugHash": 2937665788, "isVisible": true },
+          { "plugHash": 900022, "isVisible": false },
+          { "plugHash": 900021, "isVisible": false },
+          { "plugHash": 910021, "isVisible": false },
+          { "plugHash": 910022, "isVisible": false },
+          { "plugHash": 910023, "isVisible": false }
+        ]
+      }
+    },
+    "stats": {
+      "fixture-discipline-arms-plain": {
+        "stats": {
+          "0": { "statHash": 1735777505, "value": 31 },
+          "1": { "statHash": 144602215, "value": 26 },
+          "2": { "statHash": 2996146975, "value": 9 }
+        }
+      },
+      "fixture-discipline-arms-mw": {
+        "stats": {
+          "0": { "statHash": 1735777505, "value": 31 },
+          "1": { "statHash": 144602215, "value": 26 },
+          "2": { "statHash": 2996146975, "value": 9 }
+        }
+      }
+    },
+    "reusablePlugs": {}
+  },
+  "manifest": {
+    "items": {
+      "900100": {
+        "displayProperties": {
+          "name": "Last Discipline Grasps",
+          "icon": "/common/destiny2_content/icons/ec88f1ed1bc957aded9fe08e92c138be.jpg"
+        },
+        "classType": 0,
+        "inventory": { "bucketTypeHash": 3551918588, "tierType": 5 },
+        "equippingBlock": { "equipableItemSetHash": 900004 },
+        "sockets": {
+          "socketEntries": [
+            { "reusablePlugSetHash": 1155052024, "singleInitialItemHash": 2121121504 }
+          ]
+        }
+      },
+      "2937665788": {
+        "displayProperties": { "name": "Grenadier" },
+        "classType": 3
+      },
+      "900020": {
+        "displayProperties": { "name": "+6 All Stats Mod" },
+        "classType": 3,
+        "investmentStats": [
+          { "statTypeHash": 1735777505, "value": 6 },
+          { "statTypeHash": 144602215, "value": 6 },
+          { "statTypeHash": 2996146975, "value": 6 }
+        ]
+      },
+      "900022": {
+        "displayProperties": { "name": "+4 All Stats Mod" },
+        "classType": 3,
+        "investmentStats": [
+          { "statTypeHash": 1735777505, "value": 4 },
+          { "statTypeHash": 144602215, "value": 4 },
+          { "statTypeHash": 2996146975, "value": 4 }
+        ]
+      },
+      "900021": {
+        "displayProperties": { "name": "Masterwork Enhancement" },
+        "classType": 3,
+        "investmentStats": [
+          { "statTypeHash": 1735777505, "value": 2 },
+          { "statTypeHash": 144602215, "value": 2 },
+          { "statTypeHash": 2996146975, "value": 2 }
+        ]
+      },
+      "910021": {
+        "displayProperties": { "name": "Roll Grenade" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 1735777505, "value": 25 }]
+      },
+      "910022": {
+        "displayProperties": { "name": "Roll Super" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 144602215, "value": 20 }]
+      },
+      "910023": {
+        "displayProperties": { "name": "Roll Weapons" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 2996146975, "value": 3 }]
+      }
+    },
+    "itemSets": {
+      "900004": {
+        "displayProperties": { "name": "Last Discipline" },
+        "setPerks": [{ "sandboxPerkHash": 800004 }]
+      }
+    },
+    "sandboxPerks": {
+      "800004": {
+        "displayProperties": {
+          "name": "Last Discipline perk",
+          "description": "Fixture set perk"
+        }
+      }
+    },
+    "stats": {}
+  },
+  "expected": {
+    "sharedIntrinsic": { "grenade": 25, "super": 20, "weapons": 3 },
+    "worn": { "grenade": 31, "super": 26, "weapons": 9 }
+  }
+}

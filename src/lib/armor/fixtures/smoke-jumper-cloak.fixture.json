@@ -1,0 +1,93 @@
+{
+  "description": "Smoke Jumper Cloak T5 — worn 304 shows 40/23/3 but hidden roll plugs are multiples of 5",
+  "rawItems": [
+    {
+      "itemHash": 900200,
+      "itemInstanceId": "fixture-smoke-jumper-cloak",
+      "bucketHash": 138197802,
+      "location": 2
+    }
+  ],
+  "components": {
+    "instances": {
+      "fixture-smoke-jumper-cloak": {
+        "gearTier": 5,
+        "primaryStat": { "value": 450 },
+        "isMasterwork": false
+      }
+    },
+    "sockets": {
+      "fixture-smoke-jumper-cloak": {
+        "sockets": [
+          { "plugHash": 1807652646, "isVisible": true },
+          { "plugHash": 900010, "isVisible": true },
+          { "plugHash": 910101, "isVisible": false },
+          { "plugHash": 910102, "isVisible": false },
+          { "plugHash": 910103, "isVisible": false }
+        ]
+      }
+    },
+    "stats": {
+      "fixture-smoke-jumper-cloak": {
+        "stats": {
+          "0": { "statHash": 2996146975, "value": 40 },
+          "1": { "statHash": 1735777505, "value": 23 },
+          "2": { "statHash": 1943323491, "value": 3 }
+        }
+      }
+    },
+    "reusablePlugs": {}
+  },
+  "manifest": {
+    "items": {
+      "900200": {
+        "displayProperties": {
+          "name": "Smoke Jumper Cloak",
+          "icon": "/common/destiny2_content/icons/172009eaee2bb314b70bc95565ba82ad.jpg"
+        },
+        "classType": 1,
+        "inventory": { "bucketTypeHash": 1585787867, "tierType": 5 },
+        "sockets": {
+          "socketEntries": [
+            { "reusablePlugSetHash": 3899745242, "singleInitialItemHash": 3820147479 },
+            { "reusablePlugSetHash": 1155052024, "singleInitialItemHash": 2121121504 }
+          ]
+        }
+      },
+      "1807652646": {
+        "displayProperties": { "name": "Gunner" },
+        "classType": 3
+      },
+      "900010": {
+        "displayProperties": { "name": "+10 Weapons Mod" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 2996146975, "value": 10 }]
+      },
+      "910101": {
+        "displayProperties": { "name": "Roll Weapons" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 2996146975, "value": 30 }]
+      },
+      "910102": {
+        "displayProperties": { "name": "Roll Grenade" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 1735777505, "value": 20 }]
+      },
+      "910103": {
+        "displayProperties": { "name": "Roll Class" },
+        "classType": 3,
+        "investmentStats": [{ "statTypeHash": 1943323491, "value": 3 }]
+      }
+    },
+    "itemSets": {},
+    "sandboxPerks": {},
+    "stats": {}
+  },
+  "expected": {
+    "archetype": "gunner",
+    "tertiaryStat": "class",
+    "baseStats": { "weapons": 30, "grenade": 20, "class": 3 },
+    "modStats": { "weapons": 10 },
+    "worn304": { "weapons": 40, "grenade": 23, "class": 3 }
+  }
+}

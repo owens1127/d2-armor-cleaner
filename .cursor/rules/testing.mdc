@@ -1,0 +1,43 @@
+---
+description: Testing and code quality expectations for vault cleaner
+alwaysApply: true
+---
+
+# Testing and quality
+
+## Test philosophy
+
+- Prefer **integration/flow tests** over trivial unit tests.
+- Test **behavior and user outcomes**, not implementation strings or constant values.
+- Algorithm tests need **realistic fixtures** (`src/test/armorFixtures.ts`) and assert **outcomes** (which piece wins, coverage ready, tags queued), not label text.
+- Multi-step flows belong in `src/test/flows/` when navigation, prefs, or session state matter.
+
+## When to add tests
+
+- New feature with state, navigation, or persistence → flow test covering the full path.
+- Algorithm change → fixture-based test asserting ranked picks, verdicts, or counts.
+- Bug fix → regression test at the lowest layer that would have caught it (prefer flow if user-visible).
+
+## When to delete tests
+
+- Asserts only constant values with no behavior risk.
+- Pure string formatting with no logic (covered indirectly by flow tests).
+- Duplicates coverage already in `src/test/flows/`.
+- Shallow component renders with no interaction.
+
+## Where tests live
+
+- Unit/algorithm: colocated `*.test.ts` next to source.
+- Integration flows: `src/test/flows/*.integration.test.ts`.
+- E2e (Playwright): `e2e/` — live Bungie tests skip without credentials.
+
+## Code changes
+
+- **No git commits** unless the user explicitly asks.
+- Minimize slop: match existing naming, imports, and patterns; no drive-by refactors.
+- Remove dead exports, unused props, duplicate helpers, and commented junk in touched files.
+- Prefer current APIs over `@deprecated` aliases in new code and tests.
+
+## Verification
+
+Before finishing: `npm test` and `npm run build` must pass.
