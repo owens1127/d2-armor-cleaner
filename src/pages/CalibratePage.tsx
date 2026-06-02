@@ -96,7 +96,8 @@ export function CalibratePage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { profile, updateProfile } = usePrefsStore();
-  const { setOnboardingComplete, allItems } = useVaultStore();
+  const { setOnboardingComplete, allItems, lastParsedCount } = useVaultStore();
+  const vaultReady = lastParsedCount !== null;
   const [progress, setProgress] = useState<CalibrateProgress>(() =>
     getCalibrateProgressForMount({ searchParams }),
   );
@@ -641,19 +642,16 @@ export function CalibratePage() {
   }
 
   useEffect(() => {
+    if (!vaultReady) return;
     if (step !== 'tertiary' || tertiaryStats.length >= 2) return;
     finishTertiaryArchetype();
-  }, [step, tertiaryStats.length, tertiaryArchetypeIndex, currentTertiaryArchetype]);
+  }, [vaultReady, step, tertiaryStats.length, tertiaryArchetypeIndex, currentTertiaryArchetype]);
 
   useEffect(() => {
+    if (!vaultReady) return;
     if (step !== 'tuning' || tuningStats.length >= 2) return;
     finishTuningArchetype();
-  }, [step, tuningStats.length, currentTuningArchetype, tuningArchetypeIndex]);
-
-  useEffect(() => {
-    if (step !== 'sets' || setPieces.length >= 2) return;
-    completeCalibration();
-  }, [step, setPieces.length, calibrateClass]);
+  }, [vaultReady, step, tuningStats.length, currentTuningArchetype, tuningArchetypeIndex]);
 
   return (
     <Layout>

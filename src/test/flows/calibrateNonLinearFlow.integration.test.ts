@@ -125,6 +125,14 @@ describe('calibration non-linear navigation flow', () => {
     expect(nextRun.step).toBe('class');
   });
 
+  it('restores sets step from URL after onboarding is complete', () => {
+    markOnboardingComplete();
+    const params = new URLSearchParams('step=sets&class=hunter');
+    const state = getCalibrateInitialState({ urlClass: 'hunter', searchParams: params });
+    expect(state.step).toBe('sets');
+    expect(state.calibrateClass).toBe('hunter');
+  });
+
   it('markOnboardingComplete clears sets-step progress and resumes at dashboard', () => {
     markRulesAccepted();
     markInventoryComplete('balanced');
