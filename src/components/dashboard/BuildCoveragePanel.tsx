@@ -51,14 +51,11 @@ import {
 import { formatArmorTierBadge, hasDisplayTier } from '@/lib/armor/tier';
 import { SLOT_LABELS, STAT_LABELS } from '@/lib/constants';
 import { armorHasDimFavorite } from '@/lib/dim/parseTags';
+import { TagActionButton } from '@/components/items/TagActionButton';
 import {
-  DIM_TAG_DEFINITIONS,
   tagActionFavoriteActive,
-  tagActionIconBtnClass,
   tagActionJunkActive,
   tagActionKeepActive,
-  TAG_ACTION_GLYPH_PX,
-  type TagActionKind,
 } from '@/lib/dim/tagConfig';
 import {
   analyzeCoverage,
@@ -117,15 +114,6 @@ interface BuildCoveragePanelProps {
   classState: ClassVaultState;
   classType: ClassType;
   prefs: ClassPreferenceProfile;
-}
-
-function TagActionGlyph({ tag, px = TAG_ACTION_GLYPH_PX }: { tag: TagActionKind; px?: number }) {
-  const def = DIM_TAG_DEFINITIONS[tag];
-  return (
-    <svg width={px} height={px} viewBox="0 0 512 512" aria-hidden className="block shrink-0">
-      <path fill="currentColor" d={def.svgPath} />
-    </svg>
-  );
 }
 
 function RecommendedPiecesBulkActions({
@@ -217,40 +205,6 @@ function RecommendedPiecesBulkActions({
         </div>
       </div>
     </div>
-  );
-}
-
-function TagActionButton({
-  tag,
-  active,
-  locked,
-  disabled,
-  compact,
-  title,
-  onClick,
-}: {
-  tag: TagActionKind;
-  active: boolean;
-  /** Applied in DIM but not removable from this control (favorite). */
-  locked?: boolean;
-  disabled?: boolean;
-  compact?: boolean;
-  title: string;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      aria-disabled={locked || disabled}
-      title={title}
-      aria-label={title}
-      aria-pressed={active}
-      className={tagActionIconBtnClass(tag, active, { locked, compact })}
-    >
-      <TagActionGlyph tag={tag} px={compact ? 14 : TAG_ACTION_GLYPH_PX} />
-    </button>
   );
 }
 

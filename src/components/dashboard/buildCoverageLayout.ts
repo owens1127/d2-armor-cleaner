@@ -105,6 +105,13 @@ export function rollPatternPickerActionRailStyle(): CSSProperties {
   };
 }
 
+/** Browse armor cards: DIM + keep + favorite + junk (same cells as combos picker rail). */
+export function browseCardActionRailStyle(): CSSProperties {
+  return {
+    gridTemplateColumns: 'repeat(4, var(--spacing-touch-sm))',
+  };
+}
+
 /** Measured pattern column width capped to viewport (picker menu inline width). */
 export function measureLoadoutPickerMenuWidthPx(columnWidthPx: number, viewportWidthPx: number): number {
   const max = Math.max(0, viewportWidthPx - 16);

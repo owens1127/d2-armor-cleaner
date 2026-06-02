@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { ArmorCard } from '@/components/duel/ArmorCard';
@@ -25,7 +25,7 @@ import {
   tuningCoverageToDominatorResult,
 } from '@/lib/scoring/tuningEquivalence';
 import { DominatorPopover } from '@/components/dominance/DominatorPopover';
-import { tagJunkLinkClass, tagKeepLinkClass } from '@/lib/dim/tagConfig';
+import { armorHasDimFavorite } from '@/lib/dim/parseTags';
 import { dimIdQuery } from '@/lib/session/persist';
 import {
   getOnboardingResumePath,
@@ -103,11 +103,36 @@ export function BrowsePage() {
     return [...map.entries()].sort((a, b) => a[1].localeCompare(b[1]));
   }, [classItems]);
 
-  const runDirectTag = (item: ArmorPiece, tag: TagValue | null) => {
-    void applyTagDirect([item], tag).catch((error: unknown) => {
-      console.error(error);
-    });
-  };
+  const runDirectTag = useCallback(
+    (item: ArmorPiece, tag: TagValue | null) => {
+      void applyTagDirect([item], tag).catch((error: unknown) => {
+        console.error(error);
+      });
+    },
+    [applyTagDirect],
+  );
+
+  const toggleKeep = useCallback(
+    (item: ArmorPiece) => {
+      runDirectTag(item, item.dimTag === 'keep' ? null : 'keep');
+    },
+    [runDirectTag],
+  );
+
+  const toggleFavorite = useCallback(
+    (item: ArmorPiece) => {
+      if (armorHasDimFavorite(item)) return;
+      runDirectTag(item, 'favorite');
+    },
+    [runDirectTag],
+  );
+
+  const toggleJunk = useCallback(
+    (item: ArmorPiece) => {
+      runDirectTag(item, item.dimTag === 'junk' ? null : 'junk');
+    },
+    [runDirectTag],
+  );
 
   const dominatorsBySlot = useMemo(() => {
     const bySlot = new Map<ArmorSlot, ReturnType<typeof findDominatorsMap>>();
@@ -484,6 +509,9 @@ export function BrowsePage() {
                       variant="browse"
                       static
                       className="flex-1 h-full"
+                      onToggleKeep={toggleKeep}
+                      onToggleFavorite={toggleFavorite}
+                      onToggleJunk={toggleJunk}
                     />
                   </div>
                 </DominatorPopover>
@@ -500,25 +528,12 @@ export function BrowsePage() {
                     wantLabel={label}
                     variant="browse"
                     className="flex-1 h-full"
+                    onToggleKeep={toggleKeep}
+                    onToggleFavorite={toggleFavorite}
+                    onToggleJunk={toggleJunk}
                   />
                 </div>
               )}
-              <div className="flex gap-3 mt-2 px-1 shrink-0">
-                <button
-                  type="button"
-                  onClick={() => runDirectTag(item, item.dimTag === 'keep' ? null : 'keep')}
-                  className={tagKeepLinkClass(item.dimTag === 'keep')}
-                >
-                  {item.dimTag === 'keep' ? 'Tagged keep' : 'Mark keep'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => runDirectTag(item, item.dimTag === 'junk' ? null : 'junk')}
-                  className={tagJunkLinkClass(item.dimTag === 'junk')}
-                >
-                  {item.dimTag === 'junk' ? 'Tagged junk' : 'Mark junk'}
-                </button>
-              </div>
             </div>
           );
         })}

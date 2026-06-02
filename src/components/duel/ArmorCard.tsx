@@ -21,6 +21,7 @@ import {
 } from '@/lib/duel/suggestion';
 import { scoreItem } from '@/lib/scoring/score';
 import { ItemIcon } from '@/components/items/ItemIcon';
+import { BrowseCardActionGrid } from '@/components/duel/BrowseCardActionGrid';
 import { CopyDimQueryButton } from '@/components/items/CopyDimQueryButton';
 import { DuelSetBlock } from '@/components/duel/DuelSetBlock';
 import { OnlyRollBadge } from '@/components/duel/OnlyRollBadge';
@@ -113,6 +114,9 @@ interface ArmorCardProps {
   copyCount?: number;
   copyCountTitle?: string;
   className?: string;
+  onToggleKeep?: (piece: ArmorPiece) => void;
+  onToggleFavorite?: (piece: ArmorPiece) => void;
+  onToggleJunk?: (piece: ArmorPiece) => void;
 }
 
 function OverflowPill({ count }: { count: number }) {
@@ -287,6 +291,9 @@ export function ArmorCard({
   copyCount,
   copyCountTitle,
   className = '',
+  onToggleKeep,
+  onToggleFavorite,
+  onToggleJunk,
 }: ArmorCardProps) {
   const isDuel = variant === 'duel' && opponent;
   const diffs = isDuel ? armorDiffLines(piece, opponent) : [];
@@ -315,6 +322,11 @@ export function ArmorCard({
   const { visible: statsToShow, overflow: statsOverflow } = partitionCardStats(cardStats);
   const subtitle = buildArmorSubtitle(piece, SLOT_LABELS);
   const showBrowseFooter = variant === 'browse';
+  const showBrowseTagActions =
+    showBrowseFooter &&
+    onToggleKeep != null &&
+    onToggleFavorite != null &&
+    onToggleJunk != null;
 
   const cardClassName = `ui-card cursor-pointer text-left w-full h-full flex flex-col transition-all ${className} ${
     selected
@@ -346,7 +358,9 @@ export function ArmorCard({
               )}
             </div>
             <div className="flex flex-col items-end gap-0.5 shrink-0">
-              <CopyDimQueryButton instanceId={piece.instanceId} itemName={piece.name} />
+              {variant !== 'browse' && (
+                <CopyDimQueryButton instanceId={piece.instanceId} itemName={piece.name} />
+              )}
               {variant === 'duel' && hasDisplayTier(piece.tier) && (
                 <TierBadge tier={piece.tier} />
               )}
@@ -449,12 +463,22 @@ export function ArmorCard({
           </div>
 
           {showBrowseFooter && (
-            <div className="mt-auto pt-2 min-h-[1.375rem] shrink-0 flex items-center flex-wrap gap-2">
-              {showBrowseFooter && wantLabel && <WantLabelBadge label={wantLabel} />}
-              {showBrowseFooter && breakdown && !wantLabel && !preferMatchScore && (
-                <span className="text-xs font-medium text-white/80">
-                  {formatMatchScore(breakdown)}
-                </span>
+            <div className="mt-auto pt-2 shrink-0 flex flex-col gap-2">
+              <div className="min-h-[1.375rem] flex items-center flex-wrap gap-2">
+                {wantLabel && <WantLabelBadge label={wantLabel} />}
+                {breakdown && !wantLabel && !preferMatchScore && (
+                  <span className="text-xs font-medium text-white/80">
+                    {formatMatchScore(breakdown)}
+                  </span>
+                )}
+              </div>
+              {showBrowseTagActions && (
+                <BrowseCardActionGrid
+                  piece={piece}
+                  onToggleKeep={onToggleKeep}
+                  onToggleFavorite={onToggleFavorite}
+                  onToggleJunk={onToggleJunk}
+                />
               )}
             </div>
           )}
