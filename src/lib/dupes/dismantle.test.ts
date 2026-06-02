@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { allDismantleCandidates, findDismantleBySlot } from './dismantle';
+import {
+  allDismantleCandidates,
+  buildDismantleDisplayGroups,
+  findDismantleBySlot,
+} from './dismantle';
 import { DEFAULT_REDUNDANT_PEER_SCOPE } from '@/lib/scoring/peerScope';
 import type { ArmorPiece } from '@/types';
 
@@ -75,5 +79,35 @@ describe('findDismantleBySlot', () => {
         'hunter',
       ),
     ).toHaveLength(0);
+  });
+});
+
+describe('buildDismantleDisplayGroups', () => {
+  it('groups stat-lower candidates with their keeper in one grid', () => {
+    const keeper = piece('keep', { weapons: 35, grenade: 25, super: 23 });
+    const junkA = piece('junk-a', { weapons: 28, grenade: 25, super: 20 });
+    const junkB = piece('junk-b', { weapons: 30, grenade: 22, super: 20 });
+    const candidates = allDismantleCandidates([keeper, junkA, junkB], 'hunter');
+    const groups = buildDismantleDisplayGroups(candidates);
+    expect(groups).toHaveLength(1);
+    expect(groups[0]?.reason).toBe('stat-lower');
+    expect(groups[0]?.members).toHaveLength(3);
+    expect(groups[0]?.members[0]?.role).toBe('keeper');
+    expect(groups[0]?.members[0]?.piece.instanceId).toBe('keep');
+    expect(groups[0]?.members.filter((m) => m.role === 'redundant')).toHaveLength(2);
+  });
+
+  it('includes keeper and redundant copies for tuning duplicates', () => {
+    const keeper = piece('keep', { weapons: 30, grenade: 25, super: 20 }, { tuningStat: 'weapons' });
+    const dup = piece('dup', { weapons: 30, grenade: 25, super: 20 }, {
+      tuningStat: 'weapons',
+      power: 440,
+    });
+    const candidates = allDismantleCandidates([keeper, dup], 'hunter');
+    const groups = buildDismantleDisplayGroups(candidates);
+    expect(groups).toHaveLength(1);
+    expect(groups[0]?.reason).toBe('tuning-duplicate');
+    const ids = groups[0]?.members.map((m) => m.piece.instanceId).sort();
+    expect(ids).toEqual(['dup', 'keep']);
   });
 });

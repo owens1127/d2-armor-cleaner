@@ -27,7 +27,7 @@ describe('formatRedundantReasonLine', () => {
     expect(formatRedundantReasonLine(candidate)).toBe(
       'Strictly lower than Peer Vest · Weapons +5',
     );
-    expect(redundantReasonBadge(candidate.reason)).toBe('Stat-lower');
+    expect(redundantReasonBadge(candidate.reason)).toBe('Strictly lower');
   });
 
   it('describes tuning-duplicate with mutual coverage', () => {
@@ -41,6 +41,6 @@ describe('formatRedundantReasonLine', () => {
     };
     expect(formatRedundantReasonLine(candidate)).toContain('Keeper Helm');
     expect(formatRedundantReasonLine(candidate)).toContain('keep one');
-    expect(redundantReasonBadge(candidate.reason)).toBe('Tuning dup');
+    expect(redundantReasonBadge(candidate.reason)).toBe('Tuning duplicate');
   });
 });

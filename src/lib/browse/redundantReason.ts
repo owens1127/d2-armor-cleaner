@@ -28,6 +28,25 @@ export function formatRedundantReasonLine(candidate: DismantleCandidate): string
 
 export function redundantReasonBadge(
   reason: DismantleCandidate['reason'],
-): 'Stat-lower' | 'Tuning dup' {
-  return reason === 'stat-lower' ? 'Stat-lower' : 'Tuning dup';
+): 'Strictly lower' | 'Tuning duplicate' {
+  return reason === 'stat-lower' ? 'Strictly lower' : 'Tuning duplicate';
+}
+
+/** Section header label for a redundant dupe group. */
+export function redundantGroupReasonLabel(reason: DismantleCandidate['reason']): string {
+  return redundantReasonBadge(reason);
+}
+
+/** Short comparison line under a redundant grid tile. */
+export function formatRedundantMemberDetail(candidate: DismantleCandidate): string | null {
+  if (candidate.reason === 'tuning-duplicate' && candidate.tuningCoverage?.mutual) {
+    return 'Same tuning layouts — pick one';
+  }
+  const beats =
+    candidate.reason === 'stat-lower'
+      ? (candidate.dominatorResult?.beatsOn ??
+        comparableStatDeltas(candidate.peer, candidate.item))
+      : intrinsicStatDeltas(candidate.peer, candidate.item);
+  const detail = formatBeatsOn(beats);
+  return detail || null;
 }

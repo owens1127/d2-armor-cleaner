@@ -75,6 +75,25 @@ export interface DismantleDisplayEntry extends DismantleCandidate {
   instanceIds: string[];
 }
 
+export type DismantleGroupRole = 'keeper' | 'redundant';
+
+export interface DismantleGroupMember {
+  piece: ArmorPiece;
+  role: DismantleGroupRole;
+  /** Present for redundant members (stat-lower or tuning-duplicate proof). */
+  candidate?: DismantleCandidate;
+  copyCount: number;
+  instanceIds: string[];
+}
+
+/** Keeper + redundant pieces shown together for triage. */
+export interface DismantleDisplayGroup {
+  id: string;
+  slot: ArmorSlot;
+  reason: DismantleReason;
+  members: DismantleGroupMember[];
+}
+
 function tuningDisplayGroupKey(
   candidate: DismantleCandidate,
   scope: RedundantPeerScope,
@@ -119,6 +138,121 @@ export function groupDismantleCandidatesForDisplay(
   }
 
   return out;
+}
+
+function sortDisplayGroups(
+  groups: DismantleDisplayGroup[],
+  prefs?: ClassPreferenceProfile,
+): DismantleDisplayGroup[] {
+  const slotOrder = new Map(ARMOR_SLOTS.map((s, i) => [s, i]));
+  return [...groups].sort((a, b) => {
+    const slotCmp = (slotOrder.get(a.slot) ?? 0) - (slotOrder.get(b.slot) ?? 0);
+    if (slotCmp !== 0) return slotCmp;
+    if (a.reason !== b.reason) {
+      return a.reason === 'stat-lower' ? -1 : 1;
+    }
+    const keeperA = a.members.find((m) => m.role === 'keeper')?.piece;
+    const keeperB = b.members.find((m) => m.role === 'keeper')?.piece;
+    if (keeperA && keeperB && prefs) {
+      return compareRedundantKeepPriority(keeperA, keeperB, prefs);
+    }
+    return (keeperA?.name ?? '').localeCompare(keeperB?.name ?? '');
+  });
+}
+
+/** Build keeper + redundant grids for redundant-roll browse. */
+export function buildDismantleDisplayGroups(
+  candidates: DismantleCandidate[],
+  scope: RedundantPeerScope = DEFAULT_REDUNDANT_PEER_SCOPE,
+  prefs?: ClassPreferenceProfile,
+): DismantleDisplayGroup[] {
+  const statByPeer = new Map<string, DismantleCandidate[]>();
+  const tuningByKey = new Map<string, DismantleCandidate[]>();
+
+  for (const candidate of candidates) {
+    if (candidate.reason === 'stat-lower') {
+      const key = candidate.peer.instanceId;
+      const list = statByPeer.get(key) ?? [];
+      list.push(candidate);
+      statByPeer.set(key, list);
+      continue;
+    }
+    const key = tuningDisplayGroupKey(candidate, scope);
+    const list = tuningByKey.get(key) ?? [];
+    list.push(candidate);
+    tuningByKey.set(key, list);
+  }
+
+  const groups: DismantleDisplayGroup[] = [];
+
+  for (const [peerId, list] of statByPeer) {
+    const peer = list[0]?.peer;
+    if (!peer) continue;
+    const sorted = prefs ? sortDismantleCandidates(list, prefs) : list;
+    groups.push({
+      id: `stat-${peerId}`,
+      slot: peer.armorSlot,
+      reason: 'stat-lower',
+      members: [
+        {
+          piece: peer,
+          role: 'keeper',
+          copyCount: 1,
+          instanceIds: [peer.instanceId],
+        },
+        ...sorted.map((candidate) => ({
+          piece: candidate.item,
+          role: 'redundant' as const,
+          candidate,
+          copyCount: 1,
+          instanceIds: [candidate.item.instanceId],
+        })),
+      ],
+    });
+  }
+
+  for (const [key, list] of tuningByKey) {
+    const peer = list[0]?.peer;
+    if (!peer) continue;
+    const collapsed = groupDismantleCandidatesForDisplay(list, scope);
+    const sortedCollapsed = prefs
+      ? [...collapsed].sort((a, b) =>
+          compareRedundantKeepPriority(a.item, b.item, prefs),
+        )
+      : collapsed;
+    groups.push({
+      id: `tuning-${key}`,
+      slot: peer.armorSlot,
+      reason: 'tuning-duplicate',
+      members: [
+        {
+          piece: peer,
+          role: 'keeper',
+          copyCount: 1,
+          instanceIds: [peer.instanceId],
+        },
+        ...sortedCollapsed.map((entry) => ({
+          piece: entry.item,
+          role: 'redundant' as const,
+          candidate: entry,
+          copyCount: entry.copyCount,
+          instanceIds: entry.instanceIds,
+        })),
+      ],
+    });
+  }
+
+  return sortDisplayGroups(groups, prefs);
+}
+
+export function countRedundantMembersInGroups(groups: DismantleDisplayGroup[]): number {
+  let n = 0;
+  for (const group of groups) {
+    for (const member of group.members) {
+      if (member.role === 'redundant') n += member.copyCount;
+    }
+  }
+  return n;
 }
 
 function sortDismantleCandidates(

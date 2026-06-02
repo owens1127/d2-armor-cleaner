@@ -13,10 +13,10 @@ import {
 } from '@/lib/constants';
 import {
   allDismantleCandidates,
+  buildDismantleDisplayGroups,
   countDismantleCandidates,
+  countRedundantMembersInGroups,
   findDismantleBySlot,
-  groupDismantleCandidatesForDisplay,
-  type DismantleDisplayEntry,
 } from '@/lib/dupes/dismantle';
 import { sortBrowseItems, type BrowseSortOrder } from '@/lib/armor/sort';
 import {
@@ -231,8 +231,8 @@ export function BrowsePage() {
     [allItems, classType, redundantPeerScope, classPrefs, dismantleExclusions],
   );
 
-  const redundantEntriesBySlot = useMemo(() => {
-    if (!redundantOnly) return new Map<ArmorSlot, DismantleDisplayEntry[]>();
+  const redundantGroups = useMemo(() => {
+    if (!redundantOnly) return [];
     const raw = findDismantleBySlot(
       allItems,
       classType,
@@ -240,17 +240,24 @@ export function BrowsePage() {
       classPrefs,
       dismantleExclusions,
     );
-    const out = new Map<ArmorSlot, DismantleDisplayEntry[]>();
-    for (const [armorSlot, candidates] of raw) {
-      const grouped = groupDismantleCandidatesForDisplay(candidates, redundantPeerScope);
-      const visible = grouped.filter((entry) => {
-        if (!matchesItemFilters(entry.item)) return false;
-        if (strictlyLowerOnly && entry.reason !== 'stat-lower') return false;
-        return true;
-      });
-      if (visible.length > 0) out.set(armorSlot, visible);
-    }
-    return out;
+    const candidates = [...raw.values()].flat();
+    const groups = buildDismantleDisplayGroups(
+      candidates,
+      redundantPeerScope,
+      classPrefs,
+    );
+    return groups.filter((group) => {
+      if (strictlyLowerOnly && group.reason !== 'stat-lower') return false;
+      const hasVisibleRedundant = group.members.some(
+        (member) =>
+          member.role === 'redundant' &&
+          member.instanceIds.some((instanceId) => {
+            const item = classItems.find((i) => i.instanceId === instanceId) ?? member.piece;
+            return matchesItemFilters(item);
+          }),
+      );
+      return hasVisibleRedundant;
+    });
   }, [
     redundantOnly,
     allItems,
@@ -258,15 +265,15 @@ export function BrowsePage() {
     redundantPeerScope,
     classPrefs,
     dismantleExclusions,
+    classItems,
     matchesItemFilters,
     strictlyLowerOnly,
   ]);
 
-  const redundantFilteredCount = useMemo(() => {
-    let n = 0;
-    for (const list of redundantEntriesBySlot.values()) n += list.length;
-    return n;
-  }, [redundantEntriesBySlot]);
+  const redundantFilteredCount = useMemo(
+    () => countRedundantMembersInGroups(redundantGroups),
+    [redundantGroups],
+  );
 
   const redundantFiltersActive =
     slot !== 'all' ||
@@ -364,18 +371,21 @@ export function BrowsePage() {
 
   async function copyFilteredIds() {
     const rows = redundantOnly
-      ? [...redundantEntriesBySlot.values()].flatMap((entries) =>
-          entries.flatMap((entry) =>
-            entry.instanceIds.map((instanceId) => {
-              const item = classItems.find((i) => i.instanceId === instanceId) ?? entry.item;
-              return {
-                instanceId,
-                tag: null,
-                itemName: item.name,
-                classType: item.classType,
-              };
-            }),
-          ),
+      ? redundantGroups.flatMap((group) =>
+          group.members
+            .filter((member) => member.role === 'redundant')
+            .flatMap((member) =>
+              member.instanceIds.map((instanceId) => {
+                const item =
+                  classItems.find((i) => i.instanceId === instanceId) ?? member.piece;
+                return {
+                  instanceId,
+                  tag: null,
+                  itemName: item.name,
+                  classType: item.classType,
+                };
+              }),
+            ),
         )
       : filtered.map((i) => ({
           instanceId: i.instanceId,
@@ -643,7 +653,7 @@ export function BrowsePage() {
           <RedundantRollsBrowse
             classType={classType}
             searchParams={searchParams}
-            entriesBySlot={redundantEntriesBySlot}
+            groups={redundantGroups}
             totalCandidateCount={totalRedundantCount}
             filteredCount={redundantFilteredCount}
             filtersActive={redundantFiltersActive}
