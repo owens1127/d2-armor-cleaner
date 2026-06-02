@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom';
+import { Link, Navigate, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { ArmorCard } from '@/components/duel/ArmorCard';
 import {
@@ -12,7 +12,11 @@ import {
 } from '@/lib/constants';
 import { allDismantleCandidates } from '@/lib/dupes/dismantle';
 import { sortBrowseItems, type BrowseSortOrder } from '@/lib/armor/sort';
-import { BROWSE_REDUNDANT_QUERY } from '@/lib/nav';
+import {
+  filterBrowseRedundantOnly,
+  isBrowseRedundantActive,
+  setBrowseRedundantInParams,
+} from '@/lib/browse/redundantFilter';
 import { buildFitTotal, getDesiredBuilds, resolveDesiredBuild } from '@/lib/coverage/analyze';
 import { resolveDesiredBuildFromParam } from '@/lib/coverage/builds';
 import { getClassPrefs } from '@/lib/prefs/profile';
@@ -59,8 +63,9 @@ function browseSortLabel(order: BrowseSortOrder): string {
 
 export function BrowsePage() {
   const { class: classParam } = useParams<{ class: string }>();
+  const location = useLocation();
   useVaultFocusRefresh({ refreshOnMount: true });
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const classType = (classParam ?? 'hunter') as ClassType;
   const { membership } = useAuthStore();
   const { allItems, classStates, globalDupeRules, classRuleOverrides } = useVaultStore();
@@ -74,7 +79,7 @@ export function BrowsePage() {
     globalDupeRules;
   const redundantPeerScope = redundantPeerScopeFromDupeRules(classDupeRules);
   const { applyTagDirect, pendingTags, bucketJunkedIds, bucketKeptBothIds } = useSessionStore();
-  const redundantFromUrl = searchParams.get(BROWSE_REDUNDANT_QUERY) === '1';
+  const redundantOnly = isBrowseRedundantActive(searchParams);
 
   const [slot, setSlot] = useState<ArmorSlot | 'all'>('all');
   const [archetype, setArchetype] = useState<Archetype | 'all'>('all');
@@ -82,7 +87,6 @@ export function BrowsePage() {
   const [dimTag, setDimTag] = useState<TagValue | 'all' | 'untagged'>('all');
   const [dupesOnly, setDupesOnly] = useState(false);
   const [strictlyLowerOnly, setStrictlyLowerOnly] = useState(false);
-  const [redundantOnly, setRedundantOnly] = useState(redundantFromUrl);
   const [buildFilter, setBuildFilter] = useState<string>(initialBuildFilter);
   const [buildFitOnly, setBuildFitOnly] = useState(Boolean(searchParams.get('build')));
   const [query, setQuery] = useState('');
@@ -217,15 +221,19 @@ export function BrowsePage() {
         if (!strictlyLowerOnly) return true;
         return dominatorsBySlot.get(i.armorSlot)?.has(i.instanceId) ?? false;
       })
-      .filter((i) => !redundantOnly || redundantRollIds.has(i.instanceId))
       .filter((i) => {
         if (!buildFitOnly || !activeBuildProfile) return true;
         return buildFitTotal(i, activeBuildProfile.statTargets) > 0;
       })
       .filter((i) => !q || i.name.toLowerCase().includes(q));
+    const redundantFiltered = filterBrowseRedundantOnly(
+      items,
+      redundantOnly,
+      redundantRollIds,
+    );
     const effectiveSort =
       sortOrder === 'build-fit-desc' && !activeBuildProfile ? 'match-desc' : sortOrder;
-    return sortBrowseItems(items, effectiveSort, matchTotals, buildFitTotals);
+    return sortBrowseItems(redundantFiltered, effectiveSort, matchTotals, buildFitTotals);
   }, [
     classItems,
     slot,
@@ -246,7 +254,9 @@ export function BrowsePage() {
     activeBuildProfile,
   ]);
 
-  if (!CLASSES.includes(classType)) return <Navigate to="/browse/hunter" replace />;
+  if (!CLASSES.includes(classType)) {
+    return <Navigate to={`/browse/hunter${location.search}`} replace />;
+  }
   if (!membership) return <Navigate to="/" replace />;
   if (needsOnboardingRedirect()) {
     return <Navigate to={getOnboardingResumePath(false)} replace />;
@@ -425,7 +435,11 @@ export function BrowsePage() {
           <input
             type="checkbox"
             checked={redundantOnly}
-            onChange={(e) => setRedundantOnly(e.target.checked)}
+            onChange={(e) =>
+              setSearchParams(setBrowseRedundantInParams(searchParams, e.target.checked), {
+                replace: true,
+              })
+            }
             className="rounded"
           />
           Redundant rolls only
@@ -540,7 +554,13 @@ export function BrowsePage() {
       </div>
 
       {filtered.length === 0 && state && (
-        <p className="text-muted text-center py-12">No items match these filters.</p>
+        <p className="text-muted text-center py-12">
+          {redundantOnly
+            ? redundantRollIds.size === 0
+              ? 'No redundant rolls for this class with your current rules.'
+              : 'No redundant rolls match these filters.'
+            : 'No items match these filters.'}
+        </p>
       )}
 
       <div className="mt-8">
