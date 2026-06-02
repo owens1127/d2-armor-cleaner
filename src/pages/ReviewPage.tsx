@@ -148,10 +148,6 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
         {reviewTags.length} queued · {keep.length} keep · {junk.length} junk. Apply writes queued
         tags; rows note existing DIM tags when different.
       </p>
-      <p className="text-muted text-xs mb-2">
-        <span className="text-cyan-300">Blue</span> = best slot fit ·{' '}
-        <span className="text-rose-300">salmon</span> = exclusive row winner
-      </p>
       <div className="mb-8" />
 
       {applied && (
