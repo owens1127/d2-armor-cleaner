@@ -1,4 +1,6 @@
 import { useMemo } from 'react';
+import { classLabel } from '@/i18n/gameCopy';
+import { useTranslation } from 'react-i18next';
 import { groupIntoBuckets, dupeBucketCount, itemsToReview } from '@/lib/dupes/group';
 import type { ClassType, DupeRuleConfig } from '@/types';
 import { useVaultStore } from '@/stores';
@@ -17,6 +19,7 @@ export function DupeRulesImpact({
   className = '',
   plainLanguage = false,
 }: DupeRulesImpactProps) {
+  const { t } = useTranslation(['vault', 'rulesOnboarding', 'dupes']);
   const classStates = useVaultStore((s) => s.classStates);
   const state = classStates[classType];
 
@@ -31,17 +34,21 @@ export function DupeRulesImpact({
   }, [state, rules]);
 
   if (!impact) {
-    return <p className={`text-sm text-muted ${className}`}>Load vault to preview impact.</p>;
+    return <p className={`text-sm text-muted ${className}`}>{t('vault:dupeRulesImpact')}</p>;
   }
 
   if (plainLanguage) {
-    const classLabel = classType.charAt(0).toUpperCase() + classType.slice(1);
-    const groupWord = impact.buckets === 1 ? 'group' : 'groups';
-    const rollWord = impact.review === 1 ? 'roll' : 'rolls';
+    const classDisplayName = classLabel(classType);
     const line =
       impact.buckets === 0
-        ? `No duplicate groups for ${classLabel} at this tier.`
-        : `About ${impact.buckets} duplicate ${groupWord} · roughly ${impact.review} ${rollWord} to compare`;
+        ? t('rulesOnboarding:impact.none', { class: classDisplayName })
+        : t('rulesOnboarding:impact.summary', {
+            buckets: impact.buckets,
+            review: impact.review,
+            class: classDisplayName,
+            groupWord: t('rulesOnboarding:impact.group', { count: impact.buckets }),
+            rollWord: t('rulesOnboarding:impact.roll', { count: impact.review }),
+          });
     return (
       <p className={`text-sm text-muted min-h-[2.75rem] leading-relaxed ${className}`}>
         {line}
@@ -52,10 +59,12 @@ export function DupeRulesImpact({
   return (
     <p className={`text-sm ${className}`}>
       <span className="text-white font-semibold">{impact.buckets}</span>
-      <span className="text-muted"> dupe buckets · </span>
+      <span className="text-muted"> {t('dupes:impactCompact.buckets')} </span>
       <span className="text-white font-semibold">~{impact.review}</span>
-      <span className="text-muted"> decisions · </span>
-      <span className="text-muted">{impact.pieces} pieces included</span>
+      <span className="text-muted"> {t('dupes:impactCompact.decisions')} </span>
+      <span className="text-muted">
+        {t('dupes:impactCompact.pieces', { count: impact.pieces })}
+      </span>
     </p>
   );
 }

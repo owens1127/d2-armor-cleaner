@@ -10,7 +10,14 @@ import {
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
+import { statLabel, slotLabel } from '@/i18n/gameCopy';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import {
+  coverageGapDetailCopy,
+  rollStatRoleLabelCopy,
+  rollStatRoleTitleCopy,
+} from '@/i18n/buildCopy';
 import { useVaultInteractionHold } from '@/hooks/useVaultRefreshGuard';
 import { BUILD_QUERY_PARAM, desiredBuildsEditorPath, resolveCombosBuildId } from '@/lib/nav';
 import { COMBOS_SECTION_ID, scrollToHashElement } from '@/lib/nav/hashScroll';
@@ -49,7 +56,6 @@ import {
   shouldSplitRollChipsInSetRow,
 } from '@/components/dashboard/buildCoverageLayout';
 import { formatArmorTierBadge, hasDisplayTier } from '@/lib/armor/tier';
-import { SLOT_LABELS, STAT_LABELS } from '@/lib/constants';
 import { armorHasDimFavorite } from '@/lib/dim/parseTags';
 import { TagActionButton } from '@/components/items/TagActionButton';
 import {
@@ -68,8 +74,6 @@ import {
   archetypePriorityIntrinsics,
   formatArchetypeGroupLabel,
   normalizeDesiredBuilds,
-  OPTIMAL_ROLL_TERTIARY_BONUS,
-  OPTIMAL_ROLL_TUNING_BONUS,
   rollPatternStatBonuses,
   orderEligiblePiecesForSlotPicker,
   resolveEffectiveRollPatternSlotRepresentatives,
@@ -129,6 +133,7 @@ function RecommendedPiecesBulkActions({
   onBulkFavorite: (pieces: readonly ArmorPiece[]) => void;
   onBulkJunk: (pieces: readonly ArmorPiece[]) => void;
 }) {
+  const { t } = useTranslation('build');
   const tagCount = taggablePieces.length;
   const allKeep =
     tagCount > 0 && taggablePieces.every((piece) => tagActionKeepActive(piece));
@@ -148,7 +153,7 @@ function RecommendedPiecesBulkActions({
         />
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-[11px] text-muted shrink-0">Tag all:</span>
+        <span className="text-[11px] text-muted shrink-0">{t('coverage.tagAll')}</span>
         <div
           className={LOADOUT_ACTION_GRID_CLASS}
           style={{ gridTemplateColumns: 'repeat(3, var(--spacing-touch-sm))' }}
@@ -161,10 +166,10 @@ function RecommendedPiecesBulkActions({
               disabled={tagsDisabled}
               title={
                 tagsDisabled
-                  ? 'No taggable pieces'
+                  ? t('coverage.bulkNoTaggable')
                   : allKeep
-                    ? 'Clear keep on all'
-                    : 'Mark all keep'
+                    ? t('coverage.bulkClearKeep')
+                    : t('coverage.bulkMarkKeep')
               }
               onClick={() => onBulkKeep(taggablePieces)}
             />
@@ -178,10 +183,10 @@ function RecommendedPiecesBulkActions({
               disabled={tagsDisabled}
               title={
                 tagsDisabled
-                  ? 'No taggable pieces'
+                  ? t('coverage.bulkNoTaggable')
                   : allFavorite
-                    ? 'All favorited'
-                    : 'Mark all favorite'
+                    ? t('coverage.bulkAllFavorited')
+                    : t('coverage.bulkMarkFavorite')
               }
               onClick={() => onBulkFavorite(taggablePieces)}
             />
@@ -194,10 +199,10 @@ function RecommendedPiecesBulkActions({
               disabled={tagsDisabled}
               title={
                 tagsDisabled
-                  ? 'No taggable pieces'
+                  ? t('coverage.bulkNoTaggable')
                   : allJunk
-                    ? 'Clear junk on all'
-                    : 'Mark all junk'
+                    ? t('coverage.bulkClearJunk')
+                    : t('coverage.bulkMarkJunk')
               }
               onClick={() => onBulkJunk(taggablePieces)}
             />
@@ -224,54 +229,40 @@ function PatternRollSeparator() {
 }
 
 function PatternPriorityStatChip({ stat, bonus }: { stat: Stat; bonus: number }) {
+  const { t } = useTranslation('build');
   return (
     <span
-      title={`${STAT_LABELS[stat]} from archetype (+${bonus})`}
+      title={t('coverage.archetypeBonus', { stat: statLabel(stat), bonus })}
       className={`${patternChipBaseClass} border-white/15 bg-white/[0.04] text-white/80`}
     >
       <StatIcon stat={stat} size="sm" variant="glyph" />
-      <span>{STAT_LABELS[stat]}</span>
+      <span>{statLabel(stat)}</span>
     </span>
   );
 }
 
 function PatternIrrelevantSecondaryChip({ stat }: { stat: Stat }) {
+  const { t } = useTranslation('build');
   return (
     <span
-      title={`${STAT_LABELS[stat]} · not a combo priority`}
+      title={t('coverage.notComboPriority', { stat: statLabel(stat) })}
       className={`${patternChipBaseClass} border-white/8 bg-transparent text-white/35`}
     >
       <StatIcon stat={stat} size="sm" variant="glyph" className="opacity-60" />
-      <span>{STAT_LABELS[stat]}</span>
+      <span>{statLabel(stat)}</span>
     </span>
   );
-}
-
-function rollStatRoleTitle(stat: Stat, role: RollStatRole): string {
-  if (role === 'combined') {
-    return `${STAT_LABELS[stat]} tertiary + tuning (+${OPTIMAL_ROLL_TERTIARY_BONUS} +${OPTIMAL_ROLL_TUNING_BONUS})`;
-  }
-  if (role === 'tertiary') {
-    return `${STAT_LABELS[stat]} tertiary (+${OPTIMAL_ROLL_TERTIARY_BONUS})`;
-  }
-  return `${STAT_LABELS[stat]} tuning (+${OPTIMAL_ROLL_TUNING_BONUS})`;
-}
-
-function rollStatRoleLabel(role: Exclude<RollStatRole, never>): string {
-  if (role === 'combined') return 'tertiary + tuning';
-  if (role === 'tertiary') return 'tertiary';
-  return 'tuning';
 }
 
 function PatternRollRoleChip({ stat, role }: { stat: Stat; role: RollStatRole }) {
   return (
     <span
-      title={rollStatRoleTitle(stat, role)}
+      title={rollStatRoleTitleCopy(stat, role)}
       className={`${patternChipBaseClass} border-white/12 bg-white/[0.03] text-white/75`}
     >
       <StatIcon stat={stat} size="sm" variant="glyph" />
-      <span>{STAT_LABELS[stat]}</span>
-      <span className="text-white/45">{rollStatRoleLabel(role)}</span>
+      <span>{statLabel(stat)}</span>
+      <span className="text-white/45">{rollStatRoleLabelCopy(role)}</span>
     </span>
   );
 }
@@ -334,10 +325,11 @@ function RollPatternColumnHeader({
   items?: ArmorPiece[];
   splitRollChips?: boolean;
 }) {
+  const { t } = useTranslation('build');
   const title =
     pattern.archetype !== null
       ? formatArchetypeGroupLabel(pattern.archetype, priorities)
-      : 'Any archetype';
+      : t('coverage.anyArchetype');
 
   const showArchetypeChips =
     pattern.archetype !== null &&
@@ -497,6 +489,7 @@ function SlotPiecePickerMenu({
   onToggleJunk: (piece: ArmorPiece) => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation('build');
   const menuRef = useRef<HTMLDivElement>(null);
   const listId = useId();
   const displayPieces = orderEligiblePiecesForSlotPicker(eligiblePieces);
@@ -567,7 +560,7 @@ function SlotPiecePickerMenu({
         ref={menuRef}
         id={listId}
         role="listbox"
-        aria-label={`Choose ${SLOT_LABELS[slot]}`}
+        aria-label={t('coverage.chooseSlot', { slot: slotLabel(slot) })}
         className={PICKER_MENU_PANEL_CLASS}
         onMouseDown={(event) => event.stopPropagation()}
         onWheel={(event) => event.stopPropagation()}
@@ -582,10 +575,10 @@ function SlotPiecePickerMenu({
       >
       <div className="shrink-0 border-b border-white/10 bg-white/[0.04] px-2.5 py-1.5">
         <p className="text-[10px] font-medium uppercase tracking-wide text-white/45">
-          {SLOT_LABELS[slot]}
+          {slotLabel(slot)}
         </p>
         <p className="text-[11px] text-white/70 tabular-nums">
-          {eligiblePieces.length} eligible {eligiblePieces.length === 1 ? 'piece' : 'pieces'}
+          {t('coverage.eligible', { count: eligiblePieces.length })}
         </p>
       </div>
       <ul className="overflow-y-auto flex-1 min-h-0">
@@ -690,13 +683,14 @@ function LoadoutActionIconPlaceholder() {
 }
 
 function LoadoutChoosePlaceholder() {
+  const { t } = useTranslation('build');
   return (
     <div
       className={`${LOADOUT_ACTION_CHOOSE_CELL_CLASS} ${LOADOUT_ACTION_PLACEHOLDER_CLASS}`}
       aria-hidden
     >
       <span className={loadoutChooseBtnClass({ open: false })}>
-        <span>Choose</span>
+        <span>{t('coverage.choose')}</span>
         <span className="tabular-nums opacity-0">0</span>
       </span>
     </div>
@@ -731,6 +725,7 @@ function PatternLoadoutActionGrid({
   onToggleFavorite: (piece: ArmorPiece) => void;
   onToggleJunk: (piece: ArmorPiece) => void;
 }) {
+  const { t } = useTranslation('build');
   const isPickerRail = railVariant === 'picker';
   const railStyle = isPickerRail ? rollPatternPickerActionRailStyle() : rollPatternActionRailStyle();
   const isolateActivation = stopRowActivation
@@ -775,7 +770,7 @@ function PatternLoadoutActionGrid({
             compact
             tag="keep"
             active={isTaggedKeep}
-            title={isTaggedKeep ? 'Remove keep tag in DIM' : 'Tag keep in DIM'}
+            title={isTaggedKeep ? t('coverage.tagKeepRemove') : t('coverage.tagKeep')}
             onClick={() => onToggleKeep(piece)}
           />
         </div>
@@ -789,7 +784,7 @@ function PatternLoadoutActionGrid({
             tag="favorite"
             active={dimFavorite}
             locked={dimFavorite}
-            title={dimFavorite ? 'Already favorited in DIM' : 'Tag favorite in DIM'}
+            title={dimFavorite ? t('coverage.tagFavoriteAlready') : t('coverage.tagFavorite')}
             onClick={() => onToggleFavorite(piece)}
           />
         </div>
@@ -802,7 +797,7 @@ function PatternLoadoutActionGrid({
             compact
             tag="junk"
             active={isTaggedJunk}
-            title={isTaggedJunk ? 'Remove junk tag in DIM' : 'Tag junk in DIM'}
+            title={isTaggedJunk ? t('coverage.tagJunkRemove') : t('coverage.tagJunk')}
             onClick={() => onToggleJunk(piece)}
           />
         </div>
@@ -816,11 +811,11 @@ function PatternLoadoutActionGrid({
               onClick={onToggleChoose}
               aria-haspopup="listbox"
               aria-expanded={pickerOpen}
-              aria-label={`Choose piece · ${eligibleCount} eligible`}
-              title={`${eligibleCount} eligible pieces in vault`}
+              aria-label={t('coverage.choosePiece', { count: eligibleCount })}
+              title={t('coverage.chooseEligibleTitle', { count: eligibleCount })}
               className={loadoutChooseBtnClass({ open: pickerOpen })}
             >
-              <span>Choose</span>
+              <span>{t('coverage.choose')}</span>
               <span className="tabular-nums opacity-70">{eligibleCount}</span>
               <ChevronIcon open={pickerOpen} className="opacity-70" />
             </button>
@@ -895,7 +890,7 @@ function PatternSlotRow({
         >
           <div
             className={`${LOADOUT_LEFT_CLUSTER_CLASS} opacity-45`}
-            title={SLOT_LABELS[slot]}
+            title={slotLabel(slot)}
           >
             <SlotIcon slot={slot} size="sm" />
           </div>
@@ -944,7 +939,7 @@ function PatternSlotRow({
       >
         <div
           className={`${LOADOUT_LEFT_CLUSTER_CLASS} ${isNearMatch ? 'opacity-45' : ''}`}
-          title={SLOT_LABELS[slot]}
+          title={slotLabel(slot)}
         >
           <SlotIcon slot={slot} size="sm" />
           <ItemIcon
@@ -1102,17 +1097,12 @@ const RollPatternColumn = memo(function RollPatternColumn({
   );
 });
 
-function gapDetail(buildStatHits: number, targetCount: number): string {
-  if (buildStatHits >= targetCount) return 'matches all priorities';
-  if (buildStatHits >= 2) return 'matches multiple priorities';
-  return 'matches one priority';
-}
-
 export function BuildCoveragePanel({
   classState,
   classType,
   prefs,
 }: BuildCoveragePanelProps) {
+  const { t } = useTranslation('build');
   const { applyTagDirect } = useSessionStore();
   const { updateProfile } = usePrefsStore();
   const hasSavedBuilds = normalizeDesiredBuilds(prefs.desiredBuilds, classType).length > 0;
@@ -1189,7 +1179,7 @@ export function BuildCoveragePanel({
       allAnalyses[0] ??
       analyzeCoverage(classState.items, classState.buckets, {
         id: 'fallback',
-        label: 'Combo',
+        label: t('coverage.comboFallback'),
         statTargets: defaultStatTargetsFromPrefs(prefs),
       })
     );
@@ -1470,11 +1460,9 @@ export function BuildCoveragePanel({
   if (!hasSavedBuilds) {
     return (
       <section className="mb-10 min-w-0 rounded-2xl bg-surface/60 px-4 py-4 sm:px-5 ring-1 ring-white/8">
-        <h2 className="text-base font-semibold tracking-tight text-white">Your combos</h2>
+        <h2 className="text-base font-semibold tracking-tight text-white">{t('coverage.heading')}</h2>
         <div className="mt-4 rounded-xl bg-black/15 px-4 py-4 ring-1 ring-white/10">
-          <p className="max-w-lg text-sm text-muted">
-            No combos yet. Add 2–4 stat priorities in the Combos section below.
-          </p>
+          <p className="max-w-lg text-sm text-muted">{t('coverage.empty')}</p>
         </div>
       </section>
     );
@@ -1484,17 +1472,15 @@ export function BuildCoveragePanel({
     <section className="mb-10 min-w-0 rounded-2xl bg-surface/60 px-4 py-4 sm:px-5 ring-1 ring-white/8">
       <div className="mb-4 flex flex-wrap items-start justify-between gap-3 border-b border-white/10 pb-3">
         <div>
-          <h2 className="text-base font-semibold tracking-tight text-white">Your combos</h2>
-          <p className="mt-1 max-w-xl text-xs text-muted">
-            Best piece per slot for each optimal roll pattern (archetype + tertiary + tuning)
-          </p>
+          <h2 className="text-base font-semibold tracking-tight text-white">{t('coverage.heading')}</h2>
+          <p className="mt-1 max-w-xl text-xs text-muted">{t('coverage.intro')}</p>
         </div>
         <button
           type="button"
           onClick={scrollToCombosEditor}
           className="cursor-pointer text-[11px] text-white/70 hover:text-white shrink-0 underline-offset-2 hover:underline"
         >
-          Edit combos
+          {t('coverage.editCombos')}
         </button>
       </div>
 
@@ -1538,17 +1524,15 @@ export function BuildCoveragePanel({
 
       {optimalRollPatterns.length === 0 && (
         <div className="mb-4 rounded-lg bg-white/[0.03] px-3 py-2.5 ring-1 ring-white/10">
-          <p className="text-sm font-medium text-white">Set stat priorities on a combo to see roll targets</p>
+          <p className="text-sm font-medium text-white">{t('coverage.setPrioritiesHint')}</p>
         </div>
       )}
 
       <div className="mb-3 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
           <div className="min-w-0">
-            <h3 className="text-sm font-semibold text-white/95">Recommended pieces</h3>
-            <p className="mt-0.5 text-[10px] text-muted">
-              DIM tags and search for the grid below
-            </p>
+            <h3 className="text-sm font-semibold text-white/95">{t('coverage.recommendedHeading')}</h3>
+            <p className="mt-0.5 text-[10px] text-muted">{t('coverage.recommendedHint')}</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <RecommendedPiecesBulkActions
@@ -1562,7 +1546,7 @@ export function BuildCoveragePanel({
               to={browseBuildHref(classType, buildId)}
               className="cursor-pointer text-[11px] text-white/70 hover:text-white underline-offset-2 hover:underline shrink-0"
             >
-              Browse vault
+              {t('coverage.browseVault')}
             </Link>
           </div>
         </div>
@@ -1570,7 +1554,7 @@ export function BuildCoveragePanel({
           <div className="space-y-1 rounded-lg bg-white/[0.03] px-3 py-2.5 ring-1 ring-white/10">
             <div className="flex flex-wrap items-center gap-2">
               <p className="text-[11px] text-muted">
-                Set target:{' '}
+                {t('coverage.setTarget')}{' '}
                 <span className="text-white/90">
                   {formatSetBonusTargetsSummary(
                     build.setBonus2pc,
@@ -1612,12 +1596,12 @@ export function BuildCoveragePanel({
                     key={`vault-${entry.hash}-${entry.tier}`}
                     className="text-[11px] text-danger/90"
                   >
-                    {formatSetBonusVaultReachLabel(entry)} · not enough vault pieces
+                    {formatSetBonusVaultReachLabel(entry)} · {t('coverage.vaultPiecesShort')}
                   </p>
                 ))}
             {activeAnalysis.setBonusReadiness.conflictingSets && (
               <p className="text-[11px] text-danger/90">
-                These set targets need more than five armor pieces · adjust your combo.
+                {t('coverage.conflictingSets')}
               </p>
             )}
           </div>
@@ -1667,7 +1651,7 @@ export function BuildCoveragePanel({
         className="mt-2 cursor-pointer text-xs text-accent-dim hover:text-white underline-offset-2 hover:underline"
         aria-expanded={showDetails}
       >
-        {showDetails ? 'Hide roll-type details' : 'Show roll-type details'}
+        {showDetails ? t('coverage.hideRollDetails') : t('coverage.showRollDetails')}
       </button>
 
       {showDetails && (
@@ -1684,34 +1668,31 @@ function BuildCoverageDetails({
   analysis: CoverageAnalysis;
   targetCount: number;
 }) {
+  const { t } = useTranslation('build');
   return (
     <div className="mt-4 space-y-4 border-t border-white/10 pt-4">
       <div className="text-xs text-muted space-y-1">
+        <p>{t('coverage.detailsSupporting', { count: analysis.supportingPieces })}</p>
         <p>
-          <span className="text-white/80 tabular-nums">{analysis.supportingPieces}</span>{' '}
-          pieces in your vault roll at least one priority stat.
-        </p>
-        <p>
-          <span className="text-white/80 tabular-nums">{analysis.filledProfiles}</span> of{' '}
-          <span className="text-white/80 tabular-nums">{analysis.possibleProfiles}</span>{' '}
-          roll types you could own (archetype + tertiary + slot) are in your vault.
+          {t('coverage.detailsProfiles', {
+            filled: analysis.filledProfiles,
+            possible: analysis.possibleProfiles,
+          })}
         </p>
       </div>
 
       {analysis.redundantOverlap && (
         <p className="rounded-lg bg-white/[0.03] px-3 py-2 text-xs text-muted ring-1 ring-white/10">
-          Empty slots remain despite redundant rolls. Prioritize fills over more dupes.
+          {t('coverage.detailsRedundantOverlap')}
         </p>
       )}
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <h3 className="text-xs font-semibold text-white/90 mb-1">Roll types to hunt</h3>
-          <p className="text-[11px] text-muted mb-2">
-            Empty combinations that would help this combo.
-          </p>
+          <h3 className="text-xs font-semibold text-white/90 mb-1">{t('coverage.gapsHeading')}</h3>
+          <p className="text-[11px] text-muted mb-2">{t('coverage.gapsIntro')}</p>
           {analysis.gaps.length === 0 ? (
-            <p className="text-xs text-muted">Nothing obvious missing from your matrix.</p>
+            <p className="text-xs text-muted">{t('coverage.gapsEmpty')}</p>
           ) : (
             <ul className="space-y-1.5">
               {analysis.gaps.map((gap) => (
@@ -1721,7 +1702,7 @@ function BuildCoverageDetails({
                 >
                   {gap.label}
                   <span className="text-muted ml-1">
-                    ({gapDetail(gap.buildStatHits, targetCount)})
+                    ({coverageGapDetailCopy(gap.buildStatHits, targetCount)})
                   </span>
                 </li>
               ))}
@@ -1744,7 +1725,9 @@ function BuildCoverageDetails({
                   className="flex items-center justify-between gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs ring-1 ring-white/10"
                 >
                   <span className="text-white/90 truncate">{cluster.label}</span>
-                  <span className="shrink-0 text-muted tabular-nums">{cluster.count} pieces</span>
+                  <span className="shrink-0 text-muted tabular-nums">
+                    {t('coverage.overlapCount', { count: cluster.count })}
+                  </span>
                 </li>
               ))}
             </ul>

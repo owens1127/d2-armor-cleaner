@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SlotIcon } from '@/components/SlotIcon';
 import {
   activeBucketItemCount,
@@ -15,22 +16,20 @@ interface DuelBucketChooserProps {
 }
 
 export function DuelBucketChooser({ classLabel, buckets, onSelect }: DuelBucketChooserProps) {
+  const { t } = useTranslation('duel');
   const sorted = useMemo(() => buckets, [buckets]);
 
   return (
     <div className="text-left py-8 ui-card w-full max-w-lg mx-auto px-6">
       <p className="text-[0.65rem] font-medium uppercase tracking-wide text-muted mb-1">
-        Compare duplicates
+        {t('chooser.kicker')}
       </p>
-      <h2 className="ui-heading text-xl font-medium text-white mb-1">Choose a duplicate group</h2>
-      <p className="text-sm text-muted mb-5">
-        Pick which {classLabel} armor group to compare first. You can switch groups later from the
-        header.
-      </p>
+      <h2 className="ui-heading text-xl font-medium text-white mb-1">{t('chooser.title')}</h2>
+      <p className="text-sm text-muted mb-5">{t('chooser.intro', { class: classLabel })}</p>
 
       <ul
         role="listbox"
-        aria-label={`${classLabel} duplicate groups`}
+        aria-label={t('chooser.listAria', { class: classLabel })}
         className="rounded-md border border-border bg-surface-2 max-h-[min(20rem,50vh)] overflow-y-auto"
       >
         {sorted.map((b) => {

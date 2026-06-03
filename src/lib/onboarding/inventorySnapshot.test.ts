@@ -2,12 +2,8 @@ import { describe, expect, it } from 'vitest';
 import type { ArmorPiece } from '@/types';
 import {
   buildVaultInventorySnapshot,
-  DEFAULT_VAULT_CAPACITY,
   estimateVaultTrim,
-  getKeepTarget,
-  getKeepTargetTotal,
   vaultHeavyThreshold,
-  VAULT_KEEP_TOTAL_TARGETS,
 } from '@/lib/onboarding/inventorySnapshot';
 
 function t5Piece(classType: ArmorPiece['classType'], id: string): ArmorPiece {
@@ -28,16 +24,6 @@ function t5Piece(classType: ArmorPiece['classType'], id: string): ArmorPiece {
 }
 
 describe('vault keep targets', () => {
-  it('scales presets to DEFAULT_VAULT_CAPACITY', () => {
-    expect(DEFAULT_VAULT_CAPACITY).toBe(1300);
-    expect(getKeepTarget('lean')).toBe(120);
-    expect(getKeepTarget('balanced')).toBe(200);
-    expect(getKeepTarget('options')).toBe(280);
-    expect(getKeepTarget('hoarder')).toBe(400);
-    expect(getKeepTargetTotal('balanced')).toBe(VAULT_KEEP_TOTAL_TARGETS.balanced);
-    expect(getKeepTargetTotal('balanced')).toBe(600);
-  });
-
   it('vaultHeavyThreshold uses total keep goal, not legacy tiny counts', () => {
     expect(vaultHeavyThreshold('balanced').totalT5).toBe(900);
     expect(vaultHeavyThreshold('lean').totalT5).toBe(540);

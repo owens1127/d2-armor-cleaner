@@ -1,13 +1,4 @@
-import {
-  ARCHETYPE_LABELS,
-  ARCHETYPES,
-  ARMOR_SLOTS,
-  CLASS_LABELS,
-  CLASSES,
-  SLOT_LABELS,
-  STAT_LABELS,
-  STATS,
-} from '@/lib/constants';
+import { ARCHETYPES, ARMOR_SLOTS, CLASSES, STATS } from '@/lib/constants';
 import { armorIsDimKeepOrFavorite } from '@/lib/dim/parseTags';
 import { createEntityId } from '@/lib/ids';
 import type {
@@ -49,7 +40,7 @@ function isMultiMatchMode(mode: AutoFilterMatchMode | undefined): boolean {
   return m === 'anyOf' || m === 'noneOf';
 }
 
-function getCriterionValues<T>(
+export function getCriterionValues<T>(
   single: T | undefined,
   multi: readonly T[] | undefined,
 ): T[] | undefined {
@@ -82,15 +73,6 @@ export function criterionMatches<T>(
     default:
       return inSet && values.length === 1;
   }
-}
-
-function describeCriterion(labels: string[], mode: AutoFilterMatchMode | undefined): string {
-  if (labels.length === 0) return '';
-  const m = normalizeMatchMode(mode);
-  if (m === 'anyOf') return `any of ${labels.join(', ')}`;
-  if (m === 'noneOf') return `none of ${labels.join(', ')}`;
-  if (m === 'not') return `NOT ${labels[0]}`;
-  return labels[0];
 }
 
 function normalizeEnumList<T extends string>(
@@ -270,61 +252,6 @@ export function normalizeAutoFilterRules(raw: unknown): AutoFilterRule[] {
     });
   }
   return rules;
-}
-
-export function describeAutoFilterRule(
-  rule: AutoFilterRule,
-  setNames?: ReadonlyMap<number, string>,
-): string {
-  if (rule.name?.trim()) return rule.name.trim();
-  const parts: string[] = [];
-  parts.push(rule.classType === 'all' ? 'All classes' : CLASS_LABELS[rule.classType]);
-  const archetypeValues = getCriterionValues(rule.archetype, rule.archetypes);
-  if (archetypeValues?.length) {
-    parts.push(
-      describeCriterion(
-        archetypeValues.map((value) => ARCHETYPE_LABELS[value]),
-        rule.archetypeMatchMode,
-      ),
-    );
-  }
-  const tertiaryValues = getCriterionValues(rule.tertiaryStat, rule.tertiaryStats);
-  if (tertiaryValues?.length) {
-    parts.push(
-      describeCriterion(
-        tertiaryValues.map((value) => `${STAT_LABELS[value]} tertiary`),
-        rule.tertiaryStatMatchMode,
-      ),
-    );
-  }
-  const tuningValues = getCriterionValues(rule.tuningStat, rule.tuningStats);
-  if (tuningValues?.length) {
-    parts.push(
-      describeCriterion(
-        tuningValues.map((value) => `${STAT_LABELS[value]} tuning`),
-        rule.tuningStatMatchMode,
-      ),
-    );
-  }
-  const slotValues = getCriterionValues(rule.armorSlot, rule.armorSlots);
-  if (slotValues?.length) {
-    parts.push(
-      describeCriterion(
-        slotValues.map((value) => SLOT_LABELS[value]),
-        rule.armorSlotMatchMode,
-      ),
-    );
-  }
-  const setValues = getCriterionValues(rule.armorSetHash, rule.armorSetHashes);
-  if (setValues?.length) {
-    parts.push(
-      describeCriterion(
-        setValues.map((hash) => setNames?.get(hash) ?? `set ${hash}`),
-        rule.armorSetHashMatchMode,
-      ),
-    );
-  }
-  return parts.join(' · ');
 }
 
 /** Items blocked from auto-junk: keep state, already junked, or session keep decisions. */

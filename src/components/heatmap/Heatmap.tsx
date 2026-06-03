@@ -1,12 +1,9 @@
 import { Fragment } from 'react';
+import { classLabel, statLabel, archetypeLabel, slotLabel } from '@/i18n/gameCopy';
 import {
-  ARCHETYPE_LABELS,
   ARCHETYPES,
   ARMOR_SLOTS,
-  CLASS_LABELS,
   isImpossibleCell,
-  SLOT_LABELS,
-  STAT_LABELS,
   tertiaryStatsForArchetype,
 } from '@/lib/constants';
 import { ClassIcon } from '@/components/items/ClassIcon';
@@ -62,14 +59,14 @@ function ClassHeatmapSidebar({ classType }: { classType: ClassType }) {
   return (
     <div
       className="flex flex-col items-center justify-center gap-2 shrink-0 w-10 self-stretch border border-border rounded-xl bg-surface-2/80"
-      aria-label={`${CLASS_LABELS[classType]} vault heatmap`}
+      aria-label={`${classLabel(classType)} vault heatmap`}
     >
       <ClassIcon classType={classType} size="xs" className="text-muted" />
       <span
         className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted select-none"
         style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
       >
-        {CLASS_LABELS[classType]}
+        {classLabel(classType)}
       </span>
     </div>
   );
@@ -121,7 +118,7 @@ function ArchetypeFocusGrid({
         <div
           key={stat}
           className="bg-surface-2 flex items-center justify-center py-2 min-h-[2rem]"
-          title={STAT_LABELS[stat]}
+          title={statLabel(stat)}
         >
           <StatIcon stat={stat} size={HEATMAP_HEADER_STAT_SIZE} variant="glyph" />
         </div>
@@ -171,7 +168,7 @@ function ArmorViewGrid({
         <div key={archetype} className="flex flex-col gap-1 min-w-0">
           <div className="text-center mb-1 px-0.5">
             <div className="text-[10px] font-semibold uppercase tracking-wider text-muted truncate">
-              {ARCHETYPE_LABELS[archetype]}
+              {archetypeLabel(archetype)}
             </div>
           </div>
           <div
@@ -185,7 +182,7 @@ function ArmorViewGrid({
               <div
                 key={stat}
                 className="bg-surface-2 flex items-center justify-center py-2 min-h-[1.75rem]"
-                title={STAT_LABELS[stat]}
+                title={statLabel(stat)}
               >
                 <StatIcon stat={stat} size={HEATMAP_HEADER_STAT_SIZE} variant="glyph" />
               </div>
@@ -257,12 +254,12 @@ export function Heatmap({
           )}
         </div>
         <p className="text-xs text-muted mt-2">
-          {CLASS_LABELS[classState.classType]} · count per cell (excludes junk) · tint = avg interest ·
+          {classLabel(classState.classType)} · count per cell (excludes junk) · tint = avg interest ·
           white dot = dupes · dim dot = mixed tuning
           {viewMode === 'armor'
             ? ' · armor view (6 archetypes)'
-            : ` · archetype view (${ARCHETYPE_LABELS[focusArchetype]})`}
-          {slotFilter !== 'all' && ` · ${SLOT_LABELS[slotFilter]} only`}
+            : ` · archetype view (${archetypeLabel(focusArchetype)})`}
+          {slotFilter !== 'all' && ` · ${slotLabel(slotFilter)} only`}
         </p>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ClassIcon } from '@/components/items/ClassIcon';
 import { CLASSES } from '@/lib/constants';
 import { classSwitchPath } from '@/lib/nav';
@@ -28,10 +29,11 @@ export function HeaderClassPicker({
   onSessionClassChange: (classType: ClassType) => void;
 }) {
   const location = useLocation();
+  const { t } = useTranslation('layout');
 
   return (
     <nav
-      aria-label="Guardian class"
+      aria-label={t('aria.guardianClass')}
       className="flex shrink-0 items-center gap-0.5 rounded-md border border-border bg-surface/80 p-0.5"
     >
       {CLASSES.map((c) => {

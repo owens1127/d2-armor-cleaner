@@ -62,18 +62,24 @@ beforeEach(() => {
 
 describe('buildAuthenticatedNavLinks', () => {
   it('omits Home and starts with Dashboard for the active class', () => {
+    local.set(LS_ONBOARDING, 'true');
     const links = buildAuthenticatedNavLinks('warlock');
-    expect(links.map((l) => l.label)).not.toContain('Home');
+    expect(links.map((l) => l.labelKey)).not.toContain('Home' as never);
     expect(links[0]).toEqual({
-      label: 'Dashboard',
+      labelKey: 'dashboard',
       match: '/dashboard',
       to: '/dashboard/warlock',
     });
-    expect(links.find((l) => l.label === 'Settings')).toEqual({
-      label: 'Settings',
+    expect(links.find((l) => l.labelKey === 'settings')).toEqual({
+      labelKey: 'settings',
       match: '/settings',
       to: settingsPath('warlock'),
     });
+  });
+
+  it('hides app routes until onboarding is complete', () => {
+    const links = buildAuthenticatedNavLinks('hunter');
+    expect(links.map((l) => l.labelKey)).toEqual(['calibrate']);
   });
 });
 

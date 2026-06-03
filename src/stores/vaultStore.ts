@@ -70,6 +70,11 @@ interface VaultStore {
   setClassDupeRules: (classType: ClassType, rules: Partial<DupeRuleConfig>) => void;
   resetClassDupeRules: (classType: ClassType) => void;
   refreshClassStates: (onlyClass?: ClassType) => void;
+  relocalizeVaultDisplayNames: (
+    items: ArmorPiece[],
+    lastParsedCount: number,
+    fetchedAt: number,
+  ) => void;
   setOnboardingComplete: (v: boolean) => void;
   patchItemDimTags: (updates: { instanceId: string; tag: TagValue | null }[]) => void;
 }
@@ -404,6 +409,11 @@ export const useVaultStore = create<VaultStore>((set, get) => ({
     };
     set({ classRuleOverrides: newOverrides, classStates: nextStates, allItems: scored });
     persistDupeRules(globalDupeRules, strictness, nextStates);
+  },
+
+  relocalizeVaultDisplayNames: (items, lastParsedCount, fetchedAt) => {
+    if (items.length === 0) return;
+    commitVaultItems(items, lastParsedCount, fetchedAt);
   },
 
   refreshClassStates: (onlyClass?: ClassType) => {

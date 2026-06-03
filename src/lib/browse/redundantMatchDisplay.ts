@@ -3,13 +3,14 @@ import {
   type CardStatEntry,
   type StatPillRole,
 } from '@/components/duel/ArmorCard';
-import { ARCHETYPE_STATS, STAT_LABELS, STATS } from '@/lib/constants';
 import {
   budgetRelevantIntrinsicStats,
   intrinsicStatValue,
   intrinsicStatsEqual,
 } from '@/lib/armor/intrinsicCompare';
 import type { DismantleDisplayGroup, DismantleReason } from '@/lib/dupes/dismantle';
+import { statLabel } from '@/i18n/gameCopy';
+import { ARCHETYPE_STATS, STATS } from '@/lib/constants';
 import { comparableStatDeltas } from '@/lib/scoring/dominance';
 import type { ArmorPiece, Stat } from '@/types';
 
@@ -89,7 +90,7 @@ export function analyzeRedundantGroupMatch(group: DismantleDisplayGroup): Redund
         comparableStatDeltas(keeper, candidate.item);
       for (const beat of beats) {
         if (beat.delta > 0) {
-          lowerStatLabels.push(`${STAT_LABELS[beat.stat]} −${beat.delta}`);
+          lowerStatLabels.push(`${statLabel(beat.stat)} −${beat.delta}`);
         }
       }
     }
@@ -112,10 +113,10 @@ export function formatRedundantGroupMatchingLine(
 ): string {
   const parts: string[] = [];
   if (match.sharedTertiary) {
-    parts.push(`${STAT_LABELS[match.sharedTertiary]} tertiary`);
+    parts.push(`${statLabel(match.sharedTertiary)} tertiary`);
   }
   if (match.sharedTuning) {
-    parts.push(`${STAT_LABELS[match.sharedTuning]} tuning`);
+    parts.push(`${statLabel(match.sharedTuning)} tuning`);
   }
 
   if (parts.length === 0) {

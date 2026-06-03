@@ -1,0 +1,1017 @@
+{
+  "autoFilters": {
+    "title": "自動フィルター",
+    "intro": "保管庫の読み込みまたは更新時に、ジャンクタグを自動でキューに追加します。キープとお気に入りには自動タグ付けしません。",
+    "noRules": "ルールはまだありません。",
+    "addRule": "ルールを追加",
+    "classLabel": "クラス",
+    "operatorsIntro": "各フィルターは <1>次と一致</1>、<2>次と一致しない</2>、<3>いずれか</3>、<4>いずれも該当しない</4> にできます（例：アーキタイプが Gunner でないジャンクのハンター防具）。",
+    "rulesHeading": "ルール",
+    "rulesBody": "一致するピースはレビューでジャンクとしてキューに入ります（手動ジャンクと同じ）。keepは自動タグされません：DIM keep/お気に入り、保留中のkeep、デュエルバケットでkeepしたピース。",
+    "deleteRule": "削除",
+    "allClasses": "全クラス",
+    "archetypeLabel": "아키타입",
+    "tertiaryStatLabel": "3차 스탯",
+    "tuningStatLabel": "튜닝 스탯",
+    "slotLabel": "슬롯",
+    "armorSetLabel": "방어구 세트",
+    "any": "아무거나",
+    "addValue": "값 추가…",
+    "pickValue": "값 선택…",
+    "matchMode": "일치 모드",
+    "matchModeDisabled": "일치 모드(먼저 값을 선택하세요)",
+    "operators": {
+      "is": "Is",
+      "isNot": "Is not",
+      "anyOf": "Any of",
+      "noneOf": "None of"
+    },
+    "livePreview_one": "실시간 미리보기: 다음 금고 불러오기 시 {{count}}개 피스가 대기열에 들어갑니다(keep, 즐겨찾기, 이미 정크 처리된 항목 제외).",
+    "livePreview_other": "실시간 미리보기: 다음 금고 불러오기 시 {{count}}개 피스가 대기열에 들어갑니다(keep, 즐겨찾기, 이미 정크 처리된 항목 제외).",
+    "setFallback": "세트 {{hash}}",
+    "addRuleHeading": "ルールを追加",
+    "enableRule": "규칙 사용: {{label}}",
+    "disableRule": "규칙 끄기: {{label}}",
+    "removeValue": "{{label}} 제거",
+    "describe": {
+      "allClasses": "모든 클래스",
+      "tertiary": "{{stat}} 3차",
+      "tuning": "{{stat}} 튜닝",
+      "setFallback": "세트 {{hash}}",
+      "anyOf": "다음 중 하나: {{labels}}",
+      "noneOf": "다음 중 없음: {{labels}}",
+      "not": "NOT {{label}}"
+    }
+  },
+  "browse": {
+    "title": "{{class}} 防具を閲覧",
+    "summary": "{{total}} 件中 {{filtered}} 件 · {{sortLabel}}",
+    "redundantLink": "冗長ロール {{count}} 件",
+    "loadVaultFirst": "まずダッシュボードから保管庫を読み込んでください。",
+    "filters": {
+      "slot": "スロット",
+      "archetype": "アーキタイプ",
+      "search": "検索",
+      "armorSet": "防具セット",
+      "dimTag": "DIM タグ",
+      "sort": "並べ替え",
+      "combo": "コンボ",
+      "allSlots": "すべてのスロット",
+      "allArchetypes": "すべてのアーキタイプ",
+      "allSets": "すべてのセット",
+      "any": "任意",
+      "anyCombo": "任意のコンボ",
+      "armorNamePlaceholder": "防具名…",
+      "statLowerOnly": "ステータスが低いのみ",
+      "dupesOnly": "重複のみ",
+      "strictlyLowerOnly": "厳密に低いのみ",
+      "redundantOnly": "冗長ロールのみ",
+      "supportsComboOnly": "コンボ対応のみ"
+    },
+    "dimTags": {
+      "untagged": "タグなし",
+      "keep": "キープ",
+      "junk": "ジャンク",
+      "favorite": "お気に入り",
+      "infuse": "インフューズ",
+      "archive": "アーカイブ"
+    },
+    "sort": {
+      "matchDesc": "適合 %（高 → 低）",
+      "matchAsc": "適合 %（低 → 高）",
+      "preference": "好み",
+      "buildFitDesc": "コンボ適合（高 → 低）",
+      "matchDescHint": "適合 % で並べ替え（最も適合する順）",
+      "matchAscHint": "適合 % で並べ替え（最も適合しない順）",
+      "buildFitHint": "コンボ適合で並べ替え",
+      "preferenceHint": "好みで並べ替え"
+    },
+    "copyIds": "{{count}} 件の id: クエリをコピー",
+    "copied": "コピーしました！",
+    "reviewTagsLink": "比較/仕分けタグをレビュー（{{count}}）",
+    "redundant": {
+      "pickOne": "残す 1 つを選ぶ",
+      "noRedundant": "冗長ロールなし",
+      "noMatches": "一致なし",
+      "noMatchFilters": "No redundant rolls match the current filters.",
+      "noneToShow": "No redundant rolls to show."
+    },
+    "noItemsMatch": "No items match these filters.",
+    "backToDashboard": "Back to dashboard",
+    "dupeBadge": "dupe"
+  },
+  "build": {
+    "title": "{{class}} コンボ",
+    "intro": "コンボの各ロール目標に対する保管庫内の最適な装備。",
+    "combosHeading": "コンボ",
+    "setBonuses": "セットボーナス",
+    "setBonusesOptional": "セットボーナス（任意）",
+    "includeInCoverage": "カバレッジに含める",
+    "comboNameAria": "コンボ名",
+    "maxCombos": "クラスあたり最大 {{max}} コンボ。",
+    "orderLabel": "순서:",
+    "noneOption": "없음",
+    "twoTwoMix": " · 2+2 믹스",
+    "editor": {
+      "intro": "순서대로 2~4개 스탯과 선택적 방어구 세트 보너스(예: Ferropotent 2pc + Smoke Jumper 2pc)를 고릅니다. 스탯·세트 정렬에 맞는 슬롯별 최고 피스를 추천합니다.",
+      "unsavedHint": "저장되지 않은 변경 · 저장하거나 취소하면 읽기 전용 보기로 돌아갑니다.",
+      "editingHint": "콤보 편집 중 · 완료 후 저장하거나 취소하세요.",
+      "allSavedHint": "모든 콤보 저장됨 · 카드의 편집을 눌러 설정을 변경하세요.",
+      "emptyList": "이 클래스에 저장된 콤보가 없습니다. 아래에서 추가하면 롤 추천과 찾아보기 정렬에 사용됩니다.",
+      "unsaved": "미저장",
+      "saved": "저장됨",
+      "on": "켜짐",
+      "off": "꺼짐",
+      "edit": "편집",
+      "remove": "제거",
+      "save": "저장",
+      "cancel": "취소",
+      "addStat": "스탯 추가",
+      "priority1": "1순위",
+      "priority2": "2순위",
+      "priority3": "3순위",
+      "priority4": "4순위",
+      "priorityN": "{{n}}순위",
+      "setBonus2pc": "2피스 보너스",
+      "setBonus4pcSame": "동일 세트(4pc)",
+      "setBonus4pcMix": "두 번째 세트(2pc 믹스) 또는 4pc",
+      "setBonusHint": "2pc용 세트 하나를 고른 뒤, 4pc는 같은 세트 또는 2+2 믹스용 두 번째 세트를 고르세요.",
+      "loadVaultForSets": "인벤토리에서 방어구 세트를 고르려면 금고를 불러오세요.",
+      "firstSet2pc": "첫 세트(2pc)",
+      "twoPcOnly": "2pc만(첫 세트)",
+      "set4pcSuffix": "{{name}} (4pc)",
+      "set2pcMixSuffix": "{{name}} (2pc 믹스)",
+      "targetLabel": "목표:",
+      "addStatCount": "+ 스탯 추가 ({{current}}/{{max}})",
+      "addCombo": "콤보 추가",
+      "addAnotherCombo": "콤보 하나 더 추가",
+      "viewCoverageLink": "{{class}} 콤보 커버리지 보기"
+    },
+    "coverage": {
+      "heading": "あなたのコンボ",
+      "intro": "각 최적 롤 패턴(아키타입 + 3차 + 튜닝)별 슬롯 최고 피스",
+      "empty": "콤보가 없습니다. 아래 콤보 섹션에서 2~4개 스탯 우선순위를 추가하세요.",
+      "editCombos": "콤보 편집",
+      "setPrioritiesHint": "롤 목표를 보려면 콤보에 스탯 우선순위를 설정하세요",
+      "recommendedHeading": "추천 피스",
+      "recommendedHint": "아래 그리드용 DIM 태그 및 검색",
+      "browseVault": "ヴォールトを見る",
+      "setTarget": "세트 목표:",
+      "vaultPiecesShort": "금고 피스 부족",
+      "conflictingSets": "이 세트 목표는 방어구 5개를 넘습니다 · 콤보를 조정하세요.",
+      "showRollDetails": "롤 유형 상세 보기",
+      "hideRollDetails": "롤 유형 상세 숨기기",
+      "tagAll": "모두 태그:",
+      "bulkNoTaggable": "태그 가능한 피스 없음",
+      "bulkClearKeep": "모두 keep 해제",
+      "bulkMarkKeep": "모두 keep",
+      "bulkAllFavorited": "모두 즐겨찾기",
+      "bulkMarkFavorite": "모두 즐겨찾기",
+      "bulkClearJunk": "모두 정크 해제",
+      "bulkMarkJunk": "모두 정크",
+      "tagKeep": "DIM에서 keep 태그",
+      "tagKeepRemove": "DIM에서 keep 태그 제거",
+      "tagFavorite": "DIM에서 즐겨찾기",
+      "tagFavoriteAlready": "DIM에서 이미 즐겨찾기",
+      "tagJunk": "DIM에서 정크 태그",
+      "tagJunkRemove": "DIM에서 정크 태그 제거",
+      "choose": "選択",
+      "chooseSlot": "{{slot}} 선택",
+      "choosePiece": "피스 선택 · {{count}}개 후보",
+      "eligible_one": "후보 {{count}}개",
+      "eligible_other": "후보 {{count}}개",
+      "anyArchetype": "아무 아키타입",
+      "tier": "티어 {{tier}}",
+      "comboFallback": "콤보",
+      "rollRoleCombined": "3차 + 튜닝",
+      "rollRoleTertiary": "3차",
+      "rollRoleTuning": "튜닝",
+      "notComboPriority": "{{stat}} · 콤보 우선순위 아님",
+      "archetypeBonus": "아키타입 {{stat}} (+{{bonus}})",
+      "rollCombinedTitle": "{{stat}} 3차+튜닝 (+{{tertiaryBonus}} +{{tuningBonus}})",
+      "rollTertiaryTitle": "{{stat}} 3차 (+{{bonus}})",
+      "rollTuningTitle": "{{stat}} 튜닝 (+{{bonus}})",
+      "detailsSupporting": "금고에 우선순위 스탯을 하나 이상 굴리는 피스 {{count}}개.",
+      "detailsProfiles": "보유 가능한 롤 유형 {{possible}}개 중 {{filled}}개가 금고에 있습니다(아키타입 + 3차 + 슬롯).",
+      "detailsRedundantOverlap": "중복 롤이 있어도 빈 슬롯이 남습니다. 중복보다 채우기를 우선하세요.",
+      "gapsHeading": "찾을 롤 유형",
+      "gapsIntro": "이 콤보에 도움이 되는 빈 조합.",
+      "gapsEmpty": "매트릭스에서 눈에 띄는 빈칸이 없습니다.",
+      "overlapsHeading": "많이 가진 롤 유형",
+      "overlapsIntro": "같은 조합에 피스 3개 이상.",
+      "overlapsEmpty": "한 롤 유형에 과도한 중복 없음.",
+      "overlapCount_one": "{{count}}개",
+      "overlapCount_other": "{{count}}개",
+      "gapAllPriorities": "모든 우선순위 일치",
+      "gapMultiplePriorities": "여러 우선순위 일치",
+      "gapOnePriority": "한 우선순위 일치",
+      "chooseEligibleTitle": "금고 후보 {{count}}개"
+    }
+  },
+  "calibrate": {
+    "title": "好みを較正",
+    "calibratingClass": "{{class}} を較正中。",
+    "choicesSaved_one": "1 件の選択を保存済み",
+    "choicesSaved_other": "{{count}} 件の選択を保存済み",
+    "steps": {
+      "class": "クラス",
+      "archetype": "アーキタイプ",
+      "tertiary": "第3ステータス",
+      "tuning": "チューニングステータス",
+      "sets": "防具セット"
+    },
+    "stepHeader": "ステップ {{current}} / {{total}} · {{step}}",
+    "classTitle": "どのクラスを較正しますか？",
+    "archetypeTitle": "アーキタイプを好み順に並べる",
+    "archetypeInstruction": "一番好みのものを上に。行をドラッグするか矢印を使用。6 つのアーキタイプすべてが表示されます。保管庫の所持状況はリストを制限しません。",
+    "tertiaryTitle": "第3ステータスを好み順に並べる",
+    "tuningTitle": "チューニングステータスを好み順に並べる",
+    "setsTitle": "防具セットを好み順に並べる",
+    "skipAllArchetypes": "すべてのアーキタイプをスキップ",
+    "showBonusDetails": "ボーナス詳細を表示",
+    "bonusUnavailable": "ボーナス詳細は利用できません",
+    "noSetBonuses": "セットボーナスはありません",
+    "continue": "Continue",
+    "goToDashboard": "Go to dashboard",
+    "noArmorSets": "No armor sets to compare.",
+    "savedNextStep": "Saved · Next step",
+    "skipTertiaryArchetype": "Skip {{archetype}} tertiary",
+    "skipTertiaryStats": "Skip tertiary stats",
+    "skipTuningArchetype": "Skip {{archetype}} tuning",
+    "skipTuningStats": "Skip tuning stats",
+    "skipArmorSets": "Skip armor sets",
+    "nextArchetype": "Next archetype",
+    "setsInstruction": "Most preferred at the top. Sets from your vault, ordered by how many pieces you own. Drag to reorder or use arrow buttons.",
+    "contextSetPrefs": "Armor set preferences",
+    "unknownSet": "Unknown set",
+    "rankTheseStats": "Rank these stats:",
+    "dragRowsHint": "Drag rows or use the arrows. Most important at the top.",
+    "archetypeProgress": "{{current}} of {{total}} archetypes"
+  },
+  "common": {
+    "language": "言語",
+    "languageEn": "English",
+    "languageFr": "Français",
+    "languageEs": "Español",
+    "languageEsMx": "Español (México)",
+    "languageDe": "Deutsch",
+    "languageIt": "Italiano",
+    "languageJa": "日本語",
+    "languageKo": "한국어",
+    "languagePl": "Polski",
+    "languagePtBr": "Português (Brasil)",
+    "languageRu": "Русский",
+    "languageZhChs": "简体中文",
+    "languageZhCht": "繁體中文",
+    "continue": "続ける",
+    "save": "保存",
+    "back": "戻る",
+    "skip": "スキップ",
+    "signOut": "サインアウト",
+    "retry": "再試行",
+    "retrying": "再試行中…",
+    "pleaseWait": "お待ちください",
+    "copied": "コピーしました！",
+    "none": "なし",
+    "configured": "設定済み",
+    "notConfigured": "未設定",
+    "developer": "開発者",
+    "openReviewPage": "レビューページを開く",
+    "clearPendingTags": "保留中のタグをクリア",
+    "exportPrefs": "設定をエクスポート",
+    "importPrefs": "設定をインポート",
+    "preferencesImported": "設定をインポートしました。",
+    "invalidPrefsFile": "無効な設定ファイルです。",
+    "topStats": "優先ステータス:",
+    "topArchetypes": "優先アーキタイプ:",
+    "recalibrateClass": "{{class}} を再較正",
+    "resetClassPrefs": "{{class}} の設定をリセット",
+    "resetAllClasses": "すべてのクラスをリセット",
+    "confirm": {
+      "clearPendingTags": "保留中のタグ {{count}} 件をすべてクリアしますか？DIM には適用されません。",
+      "resetClassPrefs": "{{class}} の設定をデフォルトに戻しますか？このクラスのステータス重み、較正の選択、学習済みの重みがクリアされます。",
+      "resetAllClassPrefs": "すべてのクラスの設定をデフォルトに戻しますか？ハンター、タイタン、ウォーロックのステータス重み、較正の選択、学習済みの重みがクリアされます。重複ルールなどのその他の設定は保持されます。"
+    },
+    "classPrefs": {
+      "heading": "{{class}} の設定",
+      "usingClass": "{{class}} を使用中（ヘッダーでクラスを変更）。較正によるクラス別のステータスとアーキタイプの重み。重複ルールはクラスごとに上書きしない限り共有されます。",
+      "calibrations": "較正 {{count}} 回 · 信頼度 {{confidence}}"
+    },
+    "reviewTags": {
+      "heading": "レビュータグ",
+      "queued_one": "DIM に適用するタグが {{count}} 件キューに入っています。",
+      "queued_other": "DIM に適用するタグが {{count}} 件キューに入っています。",
+      "none": "保留中のタグはありません。"
+    },
+    "dev": {
+      "dimKeyHint": "ローカル DIM キー: origin {{origin}} で api.destinyitemmanager.com/new_app に POST します。"
+    },
+    "dimCopy": {
+      "queryFor": "{{name}} DIM 쿼리 복사",
+      "queryCopied": "{{name}} DIM 쿼리가 클립보드에 복사되었습니다.",
+      "searchShown": "표시된 피스 DIM 검색 복사",
+      "searchShownCopied": "표시된 피스 DIM 검색이 클립보드에 복사되었습니다.",
+      "searchGroup": "이 그룹의 {{count}}개 피스 DIM 검색 복사",
+      "searchGroupCopied": "이 그룹의 {{count}}개 피스 DIM 검색이 클립보드에 복사되었습니다."
+    }
+  },
+  "dashboard": {
+    "title": "{{class}} 保管庫",
+    "summary": "ティア付き {{class}} 防具 {{tieredCount}} 件 · 重複範囲内 {{minTierLabel}} {{dupeScopeCount}} 件 · 重複バケット {{buckets}} · 判断約 {{review}}",
+    "customDupeRules": "· カスタム重複ルール",
+    "tieredAccount": "· ティア付き防具 {{count}} 件（アカウント）",
+    "customRulesBanner": "{{class}} はカスタム重複ルールを使用中",
+    "nextSteps": "次のステップ",
+    "browseAllArmor": "すべての防具を閲覧",
+    "redundantRolls": "冗長ロール（{{count}}）",
+    "refreshVault": "保管庫を更新",
+    "armorView": "防具ビュー",
+    "archetypeView": "アーキタイプビュー",
+    "heatmapSlot": "ヒートマップスロット",
+    "allSlots": "すべてのスロット",
+    "insights": {
+      "continueSetup": {
+        "title": "セットアップを続ける",
+        "detail": "較正を完了して保管庫の提案を優先度に合わせる",
+        "cta": "続ける"
+      },
+      "continueCalibration": {
+        "title": "較正を続ける",
+        "detail": "好みの較正を中断したところから再開",
+        "cta": "続ける"
+      },
+      "calibratePreferences": {
+        "title": "好みを較正",
+        "detail": "このクラスのステータス、アーキタイプ、セットの優先度を設定",
+        "cta": "較正"
+      },
+      "completeCalibration": {
+        "title": "較正を完了",
+        "detail": "信頼度が低い · あと数回の選択で重複とコンボの提案が向上",
+        "cta": "較正"
+      },
+      "improveCalibration": {
+        "title": "較正を改善",
+        "detail": "信頼度が中程度 · さらに選択するとランキングとカバレッジのヒントが向上",
+        "cta": "較正"
+      },
+      "recalibrateStale": {
+        "title": "好みを再較正",
+        "detail": "前回の較正から時間が経過 · 保管庫のロールが変わっている可能性",
+        "cta": "再較正"
+      },
+      "recalibrateDefault": {
+        "title": "好みを再較正",
+        "detail": "いつでもこのクラスのステータス、アーキタイプ、セットの重みを更新",
+        "cta": "再較正"
+      },
+      "setupAutoFilters": {
+        "title": "自動フィルターを設定",
+        "detail": "保管庫読み込み時に、残したくないロールのジャンクタグをキューに追加",
+        "cta": "フィルターを設定"
+      },
+      "setupCombos": {
+        "title": "コンボを設定",
+        "detail": "コンボごとに優先ステータスを 2〜4 個選択 · {{countLabel}}",
+        "cta": "コンボを設定"
+      },
+      "addAnotherCombo": {
+        "title": "コンボを追加",
+        "detail": "コンボ {{countLabel}} · あと 1 つ追加",
+        "cta": "コンボを追加"
+      },
+      "addMoreCombos": {
+        "title": "コンボをさらに追加",
+        "detail": "{{countLabel}} · あと {{remaining}} コンボ追加",
+        "cta": "コンボを追加"
+      },
+      "fixCoverage": {
+        "title": "{{label}} のカバレッジを修正",
+        "cta": "コンボを開く"
+      },
+      "browseUpgrades": {
+        "title": "{{label}} のアップグレードを閲覧",
+        "cta": "保管庫を閲覧"
+      },
+      "compareLargest": {
+        "title": "{{label}} を比較",
+        "detail": "最大の重複バケットに {{count}} 件",
+        "cta": "このグループを比較"
+      },
+      "redundantRolls": {
+        "title": "冗長ロールをレビュー",
+        "detail_one": "保持する別ロールより厳密に劣る装備が {{count}} 件",
+        "detail_other": "保持する別ロールより厳密に劣る装備が {{count}} 件",
+        "cta": "一覧を開く"
+      },
+      "taggedKeep": {
+        "title": "DIM タグ付き重複をレビュー",
+        "detail_one": "DIM で既にキープまたはお気に入りタグの重複候補が {{count}} 件",
+        "detail_other": "DIM で既にキープまたはお気に入りタグの重複候補が {{count}} 件",
+        "cta": "保管庫を閲覧"
+      },
+      "heavyBuckets": {
+        "title": "大きな重複バケットを整理",
+        "detail_one": "5 件以上のバケットが {{count}} 個。ヒートマップで 1 つ選んでください。",
+        "detail_other": "5 件以上のバケットが {{count}} 個。ヒートマップで 1 つ選んでください。",
+        "cta": "重複を比較"
+      },
+      "fixCoverageNoVault": "保管庫に優先ステータスのロールを持つ装備はまだありません",
+      "fixCoverageNeedSlot": "優先度に合う {{slot}} が必要です",
+      "fixCoverageSlots": "推奨ロードアウトのスロット {{filled}}/{{total}} を埋め済み",
+      "browseNoArmor": "保管庫にこれらのステータスをロールする防具はまだありません",
+      "browseGaps": "より良い適合を探すロールタイプが {{count}} 種類",
+      "browseGaps_other": "より良い適合を探すロールタイプが {{count}} 種類",
+      "browseCompare": "保管庫の防具をコンボと比較"
+    },
+    "buildLink": {
+      "title": "あなたのコンボ"
+    },
+    "coverage": {
+      "yourCombos": "あなたのコンボ",
+      "setPriorities": "コンボでステータスの優先度を設定してロール目標を表示",
+      "recommendedPieces": "おすすめの装備",
+      "rollTypesHunt": "探すロールタイプ",
+      "nothingMissing": "マトリックスから明らかに不足しているものはありません。",
+      "rollTypesMany": "多く持っているロールタイプ",
+      "noHeavyDuplicates": "1 つのロールタイプに重複が集中していません。",
+      "tagAll": "すべてにタグ:",
+      "choose": "Choose",
+      "chooseSlotAria": "Choose {{slot}}",
+      "choosePieceAria": "Choose piece · {{count}} eligible",
+      "supportingPieces": "<1>{{count}}</1> pieces in your vault roll at least one priority stat.",
+      "filledProfiles": "<1>{{filled}}</1> of <2>{{total}}</2> roll types you could own (archetype + tertiary + slot) are in your vault.",
+      "redundantOverlap": "Empty slots remain despite redundant rolls. Prioritize fills over more dupes.",
+      "gapsIntro": "Empty combinations that would help this combo.",
+      "overlapsIntro": "Three or more pieces in the same combination.",
+      "piecesCount": "{{count}} pieces",
+      "orderLabel": "Order:"
+    }
+  },
+  "duel": {
+    "title": "{{class}} の重複を比較",
+    "subtitle": {
+      "wrapUp": "このグループをレビューして続行",
+      "bucketMeta": "{{slot}} · {{archetype}} · {{tertiary}} · {{count}} 件",
+      "bucketProgress": "{{meta}} · {{progress}}",
+      "noDupes": "このクラスに比較する重複防具はありません",
+      "chooseGroup": "重複グループを選んで開始",
+      "startingNext": "次の重複グループを開始中…"
+    },
+    "resetBucket": "バケットをリセット",
+    "preparing": "比較を準備中…",
+    "queueEmpty": {
+      "title": "キューが空です",
+      "summary": "キープ {{keep}} · ジャンク {{junk}} をキューに追加済み。",
+      "reviewTags": "タグをレビュー",
+      "restartQueue": "キューを再開",
+      "clearSession": "{{class}} セッションをクリア"
+    },
+    "noDuplicates": {
+      "title": "比較する重複がありません",
+      "body": "{{class}} のルールに一致する重複バケットがありません。設定で重複ルールを緩めるか、新しい保管庫スナップショットを読み込んでください。"
+    },
+    "noGroupsInQueue": "キューに重複グループがありません。設定で重複ルールを緩めるか、キューを再開してください。",
+    "skipGroup": "グループをスキップ (S)",
+    "restoringSession": "セッションを復元中…",
+    "confirm": {
+      "switchBucket": "バケットを切り替えますか？現在のバケットの進行中の選択とジャンクタグがクリアされます。",
+      "resetBucket": "このバケットをリセットしますか？進行中の選択、ジャンクタグ、比較の進行状況がすべてクリアされます。バケットはキューに残ります。",
+      "clearClassSession": "이 클래스의 모든 비교 진행 및 대기 태그를 지울까요? 되돌릴 수 없습니다."
+    },
+    "chooser": {
+      "title": "重複グループを選択",
+      "kicker": "중복 비교",
+      "intro": "먼저 비교할 {{class}} 방어구 그룹을 고르세요. 헤더에서 나중에 바꿀 수 있습니다.",
+      "listAria": "{{class}} duplicate groups"
+    },
+    "wrapUp": {
+      "title": "この重複グループをレビュー",
+      "chooseNext": "次に比較するグループを選択",
+      "nextGroupsAria": "次の重複グループ",
+      "kicker": "バケット完了",
+      "allPairsDecided": "모든 듀얼 쌍 결정됨",
+      "continueNext": "다음 그룹으로 계속",
+      "applyTagsContinue": "태그 적용 후 계속",
+      "chooseDifferent": "다른 그룹 선택",
+      "backToSummary": "요약으로 돌아가기",
+      "whatsNext": "次に",
+      "tagsFootnote": "계속하면 태그가 대기열에 들어갑니다. 검토 전까지 적용되지 않습니다.",
+      "stats": {
+        "keeps": "Keep",
+        "junkQueued": "정크 대기",
+        "preferEliminated": "선호 탈락",
+        "pairsDecided": "결정한 쌍",
+        "inGroup": "이 그룹"
+      },
+      "breakdown": {
+        "keepBoth": "둘 다 keep: {{count}}",
+        "keepSide": "한쪽 keep: {{count}}",
+        "junkedInDuels": "듀얼에서 정크: {{count}}",
+        "preferInPlay": "선호 진행 중: {{count}}"
+      },
+      "piece_one": "{{count}}개",
+      "piece_other": "{{count}}개",
+      "sessionLast": "대기열의 마지막 그룹",
+      "sessionLeft_one": "이후 {{count}}개 그룹 남음",
+      "sessionLeft_other": "이후 {{count}}개 그룹 남음"
+    },
+    "bucket": {
+      "label": "バケット",
+      "select": "バケットを選択",
+      "dupeBucketsAria": "重複バケット"
+    },
+    "keyboard": {
+      "aria": "比較のキーボードショートカット",
+      "left": "왼쪽",
+      "both": "둘 다",
+      "right": "오른쪽",
+      "keep": "Keep",
+      "prefer": "선호",
+      "junk": "정크"
+    },
+    "compare": {
+      "suggested": "提案",
+      "sameRoll": "同じロール",
+      "compareSides": "左右を比較",
+      "suggestedPick": "提案の選択: ",
+      "vs": "vs",
+      "fitTitle": "保存した好みへの適合度",
+      "powerTitle": "パワーレベル",
+      "identicalRolls": "동일 롤. 하나 keep, 하나 정크, 둘 다 keep, 또는 패스.",
+      "suppressedSuggestion": "둘 다 강함 · 티어 마지막. 선호, 패스, keep, 정크 중 선택.",
+      "buildOptimalPrefix": "콤보 최적: ",
+      "orPassKeepJunk": "· 또는 패스 / keep / 정크",
+      "evenMatch": "동률. 선호, 패스, keep, 정크 중 선택.",
+      "eliminated": "브래킷에서 탈락",
+      "actionKeep": "Keep",
+      "outcomes": {
+        "prefer": "이쪽 선호. 패자는 버킷 종료 시 정크 전에 선호 패배 {{threshold}}회 필요.",
+        "keepSide": "버킷 종료 시 keep · 다른 쪽은 브래킷에 남음",
+        "keepBoth": "버킷 종료 시 둘 다 keep",
+        "junkOne": "지금 정크 · 다른 쪽은 브래킷에 남음(승자 없음)",
+        "junkBoth": "지금 둘 다 정크",
+        "pass": "이 쌍 건너뜀. 태그 없음, 둘 다 다시 대기열."
+      },
+      "pass": "패스",
+      "preferred": "선호",
+      "tuningLabel": "튜닝: {{stat}}",
+      "setFootnote": "세트: {{name}}",
+      "loss_one": "1 패배",
+      "loss_other": "{{count}} 패배",
+      "lossRemaining_one": "버킷 종료 전 정크까지 {{count}}번 더 패배 필요",
+      "lossRemaining_other": "버킷 종료 전 정크까지 {{count}}번 더 패배 필요",
+      "keyboardHints": "버튼에 마우스를 올리면 결과 표시 · ↑ 둘 다 keep · Space 패스 · ↓ 둘 다 정크 · Ctrl+←/→ 측면 정크",
+      "aria": {
+        "keepLeft": "왼쪽 keep. {{outcome}}",
+        "keepRight": "오른쪽 keep. {{outcome}}",
+        "keepBoth": "둘 다 keep. {{outcome}}",
+        "preferLeft": "왼쪽 선호. {{outcome}}",
+        "preferRight": "오른쪽 선호. {{outcome}}",
+        "passPair": "패스. {{outcome}}",
+        "junkLeft": "왼쪽 정크. {{outcome}}",
+        "junkRight": "오른쪽 정크. {{outcome}}",
+        "junkBoth": "둘 다 정크. {{outcome}}"
+      }
+    },
+    "progress": {
+      "noGroups": "重複グループなし",
+      "lastInQueue": "キューの最後のグループ"
+    }
+  },
+  "dupes": {
+    "grouping": {
+      "sameArmorSet": {
+        "label": "同じ防具セットを要求",
+        "help": "同じセットの装備のみをグループ化または比較。オフ: すべてのセットで同じスロット + アーキタイプ + 第3ステータス。"
+      },
+      "sameTuningStat": {
+        "label": "同じチューニングステータスを要求",
+        "help": "チューニングステータスで分割（例: 武器 vs グレネード）。オフ: 1 バケットに混在するチューニングステータス。"
+      }
+    },
+    "respectKeepFavorite": {
+      "label": "ジャンク選定時に DIM のキープとお気に入りを尊重",
+      "help": "オン時、キープおよびお気に入りタグの装備は重複フローでジャンクとして提案されません。"
+    },
+    "excludeJunk": {
+      "label": "ジャンクタグ付き装備を重複カウントから除外"
+    },
+    "presets": {
+      "loose": {
+        "label": "ゆるい"
+      },
+      "standard": {
+        "label": "標準"
+      },
+      "setAware": {
+        "label": "セット重視"
+      },
+      "tuning": {
+        "label": "チューニング"
+      },
+      "strict": {
+        "label": "厳格"
+      }
+    },
+    "impactCompact": {
+      "buckets": "重複バケット ·",
+      "decisions": "判断 ·",
+      "pieces": "{{count}} 件を含む"
+    },
+    "matchStyle": {
+      "custom": "カスタム",
+      "usingPreset": "{{label}} を使用中",
+      "usingCustomRules": "カスタムルールを使用中",
+      "cardBody": {
+        "loose": "同じ防具セットやチューニングステータスを要求せず、同じスロットの装備を比較します。",
+        "standard": "同じ防具セットを要求せず、スロット、アーキタイプ、第3ステータスで比較します。",
+        "setAware": "防具セットで重複をグループ化 · 多くの保管庫に適しています。",
+        "tuning": "異なる防具セットでもチューニングステータスで重複をグループ化します。",
+        "strict": "重複一致には同じ防具セットとチューニングステータスが必要です。"
+      },
+      "customMix": "カスタム組み合わせ: {{armorSet}}、{{tuningStat}}。",
+      "armorSetSame": "同じ防具セット",
+      "armorSetAny": "任意の防具セット",
+      "tuningStatSame": "同じチューニングステータス",
+      "tuningStatAny": "任意のチューニングステータス",
+      "dimTagsRespect": "ジャンク提案時に DIM のキープとお気に入りタグを考慮します。",
+      "dimTagsIgnore": "ジャンク提案時にキープとお気に入りタグは使用しません。"
+    },
+    "suggestions": {
+      "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+      "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+      "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+      "standardDefault": "Standard preset for your vault size."
+    }
+  },
+  "errors": {
+    "boundary": {
+      "title": "問題が発生しました",
+      "body": "{{appName}} で予期しないエラーが発生しました。ローカルストレージの設定とキュー内のタグは通常影響を受けません。",
+      "reload": "アプリを再読み込み",
+      "goHome": "ホームへ"
+    },
+    "oauth": {
+      "completingLogin": "Bungie ログインを完了中…",
+      "exchangingCode": "認可コードを交換中…",
+      "loadingVault": "保管庫を読み込み中…",
+      "firstLoadNote": "初回読み込みではゲームマニフェストのダウンロードがあり、1 分ほどかかる場合があります。",
+      "bungieDenied": "Bungie がログインを拒否しました: {{error}}",
+      "noAuthCode": "認可コードが返されませんでした: もう一度サインインしてください。",
+      "stateMismatch": "OAuth state が一致しません: 古いタブやセッションストレージのブロックが原因のことがあります。ログインに戻って再試行してください。",
+      "loginFailed": "ログインに失敗しました",
+      "backToLogin": "ログインに戻る",
+      "suffix": "もう一度サインインしてください。問題が続く場合はサイト管理者にお問い合わせください。",
+      "devChecklistIntro": "Bungie アプリのチェックリスト（ローカル開発）:",
+      "devRedirect": "リダイレクト URL: {{uri}}",
+      "devOrigin": "Origin: {{origin}}",
+      "devClientId": "クライアント ID が Bungie アプリケーションと一致（{{clientId}}）",
+      "devApiKey": "API キーが同じ Bungie アプリケーションのもの",
+      "devRestart": "認証情報を変更したら開発サーバーを再起動"
+    },
+    "env": {
+      "bungieSignInUnavailableDev": "このビルドではサインインが有効になっていません。",
+      "bungieSignInUnavailable": "このデプロイではサインインは利用できません。",
+      "bungieCredentialsMissingDev": "この環境では Bungie サインインが有効になっていません。",
+      "bungieCredentialsMissing": "このデプロイではサインインは利用できません。サイト管理者にお問い合わせください。",
+      "bungieSecretMissingDev": "この環境では Bungie サインインが完全には有効になっていません。",
+      "dimSyncUnavailableDev": "この環境では DIM 同期が有効になっていません。",
+      "dimSyncUnavailable": "このデプロイでは DIM へのタグ適用は利用できません。サイト管理者にお問い合わせください。"
+    },
+    "vault": {
+      "sessionExpired": "Bungie セッションの有効期限が切れた可能性があります。サインアウトして再度サインインしてください。",
+      "forbidden": "Bungie がリクエストを拒否しました。再度サインインするか、続く場合はサイト管理者にお問い合わせください。",
+      "manifest": "マニフェストのダウンロードに失敗しました。接続を確認して再試行してください。初回読み込みは 1 分ほどかかることがあります。",
+      "network": "ネットワークエラー。接続を確認するか、しばらくしてから再試行してください。",
+      "membership": "Destiny メンバーシップを解決できませんでした。アカウントに Destiny 2 キャラクターがあることを確認してください。"
+    },
+    "applyTagsFailed": "タグの適用に失敗しました",
+    "partialApply": "{{total}} 件中 {{ok}} 件のタグを適用しました。{{failed}} 件が失敗: 再試行するかキューから削除してください。"
+  },
+  "footer": {
+    "aria": {
+      "siteLinks": "サイトリンク",
+      "kofi": "Ko-fi で支援"
+    },
+    "links": {
+      "newoReport": "newo.report",
+      "github": "GitHub"
+    }
+  },
+  "game": {
+    "achievability": {
+      "ready": "準備完了",
+      "almost": "あと少し",
+      "needBetterRolls": "より良いロールが必要",
+      "covered": "カバー済み",
+      "weakTuning": "チューニング弱め",
+      "gap": "不足",
+      "idealTuning": "理想的なチューニング",
+      "tuned": "チューニング済み",
+      "archetypeOnly": "アーキタイプのみ",
+      "noFit": "適合なし"
+    },
+    "armorDiff": {
+      "sameStatSplit": "同じステータス配分",
+      "sameStatsTuning": "同じステータスとチューニング",
+      "sameRoll": "同じロール",
+      "decideSetOrTuning": "セットまたはチューニングで決定",
+      "decideTuning": "チューニングで決定",
+      "decideSet": "セットで決定",
+      "sameExceptPower": "パワー/所在以外は同一",
+      "identicalRoll": "同一ロール。どちらでも選べます。"
+    },
+    "fit": {
+      "poorMatch": "適合度が低い",
+      "closeCall": "僅差"
+    },
+    "scoring": {
+      "calibrateForAccuracy": "精度向上のため好みを較正してください"
+    },
+    "heatmap": {
+      "mixedTuning": "バケット内に混在するチューニングステータス",
+      "dupeBucket": "重複バケット"
+    },
+    "minTier": {
+      "tier5Only": "ティア 5 のみ"
+    },
+    "diff": {
+      "tuning": "튜닝",
+      "set": "세트",
+      "power": "전투력",
+      "masterwork": "마스터워크",
+      "noSet": "세트 없음",
+      "yes": "예",
+      "no": "아니오",
+      "tuningVs": "튜닝: {{a}} vs {{b}}",
+      "setFootnote": "세트: {{name}}"
+    },
+    "dominator": {
+      "differentStatSplit": "스탯 분배 다름",
+      "sameAfterTuning": "튜닝 후 동일",
+      "beatsPiece": "이 피스보다 우수",
+      "statComparison": "스탯 비교",
+      "tuningCoverage": "튜닝 커버리지",
+      "aheadOn": "앞섬",
+      "everyTuningLayout": "모든 튜닝 배치"
+    },
+    "classes": {
+      "titan": "타이탄",
+      "hunter": "사냥꾼",
+      "warlock": "워록"
+    },
+    "stats": {
+      "weapons": "무기",
+      "grenade": "수류탄",
+      "super": "슈퍼",
+      "melee": "근접",
+      "health": "생명력",
+      "class": "클래스"
+    },
+    "archetypes": {
+      "gunner": "거너",
+      "grenadier": "그레네이더",
+      "paragon": "패러곤",
+      "brawler": "브롤러",
+      "bulwark": "벌워크",
+      "specialist": "스페셜리스트"
+    },
+    "slots": {
+      "helmet": "투구",
+      "arms": "팔",
+      "chest": "가슴",
+      "legs": "다리",
+      "classItem": "직업 아이템"
+    },
+    "roll": {
+      "tertiary": "{{stat}} 3차",
+      "tuning": "{{stat}} 튜닝",
+      "tuningLabel": "튜닝: {{stat}}",
+      "preferred": "선호",
+      "none": "없음"
+    },
+    "labels": {
+      "separator": " · "
+    }
+  },
+  "home": {
+    "tagline": "重複防具を比較して DIM タグをキューに追加。ここでは分解しません。",
+    "resumeSession": "前回のセッションを再開",
+    "footerNote": "保管庫は Bungie.net 経由。タグは DIM 経由。設定でサインアウトできます。",
+    "signInWithBungie": "Bungie でサインイン"
+  },
+  "layout": {
+    "aria": {
+      "guardianClass": "ガーディアンのクラス"
+    }
+  },
+  "nav": {
+    "dashboard": "ダッシュボード",
+    "calibrate": "較正",
+    "browse": "閲覧",
+    "combos": "コンボ",
+    "compare": "比較",
+    "review": "レビュー",
+    "autoFilters": "自動フィルター",
+    "settings": "設定",
+    "mobile": {
+      "dashboard": "Dash",
+      "calibrate": "較正",
+      "autoFilters": "Filter",
+      "settings": "設定"
+    },
+    "aria": {
+      "mobile": "モバイルナビゲーション"
+    }
+  },
+  "onboarding": {
+    "restoringSession": "Bungie セッションを復元中…",
+    "redirectingLogin": "ログインにリダイレクト中…",
+    "vaultTrimTitle": "保管庫整理の目標",
+    "tieredFound": "ティア付き防具を <1>{{count}}</1> 件見つけました（<2>{{pieceWord}}</2>）<3>{{t5Block}}</3>。",
+    "piece_one": "件",
+    "piece_other": "件",
+    "t5Block": "（ティア 5 が <1>{{count}}</1> 件）",
+    "noTieredFound": "ティア付き防具は見つかりませんでした<1>{{parsedHint}}</1>。ティア付き防具（T1–T5）のみをインポートします。レガシーと未ティアの装備はスキップされます。",
+    "parsedHint": "（保管庫から {{count}} 件を解析）",
+    "keepGoalHeading": "どのくらい残したいですか？",
+    "keepGoalIntro": "整理時にティア 5 の重複防具をどれだけ積極的に削減するかを設定します。",
+    "keepGoalSummary": "保持目標: 合計約 {{total}} 件のティア 5（クラスあたり約 {{perClass}} 件）。",
+    "keepGoalExcess": " 目標を約 <1>{{excess}}</1> 件上回っています。",
+    "keepGoalAtTarget": " 目標以下または目標どおりです。",
+    "signOutBack": "サインアウト",
+    "keepOptions": {
+      "lean": {
+        "label": "スリム",
+        "blurb": "積極的に整理 · ほとんどの重複バケットをクリア"
+      },
+      "balanced": {
+        "label": "バランス",
+        "blurb": "明らかな重複をクリアし、ビルド用のバリエーションを保持"
+      },
+      "options": {
+        "label": "選択肢を残す",
+        "blurb": "追加のステータスロールとセットコンボを保持 · 軽めの整理"
+      },
+      "hoarder": {
+        "label": "コレクター",
+        "blurb": "明白な重複のみ整理 · 選択肢を最大化"
+      },
+      "description": "{{blurb}}（クラスあたりティア 5 約 {{perClass}} 件）"
+    },
+    "backAria": "戻る"
+  },
+  "review": {
+    "title": "タグをレビュー",
+    "summary": "キュー {{total}} · キープ {{keep}} · ジャンク {{junk}}。適用でキュー内のタグを書き込み。行には既存の DIM タグが異なる場合に記載されます。",
+    "applied": "タグを DIM Sync に適用しました。",
+    "openJunkInDim": "DIM でジャンクを開く",
+    "partialApplied": "一部適用: {{count}} 件のタグが成功しました。失敗した項目はキューに残ります。",
+    "retryFailed": "失敗 {{count}} 件を再試行",
+    "empty": "保留中のタグはありません。",
+    "compareDupes": "重複を比較",
+    "table": {
+      "item": "アイテム",
+      "copyDimSr": "DIM クエリをコピー",
+      "archetype": "アーキタイプ",
+      "tertiary": "第3",
+      "tuning": "チューニング",
+      "class": "クラス",
+      "combo": "コンボ",
+      "appliesToDim": "DIM に適用",
+      "none": "なし"
+    },
+    "copy": {
+      "ids": "id: クエリをコピー",
+      "junk": "tag:junk 検索をコピー",
+      "junkIds": "ジャンク id のみコピー",
+      "copied": "コピーしました！",
+      "announcement": "{{label}} をクリップボードにコピーしました。"
+    },
+    "removeFromQueue": "キューから削除",
+    "applyTags": "{{count}} 件のタグを DIM に適用",
+    "applying": "適用中…",
+    "clearPending": "保留中のタグをクリア",
+    "clearSession": "セッションをクリア",
+    "backToDashboard": "ダッシュボードに戻る",
+    "confirm": {
+      "clearPending": "保留中のタグ {{count}} 件をすべてクリアしますか？DIM には適用されません。比較セッションの進行状況は保持されます。",
+      "clearSession": "比較セッション全体をクリアしますか？保留中のタグと進行中の比較状態がリセットされます。"
+    },
+    "alreadyInDim": "DIM に既にあります: {{summary}}"
+  },
+  "rulesOnboarding": {
+    "title": "重複はどのように一致させますか？",
+    "intro": "似た防具ロールをグループ化し、キーパーを選んで残りを DIM でタグ付けできます。設定でいつでも変更できます。",
+    "restoringSession": "Bungie セッションを復元中…",
+    "redirectingLogin": "ログインにリダイレクト中…",
+    "loadingVault": "保管庫を読み込み中…",
+    "retryVaultLoad": "保管庫の読み込みを再試行",
+    "refreshing": "更新中…",
+    "noTieredArmor": "最小ティアの範囲にティア付き防具がありません",
+    "tieredPiecesImported": "（ティア付き装備 {{count}} 件をインポート）",
+    "tieredArmorFootnote": "ゲーム内でティア付けした装備（T1–T5）のみが含まれます。必要に応じて設定で最小ティアを下げてください。",
+    "recommendedPresetSr": "おすすめプリセット",
+    "useRecommended": "おすすめを使用",
+    "customizeRules": "ルールをカスタマイズ",
+    "hideCustomization": "カスタマイズを非表示",
+    "customizeIntro": "重複とみなす条件を厳しくしたり緩くしたりできます。設定のプリセットでワンクリック設定できます。",
+    "matchStyleLabel": "一致スタイル:",
+    "previewByClass": "クラス別プレビュー",
+    "suggestions": "提案",
+    "usePreset": "{{label}} を使用",
+    "impact": {
+      "none": "{{class}} では現在のティアで重複グループは見つかりませんでした。",
+      "summary": "重複 {{groupWord}} 約 {{buckets}} · 比較対象の {{rollWord}} 約 {{review}}（{{class}}）",
+      "group_one": "グループ",
+      "group_other": "グループ",
+      "roll_one": "ロール",
+      "roll_other": "ロール"
+    },
+    "aria": {
+      "dupeRules": "重複ルール"
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "account": {
+      "heading": "アカウント",
+      "signedInAs": "<1>{{name}}</1> としてサインイン中",
+      "parsedCount": "ティア付き防具 {{count}} 件を解析（保管庫、全キャラクター、ポストマスター）",
+      "signOutNote": "サインアウトすると、このブラウザセッションから Bungie と DIM のトークンがクリアされます（セッションストレージのみ）。設定はローカルストレージに残ります。",
+      "signOutButton": "サインアウトしてトークンをクリア"
+    },
+    "dupeRules": {
+      "heading": "重複ルール",
+      "intro": "ヒートマップ、比較、閲覧、冗長ロール一覧で共有されるルール。",
+      "scopeHeading": "範囲: カウント対象の装備",
+      "minTierLabel": "最小装備ティア",
+      "minTierHelp": "保管庫のインポートはティア 1〜5 を読み込みます。このティア以上の装備のみが重複バケットと冗長ロールチェックに入ります。",
+      "groupingHeading": "グループ化: 「重複」の定義",
+      "groupingIntro": "装備は常にクラス、スロット、アーキタイプ、第3ステータスで一致します。これらのオプションでより厳密な分割を追加し、冗長ロール比較にも適用されます。",
+      "dimTagsHeading": "重複カウント時の DIM タグ",
+      "dimTagsIntro": "タグ付き装備は表示されますが、重複バケットサイズとレビュー数から除外できます。",
+      "liveImpact": "ライブ影響（グローバルルール、ハンター保管庫）"
+    },
+    "classDupeRules": {
+      "heading": "{{class}} の重複ルール",
+      "usingClass": "{{class}} を使用中（ヘッダーでクラスを変更）。クラスはデフォルトでグローバルルールを共有。他を変更せずに 1 クラスにプリセットを適用できます。",
+      "customRules": "{{class}} はカスタムルールを使用中 ·",
+      "resetToGlobal": "グローバルに戻す"
+    },
+    "dupePresets": {
+      "heading": "重複プリセット"
+    },
+    "dashboardLink": "ダッシュボード",
+    "language": {
+      "heading": "言語",
+      "useBrowser": "ブラウザの言語を使用",
+      "useBrowserHelp": "オン時、アプリはブラウザの言語に従います。オフ時は下で選んだ言語を使用します。"
+    },
+    "developer": {
+      "heading": "開発者",
+      "bungie": "Bungie: {{status}}",
+      "dimSync": "DIM Sync: {{status}}"
+    },
+    "reviewTags": {
+      "heading": "レビュータグ"
+    },
+    "classPrefs": {
+      "heading": "{{class}} の設定",
+      "usingClass": "{{class}} を使用中（ヘッダーでクラスを変更）。較正によるクラス別のステータスとアーキタイプの重み。重複ルールはクラスごとに上書きしない限り共有されます。",
+      "calibrations": "較正 {{count}} 回 · 信頼度 {{confidence}}",
+      "topStats": "優先ステータス:",
+      "topArchetypes": "優先アーキタイプ:",
+      "recalibrate": "{{class}} を再較正",
+      "exportPrefs": "設定をエクスポート",
+      "importPrefs": "設定をインポート",
+      "resetClass": "{{class}} の設定をリセット",
+      "resetAll": "すべてのクラスをリセット",
+      "imported": "設定をインポートしました。",
+      "invalidFile": "無効な設定ファイルです。",
+      "openReview": "レビューページを開く",
+      "clearPending": "保留中のタグをクリア",
+      "queued_one": "DIM に適用するタグが {{count}} 件キューに入っています。",
+      "queued_other": "DIM に適用するタグが {{count}} 件キューに入っています。",
+      "nonePending": "保留中のタグはありません。",
+      "confirmClearPending": "保留中のタグ {{count}} 件をすべてクリアしますか？DIM には適用されません。",
+      "confirmResetClass": "{{class}} の設定をデフォルトに戻しますか？このクラスのステータス重み、較正の選択、学習済みの重みがクリアされます。",
+      "confirmResetAll": "すべてのクラスの設定をデフォルトに戻しますか？ハンター、タイタン、ウォーロックのステータス重み、較正の選択、学習済みの重みがクリアされます。重複ルールなどのその他の設定は保持されます。"
+    }
+  },
+  "vault": {
+    "loading": "保管庫を読み込み中…",
+    "refreshing": "更新中…",
+    "refreshingStatus": "更新中… {{status}}",
+    "loadVault": "保管庫を読み込む",
+    "noDataYet": "保管庫データはまだありません。",
+    "noDataBrowseHint": "まずダッシュボードから保管庫を読み込んでください。",
+    "noDataBuildHint": "保管庫データはまだありません。ダッシュボードから保管庫を読み込んでください。",
+    "retryVaultLoad": "保管庫の読み込みを再試行",
+    "signOutInSettings": "設定でサインアウト",
+    "dismiss": "閉じる",
+    "tieredArmorTitle": "ゲーム内でティア付けした防具（ティア 1–5）。レガシー装備と未ティアの装備はインポートから除外されます。重複の範囲は最小ティア設定を使用します。",
+    "dupeRulesImpact": "保管庫を読み込んで影響をプレビューします。"
+  }
+}

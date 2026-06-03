@@ -1,5 +1,8 @@
 import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { classLabel, statLabel, archetypeLabel } from '@/i18n/gameCopy';
+import { Trans, useTranslation } from 'react-i18next';
 import { DupeRulesImpact } from '@/components/DupeRulesImpact';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Layout } from '@/components/Layout';
 import { desiredBuildsEditorPath, settingsPath } from '@/lib/nav';
 import {
@@ -8,12 +11,15 @@ import {
   normalizeHashTargetId,
 } from '@/lib/nav/hashScroll';
 import { useScrollToLocationHash } from '@/lib/nav/useScrollToLocationHash';
-import { DUPE_MIN_TIER_VALUES, DUPE_PRESETS, formatDupeMinTierLabel } from '@/lib/constants';
+import { CLASSES, DUPE_MIN_TIER_VALUES, DUPE_PRESETS, STATS, formatDupeMinTierLabel } from '@/lib/constants';
+import { dupePresetLabel } from '@/lib/dupes/rules';
 import {
-  DUPE_EXCLUDE_JUNK_LABEL,
-  DUPE_GROUPING_TOGGLES,
-  DUPE_RESPECT_KEEP_FAVORITE_HELP,
-  DUPE_RESPECT_KEEP_FAVORITE_LABEL,
+  DUPE_GROUPING_TOGGLE_KEYS,
+  dupeExcludeJunkLabel,
+  dupeGroupingToggleHelp,
+  dupeGroupingToggleLabel,
+  dupeRespectKeepFavoriteHelp,
+  dupeRespectKeepFavoriteLabel,
   respectDimKeepFavoriteChecked,
   respectDimKeepFavoritePatch,
 } from '@/lib/dupes/ruleUi';
@@ -29,12 +35,12 @@ import {
   getCalibrationChoiceCount,
   getCalibrationConfidence,
 } from '@/lib/prefs/calibrationChoices';
-import { ARCHETYPE_LABELS, CLASS_LABELS, CLASSES, STAT_LABELS, STATS } from '@/lib/constants';
 import { parseImportedPrefs } from '@/lib/prefs/storage';
 import { useEffect, useRef, useState } from 'react';
 import type { ClassType } from '@/types';
 
 export function SettingsPage() {
+  const { t } = useTranslation(['settings', 'common']);
   useScrollToLocationHash();
   const { class: classParam } = useParams<{ class: string }>();
   const location = useLocation();
@@ -64,6 +70,7 @@ export function SettingsPage() {
   }, [location.hash, classType, navigate]);
 
   if (!validClass) return <Navigate to={settingsPath('hunter')} replace />;
+  if (!membership) return null;
 
   const classPrefs = getClassPrefs(profile, classType);
   const topStats = [...STATS]
@@ -72,8 +79,6 @@ export function SettingsPage() {
   const topArchetypes = (Object.entries(classPrefs.archetypeWeights) as [import('@/types').Archetype, number][])
     .sort((a, b) => b[1] - a[1])
     .slice(0, 3);
-
-  if (!membership) return <Navigate to="/" replace />;
 
   function logout() {
     clearSession();
@@ -87,73 +92,89 @@ export function SettingsPage() {
 
   return (
     <Layout>
-      <h1 className="text-2xl font-bold mb-6">Settings</h1>
+      <h1 className="text-2xl font-bold mb-6">{t('title')}</h1>
 
       <section className="mb-10 max-w-xl">
-        <h2 className="text-sm font-semibold uppercase text-muted mb-3">Account</h2>
+        <h2 className="text-sm font-semibold uppercase text-muted mb-3">
+          {t('language.heading')}
+        </h2>
+        <LanguageSwitcher id="settings-language" />
+      </section>
+
+      <section className="mb-10 max-w-xl">
+        <h2 className="text-sm font-semibold uppercase text-muted mb-3">
+          {t('account.heading')}
+        </h2>
         <p className="text-sm mb-3">
-          Signed in as <span className="text-accent-dim">{membership.displayName}</span>
+          <Trans
+            i18nKey="account.signedInAs"
+            ns="settings"
+            values={{ name: membership.displayName }}
+            components={{ 1: <span className="text-accent-dim" /> }}
+          />
         </p>
         {lastParsedCount !== null && (
           <p className="text-xs text-muted mb-3">
-            {lastParsedCount} tiered armor pieces parsed (vault, all characters, postmaster)
+            {t('account.parsedCount', { count: lastParsedCount })}
           </p>
         )}
-        <p className="text-xs text-muted mb-2">
-          Sign out clears Bungie and DIM tokens from this browser session (session storage
-          only). Preferences stay in local storage.
-        </p>
+        <p className="text-xs text-muted mb-2">{t('account.signOutNote')}</p>
         <button
           type="button"
           onClick={logout}
           className="text-sm text-danger hover:underline"
         >
-          Sign out and clear tokens
+          {t('account.signOutButton')}
         </button>
       </section>
 
       {isDevBuild() && (
         <section className="mb-10 max-w-xl">
-          <h2 className="text-sm font-semibold uppercase text-muted mb-3">Developer</h2>
+          <h2 className="text-sm font-semibold uppercase text-muted mb-3">{t('developer.heading')}</h2>
           <ul className="text-sm space-y-1 text-muted">
-            <li>Bungie: {isBungieConfigured() ? 'configured' : 'not configured'}</li>
-            <li>DIM Sync: {getDimApiKey() ? 'configured' : 'not configured'}</li>
+            <li>
+              {t('developer.bungie', {
+                status: isBungieConfigured() ? t('common:configured') : t('common:notConfigured'),
+              })}
+            </li>
+            <li>
+              {t('developer.dimSync', {
+                status: getDimApiKey() ? t('common:configured') : t('common:notConfigured'),
+              })}
+            </li>
           </ul>
           {!getDimApiKey() && (
             <p className="text-xs text-muted mt-2">
-              Local DIM key: POST to api.destinyitemmanager.com/new_app with origin{' '}
-              {typeof window !== 'undefined' ? window.location.origin : 'this site'}.
+              {t('common:dev.dimKeyHint', {
+                origin: typeof window !== 'undefined' ? window.location.origin : 'this site',
+              })}
             </p>
           )}
         </section>
       )}
 
       <section className="mb-10 max-w-xl">
-        <h2 className="text-sm font-semibold uppercase text-muted mb-3">Review tags</h2>
+        <h2 className="text-sm font-semibold uppercase text-muted mb-3">{t('reviewTags.heading')}</h2>
         <p className="text-sm text-muted mb-3">
           {pendingTagCount > 0
-            ? `${pendingTagCount} tag${pendingTagCount === 1 ? '' : 's'} queued to apply in DIM.`
-            : 'No pending tags.'}
+            ? t('classPrefs.queued', { count: pendingTagCount })
+            : t('classPrefs.nonePending')}
         </p>
         {pendingTagCount > 0 && (
           <div className="flex flex-wrap items-center gap-3">
             <Link to="/review" className="text-sm text-white hover:underline">
-              Open review page
+              {t('classPrefs.openReview')}
             </Link>
             <button
               type="button"
               onClick={() => {
-                if (
-                  confirm(
-                    `Clear all ${pendingTagCount} pending tags? They will not be applied to DIM.`,
-                  )
-                ) {
+                if (confirm(t('classPrefs.confirmClearPending', { count: pendingTagCount }))) {
                   clearPendingTags();
                 }
               }}
               className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5 text-danger/80"
             >
-              Clear pending tags
+              {t('classPrefs.clearPending')}
             </button>
           </div>
         )}
@@ -161,31 +182,32 @@ export function SettingsPage() {
 
       <section className="mb-10 max-w-xl">
         <h2 className="text-sm font-semibold uppercase text-muted mb-3">
-          {CLASS_LABELS[classType]} preferences
+          {t('classPrefs.heading', { class: classLabel(classType) })}
         </h2>
         <p className="text-xs text-muted mb-3">
-          Using {CLASS_LABELS[classType]} (change class in header). Per-class stat and
-          archetype weights from calibration. Dupe rules are shared unless overridden per class.
+          {t('classPrefs.usingClass', { class: classLabel(classType) })}
         </p>
         <p className="text-sm text-muted mb-3">
-          {getCalibrationChoiceCount(classPrefs)} calibrations · confidence{' '}
-          {getCalibrationConfidence(classPrefs)}
+          {t('classPrefs.calibrations', {
+            count: getCalibrationChoiceCount(classPrefs),
+            confidence: getCalibrationConfidence(classPrefs),
+          })}
         </p>
         <div className="text-sm space-y-2">
           <p>
-            <span className="text-muted">Top stats:</span>{' '}
-            {topStats.map((s) => STAT_LABELS[s]).join(', ')}
+            <span className="text-muted">{t('classPrefs.topStats')}</span>{' '}
+            {topStats.map((s) => statLabel(s)).join(', ')}
           </p>
           <p>
-            <span className="text-muted">Top archetypes:</span>{' '}
-            {topArchetypes.map(([a]) => ARCHETYPE_LABELS[a]).join(', ')}
+            <span className="text-muted">{t('classPrefs.topArchetypes')}</span>{' '}
+            {topArchetypes.map(([a]) => archetypeLabel(a)).join(', ')}
           </p>
         </div>
         <Link
           to={`/onboarding/calibrate?class=${classType}`}
           className="inline-block mt-3 text-sm text-accent-dim hover:underline"
         >
-          Recalibrate {CLASS_LABELS[classType]}
+          {t('classPrefs.recalibrate', { class: classLabel(classType) })}
         </Link>
         <div className="flex flex-wrap gap-2 mt-4">
           <button
@@ -203,14 +225,14 @@ export function SettingsPage() {
             }}
             className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5"
           >
-            Export prefs
+            {t('classPrefs.exportPrefs')}
           </button>
           <button
             type="button"
             onClick={() => importInputRef.current?.click()}
             className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5"
           >
-            Import prefs
+            {t('classPrefs.importPrefs')}
           </button>
           <input
             ref={importInputRef}
@@ -223,9 +245,9 @@ export function SettingsPage() {
               try {
                 const text = await file.text();
                 setProfile(parseImportedPrefs(text));
-                setImportMsg('Preferences imported.');
+                setImportMsg(t('classPrefs.imported'));
               } catch {
-                setImportMsg('Invalid prefs file.');
+                setImportMsg(t('classPrefs.invalidFile'));
               }
               e.target.value = '';
               setTimeout(() => setImportMsg(null), 3000);
@@ -236,7 +258,7 @@ export function SettingsPage() {
             onClick={() => {
               if (
                 confirm(
-                  `Reset ${CLASS_LABELS[classType]} preferences to defaults? Stat weights, calibration choices, and learned weights for this class will be cleared.`,
+                  t('classPrefs.confirmResetClass', { class: classLabel(classType) }),
                 )
               ) {
                 updateProfile((p) => resetClassPrefs(p, classType));
@@ -244,22 +266,18 @@ export function SettingsPage() {
             }}
             className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5 text-danger/80"
           >
-            Reset {CLASS_LABELS[classType]} preferences
+            {t('classPrefs.resetClass', { class: classLabel(classType) })}
           </button>
           <button
             type="button"
             onClick={() => {
-              if (
-                confirm(
-                  'Reset preferences for all classes to defaults? Stat weights, calibration choices, and learned weights will be cleared for Hunter, Titan, and Warlock. Dupe rules and other settings are kept.',
-                )
-              ) {
+              if (confirm(t('classPrefs.confirmResetAll'))) {
                 updateProfile(resetAllClassPrefs);
               }
             }}
             className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5 text-danger/80"
           >
-            Reset all classes
+            {t('classPrefs.resetAll')}
           </button>
         </div>
         {importMsg && <p className="text-xs text-muted mt-2">{importMsg}</p>}
@@ -267,49 +285,50 @@ export function SettingsPage() {
 
       <section className="mb-10 max-w-xl">
         <h2 className="text-sm font-semibold uppercase text-muted mb-3">
-          {CLASS_LABELS[classType]} dupe rules
+          {t('classDupeRules.heading', { class: classLabel(classType) })}
         </h2>
         <p className="text-xs text-muted mb-3">
-          Using {CLASS_LABELS[classType]} (change class in header). Classes share global rules
-          by default. Apply a preset to one class without changing others.
+          {t('classDupeRules.usingClass', { class: classLabel(classType) })}
         </p>
         {classRuleOverrides[classType] && (
           <p className="text-xs text-accent-dim mb-2">
-            {CLASS_LABELS[classType]} uses custom rules ·{' '}
+            {t('classDupeRules.customRules', { class: classLabel(classType) })}{' '}
             <button
               type="button"
               onClick={() => resetClassDupeRules(classType)}
               className="underline hover:text-white"
             >
-              reset to global
+              {t('classDupeRules.resetToGlobal')}
             </button>
           </p>
         )}
         <div className="flex flex-wrap gap-2">
-          {Object.entries(DUPE_PRESETS).map(([id, { label }]) => (
+          {Object.keys(DUPE_PRESETS).map((id) => (
             <button
               key={id}
               type="button"
               onClick={() => applyPreset(id, classType)}
               className="text-xs px-3 py-1.5 rounded-full border border-border hover:bg-white/5"
             >
-              {label}
+              {dupePresetLabel(id)}
             </button>
           ))}
         </div>
       </section>
 
       <section className="mb-10 max-w-xl">
-        <h2 className="text-sm font-semibold uppercase text-muted mb-3">Dupe presets</h2>
+        <h2 className="text-sm font-semibold uppercase text-muted mb-3">
+          {t('dupePresets.heading')}
+        </h2>
         <div className="flex flex-wrap gap-2">
-          {Object.entries(DUPE_PRESETS).map(([id, { label }]) => (
+          {Object.keys(DUPE_PRESETS).map((id) => (
             <button
               key={id}
               type="button"
               onClick={() => applyPreset(id)}
               className="px-3 py-1.5 rounded-full border border-border text-sm hover:bg-white/5"
             >
-              {label}
+              {dupePresetLabel(id)}
             </button>
           ))}
         </div>
@@ -317,18 +336,18 @@ export function SettingsPage() {
 
       <section id={DUPE_RULES_SECTION_ID} className="mb-10 max-w-xl space-y-4 scroll-mt-24">
         <div>
-          <h2 className="text-sm font-semibold uppercase text-muted mb-2">Dupe rules</h2>
-          <p className="text-sm text-muted max-w-lg">
-            Shared rules for heatmap, compare, browse, and redundant-roll lists.
-          </p>
+          <h2 className="text-sm font-semibold uppercase text-muted mb-2">
+            {t('dupeRules.heading')}
+          </h2>
+          <p className="text-sm text-muted max-w-lg">{t('dupeRules.intro')}</p>
         </div>
 
         <div className="rounded-xl border border-border bg-surface-2/50 p-4 space-y-3">
           <h3 className="text-xs font-semibold uppercase tracking-wide text-muted">
-            Scope: which pieces count
+            {t('dupeRules.scopeHeading')}
           </h3>
           <label className="flex flex-col gap-1 text-sm">
-            <span>Minimum gear tier</span>
+            <span>{t('dupeRules.minTierLabel')}</span>
             <select
               value={globalDupeRules.minTier}
               onChange={(e) => setGlobalDupeRules({ minTier: Number(e.target.value) })}
@@ -340,22 +359,16 @@ export function SettingsPage() {
                 </option>
               ))}
             </select>
-            <span className="text-xs text-muted">
-              Vault import still loads tiers 1 through 5. Only pieces at or above this tier enter dupe
-              buckets and redundant-roll checks.
-            </span>
+            <span className="text-xs text-muted">{t('dupeRules.minTierHelp')}</span>
           </label>
         </div>
 
         <div className="rounded-xl border border-border bg-surface-2/50 p-4 space-y-4">
           <h3 className="text-xs font-semibold uppercase tracking-wide text-muted">
-            Grouping: what counts as a &quot;dupe&quot;
+            {t('dupeRules.groupingHeading')}
           </h3>
-          <p className="text-xs text-muted -mt-2">
-            Pieces always match on class, slot, archetype, and tertiary stat. These options add
-            stricter splits, and they apply to redundant-roll comparisons too.
-          </p>
-          {DUPE_GROUPING_TOGGLES.map(({ key, label, help }) => (
+          <p className="text-xs text-muted -mt-2">{t('dupeRules.groupingIntro')}</p>
+          {DUPE_GROUPING_TOGGLE_KEYS.map((key) => (
             <label key={key} className="flex gap-3 text-sm cursor-pointer">
               <input
                 type="checkbox"
@@ -364,8 +377,10 @@ export function SettingsPage() {
                 className="accent-accent mt-0.5"
               />
               <span>
-                <span className="block">{label}</span>
-                <span className="block text-xs text-muted mt-0.5">{help}</span>
+                <span className="block">{dupeGroupingToggleLabel(key)}</span>
+                <span className="block text-xs text-muted mt-0.5">
+                  {dupeGroupingToggleHelp(key)}
+                </span>
               </span>
             </label>
           ))}
@@ -373,11 +388,9 @@ export function SettingsPage() {
 
         <div className="rounded-xl border border-border bg-surface-2/50 p-4 space-y-3">
           <h3 className="text-xs font-semibold uppercase tracking-wide text-muted">
-            DIM tags when counting dupes
+            {t('dupeRules.dimTagsHeading')}
           </h3>
-          <p className="text-xs text-muted -mt-2">
-            Tagged pieces stay visible but can be left out of dupe bucket sizes and review counts.
-          </p>
+          <p className="text-xs text-muted -mt-2">{t('dupeRules.dimTagsIntro')}</p>
           <label className="flex gap-3 text-sm cursor-pointer">
             <input
               type="checkbox"
@@ -388,9 +401,9 @@ export function SettingsPage() {
               className="accent-accent mt-0.5"
             />
             <span>
-              <span className="block">{DUPE_RESPECT_KEEP_FAVORITE_LABEL}</span>
+              <span className="block">{dupeRespectKeepFavoriteLabel()}</span>
               <span className="block text-xs text-muted mt-0.5">
-                {DUPE_RESPECT_KEEP_FAVORITE_HELP}
+                {dupeRespectKeepFavoriteHelp()}
               </span>
             </span>
           </label>
@@ -401,18 +414,18 @@ export function SettingsPage() {
               onChange={(e) => setGlobalDupeRules({ ignoreTaggedJunk: e.target.checked })}
               className="accent-accent"
             />
-            {DUPE_EXCLUDE_JUNK_LABEL}
+            {dupeExcludeJunkLabel()}
           </label>
         </div>
 
         <div className="pt-2 border-t border-border">
-          <p className="text-xs text-muted mb-2">Live impact (global rules, Hunter vault)</p>
+          <p className="text-xs text-muted mb-2">{t('dupeRules.liveImpact')}</p>
           <DupeRulesImpact rules={globalDupeRules} classType="hunter" />
         </div>
       </section>
 
       <Link to="/dashboard/hunter" className="block mt-8 text-sm text-muted hover:text-white">
-        Dashboard
+        {t('dashboardLink')}
       </Link>
     </Layout>
   );

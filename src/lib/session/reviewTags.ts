@@ -98,9 +98,6 @@ export function normalizePendingTags(tags: PendingTag[]): PendingTag[] {
   return [...byId.values()];
 }
 
-/** @deprecated Use normalizePendingTags */
-export const dedupeReviewTags = normalizePendingTags;
-
 export function dimTagMatchesPending(
   piece: Pick<ArmorPiece, 'dimTag' | 'dimFavorite'>,
   tag: TagValue | null,

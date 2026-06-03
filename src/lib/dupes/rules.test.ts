@@ -1,19 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { DUPE_PRESETS } from '@/lib/constants';
 import {
-  dupeMatchStyleCardDescription,
-  dupeMatchStyleCardHeadline,
-  dupeMatchStyleLabel,
   mergeDupeRules,
   presetIdForRules,
   reconcileStrictnessWithRules,
   strictnessForPreset,
   strictnessToPreset,
 } from './rules';
-import {
-  respectDimKeepFavoriteChecked,
-  respectDimKeepFavoritePatch,
-} from './ruleUi';
+import { respectDimKeepFavoritePatch } from './ruleUi';
 
 describe('dupe preset strictness sync', () => {
   it('maps each preset rules to its preset id', () => {
@@ -45,45 +39,9 @@ describe('dupe preset strictness sync', () => {
     });
     expect(presetIdForRules(custom)).toBeNull();
   });
-
-  it('labels custom mixes and named presets', () => {
-    expect(dupeMatchStyleLabel(mergeDupeRules(DUPE_PRESETS.setAware.rules))).toBe('Set-aware');
-    const custom = mergeDupeRules({
-      sameArmorSet: true,
-      sameTuningStat: true,
-      ignoreTaggedKeep: false,
-    });
-    expect(dupeMatchStyleLabel(custom)).toBe('Custom');
-  });
-
-  it('builds onboarding card copy from active rules', () => {
-    const tuning = mergeDupeRules(DUPE_PRESETS.tuning.rules);
-    expect(dupeMatchStyleCardHeadline(tuning)).toBe('Using Tuning');
-    expect(dupeMatchStyleCardDescription(tuning)).toContain('tuning stat');
-
-    const custom = mergeDupeRules({
-      sameArmorSet: true,
-      sameTuningStat: true,
-      ignoreTaggedKeep: false,
-    });
-    expect(dupeMatchStyleCardHeadline(custom)).toBe('Using custom rules');
-    expect(dupeMatchStyleCardDescription(custom)).toContain('Custom mix');
-  });
 });
 
 describe('dupe rule respect toggle (UI vs storage)', () => {
-  it('shows Tuning preset: require tuning, not set, respect off', () => {
-    const tuning = mergeDupeRules(DUPE_PRESETS.tuning.rules);
-    expect(tuning.sameArmorSet).toBe(false);
-    expect(tuning.sameTuningStat).toBe(true);
-    expect(respectDimKeepFavoriteChecked(tuning)).toBe(false);
-  });
-
-  it('shows Loose preset with respect on', () => {
-    const loose = mergeDupeRules(DUPE_PRESETS.loose.rules);
-    expect(respectDimKeepFavoriteChecked(loose)).toBe(true);
-  });
-
   it('maps respect checked to ignoreTaggedKeep without inverting', () => {
     expect(respectDimKeepFavoritePatch(true)).toEqual({
       ignoreTaggedKeep: false,

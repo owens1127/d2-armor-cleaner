@@ -1,18 +1,7 @@
-import {
-  ARCHETYPES,
-  ARCHETYPE_LABELS,
-  ARMOR_SLOTS,
-  CLASS_LABELS,
-  CLASSES,
-  SLOT_LABELS,
-  STAT_LABELS,
-  STATS,
-} from '@/lib/constants';
-import {
-  countAutoFilterMatches,
-  createAutoFilterRule,
-  describeAutoFilterRule,
-} from '@/lib/auto-filter/match';
+import { describeAutoFilterRule } from '@/i18n/autoFiltersCopy';
+import { classLabel, statLabel, archetypeLabel, slotLabel } from '@/i18n/gameCopy';
+import { CLASSES, ARCHETYPES, STATS, ARMOR_SLOTS } from '@/lib/constants';
+import { countAutoFilterMatches, createAutoFilterRule } from '@/lib/auto-filter/match';
 import { calibrationSetPieces } from '@/lib/scoring/calibrate';
 import { useSessionStore, useVaultStore } from '@/stores';
 import { usePrefsStore } from '@/stores/prefsStore';
@@ -25,6 +14,7 @@ import type {
   Stat,
 } from '@/types';
 import { useMemo, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 const IS: AutoFilterMatchMode = 'is';
 const NOT: AutoFilterMatchMode = 'not';
@@ -130,6 +120,7 @@ function MatchModeSelect({
   id: string;
   disabled?: boolean;
 }) {
+  const { t } = useTranslation('autoFilters');
   return (
     <select
       id={id}
@@ -140,12 +131,12 @@ function MatchModeSelect({
         'bg-surface border border-border rounded-md px-2 py-1.5 text-xs shrink-0 w-[5.75rem]',
         disabled ? 'opacity-50 cursor-not-allowed' : '',
       ].join(' ')}
-      aria-label={disabled ? 'Match mode (pick a value first)' : 'Match mode'}
+      aria-label={disabled ? t('matchModeDisabled') : t('matchMode')}
     >
-      <option value={IS}>Is</option>
-      <option value={NOT}>Is not</option>
-      <option value={ANY_OF}>Any of</option>
-      <option value={NONE_OF}>None of</option>
+      <option value={IS}>{t('operators.is')}</option>
+      <option value={NOT}>{t('operators.isNot')}</option>
+      <option value={ANY_OF}>{t('operators.anyOf')}</option>
+      <option value={NONE_OF}>{t('operators.noneOf')}</option>
     </select>
   );
 }
@@ -159,7 +150,7 @@ function MultiValueField<T extends string | number>({
   matchModeId,
   options,
   getOptionLabel,
-  anyLabel = 'Any',
+  anyLabel,
 }: {
   label: string;
   values: T[];
@@ -171,6 +162,8 @@ function MultiValueField<T extends string | number>({
   getOptionLabel: (value: T) => string;
   anyLabel?: string;
 }) {
+  const { t } = useTranslation('autoFilters');
+  const resolvedAnyLabel = anyLabel ?? t('any');
   const isMulti = isMultiMatchMode(matchMode);
   const hasValues = values.length > 0;
   const availableOptions = options.filter((option) => !values.includes(option));
@@ -217,7 +210,7 @@ function MultiValueField<T extends string | number>({
                       type="button"
                       onClick={() => removeValue(value)}
                       className="text-muted hover:text-white"
-                      aria-label={`Remove ${getOptionLabel(value)}`}
+                      aria-label={t('removeValue', { label: getOptionLabel(value) })}
                     >
                       ×
                     </button>
@@ -234,7 +227,7 @@ function MultiValueField<T extends string | number>({
               }}
               className="bg-surface border border-border rounded-md px-2 py-1.5 min-w-0 w-full text-sm"
             >
-              <option value="">{hasValues ? 'Add value…' : 'Pick a value…'}</option>
+              <option value="">{hasValues ? t('addValue') : t('pickValue')}</option>
               {availableOptions.map((option) => (
                 <option key={String(option)} value={String(option)}>
                   {getOptionLabel(option)}
@@ -257,7 +250,7 @@ function MultiValueField<T extends string | number>({
             }}
             className="bg-surface border border-border rounded-md px-2 py-1.5 min-w-0 flex-1"
           >
-            <option value="">{anyLabel}</option>
+            <option value="">{resolvedAnyLabel}</option>
             {options.map((option) => (
               <option key={String(option)} value={String(option)}>
                 {getOptionLabel(option)}
@@ -298,12 +291,13 @@ function RuleToggle({
   onChange: (enabled: boolean) => void;
   label: string;
 }) {
+  const { t } = useTranslation('autoFilters');
   return (
     <button
       type="button"
       role="switch"
       aria-checked={enabled}
-      aria-label={`${enabled ? 'Disable' : 'Enable'} rule: ${label}`}
+      aria-label={enabled ? t('disableRule', { label }) : t('enableRule', { label })}
       onClick={() => onChange(!enabled)}
       className={[
         'relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors',
@@ -323,6 +317,7 @@ function RuleToggle({
 }
 
 export function AutoFilterRulesSection() {
+  const { t } = useTranslation('autoFilters');
   const { profile, updateProfile } = usePrefsStore();
   const allItems = useVaultStore((s) => s.allItems);
   const pendingTags = useSessionStore((s) => s.pendingTags);
@@ -384,19 +379,24 @@ export function AutoFilterRulesSection() {
     <section id="auto-filters" className="mb-10 max-w-xl space-y-3 scroll-mt-6">
       <h2 className="flex items-center gap-2 text-sm font-semibold uppercase text-muted mb-3">
         <AutoFilterIcon className="text-muted shrink-0" />
-        Rules
+        {t('rulesHeading')}
       </h2>
       <p className="text-xs text-muted">
-        Matching pieces are queued as junk in Review (same as manual junk). Keeps are never
-        auto-tagged: DIM keep/favorite, pending keep, or pieces you kept in a duel bucket. Each
-        filter can be <span className="text-white/80">Is</span>,{' '}
-        <span className="text-white/80">Is not</span>, <span className="text-white/80">Any of</span>
-        , or <span className="text-white/80">None of</span> (e.g. junk Hunter pieces whose archetype
-        is none of Bulwark, Paragon).
+        {t('rulesBody')}{' '}
+        <Trans
+          i18nKey="operatorsIntro"
+          ns="autoFilters"
+          components={[
+            <span key="1" className="text-white/80" />,
+            <span key="2" className="text-white/80" />,
+            <span key="3" className="text-white/80" />,
+            <span key="4" className="text-white/80" />,
+          ]}
+        />
       </p>
 
       {rules.length === 0 ? (
-        <p className="text-sm text-muted">No rules yet.</p>
+        <p className="text-sm text-muted">{t('noRules')}</p>
       ) : (
         <ul className="space-y-2">
           {rules.map((rule) => (
@@ -429,7 +429,7 @@ export function AutoFilterRulesSection() {
                 onClick={() => updateRules(rules.filter((r) => r.id !== rule.id))}
                 className="text-xs text-danger/80 hover:underline ml-auto"
               >
-                Delete
+                {t('deleteRule')}
               </button>
             </li>
           ))}
@@ -437,10 +437,10 @@ export function AutoFilterRulesSection() {
       )}
 
       <div className="border border-border rounded-lg p-4 bg-surface-2 space-y-3">
-        <p className="text-xs font-semibold uppercase text-muted">Add rule</p>
+        <p className="text-xs font-semibold uppercase text-muted">{t('addRuleHeading')}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
           <label className="flex flex-col gap-1">
-            <span className="text-muted text-xs">Class</span>
+            <span className="text-muted text-xs">{t('classLabel')}</span>
             <select
               value={draft.classType}
               onChange={(e) =>
@@ -454,67 +454,69 @@ export function AutoFilterRulesSection() {
             >
               {CLASSES.map((c) => (
                 <option key={c} value={c}>
-                  {CLASS_LABELS[c]}
+                  {classLabel(c)}
                 </option>
               ))}
-              <option value="all">All classes</option>
+              <option value="all">{t('allClasses')}</option>
             </select>
           </label>
           <MultiValueField
-            label="Archetype"
+            label={t('archetypeLabel')}
             values={draft.archetypeValues}
             matchMode={draft.archetypeMatchMode}
             matchModeId="draft-archetype-mode"
             options={ARCHETYPES}
-            getOptionLabel={(value) => ARCHETYPE_LABELS[value]}
+            getOptionLabel={(value) => archetypeLabel(value)}
             onValuesChange={(archetypeValues) => setDraft((d) => ({ ...d, archetypeValues }))}
             onMatchModeChange={(archetypeMatchMode) =>
               setDraft((d) => ({ ...d, archetypeMatchMode }))
             }
           />
           <MultiValueField
-            label="Tertiary stat"
+            label={t('tertiaryStatLabel')}
             values={draft.tertiaryStatValues}
             matchMode={draft.tertiaryStatMatchMode}
             matchModeId="draft-tertiary-mode"
             options={STATS}
-            getOptionLabel={(value) => STAT_LABELS[value]}
+            getOptionLabel={(value) => statLabel(value)}
             onValuesChange={(tertiaryStatValues) => setDraft((d) => ({ ...d, tertiaryStatValues }))}
             onMatchModeChange={(tertiaryStatMatchMode) =>
               setDraft((d) => ({ ...d, tertiaryStatMatchMode }))
             }
           />
           <MultiValueField
-            label="Tuning stat"
+            label={t('tuningStatLabel')}
             values={draft.tuningStatValues}
             matchMode={draft.tuningStatMatchMode}
             matchModeId="draft-tuning-mode"
             options={STATS}
-            getOptionLabel={(value) => STAT_LABELS[value]}
+            getOptionLabel={(value) => statLabel(value)}
             onValuesChange={(tuningStatValues) => setDraft((d) => ({ ...d, tuningStatValues }))}
             onMatchModeChange={(tuningStatMatchMode) =>
               setDraft((d) => ({ ...d, tuningStatMatchMode }))
             }
           />
           <MultiValueField
-            label="Slot"
+            label={t('slotLabel')}
             values={draft.armorSlotValues}
             matchMode={draft.armorSlotMatchMode}
             matchModeId="draft-slot-mode"
             options={ARMOR_SLOTS}
-            getOptionLabel={(value) => SLOT_LABELS[value]}
+            getOptionLabel={(value) => slotLabel(value)}
             onValuesChange={(armorSlotValues) => setDraft((d) => ({ ...d, armorSlotValues }))}
             onMatchModeChange={(armorSlotMatchMode) =>
               setDraft((d) => ({ ...d, armorSlotMatchMode }))
             }
           />
           <MultiValueField
-            label="Armor set"
+            label={t('armorSetLabel')}
             values={draft.armorSetHashValues}
             matchMode={draft.armorSetHashMatchMode}
             matchModeId="draft-set-mode"
             options={vaultSets.map((set) => set.hash)}
-            getOptionLabel={(hash) => vaultSets.find((set) => set.hash === hash)?.name ?? `Set ${hash}`}
+            getOptionLabel={(hash) =>
+              vaultSets.find((set) => set.hash === hash)?.name ?? t('setFallback', { hash })
+            }
             onValuesChange={(armorSetHashValues) => setDraft((d) => ({ ...d, armorSetHashValues }))}
             onMatchModeChange={(armorSetHashMatchMode) =>
               setDraft((d) => ({ ...d, armorSetHashMatchMode }))
@@ -526,14 +528,13 @@ export function AutoFilterRulesSection() {
           onClick={addRule}
           className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5"
         >
-          Add rule
+          {t('addRule')}
         </button>
       </div>
 
       {allItems.length > 0 && rules.some((r) => r.enabled) && (
         <p className="text-xs text-muted pt-2 border-t border-border">
-          Live preview: {liveMatchCount} piece{liveMatchCount === 1 ? '' : 's'} would be queued on
-          next vault load (excluding keeps, favorites, and already junked).
+          {t('livePreview', { count: liveMatchCount })}
         </p>
       )}
     </section>

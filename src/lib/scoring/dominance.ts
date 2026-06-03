@@ -1,5 +1,6 @@
 import type { ArmorPiece, ClassPreferenceProfile, RedundantPeerScope, Stat } from '@/types';
-import { ARCHETYPE_STATS, STAT_LABELS, STATS } from '@/lib/constants';
+import { statLabel } from '@/i18n/gameCopy';
+import { ARCHETYPE_STATS, STATS } from '@/lib/constants';
 import { wornStatsEqual } from '@/lib/armor/effectiveStats';
 import {
   budgetRelevantIntrinsicStats,
@@ -110,8 +111,8 @@ export function formatBeatsOn(beats: StatBeat[]): string {
   const wins = nonzero.filter((b) => b.delta > 0);
   const losses = nonzero.filter((b) => b.delta < 0);
   const parts = [
-    ...wins.map((b) => `${STAT_LABELS[b.stat]} +${b.delta}`),
-    ...losses.map((b) => `${STAT_LABELS[b.stat]} ${b.delta}`),
+    ...wins.map((b) => `${statLabel(b.stat)} +${b.delta}`),
+    ...losses.map((b) => `${statLabel(b.stat)} ${b.delta}`),
   ];
   return parts.join(' · ');
 }

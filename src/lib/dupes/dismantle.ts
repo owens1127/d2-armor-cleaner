@@ -8,11 +8,7 @@ import type {
   RedundantPeerScope,
 } from '@/types';
 import { ARMOR_SLOTS } from '@/lib/constants';
-import {
-  autoJunkCandidates,
-  findDominatorsMap,
-  type DominatorResult,
-} from '@/lib/scoring/dominance';
+import { findDominatorsMap, type DominatorResult } from '@/lib/scoring/dominance';
 import {
   findTuningRedundantMap,
   type TuningCoverageResult,
@@ -192,62 +188,4 @@ export function allDismantleCandidates(
     out.push(...list);
   }
   return out;
-}
-
-export function countByReason(
-  candidates: DismantleCandidate[],
-): Record<DismantleReason, number> {
-  return candidates.reduce(
-    (acc, c) => {
-      acc[c.reason] += 1;
-      return acc;
-    },
-    { 'stat-lower': 0, 'tuning-duplicate': 0 } as Record<DismantleReason, number>,
-  );
-}
-
-/** @deprecated Use findDismantleBySlot: returns items only, stat-lower + tuning-duplicate. */
-export function findSafeDismantleBySlot(
-  items: ArmorPiece[],
-  classType: ClassType,
-  scope: RedundantPeerScope = DEFAULT_REDUNDANT_PEER_SCOPE,
-  prefs?: ClassPreferenceProfile,
-): Map<ArmorSlot, ArmorPiece[]> {
-  const result = new Map<ArmorSlot, ArmorPiece[]>();
-  for (const [slot, list] of findDismantleBySlot(items, classType, scope, prefs)) {
-    result.set(
-      slot,
-      list.map((c) => c.item),
-    );
-  }
-  return result;
-}
-
-/** @deprecated Use countDismantleCandidates */
-export function countSafeDismantle(
-  items: ArmorPiece[],
-  classType: ClassType,
-  scope?: RedundantPeerScope,
-  prefs?: ClassPreferenceProfile,
-): number {
-  return countDismantleCandidates(items, classType, scope, prefs);
-}
-
-/** @deprecated Use allDismantleCandidates */
-export function allSafeDismantleCandidates(
-  items: ArmorPiece[],
-  classType: ClassType,
-  scope?: RedundantPeerScope,
-  prefs?: ClassPreferenceProfile,
-): ArmorPiece[] {
-  return allDismantleCandidates(items, classType, scope, prefs).map((c) => c.item);
-}
-
-/** Stat-lower dominated only: for filters or diagnostics. */
-export function statLowerCandidates(
-  items: ArmorPiece[],
-  scope?: RedundantPeerScope,
-  prefs?: ClassPreferenceProfile,
-): ArmorPiece[] {
-  return autoJunkCandidates(items.filter((i) => !i.isIgnored), scope, prefs);
 }

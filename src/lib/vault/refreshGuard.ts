@@ -64,10 +64,3 @@ export function installVaultRefreshGuard(): () => void {
     unblockListeners.clear();
   };
 }
-
-/** For tests. */
-export function resetVaultRefreshGuard(): void {
-  pointerActive = false;
-  interactionHolds = 0;
-  unblockListeners.clear();
-}

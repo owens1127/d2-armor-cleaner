@@ -1,14 +1,16 @@
-import {
-  FOOTER_NAV_LINKS,
-  KOFI_BADGE_SRC,
-  KOFI_URL,
-  SITE_AUTHOR,
-} from '@/lib/siteLinks';
+import { useTranslation } from 'react-i18next';
+import { KOFI_BADGE_SRC, KOFI_URL, SITE_AUTHOR } from '@/lib/siteLinks';
 
 const linkClass =
   'text-muted hover:text-white transition-colors underline-offset-2 hover:underline';
 
+const FOOTER_LINKS = [
+  { labelKey: 'links.newoReport' as const, href: 'https://newo.report' },
+  { labelKey: 'links.github' as const, href: 'https://github.com/owens1127/d2-armor-cleaner' },
+];
+
 export function SiteFooter() {
+  const { t } = useTranslation('footer');
   const year = new Date().getFullYear();
 
   return (
@@ -20,9 +22,9 @@ export function SiteFooter() {
 
         <nav
           className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs order-1 sm:order-2 sm:justify-center"
-          aria-label="Site links"
+          aria-label={t('aria.siteLinks')}
         >
-          {FOOTER_NAV_LINKS.map(({ label, href }) => (
+          {FOOTER_LINKS.map(({ labelKey, href }) => (
             <a
               key={href}
               href={href}
@@ -30,7 +32,7 @@ export function SiteFooter() {
               rel="noopener noreferrer"
               className={linkClass}
             >
-              {label}
+              {t(labelKey)}
             </a>
           ))}
         </nav>
@@ -40,11 +42,11 @@ export function SiteFooter() {
           target="_blank"
           rel="noopener noreferrer"
           className="order-2 sm:order-3 shrink-0 self-start sm:self-center opacity-90 hover:opacity-100 transition-opacity"
-          aria-label="Support on Ko-fi"
+          aria-label={t('aria.kofi')}
         >
           <img
             src={KOFI_BADGE_SRC}
-            alt="Support on Ko-fi"
+            alt={t('aria.kofi')}
             width={160}
             height={27}
             className="h-7 w-auto max-w-[10rem] border-0"

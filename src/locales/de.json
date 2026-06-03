@@ -1,0 +1,1017 @@
+{
+  "autoFilters": {
+    "title": "Auto-Filter",
+    "intro": "Müll-Tags automatisch in die Warteschlange stellen, wenn dein Tresor geladen oder aktualisiert wird. Keep- und Favorite-Stücke werden nie automatisch getaggt.",
+    "noRules": "Noch keine Regeln.",
+    "addRule": "Regel hinzufügen",
+    "classLabel": "Klasse",
+    "operatorsIntro": "Jeder Filter kann <1>Ist</1>, <2>Ist nicht</2>, <3>Eines von</3> oder <4>Keines von</4> sein (z. B. Müll-Hunter-Teile, deren Archetyp nicht Gunner ist).",
+    "rulesHeading": "Regeln",
+    "rulesBody": "Passende Teile werden in der Übersicht als Müll in die Warteschlange gestellt (wie manuelles Müll-Tagging). Keeps werden nie automatisch getaggt: DIM keep/Favorit, ausstehendes Keep oder Teile aus einem Duell-Bucket.",
+    "deleteRule": "Löschen",
+    "allClasses": "Alle Klassen",
+    "archetypeLabel": "Archetyp",
+    "tertiaryStatLabel": "Tertiärwert",
+    "tuningStatLabel": "Tuningwert",
+    "slotLabel": "Slot",
+    "armorSetLabel": "Rüstungsset",
+    "any": "Beliebig",
+    "addValue": "Wert hinzufügen…",
+    "pickValue": "Wert wählen…",
+    "matchMode": "Abgleichmodus",
+    "matchModeDisabled": "Abgleichmodus (zuerst einen Wert wählen)",
+    "operators": {
+      "is": "Ist",
+      "isNot": "Ist nicht",
+      "anyOf": "Eines von",
+      "noneOf": "Keines von"
+    },
+    "livePreview_one": "Live-Vorschau: {{count}} Teil würde beim nächsten Tresor-Laden in die Warteschlange (ohne Keeps, Favoriten und bereits als Müll markierte).",
+    "livePreview_other": "Live-Vorschau: {{count}} Teile würden beim nächsten Tresor-Laden in die Warteschlange (ohne Keeps, Favoriten und bereits als Müll markierte).",
+    "setFallback": "Set {{hash}}",
+    "addRuleHeading": "Regel hinzufügen",
+    "enableRule": "Regel aktivieren: {{label}}",
+    "disableRule": "Regel deaktivieren: {{label}}",
+    "removeValue": "{{label}} entfernen",
+    "describe": {
+      "allClasses": "Alle Klassen",
+      "tertiary": "{{stat}} Tertiär",
+      "tuning": "{{stat}} Tuning",
+      "setFallback": "Set {{hash}}",
+      "anyOf": "eines von {{labels}}",
+      "noneOf": "keines von {{labels}}",
+      "not": "NICHT {{label}}"
+    }
+  },
+  "browse": {
+    "title": "{{class}}-Rüstung durchsuchen",
+    "summary": "{{filtered}} von {{total}} Teilen · {{sortLabel}}",
+    "redundantLink": "{{count}} überflüssige Rolls",
+    "loadVaultFirst": "Lade zuerst deinen Tresor vom Dashboard.",
+    "filters": {
+      "slot": "Slot",
+      "archetype": "Archetyp",
+      "search": "Suche",
+      "armorSet": "Rüstungsset",
+      "dimTag": "DIM-Tag",
+      "sort": "Sortierung",
+      "combo": "Combo",
+      "allSlots": "Alle Slots",
+      "allArchetypes": "Alle Archetypen",
+      "allSets": "Alle Sets",
+      "any": "Beliebig",
+      "anyCombo": "Beliebiges Combo",
+      "armorNamePlaceholder": "Rüstungsname…",
+      "statLowerOnly": "Nur niedrigere Werte",
+      "dupesOnly": "Nur Duplikate",
+      "strictlyLowerOnly": "Nur strikt niedriger",
+      "redundantOnly": "Nur überflüssige Rolls",
+      "supportsComboOnly": "Nur Combo-Unterstützung"
+    },
+    "dimTags": {
+      "untagged": "Ohne Tag",
+      "keep": "Keep",
+      "junk": "Junk",
+      "favorite": "Favorite",
+      "infuse": "Infuse",
+      "archive": "Archive"
+    },
+    "sort": {
+      "matchDesc": "Match % (hoch → niedrig)",
+      "matchAsc": "Match % (niedrig → hoch)",
+      "preference": "Präferenz",
+      "buildFitDesc": "Combo-Passung (hoch → niedrig)",
+      "matchDescHint": "sortiert nach Match % (am kompatibelsten zuerst)",
+      "matchAscHint": "sortiert nach Match % (am wenigsten kompatibel zuerst)",
+      "buildFitHint": "sortiert nach Combo-Passung",
+      "preferenceHint": "sortiert nach Präferenz"
+    },
+    "copyIds": "{{count}} id:-Abfrage kopieren",
+    "copied": "Kopiert!",
+    "reviewTagsLink": "Vergleichs-/Triage-Tags prüfen ({{count}})",
+    "redundant": {
+      "pickOne": "Eines zum Behalten wählen",
+      "noRedundant": "Keine überflüssigen Rolls",
+      "noMatches": "Keine Treffer",
+      "noMatchFilters": "No redundant rolls match the current filters.",
+      "noneToShow": "No redundant rolls to show."
+    },
+    "noItemsMatch": "No items match these filters.",
+    "backToDashboard": "Back to dashboard",
+    "dupeBadge": "dupe"
+  },
+  "build": {
+    "title": "{{class}}-Combos",
+    "intro": "Beste Tresor-Stücke für jedes Roll-Ziel in deinem Combo.",
+    "combosHeading": "Combos",
+    "setBonuses": "Set-Boni",
+    "setBonusesOptional": "Set-Boni (optional)",
+    "includeInCoverage": "In Abdeckung einbeziehen",
+    "comboNameAria": "Combo-Name",
+    "maxCombos": "Maximal {{max}} Combos pro Klasse.",
+    "orderLabel": "Reihenfolge:",
+    "noneOption": "Keine",
+    "twoTwoMix": " · 2+2 Mix",
+    "editor": {
+      "intro": "Wähle 2–4 Werte in Reihenfolge und optionale Set-Boni (z. B. Ferropotent 2pc + Smoke Jumper 2pc). Wir empfehlen das beste Teil pro Slot für Werte und Sets.",
+      "unsavedHint": "Ungespeicherte Änderungen · speichern oder abbrechen für die Leseansicht.",
+      "editingHint": "Combo bearbeiten · nach Abschluss speichern oder abbrechen.",
+      "allSavedHint": "Alle Combos gespeichert · Bearbeiten auf einer Karte zum Ändern.",
+      "emptyList": "Keine Combos für diese Klasse. Unten hinzufügen für Roll-Empfehlungen und Sortierung.",
+      "unsaved": "Ungespeichert",
+      "saved": "Gespeichert",
+      "on": "An",
+      "off": "Aus",
+      "edit": "Bearbeiten",
+      "remove": "Entfernen",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "addStat": "Wert hinzufügen",
+      "priority1": "1. Priorität",
+      "priority2": "2. Priorität",
+      "priority3": "3. Priorität",
+      "priority4": "4. Priorität",
+      "priorityN": "Priorität {{n}}",
+      "setBonus2pc": "2er-Bonus",
+      "setBonus4pcSame": "Gleiches Set (4pc)",
+      "setBonus4pcMix": "Zweites Set (2pc Mix) oder 4pc",
+      "setBonusHint": "Ein Set für 2pc, dann dasselbe für 4pc oder ein zweites Set für 2+2 Mix.",
+      "loadVaultForSets": "Tresor laden, um Sets aus dem Inventar zu wählen.",
+      "firstSet2pc": "Erstes Set (2pc)",
+      "twoPcOnly": "Nur 2pc (erstes Set)",
+      "set4pcSuffix": "{{name}} (4pc)",
+      "set2pcMixSuffix": "{{name}} (2pc Mix)",
+      "targetLabel": "Ziel:",
+      "addStatCount": "+ Wert ({{current}}/{{max}})",
+      "addCombo": "Combo hinzufügen",
+      "addAnotherCombo": "Weitere Combo",
+      "viewCoverageLink": "{{class}}-Combo-Abdeckung anzeigen"
+    },
+    "coverage": {
+      "heading": "Deine Combos",
+      "intro": "Bestes Teil pro Slot für jedes optimale Roll-Muster (Archetyp + Tertiär + Tuning)",
+      "empty": "Noch keine Combos. 2–4 Wert-Prioritäten im Combos-Bereich unten hinzufügen.",
+      "editCombos": "Combos bearbeiten",
+      "setPrioritiesHint": "Wert-Prioritäten setzen, um Roll-Ziele zu sehen",
+      "recommendedHeading": "Empfohlene Teile",
+      "recommendedHint": "DIM-Tags und Suche für das Raster unten",
+      "browseVault": "Tresor durchsuchen",
+      "setTarget": "Set-Ziel:",
+      "vaultPiecesShort": "nicht genug Tresor-Teile",
+      "conflictingSets": "Diese Set-Ziele brauchen mehr als fünf Teile · Combo anpassen.",
+      "showRollDetails": "Roll-Details anzeigen",
+      "hideRollDetails": "Roll-Details ausblenden",
+      "tagAll": "Alle taggen:",
+      "bulkNoTaggable": "Keine taggbaren Teile",
+      "bulkClearKeep": "Keep bei allen entfernen",
+      "bulkMarkKeep": "Alle als Keep",
+      "bulkAllFavorited": "Alle favorisiert",
+      "bulkMarkFavorite": "Alle favorisieren",
+      "bulkClearJunk": "Müll bei allen entfernen",
+      "bulkMarkJunk": "Alle als Müll",
+      "tagKeep": "Keep in DIM taggen",
+      "tagKeepRemove": "Keep-Tag in DIM entfernen",
+      "tagFavorite": "Favorit in DIM",
+      "tagFavoriteAlready": "Bereits in DIM favorisiert",
+      "tagJunk": "Müll in DIM",
+      "tagJunkRemove": "Müll-Tag in DIM entfernen",
+      "choose": "Wählen",
+      "chooseSlot": "{{slot}} wählen",
+      "choosePiece": "Teil wählen · {{count}} passend",
+      "eligible_one": "{{count}} passendes Teil",
+      "eligible_other": "{{count}} passende Teile",
+      "anyArchetype": "Beliebiger Archetyp",
+      "tier": "Stufe {{tier}}",
+      "comboFallback": "Combo",
+      "rollRoleCombined": "Tertiär + Tuning",
+      "rollRoleTertiary": "Tertiär",
+      "rollRoleTuning": "Tuning",
+      "notComboPriority": "{{stat}} · keine Combo-Priorität",
+      "archetypeBonus": "{{stat}} vom Archetyp (+{{bonus}})",
+      "rollCombinedTitle": "{{stat}} Tertiär+Tuning (+{{tertiaryBonus}} +{{tuningBonus}})",
+      "rollTertiaryTitle": "{{stat}} Tertiär (+{{bonus}})",
+      "rollTuningTitle": "{{stat}} Tuning (+{{bonus}})",
+      "detailsSupporting": "{{count}} Tresor-Teile rollen mindestens eine Priorität.",
+      "detailsProfiles": "{{filled}} von {{possible}} möglichen Roll-Typen sind im Tresor.",
+      "detailsRedundantOverlap": "Leere Slots trotz Redundanz · Füllen vor mehr Duplikaten.",
+      "gapsHeading": "Roll-Typen zum Farmen",
+      "gapsIntro": "Leere Kombinationen, die dieser Combo helfen.",
+      "gapsEmpty": "Nichts Offensichtliches fehlt in der Matrix.",
+      "overlapsHeading": "Roll-Typen mit vielen Duplikaten",
+      "overlapsIntro": "Drei oder mehr Teile in derselben Kombination.",
+      "overlapsEmpty": "Keine schweren Duplikate in einem Roll-Typ.",
+      "overlapCount_one": "{{count}} Teil",
+      "overlapCount_other": "{{count}} Teile",
+      "gapAllPriorities": "alle Prioritäten",
+      "gapMultiplePriorities": "mehrere Prioritäten",
+      "gapOnePriority": "eine Priorität",
+      "chooseEligibleTitle": "{{count}} passende Teile im Tresor"
+    }
+  },
+  "calibrate": {
+    "title": "Einstellungen kalibrieren",
+    "calibratingClass": "Kalibriere {{class}}.",
+    "choicesSaved_one": "1 Auswahl gespeichert",
+    "choicesSaved_other": "{{count}} Auswahlen gespeichert",
+    "steps": {
+      "class": "Klasse",
+      "archetype": "Archetypen",
+      "tertiary": "Tertiärwerte",
+      "tuning": "Abstimmungswerte",
+      "sets": "Rüstungssets"
+    },
+    "stepHeader": "Schritt {{current}} von {{total}} · {{step}}",
+    "classTitle": "Welche Klasse kalibrierst du?",
+    "archetypeTitle": "Archetypen nach Präferenz sortieren",
+    "archetypeInstruction": "Am liebsten oben. Zeilen ziehen oder Pfeile nutzen. Alle sechs Archetypen sind aufgelistet; Tresor-Besitz schränkt die Liste nicht ein.",
+    "tertiaryTitle": "Tertiärwerte sortieren",
+    "tuningTitle": "Abstimmungswerte sortieren",
+    "setsTitle": "Rüstungssets nach Präferenz sortieren",
+    "skipAllArchetypes": "Alle Archetypen überspringen",
+    "showBonusDetails": "Bonus-Details anzeigen",
+    "bonusUnavailable": "Bonus-Details nicht verfügbar",
+    "noSetBonuses": "Keine Set-Boni aufgeführt",
+    "continue": "Continue",
+    "goToDashboard": "Go to dashboard",
+    "noArmorSets": "No armor sets to compare.",
+    "savedNextStep": "Saved · Next step",
+    "skipTertiaryArchetype": "Skip {{archetype}} tertiary",
+    "skipTertiaryStats": "Skip tertiary stats",
+    "skipTuningArchetype": "Skip {{archetype}} tuning",
+    "skipTuningStats": "Skip tuning stats",
+    "skipArmorSets": "Skip armor sets",
+    "nextArchetype": "Next archetype",
+    "setsInstruction": "Most preferred at the top. Sets from your vault, ordered by how many pieces you own. Drag to reorder or use arrow buttons.",
+    "contextSetPrefs": "Armor set preferences",
+    "unknownSet": "Unknown set",
+    "rankTheseStats": "Rank these stats:",
+    "dragRowsHint": "Drag rows or use the arrows. Most important at the top.",
+    "archetypeProgress": "{{current}} of {{total}} archetypes"
+  },
+  "common": {
+    "language": "Sprache",
+    "languageEn": "English",
+    "languageFr": "Français",
+    "languageEs": "Español",
+    "languageEsMx": "Español (México)",
+    "languageDe": "Deutsch",
+    "languageIt": "Italiano",
+    "languageJa": "日本語",
+    "languageKo": "한국어",
+    "languagePl": "Polski",
+    "languagePtBr": "Português (Brasil)",
+    "languageRu": "Русский",
+    "languageZhChs": "简体中文",
+    "languageZhCht": "繁體中文",
+    "continue": "Weiter",
+    "save": "Speichern",
+    "back": "Zurück",
+    "skip": "Überspringen",
+    "signOut": "Abmelden",
+    "retry": "Erneut versuchen",
+    "retrying": "Erneuter Versuch…",
+    "pleaseWait": "Bitte warten",
+    "copied": "Kopiert!",
+    "none": "Keine",
+    "configured": "konfiguriert",
+    "notConfigured": "nicht konfiguriert",
+    "developer": "Entwickler",
+    "openReviewPage": "Review-Seite öffnen",
+    "clearPendingTags": "Ausstehende Tags löschen",
+    "exportPrefs": "Einstellungen exportieren",
+    "importPrefs": "Einstellungen importieren",
+    "preferencesImported": "Einstellungen importiert.",
+    "invalidPrefsFile": "Ungültige Einstellungsdatei.",
+    "topStats": "Top-Stats:",
+    "topArchetypes": "Top-Archetypen:",
+    "recalibrateClass": "{{class}} neu kalibrieren",
+    "resetClassPrefs": "{{class}}-Einstellungen zurücksetzen",
+    "resetAllClasses": "Alle Klassen zurücksetzen",
+    "confirm": {
+      "clearPendingTags": "Alle {{count}} ausstehenden Tags löschen? Sie werden nicht in DIM übernommen.",
+      "resetClassPrefs": "{{class}}-Einstellungen auf Standard zurücksetzen? Stat-Gewichte, Kalibrierungswahl und gelernte Gewichte für diese Klasse werden gelöscht.",
+      "resetAllClassPrefs": "Einstellungen für alle Klassen auf Standard zurücksetzen? Stat-Gewichte, Kalibrierungswahl und gelernte Gewichte werden für Hunter, Titan und Warlock gelöscht. Duplikat-Regeln und andere Einstellungen bleiben erhalten."
+    },
+    "classPrefs": {
+      "heading": "{{class}}-Einstellungen",
+      "usingClass": "{{class}} aktiv (Klasse in der Kopfzeile wechseln). Stat- und Archetyp-Gewichte pro Klasse aus der Kalibrierung. Duplikat-Regeln sind gemeinsam, sofern nicht pro Klasse überschrieben.",
+      "calibrations": "{{count}} Kalibrierungen · Vertrauen {{confidence}}"
+    },
+    "reviewTags": {
+      "heading": "Tags prüfen",
+      "queued_one": "{{count}} Tag in der Warteschlange für DIM.",
+      "queued_other": "{{count}} Tags in der Warteschlange für DIM.",
+      "none": "Keine ausstehenden Tags."
+    },
+    "dev": {
+      "dimKeyHint": "Lokaler DIM-Schlüssel: POST an api.destinyitemmanager.com/new_app mit Origin {{origin}}."
+    },
+    "dimCopy": {
+      "queryFor": "DIM-Abfrage für {{name}} kopieren",
+      "queryCopied": "DIM-Abfrage für {{name}} in die Zwischenablage kopiert.",
+      "searchShown": "DIM-Suche für angezeigte Teile kopieren",
+      "searchShownCopied": "DIM-Suche für angezeigte Teile kopiert.",
+      "searchGroup": "DIM-Suche für alle {{count}} Teile in dieser Gruppe kopieren",
+      "searchGroupCopied": "DIM-Suche für alle {{count}} Teile in dieser Gruppe kopiert."
+    }
+  },
+  "dashboard": {
+    "title": "{{class}}-Tresor",
+    "summary": "{{tieredCount}} gestufte {{class}}-Rüstung · {{dupeScopeCount}} {{minTierLabel}} im Duplikat-Bereich · {{buckets}} Duplikat-Buckets · ~{{review}} Entscheidungen",
+    "customDupeRules": "· eigene Duplikat-Regeln",
+    "tieredAccount": "· {{count}} gestufte Rüstung (Konto)",
+    "customRulesBanner": "{{class}} nutzt eigene Duplikat-Regeln",
+    "nextSteps": "Nächste Schritte",
+    "browseAllArmor": "Alle Rüstung durchsuchen",
+    "redundantRolls": "Überflüssige Rolls ({{count}})",
+    "refreshVault": "Tresor aktualisieren",
+    "armorView": "Rüstungsansicht",
+    "archetypeView": "Archetyp-Ansicht",
+    "heatmapSlot": "Heatmap-Slot",
+    "allSlots": "Alle Slots",
+    "insights": {
+      "continueSetup": {
+        "title": "Einrichtung fortsetzen",
+        "detail": "Kalibrierung abschließen, damit Tresor-Vorschläge zu deinen Prioritäten passen",
+        "cta": "Weiter"
+      },
+      "continueCalibration": {
+        "title": "Kalibrierung fortsetzen",
+        "detail": "Dort weitermachen, wo du bei der Einstellungs-Kalibrierung aufgehört hast",
+        "cta": "Weiter"
+      },
+      "calibratePreferences": {
+        "title": "Einstellungen kalibrieren",
+        "detail": "Wert-, Archetyp- und Set-Prioritäten für diese Klasse festlegen",
+        "cta": "Kalibrieren"
+      },
+      "completeCalibration": {
+        "title": "Kalibrierung abschließen",
+        "detail": "Niedriges Vertrauen · ein paar weitere Auswahlen schärfen Duplikat- und Combo-Vorschläge",
+        "cta": "Kalibrieren"
+      },
+      "improveCalibration": {
+        "title": "Kalibrierung verbessern",
+        "detail": "Mittleres Vertrauen · mehr Auswahlen verbessern Ranking und Abdeckungs-Hinweise",
+        "cta": "Kalibrieren"
+      },
+      "recalibrateStale": {
+        "title": "Einstellungen neu kalibrieren",
+        "detail": "Deine letzte Kalibrierung liegt eine Weile zurück · Tresor-Rolls können sich verschoben haben",
+        "cta": "Neu kalibrieren"
+      },
+      "recalibrateDefault": {
+        "title": "Einstellungen neu kalibrieren",
+        "detail": "Wert-, Archetyp- und Set-Gewichte für diese Klasse jederzeit aktualisieren",
+        "cta": "Neu kalibrieren"
+      },
+      "setupAutoFilters": {
+        "title": "Auto-Filter einrichten",
+        "detail": "Müll-Tags beim Tresor-Laden für Rolls, die du nie behalten willst",
+        "cta": "Filter einrichten"
+      },
+      "setupCombos": {
+        "title": "Combos einrichten",
+        "detail": "2–4 Prioritätswerte pro Combo wählen · {{countLabel}}",
+        "cta": "Combos einrichten"
+      },
+      "addAnotherCombo": {
+        "title": "Weiteres Combo hinzufügen",
+        "detail": "{{countLabel}} Combos · 1 weiteres hinzufügen",
+        "cta": "Combos hinzufügen"
+      },
+      "addMoreCombos": {
+        "title": "Mehr Combos hinzufügen",
+        "detail": "{{countLabel}} · {{remaining}} weitere Combos hinzufügen",
+        "cta": "Combos hinzufügen"
+      },
+      "fixCoverage": {
+        "title": "{{label}}-Abdeckung beheben",
+        "cta": "Combos öffnen"
+      },
+      "browseUpgrades": {
+        "title": "Upgrades für {{label}} durchsuchen",
+        "cta": "Tresor durchsuchen"
+      },
+      "compareLargest": {
+        "title": "{{label}} vergleichen",
+        "detail": "{{count}} Teile in deinem größten Duplikat-Bucket",
+        "cta": "Diese Gruppe vergleichen"
+      },
+      "redundantRolls": {
+        "title": "Überflüssige Rolls prüfen",
+        "detail_one": "{{count}} Teil strikt schlechter als ein anderer Roll, den du behältst",
+        "detail_other": "{{count}} Teile strikt schlechter als ein anderer Roll, den du behältst",
+        "cta": "Liste öffnen"
+      },
+      "taggedKeep": {
+        "title": "DIM-getaggte Duplikate prüfen",
+        "detail_one": "{{count}} Duplikat-Kandidat bereits als keep oder favorite in DIM getaggt",
+        "detail_other": "{{count}} Duplikat-Kandidaten bereits als keep oder favorite in DIM getaggt",
+        "cta": "Tresor durchsuchen"
+      },
+      "heavyBuckets": {
+        "title": "Volle Duplikat-Buckets leeren",
+        "detail_one": "{{count}} Bucket mit 5+ Gegenständen. Heatmap nutzen, um eines zu wählen.",
+        "detail_other": "{{count}} Buckets mit 5+ Gegenständen. Heatmap nutzen, um eines zu wählen.",
+        "cta": "Duplikate vergleichen"
+      },
+      "fixCoverageNoVault": "Noch keine Tresor-Teile mit deinen Prioritätswerten",
+      "fixCoverageNeedSlot": "{{slot}} nötig, der deine Prioritäten rollt",
+      "fixCoverageSlots": "{{filled}}/{{total}} Slots im empfohlenen Loadout belegt",
+      "browseNoArmor": "Noch keine Rüstung im Tresor mit diesen Werten",
+      "browseGaps": "{{count}} Roll-Typ für bessere Passung",
+      "browseGaps_other": "{{count}} Roll-Typen für bessere Passung",
+      "browseCompare": "Tresor-Rüstung mit deinen Combos vergleichen"
+    },
+    "buildLink": {
+      "title": "Deine Combos"
+    },
+    "coverage": {
+      "yourCombos": "Deine Combos",
+      "setPriorities": "Wert-Prioritäten in einem Combo setzen, um Roll-Ziele zu sehen",
+      "recommendedPieces": "Empfohlene Teile",
+      "rollTypesHunt": "Roll-Typen zum Farmen",
+      "nothingMissing": "In deiner Matrix fehlt nichts Offensichtliches.",
+      "rollTypesMany": "Roll-Typen, von denen du viele hast",
+      "noHeavyDuplicates": "Keine schweren Duplikate in einem Roll-Typ.",
+      "tagAll": "Alle taggen:",
+      "choose": "Choose",
+      "chooseSlotAria": "Choose {{slot}}",
+      "choosePieceAria": "Choose piece · {{count}} eligible",
+      "supportingPieces": "<1>{{count}}</1> pieces in your vault roll at least one priority stat.",
+      "filledProfiles": "<1>{{filled}}</1> of <2>{{total}}</2> roll types you could own (archetype + tertiary + slot) are in your vault.",
+      "redundantOverlap": "Empty slots remain despite redundant rolls. Prioritize fills over more dupes.",
+      "gapsIntro": "Empty combinations that would help this combo.",
+      "overlapsIntro": "Three or more pieces in the same combination.",
+      "piecesCount": "{{count}} pieces",
+      "orderLabel": "Order:"
+    }
+  },
+  "duel": {
+    "title": "{{class}}-Duplikate vergleichen",
+    "subtitle": {
+      "wrapUp": "Diese Gruppe prüfen, dann weiter",
+      "bucketMeta": "{{slot}} · {{archetype}} · {{tertiary}} · {{count}} Gegenstände",
+      "bucketProgress": "{{meta}} · {{progress}}",
+      "noDupes": "Keine doppelte Rüstung zum Vergleichen für diese Klasse",
+      "chooseGroup": "Wähle eine Duplikat-Gruppe zum Starten",
+      "startingNext": "Nächste Duplikat-Gruppe wird gestartet…"
+    },
+    "resetBucket": "Bucket zurücksetzen",
+    "preparing": "Vergleiche werden vorbereitet…",
+    "queueEmpty": {
+      "title": "Warteschlange leer",
+      "summary": "{{keep}} keep · {{junk}} junk in Warteschlange.",
+      "reviewTags": "Tags prüfen",
+      "restartQueue": "Warteschlange neu starten",
+      "clearSession": "{{class}}-Sitzung löschen"
+    },
+    "noDuplicates": {
+      "title": "Keine Duplikate zum Vergleichen",
+      "body": "Keine Duplikat-Buckets passen zu deinen Regeln für {{class}}. Lockere Duplikat-Regeln in den Einstellungen oder lade einen frischen Tresor-Snapshot."
+    },
+    "noGroupsInQueue": "Keine Duplikat-Gruppen in der Warteschlange. Lockere Duplikat-Regeln in den Einstellungen oder starte die Warteschlange neu.",
+    "skipGroup": "Gruppe überspringen (S)",
+    "restoringSession": "Sitzung wird wiederhergestellt…",
+    "confirm": {
+      "switchBucket": "Bucket wechseln? Laufende Auswahl und Junk-Tags für den aktuellen Bucket werden gelöscht.",
+      "resetBucket": "Diesen Bucket zurücksetzen? Alle laufenden Auswahlen, Junk-Tags und Vergleichsfortschritt werden gelöscht. Der Bucket bleibt in der Warteschlange.",
+      "clearClassSession": "Gesamten {{class}}-Vergleichsfortschritt und Warteschlangen-Tags löschen? Nicht rückgängig."
+    },
+    "chooser": {
+      "title": "Duplikat-Gruppe wählen",
+      "kicker": "Duplikate vergleichen",
+      "intro": "Wähle zuerst eine {{class}}-Gruppe. Später im Header wechseln.",
+      "listAria": "{{class}} duplicate groups"
+    },
+    "wrapUp": {
+      "title": "Diese Duplikat-Gruppe prüfen",
+      "chooseNext": "Gruppe für den nächsten Vergleich wählen",
+      "nextGroupsAria": "Nächste Duplikat-Gruppen",
+      "kicker": "Bucket abgeschlossen",
+      "allPairsDecided": "Alle Duell-Paare entschieden",
+      "continueNext": "Weiter zur nächsten Gruppe",
+      "applyTagsContinue": "Tags anwenden & weiter",
+      "chooseDifferent": "Andere Gruppe wählen",
+      "backToSummary": "Zurück zur Zusammenfassung",
+      "whatsNext": "Als Nächstes",
+      "tagsFootnote": "Tags werden beim Weiter in die Warteschlange gelegt. Erst nach der Übersicht angewendet.",
+      "stats": {
+        "keeps": "Keeps",
+        "junkQueued": "Müll in Warteschlange",
+        "preferEliminated": "Prefer ausgeschieden",
+        "pairsDecided": "Paare entschieden",
+        "inGroup": "In dieser Gruppe"
+      },
+      "breakdown": {
+        "keepBoth": "Beide behalten: {{count}}",
+        "keepSide": "Seite behalten: {{count}}",
+        "junkedInDuels": "In Duellen als Müll: {{count}}",
+        "preferInPlay": "Prefer noch aktiv: {{count}}"
+      },
+      "piece_one": "{{count}} Teil",
+      "piece_other": "{{count}} Teile",
+      "sessionLast": "Letzte Gruppe in der Warteschlange",
+      "sessionLeft_one": "{{count}} Gruppe danach übrig",
+      "sessionLeft_other": "{{count}} Gruppen danach übrig"
+    },
+    "bucket": {
+      "label": "Bucket",
+      "select": "Bucket wählen",
+      "dupeBucketsAria": "Duplikat-Buckets"
+    },
+    "keyboard": {
+      "aria": "Tastenkürzel für Vergleich",
+      "left": "Links",
+      "both": "Beide",
+      "right": "Rechts",
+      "keep": "Keep",
+      "prefer": "Bevorzugen",
+      "junk": "Junk"
+    },
+    "compare": {
+      "suggested": "Vorgeschlagen",
+      "sameRoll": "Gleicher Roll",
+      "compareSides": "Seiten vergleichen",
+      "suggestedPick": "Vorgeschlagene Auswahl: ",
+      "vs": "vs",
+      "fitTitle": "Wie gut dieses Teil zu deinen gespeicherten Einstellungen passt",
+      "powerTitle": "Power-Stufe",
+      "identicalRolls": "Gleiche Rolls. Eins behalten, eins Müll, beide behalten oder passen.",
+      "suppressedSuggestion": "Beide stark · letztes des Tiers. Prefer, Pass, Keep oder Müll.",
+      "buildOptimalPrefix": "Combo-optimal für ",
+      "orPassKeepJunk": "· oder Pass / Keep / Müll",
+      "evenMatch": "Gleichstand. Prefer, Pass, Keep oder Müll für eines oder beide.",
+      "eliminated": "Aus dem Bracket ausgeschieden",
+      "actionKeep": "Keep",
+      "outcomes": {
+        "prefer": "Diese Seite bevorzugen. Verlierer braucht {{threshold}} Prefer-Niederlagen vor Müll am Bucket-Ende.",
+        "keepSide": "Keep am Bucket-Ende · andere Seite bleibt im Bracket",
+        "keepBoth": "Beide am Bucket-Ende behalten",
+        "junkOne": "Jetzt Müll · andere bleibt im Bracket (kein Sieger)",
+        "junkBoth": "Beide jetzt Müll",
+        "pass": "Paar überspringen. Keine Tags, beide erneut in der Warteschlange."
+      },
+      "pass": "Pass",
+      "preferred": "Bevorzugt",
+      "tuningLabel": "Abstimmung: {{stat}}",
+      "setFootnote": "Set: {{name}}",
+      "loss_one": "1 Niederlage",
+      "loss_other": "{{count}} Niederlagen",
+      "lossRemaining_one": "{{count}} weitere Prefer-Niederlage bis Schrott am Bucket-Ende",
+      "lossRemaining_other": "{{count}} weitere Prefer-Niederlagen bis Schrott am Bucket-Ende",
+      "keyboardHints": "Buttons für Ergebnisse · ↑ beide behalten · Leertaste Pass · ↓ beide Schrott · Strg+←/→ Seiten-Schrott",
+      "aria": {
+        "keepLeft": "Links behalten. {{outcome}}",
+        "keepRight": "Rechts behalten. {{outcome}}",
+        "keepBoth": "Beide behalten. {{outcome}}",
+        "preferLeft": "Links bevorzugen. {{outcome}}",
+        "preferRight": "Rechts bevorzugen. {{outcome}}",
+        "passPair": "Paar passen. {{outcome}}",
+        "junkLeft": "Links Schrott. {{outcome}}",
+        "junkRight": "Rechts Schrott. {{outcome}}",
+        "junkBoth": "Beide Schrott. {{outcome}}"
+      }
+    },
+    "progress": {
+      "noGroups": "Keine Duplikat-Gruppen",
+      "lastInQueue": "Letzte Gruppe in deiner Warteschlange"
+    }
+  },
+  "dupes": {
+    "grouping": {
+      "sameArmorSet": {
+        "label": "Gleiches Rüstungsset erforderlich",
+        "help": "Nur Teile aus demselben Set gruppieren oder vergleichen. Aus: gleicher Slot + Archetyp + Tertiär über alle Sets."
+      },
+      "sameTuningStat": {
+        "label": "Gleichen Abstimmungswert erforderlich",
+        "help": "Nach Abstimmungswert trennen (z. B. Waffen vs. Granate). Aus: gemischte Abstimmungswerte in einem Bucket."
+      }
+    },
+    "respectKeepFavorite": {
+      "label": "DIM Keep und Favorite beim Müll-Vorschlag beachten",
+      "help": "Wenn aktiv, werden Keep- und Favorite-getaggte Teile in Duplikat-Flows nicht als Müll vorgeschlagen."
+    },
+    "excludeJunk": {
+      "label": "Junk-getaggte Teile von Duplikat-Zählungen ausschließen"
+    },
+    "presets": {
+      "loose": {
+        "label": "Locker"
+      },
+      "standard": {
+        "label": "Standard"
+      },
+      "setAware": {
+        "label": "Set-bewusst"
+      },
+      "tuning": {
+        "label": "Abstimmung"
+      },
+      "strict": {
+        "label": "Streng"
+      }
+    },
+    "impactCompact": {
+      "buckets": "Duplikat-Buckets ·",
+      "decisions": "Entscheidungen ·",
+      "pieces": "{{count}} Teile einbezogen"
+    },
+    "matchStyle": {
+      "custom": "Benutzerdefiniert",
+      "usingPreset": "Verwendet {{label}}",
+      "usingCustomRules": "Verwendet benutzerdefinierte Regeln",
+      "cardBody": {
+        "loose": "Teile im gleichen Slot vergleichen, ohne gleiches Rüstungsset oder Abstimmungswert.",
+        "standard": "Nach Slot, Archetyp und Tertiär vergleichen, ohne gleiches Rüstungsset.",
+        "setAware": "Gruppiert Duplikate nach Rüstungsset · funktioniert für die meisten Tresore.",
+        "tuning": "Gruppiert Duplikate nach Abstimmungswert, auch über verschiedene Rüstungssets.",
+        "strict": "Erfordert gleiches Rüstungsset und Abstimmungswert für ein Duplikat-Match."
+      },
+      "customMix": "Benutzerdefinierte Mischung: {{armorSet}}, {{tuningStat}}.",
+      "armorSetSame": "gleiches Rüstungsset",
+      "armorSetAny": "beliebiges Rüstungsset",
+      "tuningStatSame": "gleicher Abstimmungswert",
+      "tuningStatAny": "beliebiger Abstimmungswert",
+      "dimTagsRespect": "DIM Keep- und Favorite-Tags zählen beim Müll-Vorschlag.",
+      "dimTagsIgnore": "Keep- und Favorite-Tags werden beim Müll-Vorschlag nicht berücksichtigt."
+    },
+    "suggestions": {
+      "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+      "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+      "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+      "standardDefault": "Standard preset for your vault size."
+    }
+  },
+  "errors": {
+    "boundary": {
+      "title": "Etwas ist schiefgelaufen",
+      "body": "{{appName}} ist auf einen unerwarteten Fehler gestoßen. Deine Einstellungen und warteschlangigen Tags im lokalen Speicher sind meist unberührt.",
+      "reload": "App neu laden",
+      "goHome": "Zur Startseite"
+    },
+    "oauth": {
+      "completingLogin": "Bungie-Anmeldung wird abgeschlossen…",
+      "exchangingCode": "Autorisierungscode wird ausgetauscht…",
+      "loadingVault": "Dein Tresor wird geladen…",
+      "firstLoadNote": "Beim ersten Laden wird das Spiel-Manifest heruntergeladen; das kann eine Minute dauern.",
+      "bungieDenied": "Bungie hat die Anmeldung abgelehnt: {{error}}",
+      "noAuthCode": "Kein Autorisierungscode zurückgegeben: versuche erneut anzumelden.",
+      "stateMismatch": "OAuth-Status stimmt nicht überein: oft durch einen veralteten Tab oder blockierten Session-Speicher. Zur Anmeldung zurück und erneut versuchen.",
+      "loginFailed": "Anmeldung fehlgeschlagen",
+      "backToLogin": "Zur Anmeldung",
+      "suffix": "Versuche erneut anzumelden. Wenn das Problem bleibt, wende dich an den Seitenbetreiber.",
+      "devChecklistIntro": "Bungie-App-Checkliste (lokale Entwicklung):",
+      "devRedirect": "Weiterleitungs-URL: {{uri}}",
+      "devOrigin": "Origin: {{origin}}",
+      "devClientId": "Client-ID passt zu deiner Bungie-Anwendung ({{clientId}})",
+      "devApiKey": "API-Schlüssel stammt aus derselben Bungie-Anwendung",
+      "devRestart": "Dev-Server nach Änderung der Zugangsdaten neu starten"
+    },
+    "env": {
+      "bungieSignInUnavailableDev": "Anmeldung ist in diesem Build nicht aktiviert.",
+      "bungieSignInUnavailable": "Anmeldung ist in dieser Bereitstellung nicht verfügbar.",
+      "bungieCredentialsMissingDev": "Bungie-Anmeldung ist in dieser Umgebung nicht aktiviert.",
+      "bungieCredentialsMissing": "Anmeldung ist in dieser Bereitstellung nicht verfügbar. Wende dich an den Seitenbetreiber.",
+      "bungieSecretMissingDev": "Bungie-Anmeldung ist in dieser Umgebung nicht vollständig aktiviert.",
+      "dimSyncUnavailableDev": "DIM-Sync ist in dieser Umgebung nicht aktiviert.",
+      "dimSyncUnavailable": "Tags in DIM zu übernehmen ist in dieser Bereitstellung nicht verfügbar. Wende dich an den Seitenbetreiber."
+    },
+    "vault": {
+      "sessionExpired": "Deine Bungie-Sitzung ist möglicherweise abgelaufen. Melde dich ab und erneut an.",
+      "forbidden": "Bungie hat die Anfrage abgelehnt. Melde dich erneut an, oder wende dich an den Seitenbetreiber, wenn das anhält.",
+      "manifest": "Manifest-Download fehlgeschlagen. Verbindung prüfen und erneut versuchen – das erste Laden kann eine Minute dauern.",
+      "network": "Netzwerkfehler. Verbindung prüfen oder gleich erneut versuchen.",
+      "membership": "Destiny-Mitgliedschaft konnte nicht aufgelöst werden. Stelle sicher, dass das Konto Destiny-2-Charaktere hat."
+    },
+    "applyTagsFailed": "Tags konnten nicht übernommen werden",
+    "partialApply": "{{ok}} von {{total}} Tags übernommen. {{failed}} fehlgeschlagen: erneut versuchen oder aus der Warteschlange entfernen."
+  },
+  "footer": {
+    "aria": {
+      "siteLinks": "Seitenlinks",
+      "kofi": "Auf Ko-fi unterstützen"
+    },
+    "links": {
+      "newoReport": "newo.report",
+      "github": "GitHub"
+    }
+  },
+  "game": {
+    "achievability": {
+      "ready": "Bereit",
+      "almost": "Fast",
+      "needBetterRolls": "Bessere Rolls nötig",
+      "covered": "Abgedeckt",
+      "weakTuning": "Schwache Abstimmung",
+      "gap": "Lücke",
+      "idealTuning": "Ideale Abstimmung",
+      "tuned": "Abgestimmt",
+      "archetypeOnly": "Nur Archetyp",
+      "noFit": "Keine Passung"
+    },
+    "armorDiff": {
+      "sameStatSplit": "Gleiche Wertverteilung",
+      "sameStatsTuning": "Gleiche Werte & Abstimmung",
+      "sameRoll": "Gleicher Roll",
+      "decideSetOrTuning": "Nach Set oder Abstimmung entscheiden",
+      "decideTuning": "Nach Abstimmung entscheiden",
+      "decideSet": "Nach Set entscheiden",
+      "sameExceptPower": "Gleich bis auf Power/Standort",
+      "identicalRoll": "Identischer Roll. Wähle eines."
+    },
+    "fit": {
+      "poorMatch": "Schlechte Passung",
+      "closeCall": "Knappes Ergebnis"
+    },
+    "scoring": {
+      "calibrateForAccuracy": "Einstellungen kalibrieren für bessere Genauigkeit"
+    },
+    "heatmap": {
+      "mixedTuning": "Gemischte Abstimmungswerte im Bucket",
+      "dupeBucket": "Duplikat-Bucket"
+    },
+    "minTier": {
+      "tier5Only": "Nur Stufe 5"
+    },
+    "diff": {
+      "tuning": "Abstimmung",
+      "set": "Set",
+      "power": "Power",
+      "masterwork": "Meisterwerk",
+      "noSet": "Kein Set",
+      "yes": "Ja",
+      "no": "Nein",
+      "tuningVs": "Abstimmung: {{a}} vs {{b}}",
+      "setFootnote": "Set: {{name}}"
+    },
+    "dominator": {
+      "differentStatSplit": "Andere Wertverteilung",
+      "sameAfterTuning": "Nach Tuning gleich",
+      "beatsPiece": "Schlägt dieses Teil",
+      "statComparison": "Wertvergleich",
+      "tuningCoverage": "Tuning-Abdeckung",
+      "aheadOn": "Vorn bei",
+      "everyTuningLayout": "jedes Tuning-Layout"
+    },
+    "classes": {
+      "titan": "Titan",
+      "hunter": "Jäger",
+      "warlock": "Warlock"
+    },
+    "stats": {
+      "weapons": "Waffen",
+      "grenade": "Granate",
+      "super": "Super",
+      "melee": "Nahkampf",
+      "health": "Gesundheit",
+      "class": "Klasse"
+    },
+    "archetypes": {
+      "gunner": "Schütze",
+      "grenadier": "Grenadier",
+      "paragon": "Vorbild",
+      "brawler": "Schläger",
+      "bulwark": "Bollwerk",
+      "specialist": "Spezialist"
+    },
+    "slots": {
+      "helmet": "Helm",
+      "arms": "Arme",
+      "chest": "Brust",
+      "legs": "Beine",
+      "classItem": "Klassengegenstand"
+    },
+    "roll": {
+      "tertiary": "{{stat}} Tertiär",
+      "tuning": "{{stat}} Abstimmung",
+      "tuningLabel": "Abstimmung: {{stat}}",
+      "preferred": "Bevorzugt",
+      "none": "keine"
+    },
+    "labels": {
+      "separator": " · "
+    }
+  },
+  "home": {
+    "tagline": "Rüstungsduplikate vergleichen und DIM-Tags in die Warteschlange stellen. Hier wird nichts verschrottet.",
+    "resumeSession": "Vorherige Sitzung fortsetzen",
+    "footerNote": "Tresor über Bungie.net. Tags über DIM. Abmelden unter Einstellungen.",
+    "signInWithBungie": "Mit Bungie anmelden"
+  },
+  "layout": {
+    "aria": {
+      "guardianClass": "Hüter-Klasse"
+    }
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "calibrate": "Kalibrieren",
+    "browse": "Durchsuchen",
+    "combos": "Combos",
+    "compare": "Vergleichen",
+    "review": "Review",
+    "autoFilters": "Auto-Filter",
+    "settings": "Einstellungen",
+    "mobile": {
+      "dashboard": "Dash",
+      "calibrate": "Kal.",
+      "autoFilters": "Filter",
+      "settings": "Einst."
+    },
+    "aria": {
+      "mobile": "Mobile Navigation"
+    }
+  },
+  "onboarding": {
+    "restoringSession": "Bungie-Sitzung wird wiederhergestellt…",
+    "redirectingLogin": "Weiterleitung zur Anmeldung…",
+    "vaultTrimTitle": "Tresor-Trim-Ziel",
+    "tieredFound": "<1>{{count}}</1> gestufte Rüstungs-<2>{{pieceWord}}</2> gefunden<3>{{t5Block}}</3>.",
+    "piece_one": "Stück",
+    "piece_other": "Stücke",
+    "t5Block": " (<1>{{count}}</1> auf Stufe 5)",
+    "noTieredFound": "Keine gestufte Rüstung gefunden<1>{{parsedHint}}</1>. Importiert nur gestufte Rüstung (T1–T5); Legacy- und nie gestufte Ausrüstung wird übersprungen.",
+    "parsedHint": " ({{count}} Gegenstände aus dem Tresor gelesen)",
+    "keepGoalHeading": "Wie viel möchtest du behalten?",
+    "keepGoalIntro": "Legt fest, wie aggressiv wir beim Aufräumen doppelter Stufe-5-Rüstung vorschlagen.",
+    "keepGoalSummary": "Behalte-Ziel: etwa {{total}} Stufe 5 insgesamt (etwa {{perClass}} pro Klasse).",
+    "keepGoalExcess": " Du hast etwa <1>{{excess}}</1> über diesem Ziel.",
+    "keepGoalAtTarget": " Du liegst am oder unter dem Ziel.",
+    "signOutBack": "Abmelden",
+    "keepOptions": {
+      "lean": {
+        "label": "Schlank",
+        "blurb": "Aggressiv trimmen · die meisten Duplikat-Buckets leeren"
+      },
+      "balanced": {
+        "label": "Ausgewogen",
+        "blurb": "Offensichtliche Duplikate entfernen, Vielfalt für Builds behalten"
+      },
+      "options": {
+        "label": "Optionen behalten",
+        "blurb": "Extra Stat-Rolls und Set-Combos behalten; leichteres Trimmen"
+      },
+      "hoarder": {
+        "label": "Sammler",
+        "blurb": "Nur offensichtliche Duplikate trimmen; Optionen maximieren"
+      },
+      "description": "{{blurb}} (~{{perClass}} Stufe 5 pro Klasse)"
+    },
+    "backAria": "Zurück"
+  },
+  "review": {
+    "title": "Tags prüfen",
+    "summary": "{{total}} in Warteschlange · {{keep}} keep · {{junk}} junk. Übernehmen schreibt wartende Tags; Zeilen zeigen bestehende DIM-Tags, wenn abweichend.",
+    "applied": "Tags in DIM Sync übernommen.",
+    "openJunkInDim": "Junk in DIM öffnen",
+    "partialApplied": "Teilweise übernommen: {{count}} Tags erfolgreich. Fehlgeschlagene bleiben in der Warteschlange.",
+    "retryFailed": "{{count}} fehlgeschlagene erneut versuchen",
+    "empty": "Keine ausstehenden Tags.",
+    "compareDupes": "Duplikate vergleichen",
+    "table": {
+      "item": "Gegenstand",
+      "copyDimSr": "DIM-Abfrage kopieren",
+      "archetype": "Archetyp",
+      "tertiary": "Tertiär",
+      "tuning": "Tuning",
+      "class": "Klasse",
+      "combo": "Combo",
+      "appliesToDim": "Gilt für DIM",
+      "none": "Keine"
+    },
+    "copy": {
+      "ids": "id:-Abfrage kopieren",
+      "junk": "tag:junk-Suche kopieren",
+      "junkIds": "Nur Junk-IDs kopieren",
+      "copied": "Kopiert!",
+      "announcement": "{{label}} in die Zwischenablage kopiert."
+    },
+    "removeFromQueue": "Aus Warteschlange entfernen",
+    "applyTags": "{{count}} Tags in DIM übernehmen",
+    "applying": "Wird übernommen…",
+    "clearPending": "Ausstehende Tags löschen",
+    "clearSession": "Sitzung löschen",
+    "backToDashboard": "Zum Dashboard",
+    "confirm": {
+      "clearPending": "Alle {{count}} ausstehenden Tags löschen? Sie werden nicht in DIM übernommen. Vergleichs-Sitzungsfortschritt bleibt erhalten.",
+      "clearSession": "Gesamte Vergleichs-Sitzung löschen? Ausstehende Tags und laufender Vergleichsstatus werden zurückgesetzt."
+    },
+    "alreadyInDim": "Bereits in DIM: {{summary}}"
+  },
+  "rulesOnboarding": {
+    "title": "Wie sollen Duplikate übereinstimmen?",
+    "intro": "Wir gruppieren ähnliche Rüstungs-Rolls, damit du einen Keeper wählen und den Rest in DIM taggen kannst. Du kannst das jederzeit in den Einstellungen ändern.",
+    "restoringSession": "Bungie-Sitzung wird wiederhergestellt…",
+    "redirectingLogin": "Weiterleitung zur Anmeldung…",
+    "loadingVault": "Tresor wird geladen…",
+    "retryVaultLoad": "Tresor-Laden erneut versuchen",
+    "refreshing": "Aktualisiere…",
+    "noTieredArmor": "Keine gestufte Rüstung in deinem Umfang bei deiner Mindeststufe",
+    "tieredPiecesImported": "({{count}} gestufte Stücke importiert)",
+    "tieredArmorFootnote": "Nur im Spiel gestufte Ausrüstung (T1–T5) ist enthalten. Senke die Mindeststufe in den Einstellungen bei Bedarf.",
+    "recommendedPresetSr": "Empfohlenes Preset",
+    "useRecommended": "Empfohlenes verwenden",
+    "customizeRules": "Regeln anpassen",
+    "hideCustomization": "Anpassung ausblenden",
+    "customizeIntro": "Festlegen, was als Duplikat zählt – enger oder lockerer. Presets in den Einstellungen setzen das mit einem Klick.",
+    "matchStyleLabel": "Match-Stil:",
+    "previewByClass": "Vorschau pro Klasse",
+    "suggestions": "Vorschläge",
+    "usePreset": "{{label}} verwenden",
+    "impact": {
+      "none": "Keine Duplikat-Gruppen für {{class}} bei deiner aktuellen Stufe gefunden.",
+      "summary": "Etwa {{buckets}} Duplikat-{{groupWord}} · ungefähr {{review}} {{rollWord}} zum Vergleichen ({{class}})",
+      "group_one": "Gruppe",
+      "group_other": "Gruppen",
+      "roll_one": "Roll",
+      "roll_other": "Rolls"
+    },
+    "aria": {
+      "dupeRules": "Duplikat-Regeln"
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "account": {
+      "heading": "Konto",
+      "signedInAs": "Angemeldet als <1>{{name}}</1>",
+      "parsedCount": "{{count}} gestufte Rüstungsstücke gelesen (Tresor, alle Charaktere, Poststelle)",
+      "signOutNote": "Abmelden löscht Bungie- und DIM-Tokens aus dieser Browser-Sitzung (nur Session-Speicher). Einstellungen bleiben im lokalen Speicher.",
+      "signOutButton": "Abmelden und Tokens löschen"
+    },
+    "dupeRules": {
+      "heading": "Duplikat-Regeln",
+      "intro": "Gemeinsame Regeln für Heatmap, Vergleich, Durchsuchen und Listen überflüssiger Rolls.",
+      "scopeHeading": "Umfang: welche Stücke zählen",
+      "minTierLabel": "Mindest-Ausrüstungsstufe",
+      "minTierHelp": "Tresor-Import lädt weiterhin Stufen 1 bis 5. Nur Stücke ab dieser Stufe gelangen in Duplikat-Buckets und überflüssige-Roll-Prüfungen.",
+      "groupingHeading": "Gruppierung: was als „Duplikat“ zählt",
+      "groupingIntro": "Stücke passen immer auf Klasse, Slot, Archetyp und Tertiär-Stat. Diese Optionen fügen strengere Trennungen hinzu und gelten auch für überflüssige-Roll-Vergleiche.",
+      "dimTagsHeading": "DIM-Tags beim Zählen von Duplikaten",
+      "dimTagsIntro": "Getaggte Stücke bleiben sichtbar, können aber aus Duplikat-Bucket-Größen und Review-Zählungen ausgeschlossen werden.",
+      "liveImpact": "Live-Auswirkung (globale Regeln, Hunter-Tresor)"
+    },
+    "classDupeRules": {
+      "heading": "{{class}}-Duplikat-Regeln",
+      "usingClass": "{{class}} aktiv (Klasse in der Kopfzeile wechseln). Klassen teilen standardmäßig globale Regeln. Preset auf eine Klasse anwenden, ohne andere zu ändern.",
+      "customRules": "{{class}} nutzt benutzerdefinierte Regeln ·",
+      "resetToGlobal": "auf global zurücksetzen"
+    },
+    "dupePresets": {
+      "heading": "Duplikat-Presets"
+    },
+    "dashboardLink": "Dashboard",
+    "language": {
+      "heading": "Sprache",
+      "useBrowser": "Browsersprache verwenden",
+      "useBrowserHelp": "Wenn aktiv, folgt die App der Browsersprache. Wenn aus, die unten gewählte Sprache."
+    },
+    "developer": {
+      "heading": "Entwickler",
+      "bungie": "Bungie: {{status}}",
+      "dimSync": "DIM Sync: {{status}}"
+    },
+    "reviewTags": {
+      "heading": "Tags prüfen"
+    },
+    "classPrefs": {
+      "heading": "{{class}}-Einstellungen",
+      "usingClass": "{{class}} aktiv (Klasse in der Kopfzeile wechseln). Stat- und Archetyp-Gewichte pro Klasse aus der Kalibrierung. Duplikat-Regeln sind gemeinsam, sofern nicht pro Klasse überschrieben.",
+      "calibrations": "{{count}} Kalibrierungen · Vertrauen {{confidence}}",
+      "topStats": "Top-Stats:",
+      "topArchetypes": "Top-Archetypen:",
+      "recalibrate": "{{class}} neu kalibrieren",
+      "exportPrefs": "Einstellungen exportieren",
+      "importPrefs": "Einstellungen importieren",
+      "resetClass": "{{class}}-Einstellungen zurücksetzen",
+      "resetAll": "Alle Klassen zurücksetzen",
+      "imported": "Einstellungen importiert.",
+      "invalidFile": "Ungültige Einstellungsdatei.",
+      "openReview": "Review-Seite öffnen",
+      "clearPending": "Ausstehende Tags löschen",
+      "queued_one": "{{count}} Tag in der Warteschlange für DIM.",
+      "queued_other": "{{count}} Tags in der Warteschlange für DIM.",
+      "nonePending": "Keine ausstehenden Tags.",
+      "confirmClearPending": "Alle {{count}} ausstehenden Tags löschen? Sie werden nicht in DIM übernommen.",
+      "confirmResetClass": "{{class}}-Einstellungen auf Standard zurücksetzen? Stat-Gewichte, Kalibrierungswahl und gelernte Gewichte für diese Klasse werden gelöscht.",
+      "confirmResetAll": "Einstellungen für alle Klassen auf Standard zurücksetzen? Stat-Gewichte, Kalibrierungswahl und gelernte Gewichte werden für Hunter, Titan und Warlock gelöscht. Duplikat-Regeln und andere Einstellungen bleiben erhalten."
+    }
+  },
+  "vault": {
+    "loading": "Tresor wird geladen…",
+    "refreshing": "Aktualisiere…",
+    "refreshingStatus": "Aktualisiere… {{status}}",
+    "loadVault": "Tresor laden",
+    "noDataYet": "Noch keine Tresor-Daten.",
+    "noDataBrowseHint": "Lade zuerst deinen Tresor vom Dashboard.",
+    "noDataBuildHint": "Noch keine Tresor-Daten. Lade deinen Tresor vom Dashboard.",
+    "retryVaultLoad": "Tresor-Laden erneut versuchen",
+    "signOutInSettings": "Unter Einstellungen abmelden",
+    "dismiss": "Schließen",
+    "tieredArmorTitle": "Im Spiel gestufte Rüstung (Stufe 1–5). Legacy-Rüstung und nie gestufte Stücke sind vom Import ausgeschlossen. Der Duplikat-Umfang nutzt deine Mindeststufen-Einstellung.",
+    "dupeRulesImpact": "Tresor laden, um Auswirkung zu sehen."
+  }
+}

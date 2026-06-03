@@ -1,5 +1,5 @@
-import { CLASS_ICON_FALLBACK_PATHS, STAT_ICON_FALLBACK_PATHS } from '@/lib/constants';
-import type { ArmorPiece, ArmorSlot, ClassType, Stat } from '@/types';
+import { STAT_ICON_FALLBACK_PATHS } from '@/lib/constants';
+import type { ArmorPiece, ArmorSlot, Stat } from '@/types';
 
 let manifestStatIcons: Partial<Record<Stat, string>> | null = null;
 
@@ -11,10 +11,6 @@ export function setManifestStatIcons(icons: Partial<Record<Stat, string>>): void
 export function statIconUrl(stat: Stat): string {
   const path = manifestStatIcons?.[stat] ?? STAT_ICON_FALLBACK_PATHS[stat];
   return bungieIconUrl(path) ?? '';
-}
-
-export function classIconUrl(classType: ClassType): string {
-  return bungieIconUrl(CLASS_ICON_FALLBACK_PATHS[classType]) ?? '';
 }
 
 const BUNGIE_CDN = 'https://www.bungie.net';

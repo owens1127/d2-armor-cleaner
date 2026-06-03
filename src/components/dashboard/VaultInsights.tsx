@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   buildVaultInsightActions,
   type VaultInsightAction,
@@ -27,6 +28,7 @@ export function VaultInsights({
   redundantRollCount,
   autoFilterRules,
 }: VaultInsightsProps) {
+  const { t } = useTranslation('dashboard');
   const pendingTags = useSessionStore((s) => s.pendingTags);
   const bucketJunkedIds = useSessionStore((s) => s.bucketJunkedIds);
 
@@ -59,7 +61,7 @@ export function VaultInsights({
   return (
     <section className="mb-8 p-4 border border-border rounded-xl bg-surface-2">
       <h2 className="text-sm font-semibold uppercase tracking-wide text-muted mb-3">
-        Next steps
+        {t('nextSteps')}
       </h2>
       <ul className="space-y-2">
         {actions.map((action) => (

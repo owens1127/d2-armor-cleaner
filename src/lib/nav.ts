@@ -5,6 +5,7 @@ import {
   getOnboardingResumePath,
   hasInProgressOnboarding,
   isOnboardingComplete,
+  needsOnboardingRedirect,
 } from '@/lib/onboarding/storage';
 import type { ClassType, DesiredBuild } from '@/types';
 
@@ -38,10 +39,6 @@ export function navClassFromSearch(search: string): ClassType | null {
     return value as ClassType;
   }
   return null;
-}
-
-export function resolveActiveNavClass(pathname: string, search: string, stored: ClassType): ClassType {
-  return navClassFromPath(pathname) ?? navClassFromSearch(search) ?? stored;
 }
 
 const CLASS_PATH_SEGMENT_RE =
@@ -89,8 +86,18 @@ export function classSwitchPath(
   return null;
 }
 
+export type NavLabelKey =
+  | 'dashboard'
+  | 'calibrate'
+  | 'browse'
+  | 'combos'
+  | 'compare'
+  | 'review'
+  | 'autoFilters'
+  | 'settings';
+
 export type AppNavItem = {
-  label: string;
+  labelKey: NavLabelKey;
   match: string;
   to: string;
 };
@@ -104,24 +111,41 @@ export function authenticatedLandingPath(activeClass: ClassType): string {
   return getOnboardingResumePath(complete);
 }
 
+const NAV_GATED_UNTIL_ONBOARDING: NavLabelKey[] = [
+  'dashboard',
+  'browse',
+  'combos',
+  'compare',
+  'review',
+  'autoFilters',
+  'settings',
+];
+
 export function buildAuthenticatedNavLinks(activeClass: ClassType): AppNavItem[] {
-  return [
-    { label: 'Dashboard', match: '/dashboard', to: `/dashboard/${activeClass}` },
-    { label: 'Calibrate', match: '/onboarding', to: getCalibrateNavPath(activeClass) },
-    { label: 'Browse', match: '/browse', to: `/browse/${activeClass}` },
-    { label: 'Combos', match: '/combos', to: `/combos/${activeClass}` },
-    { label: 'Compare', match: '/duel', to: `/duel/${activeClass}` },
-    { label: 'Review', match: '/review', to: '/review' },
-    { label: 'Auto filters', match: '/auto-filters', to: '/auto-filters' },
-    { label: 'Settings', match: '/settings', to: settingsPath(activeClass) },
+  const links: AppNavItem[] = [
+    { labelKey: 'dashboard', match: '/dashboard', to: `/dashboard/${activeClass}` },
+    { labelKey: 'calibrate', match: '/onboarding', to: getCalibrateNavPath(activeClass) },
+    { labelKey: 'browse', match: '/browse', to: `/browse/${activeClass}` },
+    { labelKey: 'combos', match: '/combos', to: `/combos/${activeClass}` },
+    { labelKey: 'compare', match: '/duel', to: `/duel/${activeClass}` },
+    { labelKey: 'review', match: '/review', to: '/review' },
+    { labelKey: 'autoFilters', match: '/auto-filters', to: '/auto-filters' },
+    { labelKey: 'settings', match: '/settings', to: settingsPath(activeClass) },
   ];
+  if (needsOnboardingRedirect()) {
+    return links.filter((item) => !NAV_GATED_UNTIL_ONBOARDING.includes(item.labelKey));
+  }
+  return links;
 }
 
 export function signedOutNavLinks(): AppNavItem[] {
   return [];
 }
 
-export function isNavLinkActive(pathname: string, item: AppNavItem): boolean {
+export function isNavLinkActive(
+  pathname: string,
+  item: Pick<AppNavItem, 'match'>,
+): boolean {
   return pathname.startsWith(item.match);
 }
 

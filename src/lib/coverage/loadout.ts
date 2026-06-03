@@ -1,12 +1,6 @@
-import {
-  ARCHETYPE_LABELS,
-  ARCHETYPE_STATS,
-  ARMOR_SLOTS,
-  SLOT_LABELS,
-  STAT_LABELS,
-  STATS,
-} from '@/lib/constants';
 import { MASTERWORK_STAT_BONUS } from '@/lib/armor/effectiveStats';
+import { ARCHETYPE_STATS, ARMOR_SLOTS, STATS } from '@/lib/constants';
+import { statLabel, archetypeLabel, slotLabel } from '@/i18n/gameCopy';
 import { intrinsicStats } from '@/lib/armor/intrinsicCompare';
 import {
   computeOptimalRollShapes,
@@ -210,14 +204,14 @@ export function formatNearMatchTooltip(
   item: ArmorPiece,
   pattern: OptimalRollPattern,
 ): string {
-  const expected = STAT_LABELS[pattern.tuningStat];
-  const actual = item.tuningStat ? STAT_LABELS[item.tuningStat] : 'none';
+  const expected = statLabel(pattern.tuningStat);
+  const actual = item.tuningStat ? statLabel(item.tuningStat) : 'none';
   return `Wrong tuning · has ${actual}, need ${expected}`;
 }
 
 /** Label for acceptable tuning on multi-priority builds (any priority stat). */
 export function formatPriorityTuningLabel(priorities: Stat[]): string {
-  const names = priorities.map((stat) => STAT_LABELS[stat]);
+  const names = priorities.map((stat) => statLabel(stat));
   if (names.length === 1) return `${names[0]} tuning`;
   if (names.length === 2) return `${names[0]} or ${names[1]} tuning`;
   return `${names.slice(0, -1).join(', ')}, or ${names[names.length - 1]} tuning`;
@@ -230,7 +224,7 @@ export const OPTIMAL_ROLL_TUNING_BONUS = T5_TUNING_INTRINSIC_SHIFT;
 
 export function formatRollStatBonusLabel(stat: Stat, role: 'tertiary' | 'tuning'): string {
   const bonus = role === 'tertiary' ? OPTIMAL_ROLL_TERTIARY_BONUS : OPTIMAL_ROLL_TUNING_BONUS;
-  return `${STAT_LABELS[stat]} +${bonus}`;
+  return `${statLabel(stat)} +${bonus}`;
 }
 
 export type RollStatRole = 'tertiary' | 'tuning' | 'combined';
@@ -325,7 +319,7 @@ export function archetypePriorityIntrinsicTotal(
 
 /** Archetype group header - name only; roll details appear on stat chips. */
 export function formatArchetypeGroupLabel(archetype: Archetype, _priorities: Stat[]): string {
-  return ARCHETYPE_LABELS[archetype];
+  return archetypeLabel(archetype);
 }
 
 /** Archetype secondary stat when it is not a build priority (shown muted in pattern UI). */
@@ -339,7 +333,7 @@ export function archetypeIrrelevantSecondary(
 
 /** Roll-line fragment: e.g. "Weapons tertiary", "Super tuning", "Weapons tertiary + tuning". */
 export function formatRollStatRoleLabel(stat: Stat, role: RollStatRole): string {
-  const name = STAT_LABELS[stat];
+  const name = statLabel(stat);
   if (role === 'combined') return `${name} tertiary + tuning`;
   if (role === 'tertiary') return `${name} tertiary`;
   return `${name} tuning`;
@@ -356,10 +350,10 @@ export function formatPatternRollLine(tertiaryStat: Stat, tuningStat: Stat): str
 export function formatArchetypeRollContext(archetype: Archetype, priorities: Stat[]): string {
   const parts: string[] = [];
   for (const { stat } of archetypePriorityIntrinsics(archetype, priorities)) {
-    parts.push(STAT_LABELS[stat]);
+    parts.push(statLabel(stat));
   }
   const irrelevant = archetypeIrrelevantSecondary(archetype, priorities);
-  if (irrelevant) parts.push(STAT_LABELS[irrelevant]);
+  if (irrelevant) parts.push(statLabel(irrelevant));
   return parts.join(' · ');
 }
 
@@ -378,8 +372,8 @@ export function formatOptimalRollPatternLabel(
 
   const context = formatArchetypeRollContext(archetype, priorities);
   return context
-    ? `${ARCHETYPE_LABELS[archetype]} · ${context} · ${rollLine}`
-    : `${ARCHETYPE_LABELS[archetype]} · ${rollLine}`;
+    ? `${archetypeLabel(archetype)} · ${context} · ${rollLine}`
+    : `${archetypeLabel(archetype)} · ${rollLine}`;
 }
 
 /** Plain-text archetype legend for multi-priority optimal-roll banners. */
@@ -388,7 +382,7 @@ export function formatOptimalRollArchetypeLegend(archetypes: Archetype[]): strin
   return unique
     .map((archetype) => {
       const [primary, secondary] = ARCHETYPE_STATS[archetype];
-      return `${ARCHETYPE_LABELS[archetype]} adds ${STAT_LABELS[primary]} and ${STAT_LABELS[secondary]}`;
+      return `${archetypeLabel(archetype)} adds ${statLabel(primary)} and ${statLabel(secondary)}`;
     })
     .join(' · ');
 }
@@ -399,7 +393,7 @@ export function formatOptimalRollArchetypeLegend(archetypes: Archetype[]): strin
  */
 export function formatOptimalRollBannerIntro(priorities: Stat[]): string {
   if (priorities.length <= 1) return '';
-  const names = priorities.map((s) => STAT_LABELS[s]).join(' and ');
+  const names = priorities.map((s) => statLabel(s)).join(' and ');
   return `Any slot · each pattern below covers ${names}.`;
 }
 
@@ -432,7 +426,7 @@ export function formatEmptyPatternRollContext(
 
 /** Short visible label for an empty slot row (pattern details are in the column header). */
 export function formatEmptyPatternSlotMessage(slot: ArmorSlot): string {
-  return `${SLOT_LABELS[slot]} · no match`;
+  return `${slotLabel(slot)} · no match`;
 }
 
 /** Full hunt hint for empty slot rows - screen readers and row tooltips. */
@@ -442,12 +436,12 @@ export function formatEmptyPatternSlotAriaLabel(
   options: EmptyPatternMessageOptions = {},
 ): string {
   const { priorities = [], setName } = options;
-  const slotLabel = SLOT_LABELS[slot].toLowerCase();
+  const slotName = slotLabel(slot).toLowerCase();
   const parts = [`No ${formatEmptyPatternRollContext(pattern, priorities)}`];
   if (setName) {
     parts.push(compactSetLabelForMessage(setName));
   }
-  parts.push(slotLabel);
+  parts.push(slotName);
   return parts.join(' · ');
 }
 
@@ -504,11 +498,11 @@ export function deriveOptimalRollPatterns(priorities: Stat[]): OptimalRollPatter
 /** One-line roll identity for loadout rows, banners, and aria labels. */
 export function formatPieceRollSummary(item: ArmorPiece): string {
   const parts = [
-    ARCHETYPE_LABELS[item.archetype],
-    `${STAT_LABELS[item.tertiaryStat]} tertiary`,
+    archetypeLabel(item.archetype),
+    `${statLabel(item.tertiaryStat)} tertiary`,
   ];
   if (item.tuningStat) {
-    parts.push(`${STAT_LABELS[item.tuningStat]} tuning`);
+    parts.push(`${statLabel(item.tuningStat)} tuning`);
   }
   return parts.join(' · ');
 }
@@ -519,7 +513,7 @@ export function formatPieceRollDescriptor(item: ArmorPiece): string {
 }
 
 function formatPrioritySupportLabel(stat: Stat, fit: ReturnType<typeof pieceTuningFit>): string {
-  const name = STAT_LABELS[stat];
+  const name = statLabel(stat);
   if (fit.level === 'ideal') return `${name} via tertiary + tuning`;
   if (fit.tuningMatch) return `${name} via tuning`;
   if (fit.tertiaryMatch) return `${name} via tertiary`;
@@ -1121,7 +1115,7 @@ export function isColumnSlotEligiblePiece(
 
 export function formatTopGoldColumnTooltip(ctx: ColumnSlotContext, slot: ArmorSlot): string {
   const scopeLabel = ctx.setName ? compactSetLabelForMessage(ctx.setName) : 'combo';
-  return `Best ${scopeLabel} ${SLOT_LABELS[slot].toLowerCase()} for this roll column`;
+  return `Best ${scopeLabel} ${slotLabel(slot).toLowerCase()} for this roll column`;
 }
 
 /** Vault pieces eligible for picker/auto-pick in one column slot. */
@@ -1243,7 +1237,7 @@ export function formatBestSetPieceInSlotTooltip(
   setName: string,
   slot: ArmorSlot,
 ): string {
-  return `Best ${compactSetLabelForMessage(setName)} ${SLOT_LABELS[slot].toLowerCase()} for this roll column`;
+  return `Best ${compactSetLabelForMessage(setName)} ${slotLabel(slot).toLowerCase()} for this roll column`;
 }
 
 function comparePatternSlotCandidates(

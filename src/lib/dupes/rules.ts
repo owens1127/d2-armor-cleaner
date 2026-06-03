@@ -1,4 +1,10 @@
 import type { DupeRuleConfig } from '@/types';
+import {
+  dupeMatchStyleCardBodyCopy,
+  dupeMatchStyleCardHeadlineCopy,
+  dupeMatchStyleLabelCopy,
+  dupePresetLabel,
+} from '@/i18n/dupesCopy';
 import { DEFAULT_DUPE_RULES, DUPE_MIN_TIER_VALUES, DUPE_PRESETS } from '@/lib/constants';
 
 const PRESET_IDS = ['loose', 'standard', 'setAware', 'tuning', 'strict'] as const;
@@ -64,46 +70,17 @@ function presetGroupingRules(rules: DupeRuleConfig): Pick<
 
 /** User-facing label for current grouping rules (preset name or Custom). */
 export function dupeMatchStyleLabel(rules: DupeRuleConfig): string {
-  const presetId = presetIdForRules(rules);
-  if (!presetId) return 'Custom';
-  return DUPE_PRESETS[presetId]?.label ?? 'Custom';
+  return dupeMatchStyleLabelCopy(presetIdForRules(rules));
 }
-
-function dimTagImpactLine(rules: DupeRuleConfig): string {
-  const respectKeepFavorite =
-    !rules.ignoreTaggedKeep && !rules.ignoreTaggedFavorite;
-  return respectKeepFavorite
-    ? 'DIM keep and favorite tags count when suggesting junk.'
-    : 'Keep and favorite tags are not used when suggesting junk.';
-}
-
-const MATCH_STYLE_CARD_BODY: Record<DupePresetId, string> = {
-  loose:
-    'Compare pieces in the same slot without requiring the same armor set or tuning stat.',
-  standard:
-    'Compare by slot, archetype, and tertiary without requiring the same armor set.',
-  setAware:
-    'Groups duplicates by armor set · works well for most vaults.',
-  tuning: 'Groups duplicates by tuning stat, even across different armor sets.',
-  strict: 'Requires the same armor set and tuning stat for a duplicate match.',
-};
 
 /** Onboarding/settings card title for the active match style. */
 export function dupeMatchStyleCardHeadline(rules: DupeRuleConfig): string {
-  const label = dupeMatchStyleLabel(rules);
-  if (label === 'Custom') return 'Using custom rules';
-  return `Using ${label}`;
+  return dupeMatchStyleCardHeadlineCopy(dupeMatchStyleLabel(rules));
 }
 
 /** Short card description for the active match style. */
 export function dupeMatchStyleCardDescription(rules: DupeRuleConfig): string {
-  const presetId = presetIdForRules(rules);
-  const body = presetId
-    ? MATCH_STYLE_CARD_BODY[presetId]
-    : `Custom mix: ${rules.sameArmorSet ? 'same armor set' : 'any armor set'}, ${
-        rules.sameTuningStat ? 'same tuning stat' : 'any tuning stat'
-      }.`;
-  return `${body} ${dimTagImpactLine(rules)}`;
+  return dupeMatchStyleCardBodyCopy(presetIdForRules(rules), rules);
 }
 
 /** Preset id when rules match a built-in preset grouping; null for custom mixes. */
@@ -123,6 +100,9 @@ export function presetIdForRules(rules: DupeRuleConfig): DupePresetId | null {
   }
   return null;
 }
+
+/** Localized preset button label. */
+export { dupePresetLabel };
 
 /** Align slider with stored grouping rules when they match a preset. */
 export function reconcileStrictnessWithRules(

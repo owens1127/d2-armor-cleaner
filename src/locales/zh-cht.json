@@ -1,0 +1,1017 @@
+{
+  "autoFilters": {
+    "title": "自動篩選",
+    "intro": "在倉庫載入或重新整理時自動排隊垃圾標籤。保留與收藏永遠不會被自動標記。",
+    "noRules": "尚無規則。",
+    "addRule": "新增規則",
+    "classLabel": "職業",
+    "operatorsIntro": "每個篩選可為 <1>是</1>、<2>不是</2>、<3>任一</3> 或 <4>皆非</4>（例如：原型不是 Gunner 的獵人垃圾護甲）。",
+    "rulesHeading": "規則",
+    "rulesBody": "符合的裝備會在審閱中排隊為垃圾（與手動垃圾相同）。keep 不會自動標記：DIM keep/收藏、待處理 keep 或決鬥桶中保留的裝備。",
+    "deleteRule": "삭제",
+    "allClasses": "모든 클래스",
+    "archetypeLabel": "아키타입",
+    "tertiaryStatLabel": "3차 스탯",
+    "tuningStatLabel": "튜닝 스탯",
+    "slotLabel": "슬롯",
+    "armorSetLabel": "방어구 세트",
+    "any": "아무거나",
+    "addValue": "값 추가…",
+    "pickValue": "값 선택…",
+    "matchMode": "일치 모드",
+    "matchModeDisabled": "일치 모드(먼저 값을 선택하세요)",
+    "operators": {
+      "is": "Is",
+      "isNot": "Is not",
+      "anyOf": "Any of",
+      "noneOf": "None of"
+    },
+    "livePreview_one": "실시간 미리보기: 다음 금고 불러오기 시 {{count}}개 피스가 대기열에 들어갑니다(keep, 즐겨찾기, 이미 정크 처리된 항목 제외).",
+    "livePreview_other": "실시간 미리보기: 다음 금고 불러오기 시 {{count}}개 피스가 대기열에 들어갑니다(keep, 즐겨찾기, 이미 정크 처리된 항목 제외).",
+    "setFallback": "세트 {{hash}}",
+    "addRuleHeading": "규칙 추가",
+    "enableRule": "규칙 사용: {{label}}",
+    "disableRule": "규칙 끄기: {{label}}",
+    "removeValue": "{{label}} 제거",
+    "describe": {
+      "allClasses": "모든 클래스",
+      "tertiary": "{{stat}} 3차",
+      "tuning": "{{stat}} 튜닝",
+      "setFallback": "세트 {{hash}}",
+      "anyOf": "다음 중 하나: {{labels}}",
+      "noneOf": "다음 중 없음: {{labels}}",
+      "not": "NOT {{label}}"
+    }
+  },
+  "browse": {
+    "title": "瀏覽 {{class}} 護甲",
+    "summary": "{{filtered}} / {{total}} 件 · {{sortLabel}}",
+    "redundantLink": "{{count}} 個冗餘 roll",
+    "loadVaultFirst": "請先從儀表板載入倉庫。",
+    "filters": {
+      "slot": "部位",
+      "archetype": "原型",
+      "search": "搜尋",
+      "armorSet": "護甲套裝",
+      "dimTag": "DIM 標籤",
+      "sort": "排序",
+      "combo": "組合",
+      "allSlots": "全部部位",
+      "allArchetypes": "全部原型",
+      "allSets": "全部套裝",
+      "any": "任意",
+      "anyCombo": "任意組合",
+      "armorNamePlaceholder": "護甲名稱…",
+      "statLowerOnly": "僅屬性更低",
+      "dupesOnly": "僅重複",
+      "strictlyLowerOnly": "僅嚴格更低",
+      "redundantOnly": "僅冗餘 roll",
+      "supportsComboOnly": "僅支援組合"
+    },
+    "dimTags": {
+      "untagged": "未標記",
+      "keep": "保留",
+      "junk": "垃圾",
+      "favorite": "收藏",
+      "infuse": "灌注",
+      "archive": "歸檔"
+    },
+    "sort": {
+      "matchDesc": "匹配 %（高 → 低）",
+      "matchAsc": "匹配 %（低 → 高）",
+      "preference": "偏好",
+      "buildFitDesc": "組合契合（高 → 低）",
+      "matchDescHint": "按匹配 % 排序（最契合優先）",
+      "matchAscHint": "按匹配 % 排序（最不契合優先）",
+      "buildFitHint": "按組合契合排序",
+      "preferenceHint": "按偏好排序"
+    },
+    "copyIds": "複製 {{count}} 個 id: 查詢",
+    "copied": "已複製！",
+    "reviewTagsLink": "審核對比/分揀標籤（{{count}}）",
+    "redundant": {
+      "pickOne": "選一個保留",
+      "noRedundant": "無冗餘 roll",
+      "noMatches": "無符合",
+      "noMatchFilters": "No redundant rolls match the current filters.",
+      "noneToShow": "No redundant rolls to show."
+    },
+    "noItemsMatch": "No items match these filters.",
+    "backToDashboard": "Back to dashboard",
+    "dupeBadge": "dupe"
+  },
+  "build": {
+    "title": "{{class}} 組合",
+    "intro": "倉庫中各 roll 目標的最佳護甲，對應你的組合。",
+    "combosHeading": "組合",
+    "setBonuses": "套裝加成",
+    "setBonusesOptional": "套裝加成（選用）",
+    "includeInCoverage": "計入覆蓋",
+    "comboNameAria": "組合名稱",
+    "maxCombos": "每個職業最多 {{max}} 個組合。",
+    "orderLabel": "순서:",
+    "noneOption": "없음",
+    "twoTwoMix": " · 2+2 믹스",
+    "editor": {
+      "intro": "순서대로 2~4개 스탯과 선택적 방어구 세트 보너스(예: Ferropotent 2pc + Smoke Jumper 2pc)를 고릅니다. 스탯·세트 정렬에 맞는 슬롯별 최고 피스를 추천합니다.",
+      "unsavedHint": "저장되지 않은 변경 · 저장하거나 취소하면 읽기 전용 보기로 돌아갑니다.",
+      "editingHint": "콤보 편집 중 · 완료 후 저장하거나 취소하세요.",
+      "allSavedHint": "모든 콤보 저장됨 · 카드의 편집을 눌러 설정을 변경하세요.",
+      "emptyList": "이 클래스에 저장된 콤보가 없습니다. 아래에서 추가하면 롤 추천과 찾아보기 정렬에 사용됩니다.",
+      "unsaved": "미저장",
+      "saved": "저장됨",
+      "on": "켜짐",
+      "off": "꺼짐",
+      "edit": "편집",
+      "remove": "제거",
+      "save": "저장",
+      "cancel": "취소",
+      "addStat": "스탯 추가",
+      "priority1": "1순위",
+      "priority2": "2순위",
+      "priority3": "3순위",
+      "priority4": "4순위",
+      "priorityN": "{{n}}순위",
+      "setBonus2pc": "2피스 보너스",
+      "setBonus4pcSame": "동일 세트(4pc)",
+      "setBonus4pcMix": "두 번째 세트(2pc 믹스) 또는 4pc",
+      "setBonusHint": "2pc용 세트 하나를 고른 뒤, 4pc는 같은 세트 또는 2+2 믹스용 두 번째 세트를 고르세요.",
+      "loadVaultForSets": "인벤토리에서 방어구 세트를 고르려면 금고를 불러오세요.",
+      "firstSet2pc": "첫 세트(2pc)",
+      "twoPcOnly": "2pc만(첫 세트)",
+      "set4pcSuffix": "{{name}} (4pc)",
+      "set2pcMixSuffix": "{{name}} (2pc 믹스)",
+      "targetLabel": "목표:",
+      "addStatCount": "+ 스탯 추가 ({{current}}/{{max}})",
+      "addCombo": "콤보 추가",
+      "addAnotherCombo": "콤보 하나 더 추가",
+      "viewCoverageLink": "{{class}} 콤보 커버리지 보기"
+    },
+    "coverage": {
+      "heading": "你的組合",
+      "intro": "각 최적 롤 패턴(아키타입 + 3차 + 튜닝)별 슬롯 최고 피스",
+      "empty": "콤보가 없습니다. 아래 콤보 섹션에서 2~4개 스탯 우선순위를 추가하세요.",
+      "editCombos": "콤보 편집",
+      "setPrioritiesHint": "롤 목표를 보려면 콤보에 스탯 우선순위를 설정하세요",
+      "recommendedHeading": "추천 피스",
+      "recommendedHint": "아래 그리드용 DIM 태그 및 검색",
+      "browseVault": "瀏覽寶庫",
+      "setTarget": "세트 목표:",
+      "vaultPiecesShort": "금고 피스 부족",
+      "conflictingSets": "이 세트 목표는 방어구 5개를 넘습니다 · 콤보를 조정하세요.",
+      "showRollDetails": "롤 유형 상세 보기",
+      "hideRollDetails": "롤 유형 상세 숨기기",
+      "tagAll": "모두 태그:",
+      "bulkNoTaggable": "태그 가능한 피스 없음",
+      "bulkClearKeep": "모두 keep 해제",
+      "bulkMarkKeep": "모두 keep",
+      "bulkAllFavorited": "모두 즐겨찾기",
+      "bulkMarkFavorite": "모두 즐겨찾기",
+      "bulkClearJunk": "모두 정크 해제",
+      "bulkMarkJunk": "모두 정크",
+      "tagKeep": "DIM에서 keep 태그",
+      "tagKeepRemove": "DIM에서 keep 태그 제거",
+      "tagFavorite": "DIM에서 즐겨찾기",
+      "tagFavoriteAlready": "DIM에서 이미 즐겨찾기",
+      "tagJunk": "DIM에서 정크 태그",
+      "tagJunkRemove": "DIM에서 정크 태그 제거",
+      "choose": "選擇",
+      "chooseSlot": "{{slot}} 선택",
+      "choosePiece": "피스 선택 · {{count}}개 후보",
+      "eligible_one": "후보 {{count}}개",
+      "eligible_other": "후보 {{count}}개",
+      "anyArchetype": "아무 아키타입",
+      "tier": "티어 {{tier}}",
+      "comboFallback": "콤보",
+      "rollRoleCombined": "3차 + 튜닝",
+      "rollRoleTertiary": "3차",
+      "rollRoleTuning": "튜닝",
+      "notComboPriority": "{{stat}} · 콤보 우선순위 아님",
+      "archetypeBonus": "아키타입 {{stat}} (+{{bonus}})",
+      "rollCombinedTitle": "{{stat}} 3차+튜닝 (+{{tertiaryBonus}} +{{tuningBonus}})",
+      "rollTertiaryTitle": "{{stat}} 3차 (+{{bonus}})",
+      "rollTuningTitle": "{{stat}} 튜닝 (+{{bonus}})",
+      "detailsSupporting": "금고에 우선순위 스탯을 하나 이상 굴리는 피스 {{count}}개.",
+      "detailsProfiles": "보유 가능한 롤 유형 {{possible}}개 중 {{filled}}개가 금고에 있습니다(아키타입 + 3차 + 슬롯).",
+      "detailsRedundantOverlap": "중복 롤이 있어도 빈 슬롯이 남습니다. 중복보다 채우기를 우선하세요.",
+      "gapsHeading": "찾을 롤 유형",
+      "gapsIntro": "이 콤보에 도움이 되는 빈 조합.",
+      "gapsEmpty": "매트릭스에서 눈에 띄는 빈칸이 없습니다.",
+      "overlapsHeading": "많이 가진 롤 유형",
+      "overlapsIntro": "같은 조합에 피스 3개 이상.",
+      "overlapsEmpty": "한 롤 유형에 과도한 중복 없음.",
+      "overlapCount_one": "{{count}}개",
+      "overlapCount_other": "{{count}}개",
+      "gapAllPriorities": "모든 우선순위 일치",
+      "gapMultiplePriorities": "여러 우선순위 일치",
+      "gapOnePriority": "한 우선순위 일치",
+      "chooseEligibleTitle": "금고 후보 {{count}}개"
+    }
+  },
+  "calibrate": {
+    "title": "校準偏好",
+    "calibratingClass": "正在校準 {{class}}。",
+    "choicesSaved_one": "已儲存 1 項選擇",
+    "choicesSaved_other": "已儲存 {{count}} 項選擇",
+    "steps": {
+      "class": "職業",
+      "archetype": "原型",
+      "tertiary": "第三屬性",
+      "tuning": "調校屬性",
+      "sets": "護甲套裝"
+    },
+    "stepHeader": "第 {{current}} / {{total}} 步 · {{step}}",
+    "classTitle": "你要校準哪個職業？",
+    "archetypeTitle": "按偏好排列原型",
+    "archetypeInstruction": "最偏好的在頂部。拖曳列或使用箭頭。列出全部六種原型；是否擁有該原型不影響清單。",
+    "tertiaryTitle": "排列第三屬性",
+    "tuningTitle": "排列調校屬性",
+    "setsTitle": "按偏好排列護甲套裝",
+    "skipAllArchetypes": "跳過全部原型",
+    "showBonusDetails": "顯示加成詳情",
+    "bonusUnavailable": "加成詳情不可用",
+    "noSetBonuses": "未列出套裝加成",
+    "continue": "Continue",
+    "goToDashboard": "Go to dashboard",
+    "noArmorSets": "No armor sets to compare.",
+    "savedNextStep": "Saved · Next step",
+    "skipTertiaryArchetype": "Skip {{archetype}} tertiary",
+    "skipTertiaryStats": "Skip tertiary stats",
+    "skipTuningArchetype": "Skip {{archetype}} tuning",
+    "skipTuningStats": "Skip tuning stats",
+    "skipArmorSets": "Skip armor sets",
+    "nextArchetype": "Next archetype",
+    "setsInstruction": "Most preferred at the top. Sets from your vault, ordered by how many pieces you own. Drag to reorder or use arrow buttons.",
+    "contextSetPrefs": "Armor set preferences",
+    "unknownSet": "Unknown set",
+    "rankTheseStats": "Rank these stats:",
+    "dragRowsHint": "Drag rows or use the arrows. Most important at the top.",
+    "archetypeProgress": "{{current}} of {{total}} archetypes"
+  },
+  "common": {
+    "language": "語言",
+    "languageEn": "English",
+    "languageFr": "Français",
+    "languageEs": "Español",
+    "languageEsMx": "Español (México)",
+    "languageDe": "Deutsch",
+    "languageIt": "Italiano",
+    "languageJa": "日本語",
+    "languageKo": "한국어",
+    "languagePl": "Polski",
+    "languagePtBr": "Português (Brasil)",
+    "languageRu": "Русский",
+    "languageZhChs": "简体中文",
+    "languageZhCht": "繁體中文",
+    "continue": "繼續",
+    "save": "儲存",
+    "back": "返回",
+    "skip": "跳過",
+    "signOut": "登出",
+    "retry": "重試",
+    "retrying": "正在重試…",
+    "pleaseWait": "請稍候",
+    "copied": "已複製！",
+    "none": "無",
+    "configured": "已設定",
+    "notConfigured": "未設定",
+    "developer": "開發者",
+    "openReviewPage": "開啟審核頁",
+    "clearPendingTags": "清除待處理標籤",
+    "exportPrefs": "匯出偏好",
+    "importPrefs": "匯入偏好",
+    "preferencesImported": "偏好已匯入。",
+    "invalidPrefsFile": "偏好檔案無效。",
+    "topStats": "優先屬性：",
+    "topArchetypes": "優先原型：",
+    "recalibrateClass": "重新校準 {{class}}",
+    "resetClassPrefs": "重設 {{class}} 偏好",
+    "resetAllClasses": "重設所有職業",
+    "confirm": {
+      "clearPendingTags": "清除全部 {{count}} 個待處理標籤？它們不會套用到 DIM。",
+      "resetClassPrefs": "將 {{class}} 偏好重設為預設？該職業的屬性權重、校準選擇與學習權重將被清除。",
+      "resetAllClassPrefs": "將所有職業的偏好重設為預設？獵人、泰坦、術士的屬性權重、校準選擇與學習權重將被清除。重複規則及其他設定會保留。"
+    },
+    "classPrefs": {
+      "heading": "{{class}} 偏好",
+      "usingClass": "目前使用 {{class}}（在頁首切換職業）。各職業的屬性與原型權重來自校準。重複規則預設共用，可按職業單獨覆寫。",
+      "calibrations": "{{count}} 次校準 · 置信度 {{confidence}}"
+    },
+    "reviewTags": {
+      "heading": "審核標籤",
+      "queued_one": "{{count}} 個標籤已排隊，將在 DIM 中套用。",
+      "queued_other": "{{count}} 個標籤已排隊，將在 DIM 中套用。",
+      "none": "無待處理標籤。"
+    },
+    "dev": {
+      "dimKeyHint": "本機 DIM 金鑰：向 api.destinyitemmanager.com/new_app 傳送 POST，origin 為 {{origin}}。"
+    },
+    "dimCopy": {
+      "queryFor": "{{name}} DIM 쿼리 복사",
+      "queryCopied": "{{name}} DIM 쿼리가 클립보드에 복사되었습니다.",
+      "searchShown": "표시된 피스 DIM 검색 복사",
+      "searchShownCopied": "표시된 피스 DIM 검색이 클립보드에 복사되었습니다.",
+      "searchGroup": "이 그룹의 {{count}}개 피스 DIM 검색 복사",
+      "searchGroupCopied": "이 그룹의 {{count}}개 피스 DIM 검색이 클립보드에 복사되었습니다."
+    }
+  },
+  "dashboard": {
+    "title": "{{class}} 倉庫",
+    "summary": "{{tieredCount}} 件升階 {{class}} 護甲 · 重複範圍內 {{dupeScopeCount}} {{minTierLabel}} · {{buckets}} 個重複桶 · 約 {{review}} 個決策",
+    "customDupeRules": "· 自訂重複規則",
+    "tieredAccount": "· {{count}} 件升階護甲（帳戶）",
+    "customRulesBanner": "{{class}} 使用自訂重複規則",
+    "nextSteps": "下一步",
+    "browseAllArmor": "瀏覽全部護甲",
+    "redundantRolls": "冗餘 roll（{{count}}）",
+    "refreshVault": "重新整理倉庫",
+    "armorView": "護甲檢視",
+    "archetypeView": "原型檢視",
+    "heatmapSlot": "熱力圖部位",
+    "allSlots": "全部部位",
+    "insights": {
+      "continueSetup": {
+        "title": "繼續設定",
+        "detail": "完成校準，讓倉庫建議符合你的優先順序",
+        "cta": "繼續"
+      },
+      "continueCalibration": {
+        "title": "繼續校準",
+        "detail": "從偏好校準中斷處繼續",
+        "cta": "繼續"
+      },
+      "calibratePreferences": {
+        "title": "校準偏好",
+        "detail": "設定此職業的屬性、原型與套裝優先順序",
+        "cta": "校準"
+      },
+      "completeCalibration": {
+        "title": "完成校準",
+        "detail": "置信度偏低 · 再多選幾次可讓重複與組合建議更精準",
+        "cta": "校準"
+      },
+      "improveCalibration": {
+        "title": "改善校準",
+        "detail": "置信度中等 · 再多選幾次可改善排序與覆蓋提示",
+        "cta": "校準"
+      },
+      "recalibrateStale": {
+        "title": "重新校準偏好",
+        "detail": "上次校準已有一段時間 · 倉庫 roll 可能已變化",
+        "cta": "重新校準"
+      },
+      "recalibrateDefault": {
+        "title": "重新校準偏好",
+        "detail": "隨時更新此職業的屬性、原型與套裝權重",
+        "cta": "重新校準"
+      },
+      "setupAutoFilters": {
+        "title": "設定自動篩選",
+        "detail": "在倉庫載入時為永遠不保留的 roll 排隊垃圾標籤",
+        "cta": "設定篩選"
+      },
+      "setupCombos": {
+        "title": "設定組合",
+        "detail": "每個組合選 2–4 個優先屬性 · {{countLabel}}",
+        "cta": "設定組合"
+      },
+      "addAnotherCombo": {
+        "title": "再新增一個組合",
+        "detail": "{{countLabel}} 個組合 · 再新增 1 個",
+        "cta": "新增組合"
+      },
+      "addMoreCombos": {
+        "title": "新增更多組合",
+        "detail": "{{countLabel}} · 再新增 {{remaining}} 個組合",
+        "cta": "新增組合"
+      },
+      "fixCoverage": {
+        "title": "修正 {{label}} 覆蓋",
+        "cta": "開啟組合"
+      },
+      "browseUpgrades": {
+        "title": "瀏覽 {{label}} 升級",
+        "cta": "瀏覽倉庫"
+      },
+      "compareLargest": {
+        "title": "對比 {{label}}",
+        "detail": "你最大的重複桶中有 {{count}} 件",
+        "cta": "對比此群組"
+      },
+      "redundantRolls": {
+        "title": "審核冗餘 roll",
+        "detail_one": "{{count}} 件嚴格劣於你保留的另一個 roll",
+        "detail_other": "{{count}} 件嚴格劣於你保留的另一個 roll",
+        "cta": "開啟清單"
+      },
+      "taggedKeep": {
+        "title": "審核 DIM 標記的重複",
+        "detail_one": "{{count}} 個重複候選已在 DIM 標為保留或收藏",
+        "detail_other": "{{count}} 個重複候選已在 DIM 標為保留或收藏",
+        "cta": "瀏覽倉庫"
+      },
+      "heavyBuckets": {
+        "title": "清理沉重的重複桶",
+        "detail_one": "{{count}} 個桶有 5 件以上。使用熱力圖選一個保留。",
+        "detail_other": "{{count}} 個桶有 5 件以上。使用熱力圖選一個保留。",
+        "cta": "對比重複"
+      },
+      "fixCoverageNoVault": "倉庫中尚無裝備 roll 出你的優先屬性",
+      "fixCoverageNeedSlot": "需要能 roll 出你優先順序的 {{slot}}",
+      "fixCoverageSlots": "建議配裝已填 {{filled}}/{{total}} 個部位",
+      "browseNoArmor": "倉庫中尚無護甲 roll 出這些屬性",
+      "browseGaps": "{{count}} 種 roll 類型可追求更好契合",
+      "browseGaps_other": "{{count}} 種 roll 類型可追求更好契合",
+      "browseCompare": "將倉庫護甲與你的組合對比"
+    },
+    "buildLink": {
+      "title": "你的組合"
+    },
+    "coverage": {
+      "yourCombos": "你的組合",
+      "setPriorities": "在組合上設定屬性優先順序以查看 roll 目標",
+      "recommendedPieces": "建議裝備",
+      "rollTypesHunt": "可追求的 roll 類型",
+      "nothingMissing": "你的矩陣中沒有明顯缺口。",
+      "rollTypesMany": "你擁有很多件的 roll 類型",
+      "noHeavyDuplicates": "單一 roll 類型沒有沉重重複。",
+      "tagAll": "全部標記：",
+      "choose": "Choose",
+      "chooseSlotAria": "Choose {{slot}}",
+      "choosePieceAria": "Choose piece · {{count}} eligible",
+      "supportingPieces": "<1>{{count}}</1> pieces in your vault roll at least one priority stat.",
+      "filledProfiles": "<1>{{filled}}</1> of <2>{{total}}</2> roll types you could own (archetype + tertiary + slot) are in your vault.",
+      "redundantOverlap": "Empty slots remain despite redundant rolls. Prioritize fills over more dupes.",
+      "gapsIntro": "Empty combinations that would help this combo.",
+      "overlapsIntro": "Three or more pieces in the same combination.",
+      "piecesCount": "{{count}} pieces",
+      "orderLabel": "Order:"
+    }
+  },
+  "duel": {
+    "title": "對比 {{class}} 重複",
+    "subtitle": {
+      "wrapUp": "審核此群組後繼續",
+      "bucketMeta": "{{slot}} · {{archetype}} · {{tertiary}} · {{count}} 件",
+      "bucketProgress": "{{meta}} · {{progress}}",
+      "noDupes": "此職業沒有可對比的重複護甲",
+      "chooseGroup": "選擇一個重複群組開始",
+      "startingNext": "正在開始下一個重複群組…"
+    },
+    "resetBucket": "重設桶",
+    "preparing": "正在準備對比…",
+    "queueEmpty": {
+      "title": "佇列為空",
+      "summary": "{{keep}} 保留 · {{junk}} 垃圾已排隊。",
+      "reviewTags": "審核標籤",
+      "restartQueue": "重新開始佇列",
+      "clearSession": "清除 {{class}} 工作階段"
+    },
+    "noDuplicates": {
+      "title": "沒有可對比的重複",
+      "body": "沒有符合 {{class}} 規則的重複桶。請在設定中放寬重複規則，或載入新的倉庫快照。"
+    },
+    "noGroupsInQueue": "佇列中沒有重複群組。請在設定中放寬重複規則或重新開始佇列。",
+    "skipGroup": "跳過群組 (S)",
+    "restoringSession": "正在恢復工作階段…",
+    "confirm": {
+      "switchBucket": "切換桶？目前桶進行中的選擇與垃圾標籤將被清除。",
+      "resetBucket": "重設此桶？所有進行中的選擇、垃圾標籤與對比進度將被清除。桶仍留在佇列中。",
+      "clearClassSession": "이 클래스의 모든 비교 진행 및 대기 태그를 지울까요? 되돌릴 수 없습니다."
+    },
+    "chooser": {
+      "title": "選擇重複群組",
+      "kicker": "중복 비교",
+      "intro": "먼저 비교할 {{class}} 방어구 그룹을 고르세요. 헤더에서 나중에 바꿀 수 있습니다.",
+      "listAria": "{{class}} duplicate groups"
+    },
+    "wrapUp": {
+      "title": "審核此重複群組",
+      "chooseNext": "選擇下一個要對比的群組",
+      "nextGroupsAria": "下一個重複群組",
+      "kicker": "桶已完成",
+      "allPairsDecided": "모든 듀얼 쌍 결정됨",
+      "continueNext": "다음 그룹으로 계속",
+      "applyTagsContinue": "태그 적용 후 계속",
+      "chooseDifferent": "다른 그룹 선택",
+      "backToSummary": "요약으로 돌아가기",
+      "whatsNext": "接下來",
+      "tagsFootnote": "계속하면 태그가 대기열에 들어갑니다. 검토 전까지 적용되지 않습니다.",
+      "stats": {
+        "keeps": "Keep",
+        "junkQueued": "정크 대기",
+        "preferEliminated": "선호 탈락",
+        "pairsDecided": "결정한 쌍",
+        "inGroup": "이 그룹"
+      },
+      "breakdown": {
+        "keepBoth": "둘 다 keep: {{count}}",
+        "keepSide": "한쪽 keep: {{count}}",
+        "junkedInDuels": "듀얼에서 정크: {{count}}",
+        "preferInPlay": "선호 진행 중: {{count}}"
+      },
+      "piece_one": "{{count}}개",
+      "piece_other": "{{count}}개",
+      "sessionLast": "대기열의 마지막 그룹",
+      "sessionLeft_one": "이후 {{count}}개 그룹 남음",
+      "sessionLeft_other": "이후 {{count}}개 그룹 남음"
+    },
+    "bucket": {
+      "label": "桶",
+      "select": "選擇桶",
+      "dupeBucketsAria": "重複桶"
+    },
+    "keyboard": {
+      "aria": "對比鍵盤快捷鍵",
+      "left": "左",
+      "both": "双",
+      "right": "右",
+      "keep": "保留",
+      "prefer": "偏好",
+      "junk": "垃圾"
+    },
+    "compare": {
+      "suggested": "建議",
+      "sameRoll": "相同 roll",
+      "compareSides": "對比兩側",
+      "suggestedPick": "建議選擇：",
+      "vs": "vs",
+      "fitTitle": "此裝備與你儲存偏好的契合程度",
+      "powerTitle": "光等",
+      "identicalRolls": "동일 롤. 하나 keep, 하나 정크, 둘 다 keep, 또는 패스.",
+      "suppressedSuggestion": "둘 다 강함 · 티어 마지막. 선호, 패스, keep, 정크 중 선택.",
+      "buildOptimalPrefix": "콤보 최적: ",
+      "orPassKeepJunk": "· 또는 패스 / keep / 정크",
+      "evenMatch": "동률. 선호, 패스, keep, 정크 중 선택.",
+      "eliminated": "브래킷에서 탈락",
+      "actionKeep": "Keep",
+      "outcomes": {
+        "prefer": "이쪽 선호. 패자는 버킷 종료 시 정크 전에 선호 패배 {{threshold}}회 필요.",
+        "keepSide": "버킷 종료 시 keep · 다른 쪽은 브래킷에 남음",
+        "keepBoth": "버킷 종료 시 둘 다 keep",
+        "junkOne": "지금 정크 · 다른 쪽은 브래킷에 남음(승자 없음)",
+        "junkBoth": "지금 둘 다 정크",
+        "pass": "이 쌍 건너뜀. 태그 없음, 둘 다 다시 대기열."
+      },
+      "pass": "跳过",
+      "preferred": "Preferred",
+      "tuningLabel": "Tuning: {{stat}}",
+      "setFootnote": "Set: {{name}}",
+      "loss_one": "1 loss",
+      "loss_other": "{{count}} losses",
+      "lossRemaining_one": "{{count}} more prefer loss before junk at bucket end",
+      "lossRemaining_other": "{{count}} more prefer losses before junk at bucket end",
+      "keyboardHints": "Hover buttons for outcomes · ↑ keep both · Space pass · ↓ junk both · Ctrl+←/→ junk sides",
+      "aria": {
+        "keepLeft": "Keep left. {{outcome}}",
+        "keepRight": "Keep right. {{outcome}}",
+        "keepBoth": "Keep both. {{outcome}}",
+        "preferLeft": "Prefer left. {{outcome}}",
+        "preferRight": "Prefer right. {{outcome}}",
+        "passPair": "Pass pair. {{outcome}}",
+        "junkLeft": "Junk left. {{outcome}}",
+        "junkRight": "Junk right. {{outcome}}",
+        "junkBoth": "Junk both. {{outcome}}"
+      }
+    },
+    "progress": {
+      "noGroups": "沒有重複群組",
+      "lastInQueue": "佇列中的最後一群組"
+    }
+  },
+  "dupes": {
+    "grouping": {
+      "sameArmorSet": {
+        "label": "要求相同護甲套裝",
+        "help": "僅將同一套裝的護甲分組或對比。關閉時：相同部位 + 原型 + 第三屬性，跨套裝。"
+      },
+      "sameTuningStat": {
+        "label": "要求相同調校屬性",
+        "help": "按調校屬性拆分（例如武器 vs 手雷）。關閉時：同一桶內可混合調校屬性。"
+      }
+    },
+    "respectKeepFavorite": {
+      "label": "標記垃圾時尊重 DIM 保留與收藏",
+      "help": "開啟時，已標保留或收藏的護甲不會在重複流程中被建議為垃圾。"
+    },
+    "excludeJunk": {
+      "label": "從重複計數中排除已標垃圾的護甲"
+    },
+    "presets": {
+      "loose": {
+        "label": "寬鬆"
+      },
+      "standard": {
+        "label": "標準"
+      },
+      "setAware": {
+        "label": "套裝感知"
+      },
+      "tuning": {
+        "label": "調校"
+      },
+      "strict": {
+        "label": "嚴格"
+      }
+    },
+    "impactCompact": {
+      "buckets": "重複桶 ·",
+      "decisions": "決策 ·",
+      "pieces": "含 {{count}} 件"
+    },
+    "matchStyle": {
+      "custom": "自訂",
+      "usingPreset": "使用 {{label}}",
+      "usingCustomRules": "使用自訂規則",
+      "cardBody": {
+        "loose": "對比相同部位的護甲，不要求相同套裝或調校屬性。",
+        "standard": "按部位、原型與第三屬性對比，不要求相同護甲套裝。",
+        "setAware": "按護甲套裝分組重複 · 適合大多數倉庫。",
+        "tuning": "按調校屬性分組重複，即使跨不同護甲套裝。",
+        "strict": "重複符合需相同護甲套裝與調校屬性。"
+      },
+      "customMix": "自訂組合：{{armorSet}}，{{tuningStat}}。",
+      "armorSetSame": "相同護甲套裝",
+      "armorSetAny": "任意護甲套裝",
+      "tuningStatSame": "相同調校屬性",
+      "tuningStatAny": "任意調校屬性",
+      "dimTagsRespect": "建議垃圾時會考慮 DIM 保留與收藏標籤。",
+      "dimTagsIgnore": "建議垃圾時不使用保留與收藏標籤。"
+    },
+    "suggestions": {
+      "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+      "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+      "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+      "standardDefault": "Standard preset for your vault size."
+    }
+  },
+  "errors": {
+    "boundary": {
+      "title": "發生錯誤",
+      "body": "{{appName}} 遇到未預期的錯誤。本機儲存空間中的偏好與已排隊標籤通常不受影響。",
+      "reload": "重新載入應用程式",
+      "goHome": "返回首頁"
+    },
+    "oauth": {
+      "completingLogin": "正在完成 Bungie 登入…",
+      "exchangingCode": "正在交換授權碼…",
+      "loadingVault": "正在載入你的倉庫…",
+      "firstLoadNote": "首次載入會下載遊戲清單，可能需要一分鐘。",
+      "bungieDenied": "Bungie 拒絕登入：{{error}}",
+      "noAuthCode": "未收到授權碼：請重新登入。",
+      "stateMismatch": "OAuth 狀態不符：常因分頁過舊或工作階段儲存空間遭封鎖。請返回登入並重試。",
+      "loginFailed": "登入失敗",
+      "backToLogin": "返回登入",
+      "suffix": "請重新登入。若問題持續，請聯絡網站管理員。",
+      "devChecklistIntro": "Bungie 應用程式檢查清單（本機開發）：",
+      "devRedirect": "重新導向 URL：{{uri}}",
+      "devOrigin": "Origin：{{origin}}",
+      "devClientId": "用戶端 ID 與你的 Bungie 應用程式相符（{{clientId}}）",
+      "devApiKey": "API 金鑰來自同一 Bungie 應用程式",
+      "devRestart": "變更憑證後請重新啟動開發伺服器"
+    },
+    "env": {
+      "bungieSignInUnavailableDev": "此建置未啟用登入。",
+      "bungieSignInUnavailable": "此部署不提供登入。",
+      "bungieCredentialsMissingDev": "此環境未啟用 Bungie 登入。",
+      "bungieCredentialsMissing": "此部署不提供登入。請聯絡網站管理員。",
+      "bungieSecretMissingDev": "此環境未完整啟用 Bungie 登入。",
+      "dimSyncUnavailableDev": "此環境未啟用 DIM 同步。",
+      "dimSyncUnavailable": "此部署無法將標籤套用到 DIM。請聯絡網站管理員。"
+    },
+    "vault": {
+      "sessionExpired": "你的 Bungie 工作階段可能已過期。請登出後重新登入。",
+      "forbidden": "Bungie 拒絕了請求。請重新登入；若持續發生請聯絡網站管理員。",
+      "manifest": "清單下載失敗。請檢查連線並重試：首次載入可能需要一分鐘。",
+      "network": "網路錯誤。請檢查連線或稍後再試。",
+      "membership": "無法解析你的 Destiny 會員。請確認帳戶擁有 Destiny 2 角色。"
+    },
+    "applyTagsFailed": "套用標籤失敗",
+    "partialApply": "已套用 {{ok}} / {{total}} 個標籤。{{failed}} 個失敗：請重試或從佇列移除。"
+  },
+  "footer": {
+    "aria": {
+      "siteLinks": "網站連結",
+      "kofi": "在 Ko-fi 上支持"
+    },
+    "links": {
+      "newoReport": "newo.report",
+      "github": "GitHub"
+    }
+  },
+  "game": {
+    "achievability": {
+      "ready": "就緒",
+      "almost": "接近",
+      "needBetterRolls": "需要更好 roll",
+      "covered": "已覆蓋",
+      "weakTuning": "調校偏弱",
+      "gap": "缺口",
+      "idealTuning": "理想調校",
+      "tuned": "已調校",
+      "archetypeOnly": "僅原型",
+      "noFit": "不符合"
+    },
+    "armorDiff": {
+      "sameStatSplit": "相同屬性分配",
+      "sameStatsTuning": "相同屬性與調校",
+      "sameRoll": "相同 roll",
+      "decideSetOrTuning": "按套裝或調校決定",
+      "decideTuning": "按調校決定",
+      "decideSet": "按套裝決定",
+      "sameExceptPower": "除光等/位置外完全相同",
+      "identicalRoll": "完全相同的 roll。任選其一即可。"
+    },
+    "fit": {
+      "poorMatch": "匹配差",
+      "closeCall": "難分高下"
+    },
+    "scoring": {
+      "calibrateForAccuracy": "校準偏好以提高準確度"
+    },
+    "heatmap": {
+      "mixedTuning": "桶內混合調校屬性",
+      "dupeBucket": "重複桶"
+    },
+    "minTier": {
+      "tier5Only": "僅 T5 階"
+    },
+    "diff": {
+      "tuning": "Tuning",
+      "set": "Set",
+      "power": "Power",
+      "masterwork": "Masterwork",
+      "noSet": "無套裝",
+      "yes": "Yes",
+      "no": "No",
+      "tuningVs": "Tuning: {{a}} vs {{b}}",
+      "setFootnote": "套裝：{{name}}"
+    },
+    "dominator": {
+      "differentStatSplit": "스탯 분배 다름",
+      "sameAfterTuning": "튜닝 후 동일",
+      "beatsPiece": "이 피스보다 우수",
+      "statComparison": "스탯 비교",
+      "tuningCoverage": "튜닝 커버리지",
+      "aheadOn": "앞섬",
+      "everyTuningLayout": "모든 튜닝 배치"
+    },
+    "classes": {
+      "titan": "泰坦",
+      "hunter": "猎人",
+      "warlock": "术士"
+    },
+    "stats": {
+      "weapons": "武器",
+      "grenade": "手雷",
+      "super": "超级技能",
+      "melee": "近战",
+      "health": "生命值",
+      "class": "职业"
+    },
+    "archetypes": {
+      "gunner": "Gunner",
+      "grenadier": "Grenadier",
+      "paragon": "Paragon",
+      "brawler": "Brawler",
+      "bulwark": "Bulwark",
+      "specialist": "Specialist"
+    },
+    "slots": {
+      "helmet": "Helmet",
+      "arms": "Arms",
+      "chest": "Chest",
+      "legs": "Legs",
+      "classItem": "Class Item"
+    },
+    "roll": {
+      "tertiary": "{{stat}} tertiary",
+      "tuning": "{{stat}} tuning",
+      "tuningLabel": "Tuning: {{stat}}",
+      "preferred": "Preferred",
+      "none": "none"
+    },
+    "labels": {
+      "separator": " · "
+    }
+  },
+  "home": {
+    "tagline": "對比重複護甲並排隊 DIM 標籤。此處不會分解任何裝備。",
+    "resumeSession": "恢復上次工作階段",
+    "footerNote": "倉庫經 Bungie.net。標籤經 DIM。在設定中登出。",
+    "signInWithBungie": "使用 Bungie 登入"
+  },
+  "layout": {
+    "aria": {
+      "guardianClass": "守護者職業"
+    }
+  },
+  "nav": {
+    "dashboard": "儀表板",
+    "calibrate": "校準",
+    "browse": "瀏覽",
+    "combos": "組合",
+    "compare": "對比",
+    "review": "審核",
+    "autoFilters": "自動篩選",
+    "settings": "設定",
+    "mobile": {
+      "dashboard": "儀表",
+      "calibrate": "校準",
+      "autoFilters": "篩選",
+      "settings": "設定"
+    },
+    "aria": {
+      "mobile": "行動版導覽"
+    }
+  },
+  "onboarding": {
+    "restoringSession": "正在恢復 Bungie 工作階段…",
+    "redirectingLogin": "正在跳轉到登入…",
+    "vaultTrimTitle": "倉庫精簡目標",
+    "tieredFound": "找到 <1>{{count}}</1> 件升階護甲 <2>{{pieceWord}}</2><3>{{t5Block}}</3>。",
+    "piece_one": "件",
+    "piece_other": "件",
+    "t5Block": "（其中 <1>{{count}}</1> 件為 T5 階）",
+    "noTieredFound": "未找到升階護甲<1>{{parsedHint}}</1>。僅匯入升階護甲（T1–T5）；舊版與未升階裝備會跳過。",
+    "parsedHint": "（從倉庫解析了 {{count}} 件物品）",
+    "keepGoalHeading": "你想保留多少？",
+    "keepGoalIntro": "設定清理時對重複 T5 階護甲的建議精簡力度。",
+    "keepGoalSummary": "保留目標：約 {{total}} 件 T5 總計（每職業約 {{perClass}}）。",
+    "keepGoalExcess": " 你比該目標多約 <1>{{excess}}</1>。",
+    "keepGoalAtTarget": " 你已處於或低於該目標。",
+    "signOutBack": "登出",
+    "keepOptions": {
+      "lean": {
+        "label": "精簡",
+        "blurb": "積極精簡 · 清空大多數重複桶"
+      },
+      "balanced": {
+        "label": "均衡",
+        "blurb": "清理明顯重複，為配裝保留多樣性"
+      },
+      "options": {
+        "label": "保留選項",
+        "blurb": "保留額外屬性 roll 與套裝組合；輕度精簡"
+      },
+      "hoarder": {
+        "label": "囤積",
+        "blurb": "僅精簡明顯重複；最大化選擇"
+      },
+      "description": "{{blurb}}（每職業約 {{perClass}} 件 T5）"
+    },
+    "backAria": "返回"
+  },
+  "review": {
+    "title": "審核標籤",
+    "summary": "已排隊 {{total}} · {{keep}} 保留 · {{junk}} 垃圾。套用會寫入已排隊標籤；若與現有 DIM 標籤不同，列內會註明。",
+    "applied": "標籤已套用到 DIM Sync。",
+    "openJunkInDim": "在 DIM 中開啟垃圾",
+    "partialApplied": "部分套用：{{count}} 個標籤成功。失敗項仍留在佇列中。",
+    "retryFailed": "重試 {{count}} 個失敗項",
+    "empty": "無待處理標籤。",
+    "compareDupes": "對比重複",
+    "table": {
+      "item": "物品",
+      "copyDimSr": "複製 DIM 查詢",
+      "archetype": "原型",
+      "tertiary": "第三屬性",
+      "tuning": "調校",
+      "class": "職業",
+      "combo": "組合",
+      "appliesToDim": "套用到 DIM",
+      "none": "無"
+    },
+    "copy": {
+      "ids": "複製 id: 查詢",
+      "junk": "複製 tag:junk 搜尋",
+      "junkIds": "僅複製垃圾 id",
+      "copied": "已複製！",
+      "announcement": "{{label}} 已複製到剪貼簿。"
+    },
+    "removeFromQueue": "從佇列移除",
+    "applyTags": "將 {{count}} 個標籤套用到 DIM",
+    "applying": "正在套用…",
+    "clearPending": "清除待處理標籤",
+    "clearSession": "清除工作階段",
+    "backToDashboard": "返回儀表板",
+    "confirm": {
+      "clearPending": "清除全部 {{count}} 個待處理標籤？它們不會套用到 DIM。對比工作階段進度會保留。",
+      "clearSession": "清除整個對比工作階段？待處理標籤與進行中的對比狀態將被重設。"
+    },
+    "alreadyInDim": "DIM 中已有：{{summary}}"
+  },
+  "rulesOnboarding": {
+    "title": "重複應如何符合？",
+    "intro": "我們將相似的護甲 roll 分組，便於你選一個保留並在 DIM 中標記其餘。可隨時在設定中更改。",
+    "restoringSession": "正在恢復 Bungie 工作階段…",
+    "redirectingLogin": "正在跳轉到登入…",
+    "loadingVault": "正在載入倉庫…",
+    "retryVaultLoad": "重試載入倉庫",
+    "refreshing": "正在重新整理…",
+    "noTieredArmor": "在你設定的最低階下，範圍內無升階護甲",
+    "tieredPiecesImported": "（已匯入 {{count}} 件升階護甲）",
+    "tieredArmorFootnote": "僅包含遊戲內升階裝備（T1–T5）。如需可在設定中降低最低階。",
+    "recommendedPresetSr": "推薦預設",
+    "useRecommended": "使用推薦",
+    "customizeRules": "自訂規則",
+    "hideCustomization": "隱藏自訂",
+    "customizeIntro": "收緊或放寬何謂重複。設定中的預設可一鍵設定。",
+    "matchStyleLabel": "符合方式：",
+    "previewByClass": "按職業預覽",
+    "suggestions": "建議",
+    "usePreset": "使用 {{label}}",
+    "impact": {
+      "none": "在目前階下，{{class}} 未找到重複群組。",
+      "summary": "約 {{buckets}} 個重複{{groupWord}} · 約 {{review}} 個{{rollWord}}待對比（{{class}}）",
+      "group_one": "群組",
+      "group_other": "群組",
+      "roll_one": "roll",
+      "roll_other": "roll"
+    },
+    "aria": {
+      "dupeRules": "重複規則"
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "account": {
+      "heading": "帳戶",
+      "signedInAs": "已登入為 <1>{{name}}</1>",
+      "parsedCount": "已解析 {{count}} 件升階護甲（倉庫、所有角色、郵局）",
+      "signOutNote": "登出會清除此瀏覽器工作階段中的 Bungie 與 DIM 權杖（僅工作階段儲存空間）。偏好保留在本機儲存空間。",
+      "signOutButton": "登出並清除權杖"
+    },
+    "dupeRules": {
+      "heading": "重複規則",
+      "intro": "熱力圖、對比、瀏覽與冗餘 roll 清單共用的規則。",
+      "scopeHeading": "範圍：哪些裝備計入",
+      "minTierLabel": "最低裝備階",
+      "minTierHelp": "倉庫匯入仍會載入 1 至 5 階。僅達到此階或以上的裝備會進入重複桶與冗餘 roll 檢查。",
+      "groupingHeading": "分組：何謂「重複」",
+      "groupingIntro": "裝備一律依職業、部位、原型與第三屬性符合。這些選項會加入更嚴格的分割，並同樣套用於冗餘 roll 對比。",
+      "dimTagsHeading": "計算重複時的 DIM 標籤",
+      "dimTagsIntro": "已標記的裝備仍會顯示，但可排除在重複桶大小與審核計數之外。",
+      "liveImpact": "即時影響（全域規則，獵人倉庫）"
+    },
+    "classDupeRules": {
+      "heading": "{{class}} 重複規則",
+      "usingClass": "目前使用 {{class}}（在頁首切換職業）。職業預設共用全域規則。可對單一職業套用預設而不影響其他職業。",
+      "customRules": "{{class}} 使用自訂規則 ·",
+      "resetToGlobal": "重設為全域"
+    },
+    "dupePresets": {
+      "heading": "重複預設"
+    },
+    "dashboardLink": "儀表板",
+    "language": {
+      "heading": "語言",
+      "useBrowser": "使用瀏覽器語言",
+      "useBrowserHelp": "開啟時，應用程式會跟隨瀏覽器語言。關閉時，使用下方選擇的語言。"
+    },
+    "developer": {
+      "heading": "開發者",
+      "bungie": "Bungie：{{status}}",
+      "dimSync": "DIM Sync：{{status}}"
+    },
+    "reviewTags": {
+      "heading": "審核標籤"
+    },
+    "classPrefs": {
+      "heading": "{{class}} 偏好",
+      "usingClass": "目前使用 {{class}}（在頁首切換職業）。各職業的屬性與原型權重來自校準。重複規則預設共用，可按職業單獨覆寫。",
+      "calibrations": "{{count}} 次校準 · 置信度 {{confidence}}",
+      "topStats": "優先屬性：",
+      "topArchetypes": "優先原型：",
+      "recalibrate": "重新校準 {{class}}",
+      "exportPrefs": "匯出偏好",
+      "importPrefs": "匯入偏好",
+      "resetClass": "重設 {{class}} 偏好",
+      "resetAll": "重設所有職業",
+      "imported": "偏好已匯入。",
+      "invalidFile": "偏好檔案無效。",
+      "openReview": "開啟審核頁",
+      "clearPending": "清除待處理標籤",
+      "queued_one": "{{count}} 個標籤已排隊，將在 DIM 中套用。",
+      "queued_other": "{{count}} 個標籤已排隊，將在 DIM 中套用。",
+      "nonePending": "無待處理標籤。",
+      "confirmClearPending": "清除全部 {{count}} 個待處理標籤？它們不會套用到 DIM。",
+      "confirmResetClass": "將 {{class}} 偏好重設為預設？該職業的屬性權重、校準選擇與學習權重將被清除。",
+      "confirmResetAll": "將所有職業的偏好重設為預設？獵人、泰坦、術士的屬性權重、校準選擇與學習權重將被清除。重複規則及其他設定會保留。"
+    }
+  },
+  "vault": {
+    "loading": "正在載入倉庫…",
+    "refreshing": "正在重新整理…",
+    "refreshingStatus": "正在重新整理… {{status}}",
+    "loadVault": "載入倉庫",
+    "noDataYet": "尚無倉庫資料。",
+    "noDataBrowseHint": "請先從儀表板載入倉庫。",
+    "noDataBuildHint": "尚無倉庫資料。請從儀表板載入倉庫。",
+    "retryVaultLoad": "重試載入倉庫",
+    "signOutInSettings": "在設定中登出",
+    "dismiss": "關閉",
+    "tieredArmorTitle": "你在遊戲中升階的護甲（T1–T5）。舊版與從未升階的裝備不會匯入。重複範圍使用你的最低階設定。",
+    "dupeRulesImpact": "載入倉庫以預覽影響。"
+  }
+}

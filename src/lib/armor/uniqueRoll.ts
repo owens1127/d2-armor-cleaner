@@ -1,5 +1,5 @@
-import { ARCHETYPE_LABELS, STAT_LABELS } from '@/lib/constants';
 import { isIgnoredByDupeRules } from '@/lib/dupes/group';
+import { statLabel, archetypeLabel } from '@/i18n/gameCopy';
 import type { ArmorPiece, DupeRuleConfig } from '@/types';
 
 /** Same roll identity: class, slot, archetype, tertiary, and tuning. */
@@ -115,9 +115,9 @@ export function rollProfileParts(
   piece: Pick<ArmorPiece, 'archetype' | 'tertiaryStat' | 'tuningStat'>,
 ): RollProfileParts {
   return {
-    archetype: ARCHETYPE_LABELS[piece.archetype],
-    tertiary: STAT_LABELS[piece.tertiaryStat],
-    tuning: piece.tuningStat ? STAT_LABELS[piece.tuningStat] : null,
+    archetype: archetypeLabel(piece.archetype),
+    tertiary: statLabel(piece.tertiaryStat),
+    tuning: piece.tuningStat ? statLabel(piece.tuningStat) : null,
   };
 }
 

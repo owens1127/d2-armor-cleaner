@@ -1,7 +1,4 @@
-import {
-  removeCalibrationKey,
-  trimCountedKeysForStep,
-} from '@/lib/onboarding/calibrateSession';
+import { trimCountedKeysForStep } from '@/lib/onboarding/calibrateSession';
 import type { CalibrateStep } from '@/lib/onboarding/storage';
 import type { CalibrationChoice, ClassPreferenceProfile, Confidence } from '@/types';
 
@@ -35,15 +32,6 @@ export function recordCalibrationChoice(
   };
 }
 
-export function removeCalibrationChoice(
-  prefs: ClassPreferenceProfile,
-  key: string,
-): ClassPreferenceProfile {
-  if (!(key in prefs.calibrationChoices)) return prefs;
-  const { [key]: _removed, ...rest } = prefs.calibrationChoices;
-  return { ...prefs, calibrationChoices: rest };
-}
-
 /** Keep only choices whose keys survive step-based trimming (browser back / step rewind). */
 export function trimCalibrationChoicesForStep(
   prefs: ClassPreferenceProfile,
@@ -70,14 +58,6 @@ export function syncCalibrationChoicesToKeys(
     }
   }
   return { ...prefs, calibrationChoices };
-}
-
-export function removeCalibrationChoicePair(
-  prefs: ClassPreferenceProfile,
-  keys: string[] | undefined,
-  key: string,
-): ClassPreferenceProfile {
-  return syncCalibrationChoicesToKeys(prefs, removeCalibrationKey(keys, key));
 }
 
 export function normalizeCalibrationChoices(raw: unknown): Record<string, CalibrationChoice> {

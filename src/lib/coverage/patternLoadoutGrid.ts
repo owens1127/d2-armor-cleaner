@@ -1,4 +1,6 @@
 import { groupPatternLoadoutColumnsBySet } from '@/components/dashboard/buildCoverageLayout';
+import { slotLabel } from '@/i18n/gameCopy';
+import { ARMOR_SLOTS } from '@/lib/constants';
 import {
   bestPiecesForPatternBySlot,
   columnSlotContextFromColumn,
@@ -17,7 +19,6 @@ import {
 import type { EligibleLoadoutPiece } from '@/lib/coverage/analyze';
 import { parseSetBonusTargets } from '@/lib/coverage/setBonus';
 import type { BuildProfile } from '@/lib/coverage/builds';
-import { ARMOR_SLOTS, SLOT_LABELS } from '@/lib/constants';
 import type { ArmorPiece, ArmorSlot, Stat } from '@/types';
 
 function comboScopeSlotKey(setHash: number | undefined, slot: ArmorSlot): string {
@@ -241,7 +242,7 @@ export function formatPatternColumnComboTooltip(
   slot: ArmorSlot,
   setName: string | undefined,
 ): string {
-  return `Eligible ${setName ? `${setName} ` : ''}${SLOT_LABELS[slot].toLowerCase()} for this roll column`;
+  return `Eligible ${setName ? `${setName} ` : ''}${slotLabel(slot).toLowerCase()} for this roll column`;
 }
 
 export interface CollectRecommendedGridPiecesOptions {

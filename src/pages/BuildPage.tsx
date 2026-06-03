@@ -1,33 +1,27 @@
 import { Navigate, useParams } from 'react-router-dom';
+import { classLabel } from '@/i18n/gameCopy';
+import { CLASSES } from '@/lib/constants';
+import { useTranslation } from 'react-i18next';
 import { Layout } from '@/components/Layout';
 import { DesiredBuildsSection } from '@/components/settings/DesiredBuildsSection';
 import { BuildCoveragePanel } from '@/components/dashboard/BuildCoveragePanel';
 import { useScrollToLocationHash } from '@/lib/nav/useScrollToLocationHash';
-import { CLASS_LABELS, CLASSES } from '@/lib/constants';
 import { getClassPrefs } from '@/lib/prefs/profile';
-import {
-  getOnboardingResumePath,
-  needsOnboardingRedirect,
-} from '@/lib/onboarding/storage';
 import { useVaultFocusRefresh } from '@/lib/vault/useVaultFocusRefresh';
-import { useAuthStore, usePrefsStore, useVaultStore } from '@/stores';
+import { usePrefsStore, useVaultStore } from '@/stores';
 import type { ClassType } from '@/types';
 
 export function BuildPage() {
   useScrollToLocationHash();
   useVaultFocusRefresh({ refreshOnMount: true });
+  const { t } = useTranslation(['build', 'vault', 'common']);
   const { class: classParam } = useParams<{ class: string }>();
   const classType = (classParam ?? 'hunter') as ClassType;
   const validClass = CLASSES.includes(classType);
-  const { membership } = useAuthStore();
   const { classStates, vaultLoading, vaultStatus } = useVaultStore();
   const { profile } = usePrefsStore();
 
   if (!validClass) return <Navigate to="/combos/hunter" replace />;
-  if (!membership) return <Navigate to="/" replace />;
-  if (needsOnboardingRedirect()) {
-    return <Navigate to={getOnboardingResumePath(false)} replace />;
-  }
 
   const state = classStates[classType];
 
@@ -35,8 +29,8 @@ export function BuildPage() {
     return (
       <Layout>
         <div className="py-20 text-center">
-          <p className="text-lg mb-2">Loading vault…</p>
-          <p className="text-sm text-muted">{vaultStatus ?? 'Please wait'}</p>
+          <p className="text-lg mb-2">{t('vault:loading')}</p>
+          <p className="text-sm text-muted">{vaultStatus ?? t('common:pleaseWait')}</p>
         </div>
       </Layout>
     );
@@ -45,7 +39,7 @@ export function BuildPage() {
   if (!state) {
     return (
       <Layout>
-        <p className="text-muted">No vault data yet. Load your vault from the dashboard.</p>
+        <p className="text-muted">{t('vault:noDataBuildHint')}</p>
       </Layout>
     );
   }
@@ -54,11 +48,9 @@ export function BuildPage() {
     <Layout>
       <div className="mb-8 space-y-2">
         <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
-          {CLASS_LABELS[classType]} combos
+          {t('build:title', { class: classLabel(classType) })}
         </h1>
-        <p className="max-w-2xl text-sm text-muted/90">
-          Best vault pieces for each roll target in your combo.
-        </p>
+        <p className="max-w-2xl text-sm text-muted/90">{t('build:intro')}</p>
       </div>
 
       <BuildCoveragePanel

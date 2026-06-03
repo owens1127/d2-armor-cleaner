@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { OnboardingStepActions } from '@/components/onboarding/OnboardingBackButton';
@@ -20,6 +21,7 @@ import { useAuthStore, usePrefsStore, useSessionStore, useVaultStore, resetVault
 import type { VaultKeepPreference } from '@/types';
 
 export function InventorySnapshotPage() {
+  const { t } = useTranslation(['onboarding', 'common', 'vault']);
   const navigate = useNavigate();
   const { membership, setMembership } = useAuthStore();
   const { allItems, classStates, loadLiveVault, vaultLoading, vaultRefreshing, vaultError, vaultStatus, lastParsedCount } =
@@ -66,9 +68,9 @@ export function InventorySnapshotPage() {
       <Layout>
         <div className="py-20 text-center">
           <p className="text-lg mb-2">
-            {mayRestore ? 'Restoring Bungie session…' : 'Redirecting to login…'}
+            {mayRestore ? t('onboarding:restoringSession') : t('onboarding:redirectingLogin')}
           </p>
-          <p className="text-sm text-muted">Please wait</p>
+          <p className="text-sm text-muted">{t('common:pleaseWait')}</p>
         </div>
       </Layout>
     );
@@ -78,8 +80,8 @@ export function InventorySnapshotPage() {
     return (
       <Layout>
         <div className="py-20 text-center">
-          <p className="text-lg mb-2">Loading vault…</p>
-          <p className="text-sm text-muted">{vaultStatus ?? 'Please wait'}</p>
+          <p className="text-lg mb-2">{t('vault:loading')}</p>
+          <p className="text-sm text-muted">{vaultStatus ?? t('common:pleaseWait')}</p>
         </div>
       </Layout>
     );
@@ -101,7 +103,7 @@ export function InventorySnapshotPage() {
             }}
             className="px-4 py-2 rounded-lg bg-accent text-surface font-medium disabled:opacity-50"
           >
-            {vaultLoading || vaultRefreshing ? 'Retrying…' : 'Retry vault load'}
+            {vaultLoading || vaultRefreshing ? t('common:retrying') : t('vault:retryVaultLoad')}
           </button>
         </div>
       </Layout>
@@ -110,42 +112,52 @@ export function InventorySnapshotPage() {
 
   return (
     <Layout>
-      <h1 className="text-2xl font-bold mb-2">Vault trim goal</h1>
+      <h1 className="text-2xl font-bold mb-2">{t('onboarding:vaultTrimTitle')}</h1>
       <p className="text-muted mb-8 max-w-2xl">
         {tieredCount > 0 ? (
-          <>
-            Found <span className="text-white font-medium tabular-nums">{tieredCount}</span> tiered
-            armor {tieredCount === 1 ? 'piece' : 'pieces'}
-            {snapshot.totalT5 > 0 && (
-              <>
-                {' '}
-                (<span className="tabular-nums">{snapshot.totalT5}</span> at Tier 5)
-              </>
-            )}
-            .
-          </>
+          <Trans
+            ns="onboarding"
+            i18nKey="tieredFound"
+            values={{
+              count: tieredCount,
+              pieceWord: t('onboarding:piece', { count: tieredCount }),
+              t5Block:
+                snapshot.totalT5 > 0
+                  ? t('onboarding:t5Block', { count: snapshot.totalT5 })
+                  : '',
+            }}
+            components={{
+              1: <span className="text-white font-medium tabular-nums" />,
+              2: <span />,
+              3: <span className="tabular-nums" />,
+            }}
+          />
         ) : (
-          <>
-            No tiered armor found
-            {lastParsedCount !== null ? ` (parsed ${lastParsedCount} items from vault)` : ''}. Imports
-            tiered armor (T1–T5) only; legacy and untiered gear is skipped.
-          </>
+          <Trans
+            ns="onboarding"
+            i18nKey="noTieredFound"
+            values={{
+              parsedHint:
+                lastParsedCount !== null
+                  ? t('onboarding:parsedHint', { count: lastParsedCount })
+                  : '',
+            }}
+            components={{ 1: <span /> }}
+          />
         )}
       </p>
 
       {vaultRefreshing && (
         <div className="mb-4 text-sm text-muted border border-border rounded-lg px-3 py-2 bg-surface-2">
-          Refreshing… {vaultStatus}
+          {t('vault:refreshingStatus', { status: vaultStatus })}
         </div>
       )}
 
       <section className="mb-8 max-w-2xl">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted mb-2">
-          How much do you want to keep?
+          {t('onboarding:keepGoalHeading')}
         </h2>
-        <p className="text-sm text-muted mb-4">
-          Sets how aggressively we suggest trimming duplicate Tier 5 armor during cleaning.
-        </p>
+        <p className="text-sm text-muted mb-4">{t('onboarding:keepGoalIntro')}</p>
         <div className="grid sm:grid-cols-2 gap-3">
           {VAULT_KEEP_OPTIONS.map((opt) => (
             <button
@@ -165,14 +177,19 @@ export function InventorySnapshotPage() {
         </div>
         {snapshot.totalT5 > 0 && (
           <p className="mt-4 text-sm text-muted">
-            Keep goal: about {trim.totalTarget} Tier 5 total (about {trim.targetPerClass} per class).
+            {t('onboarding:keepGoalSummary', {
+              total: trim.totalTarget,
+              perClass: trim.targetPerClass,
+            })}
             {trim.excess > 0 ? (
-              <>
-                {' '}
-                You have about <span className="text-white">{trim.excess}</span> above that goal.
-              </>
+              <Trans
+                ns="onboarding"
+                i18nKey="keepGoalExcess"
+                values={{ excess: trim.excess }}
+                components={{ 1: <span className="text-white" /> }}
+              />
             ) : (
-              <> You are at or below that goal.</>
+              <> {t('onboarding:keepGoalAtTarget')}</>
             )}
           </p>
         )}
@@ -180,14 +197,14 @@ export function InventorySnapshotPage() {
 
       <OnboardingStepActions
         onBack={handleSignOutBack}
-        backLabel="Sign out"
+        backLabel={t('onboarding:signOutBack')}
       >
         <button
           type="button"
           onClick={handleContinue}
           className="px-5 py-2.5 rounded-lg bg-accent text-surface font-semibold hover:opacity-90"
         >
-          Continue
+          {t('common:continue')}
         </button>
       </OnboardingStepActions>
     </Layout>

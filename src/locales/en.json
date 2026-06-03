@@ -1,0 +1,1017 @@
+{
+  "autoFilters": {
+    "title": "Auto filters",
+    "intro": "Queue junk tags automatically when your vault loads or refreshes. Keeps and favorites are never auto-tagged.",
+    "rulesHeading": "Rules",
+    "rulesBody": "Matching pieces are queued as junk in Review (same as manual junk). Keeps are never auto-tagged: DIM keep/favorite, pending keep, or pieces you kept in a duel bucket.",
+    "noRules": "No rules yet.",
+    "addRule": "Add rule",
+    "addRuleHeading": "Add rule",
+    "deleteRule": "Delete",
+    "classLabel": "Class",
+    "allClasses": "All classes",
+    "archetypeLabel": "Archetype",
+    "tertiaryStatLabel": "Tertiary stat",
+    "tuningStatLabel": "Tuning stat",
+    "slotLabel": "Slot",
+    "armorSetLabel": "Armor set",
+    "any": "Any",
+    "addValue": "Add value…",
+    "pickValue": "Pick a value…",
+    "matchMode": "Match mode",
+    "matchModeDisabled": "Match mode (pick a value first)",
+    "enableRule": "Enable rule: {{label}}",
+    "disableRule": "Disable rule: {{label}}",
+    "removeValue": "Remove {{label}}",
+    "operators": {
+      "is": "Is",
+      "isNot": "Is not",
+      "anyOf": "Any of",
+      "noneOf": "None of"
+    },
+    "operatorsIntro": "Each filter can be <1>Is</1>, <2>Is not</2>, <3>Any of</3>, or <4>None of</4> (e.g. junk Hunter pieces whose archetype is none of Bulwark, Paragon).",
+    "livePreview_one": "Live preview: {{count}} piece would be queued on next vault load (excluding keeps, favorites, and already junked).",
+    "livePreview_other": "Live preview: {{count}} pieces would be queued on next vault load (excluding keeps, favorites, and already junked).",
+    "setFallback": "Set {{hash}}",
+    "describe": {
+      "allClasses": "All classes",
+      "tertiary": "{{stat}} tertiary",
+      "tuning": "{{stat}} tuning",
+      "setFallback": "set {{hash}}",
+      "anyOf": "any of {{labels}}",
+      "noneOf": "none of {{labels}}",
+      "not": "NOT {{label}}"
+    }
+  },
+  "browse": {
+    "title": "Browse {{class}} armor",
+    "summary": "{{filtered}} of {{total}} pieces · {{sortLabel}}",
+    "redundantLink": "{{count}} redundant rolls",
+    "loadVaultFirst": "Load your vault from the dashboard first.",
+    "filters": {
+      "slot": "Slot",
+      "archetype": "Archetype",
+      "search": "Search",
+      "armorSet": "Armor set",
+      "dimTag": "DIM tag",
+      "sort": "Sort",
+      "combo": "Combo",
+      "allSlots": "All slots",
+      "allArchetypes": "All archetypes",
+      "allSets": "All sets",
+      "any": "Any",
+      "anyCombo": "Any combo",
+      "armorNamePlaceholder": "Armor name…",
+      "statLowerOnly": "Stat-lower only",
+      "dupesOnly": "Dupes only",
+      "strictlyLowerOnly": "Strictly lower only",
+      "redundantOnly": "Redundant rolls only",
+      "supportsComboOnly": "Supports combo only"
+    },
+    "dimTags": {
+      "untagged": "Untagged",
+      "keep": "Keep",
+      "junk": "Junk",
+      "favorite": "Favorite",
+      "infuse": "Infuse",
+      "archive": "Archive"
+    },
+    "sort": {
+      "matchDesc": "Match % (high → low)",
+      "matchAsc": "Match % (low → high)",
+      "preference": "Preference",
+      "buildFitDesc": "Combo fit (high → low)",
+      "matchDescHint": "sorted by match % (most compatible first)",
+      "matchAscHint": "sorted by match % (least compatible first)",
+      "buildFitHint": "sorted by combo fit",
+      "preferenceHint": "sorted by preference"
+    },
+    "copyIds": "Copy {{count}} id: query",
+    "copied": "Copied!",
+    "reviewTagsLink": "Review compare/triage tags ({{count}})",
+    "redundant": {
+      "pickOne": "Pick one to keep",
+      "noRedundant": "No redundant rolls",
+      "noMatches": "No matches",
+      "noMatchFilters": "No redundant rolls match the current filters.",
+      "noneToShow": "No redundant rolls to show."
+    },
+    "noItemsMatch": "No items match these filters.",
+    "backToDashboard": "Back to dashboard",
+    "dupeBadge": "dupe"
+  },
+  "build": {
+    "title": "{{class}} combos",
+    "intro": "Best vault pieces for each roll target in your combo.",
+    "combosHeading": "Combos",
+    "setBonuses": "Set bonuses",
+    "setBonusesOptional": "Set bonuses (optional)",
+    "includeInCoverage": "Include in coverage",
+    "comboNameAria": "Combo name",
+    "maxCombos": "Maximum {{max}} combos per class.",
+    "orderLabel": "Order:",
+    "noneOption": "None",
+    "twoTwoMix": "· 2+2 mix",
+    "editor": {
+      "intro": "Pick 2–4 stats in order and optional armor set bonuses (e.g. Ferropotent 2pc + Smoke Jumper 2pc). We recommend the best piece per slot for stat and set alignment.",
+      "unsavedHint": "Unsaved changes · save or cancel to return to the read-only view.",
+      "editingHint": "Editing combo · save or cancel when finished.",
+      "allSavedHint": "All combos saved · click Edit on a card to change settings.",
+      "emptyList": "No combos saved for this class. Add one below for roll recommendations and browse sorting.",
+      "unsaved": "Unsaved",
+      "saved": "Saved",
+      "on": "On",
+      "off": "Off",
+      "edit": "Edit",
+      "remove": "Remove",
+      "save": "Save",
+      "cancel": "Cancel",
+      "addStat": "Add stat",
+      "priority1": "1st priority",
+      "priority2": "2nd priority",
+      "priority3": "3rd priority",
+      "priority4": "4th priority",
+      "priorityN": "Priority {{n}}",
+      "setBonus2pc": "2-piece bonus",
+      "setBonus4pcSame": "Same set (4pc)",
+      "setBonus4pcMix": "Second set (2pc mix) or 4pc",
+      "setBonusHint": "Pick one set for 2pc, then the same set for 4pc or a second set for a 2+2 mix.",
+      "loadVaultForSets": "Load your vault to pick armor sets from your inventory.",
+      "firstSet2pc": "First set (2pc)",
+      "twoPcOnly": "2pc only (first set)",
+      "set4pcSuffix": "{{name}} (4pc)",
+      "set2pcMixSuffix": "{{name}} (2pc mix)",
+      "targetLabel": "Target:",
+      "addStatCount": "+ Add stat ({{current}}/{{max}})",
+      "addCombo": "Add combo",
+      "addAnotherCombo": "Add another combo",
+      "viewCoverageLink": "View {{class}} combo coverage"
+    },
+    "coverage": {
+      "heading": "Your combos",
+      "intro": "Best piece per slot for each optimal roll pattern (archetype + tertiary + tuning)",
+      "empty": "No combos yet. Add 2–4 stat priorities in the Combos section below.",
+      "editCombos": "Edit combos",
+      "setPrioritiesHint": "Set stat priorities on a combo to see roll targets",
+      "recommendedHeading": "Recommended pieces",
+      "recommendedHint": "DIM tags and search for the grid below",
+      "browseVault": "Browse vault",
+      "setTarget": "Set target:",
+      "vaultPiecesShort": "not enough vault pieces",
+      "conflictingSets": "These set targets need more than five armor pieces · adjust your combo.",
+      "showRollDetails": "Show roll-type details",
+      "hideRollDetails": "Hide roll-type details",
+      "tagAll": "Tag all:",
+      "bulkNoTaggable": "No taggable pieces",
+      "bulkClearKeep": "Clear keep on all",
+      "bulkMarkKeep": "Mark all keep",
+      "bulkAllFavorited": "All favorited",
+      "bulkMarkFavorite": "Mark all favorite",
+      "bulkClearJunk": "Clear junk on all",
+      "bulkMarkJunk": "Mark all junk",
+      "tagKeep": "Tag keep in DIM",
+      "tagKeepRemove": "Remove keep tag in DIM",
+      "tagFavorite": "Tag favorite in DIM",
+      "tagFavoriteAlready": "Already favorited in DIM",
+      "tagJunk": "Tag junk in DIM",
+      "tagJunkRemove": "Remove junk tag in DIM",
+      "choose": "Choose",
+      "chooseSlot": "Choose {{slot}}",
+      "choosePiece": "Choose piece · {{count}} eligible",
+      "chooseEligibleTitle": "{{count}} eligible pieces in vault",
+      "eligible_one": "{{count}} eligible piece",
+      "eligible_other": "{{count}} eligible pieces",
+      "anyArchetype": "Any archetype",
+      "tier": "Tier {{tier}}",
+      "comboFallback": "Combo",
+      "rollRoleCombined": "tertiary + tuning",
+      "rollRoleTertiary": "tertiary",
+      "rollRoleTuning": "tuning",
+      "notComboPriority": "{{stat}} · not a combo priority",
+      "archetypeBonus": "{{stat}} from archetype (+{{bonus}})",
+      "rollCombinedTitle": "{{stat}} tertiary + tuning (+{{tertiaryBonus}} +{{tuningBonus}})",
+      "rollTertiaryTitle": "{{stat}} tertiary (+{{bonus}})",
+      "rollTuningTitle": "{{stat}} tuning (+{{bonus}})",
+      "detailsSupporting": "{{count}} pieces in your vault roll at least one priority stat.",
+      "detailsProfiles": "{{filled}} of {{possible}} roll types you could own (archetype + tertiary + slot) are in your vault.",
+      "detailsRedundantOverlap": "Empty slots remain despite redundant rolls. Prioritize fills over more dupes.",
+      "gapsHeading": "Roll types to hunt",
+      "gapsIntro": "Empty combinations that would help this combo.",
+      "gapsEmpty": "Nothing obvious missing from your matrix.",
+      "overlapsHeading": "Roll types you have many of",
+      "overlapsIntro": "Three or more pieces in the same combination.",
+      "overlapsEmpty": "No heavy duplicates in one roll type.",
+      "overlapCount_one": "{{count}} piece",
+      "overlapCount_other": "{{count}} pieces",
+      "gapAllPriorities": "matches all priorities",
+      "gapMultiplePriorities": "matches multiple priorities",
+      "gapOnePriority": "matches one priority"
+    }
+  },
+  "calibrate": {
+    "title": "Calibrate preferences",
+    "calibratingClass": "Calibrating {{class}}.",
+    "choicesSaved_one": "1 choice saved",
+    "choicesSaved_other": "{{count}} choices saved",
+    "steps": {
+      "class": "Class",
+      "archetype": "Archetypes",
+      "tertiary": "Tertiary stats",
+      "tuning": "Tuning stats",
+      "sets": "Armor sets"
+    },
+    "stepHeader": "Step {{current}} of {{total}} · {{step}}",
+    "classTitle": "Which class are you calibrating?",
+    "archetypeTitle": "Rank archetypes by preference",
+    "archetypeInstruction": "Most preferred at the top. Drag rows or use the arrows. All six archetypes are listed; vault ownership does not limit the list.",
+    "tertiaryTitle": "Rank tertiary stats",
+    "tuningTitle": "Rank tuning stats",
+    "setsTitle": "Rank armor sets by preference",
+    "skipAllArchetypes": "Skip all archetypes",
+    "showBonusDetails": "Show bonus details",
+    "bonusUnavailable": "Bonus details unavailable",
+    "noSetBonuses": "No set bonuses listed",
+    "continue": "Continue",
+    "goToDashboard": "Go to dashboard",
+    "noArmorSets": "No armor sets to compare.",
+    "savedNextStep": "Saved · Next step",
+    "skipTertiaryArchetype": "Skip {{archetype}} tertiary",
+    "skipTertiaryStats": "Skip tertiary stats",
+    "skipTuningArchetype": "Skip {{archetype}} tuning",
+    "skipTuningStats": "Skip tuning stats",
+    "skipArmorSets": "Skip armor sets",
+    "nextArchetype": "Next archetype",
+    "setsInstruction": "Most preferred at the top. Sets from your vault, ordered by how many pieces you own. Drag to reorder or use arrow buttons.",
+    "contextSetPrefs": "Armor set preferences",
+    "unknownSet": "Unknown set",
+    "rankTheseStats": "Rank these stats:",
+    "dragRowsHint": "Drag rows or use the arrows. Most important at the top.",
+    "archetypeProgress": "{{current}} of {{total}} archetypes"
+  },
+  "common": {
+    "language": "Language",
+    "languageEn": "English",
+    "languageFr": "Français",
+    "languageEs": "Español",
+    "languageEsMx": "Español (México)",
+    "languageDe": "Deutsch",
+    "languageIt": "Italiano",
+    "languageJa": "日本語",
+    "languageKo": "한국어",
+    "languagePl": "Polski",
+    "languagePtBr": "Português (Brasil)",
+    "languageRu": "Русский",
+    "languageZhChs": "简体中文",
+    "languageZhCht": "繁體中文",
+    "continue": "Continue",
+    "save": "Save",
+    "back": "Back",
+    "skip": "Skip",
+    "signOut": "Sign out",
+    "retry": "Retry",
+    "retrying": "Retrying…",
+    "pleaseWait": "Please wait",
+    "copied": "Copied!",
+    "dimCopy": {
+      "queryFor": "Copy DIM query for {{name}}",
+      "queryCopied": "Copy DIM query for {{name}} copied to clipboard.",
+      "searchShown": "Copy DIM search for shown pieces",
+      "searchShownCopied": "Copy DIM search for shown pieces copied to clipboard.",
+      "searchGroup": "Copy DIM search for all {{count}} pieces in this group",
+      "searchGroupCopied": "Copy DIM search for all {{count}} pieces in this group copied to clipboard."
+    },
+    "none": "None",
+    "configured": "configured",
+    "notConfigured": "not configured",
+    "developer": "Developer",
+    "openReviewPage": "Open review page",
+    "clearPendingTags": "Clear pending tags",
+    "exportPrefs": "Export prefs",
+    "importPrefs": "Import prefs",
+    "preferencesImported": "Preferences imported.",
+    "invalidPrefsFile": "Invalid prefs file.",
+    "topStats": "Top stats:",
+    "topArchetypes": "Top archetypes:",
+    "recalibrateClass": "Recalibrate {{class}}",
+    "resetClassPrefs": "Reset {{class}} preferences",
+    "resetAllClasses": "Reset all classes",
+    "confirm": {
+      "clearPendingTags": "Clear all {{count}} pending tags? They will not be applied to DIM.",
+      "resetClassPrefs": "Reset {{class}} preferences to defaults? Stat weights, calibration choices, and learned weights for this class will be cleared.",
+      "resetAllClassPrefs": "Reset preferences for all classes to defaults? Stat weights, calibration choices, and learned weights will be cleared for Hunter, Titan, and Warlock. Dupe rules and other settings are kept."
+    },
+    "classPrefs": {
+      "heading": "{{class}} preferences",
+      "usingClass": "Using {{class}} (change class in header). Per-class stat and archetype weights from calibration. Dupe rules are shared unless overridden per class.",
+      "calibrations": "{{count}} calibrations · confidence {{confidence}}"
+    },
+    "reviewTags": {
+      "heading": "Review tags",
+      "queued_one": "{{count}} tag queued to apply in DIM.",
+      "queued_other": "{{count}} tags queued to apply in DIM.",
+      "none": "No pending tags."
+    },
+    "dev": {
+      "dimKeyHint": "Local DIM key: POST to api.destinyitemmanager.com/new_app with origin {{origin}}."
+    }
+  },
+  "dashboard": {
+    "title": "{{class}} vault",
+    "summary": "{{tieredCount}} tiered {{class}} armor · {{dupeScopeCount}} {{minTierLabel}} in dupe scope · {{buckets}} dupe buckets · ~{{review}} decisions",
+    "customDupeRules": "· custom dupe rules",
+    "tieredAccount": "· {{count}} tiered armor (account)",
+    "customRulesBanner": "{{class}} uses custom dupe rules",
+    "nextSteps": "Next steps",
+    "browseAllArmor": "Browse all armor",
+    "redundantRolls": "Redundant rolls ({{count}})",
+    "refreshVault": "Refresh vault",
+    "armorView": "Armor view",
+    "archetypeView": "Archetype view",
+    "heatmapSlot": "Heatmap slot",
+    "allSlots": "All slots",
+    "insights": {
+      "continueSetup": {
+        "title": "Continue setup",
+        "detail": "Finish calibration so vault suggestions match your priorities",
+        "cta": "Continue"
+      },
+      "continueCalibration": {
+        "title": "Continue calibration",
+        "detail": "Pick up where you left off in preference calibration",
+        "cta": "Continue"
+      },
+      "calibratePreferences": {
+        "title": "Calibrate preferences",
+        "detail": "Teach stat, archetype, and set priorities for this class",
+        "cta": "Calibrate"
+      },
+      "completeCalibration": {
+        "title": "Complete calibration",
+        "detail": "Low confidence · a few more picks sharpen dupe and combo suggestions",
+        "cta": "Calibrate"
+      },
+      "improveCalibration": {
+        "title": "Improve calibration",
+        "detail": "Medium confidence · more picks improve ranking and coverage hints",
+        "cta": "Calibrate"
+      },
+      "recalibrateStale": {
+        "title": "Recalibrate preferences",
+        "detail": "Your last calibration was a while ago · vault rolls may have shifted",
+        "cta": "Recalibrate"
+      },
+      "recalibrateDefault": {
+        "title": "Recalibrate preferences",
+        "detail": "Update stat, archetype, and set weights for this class anytime",
+        "cta": "Recalibrate"
+      },
+      "setupAutoFilters": {
+        "title": "Set up auto filters",
+        "detail": "Queue junk tags on vault load for rolls you never want to keep",
+        "cta": "Set up filters"
+      },
+      "setupCombos": {
+        "title": "Set up combos",
+        "detail": "Pick 2–4 priority stats per combo · {{countLabel}}",
+        "cta": "Set up combos"
+      },
+      "addAnotherCombo": {
+        "title": "Add another combo",
+        "detail": "{{countLabel}} combos · add 1 more",
+        "cta": "Add combos"
+      },
+      "addMoreCombos": {
+        "title": "Add more combos",
+        "detail": "{{countLabel}} · add {{remaining}} more combos",
+        "cta": "Add combos"
+      },
+      "fixCoverage": {
+        "title": "Fix {{label}} coverage",
+        "cta": "Open Combos"
+      },
+      "browseUpgrades": {
+        "title": "Browse upgrades for {{label}}",
+        "cta": "Browse vault"
+      },
+      "compareLargest": {
+        "title": "Compare {{label}}",
+        "detail": "{{count}} pieces in your largest dupe bucket",
+        "cta": "Compare this group"
+      },
+      "redundantRolls": {
+        "title": "Review redundant rolls",
+        "detail_one": "{{count}} piece strictly worse than another roll you keep",
+        "detail_other": "{{count}} pieces strictly worse than another roll you keep",
+        "cta": "Open list"
+      },
+      "taggedKeep": {
+        "title": "Review DIM-tagged dupes",
+        "detail_one": "{{count}} dupe candidate already tagged keep or favorite in DIM",
+        "detail_other": "{{count}} dupe candidates already tagged keep or favorite in DIM",
+        "cta": "Browse vault"
+      },
+      "heavyBuckets": {
+        "title": "Clear heavy dupe buckets",
+        "detail_one": "{{count}} bucket with 5+ items. Use the heatmap to pick one.",
+        "detail_other": "{{count}} buckets with 5+ items. Use the heatmap to pick one.",
+        "cta": "Compare duplicates"
+      },
+      "fixCoverageNoVault": "No vault pieces roll your priority stats yet",
+      "fixCoverageNeedSlot": "Need a {{slot}} that rolls your priorities",
+      "fixCoverageSlots": "{{filled}}/{{total}} slots filled in recommended loadout",
+      "browseNoArmor": "No armor in your vault rolls these stats yet",
+      "browseGaps": "{{count}} roll type to hunt for better fit",
+      "browseGaps_other": "{{count}} roll types to hunt for better fit",
+      "browseCompare": "Compare vault armor against your combos"
+    },
+    "buildLink": {
+      "title": "Your combos"
+    },
+    "coverage": {
+      "yourCombos": "Your combos",
+      "setPriorities": "Set stat priorities on a combo to see roll targets",
+      "recommendedPieces": "Recommended pieces",
+      "rollTypesHunt": "Roll types to hunt",
+      "nothingMissing": "Nothing obvious missing from your matrix.",
+      "rollTypesMany": "Roll types you have many of",
+      "noHeavyDuplicates": "No heavy duplicates in one roll type.",
+      "tagAll": "Tag all:",
+      "choose": "Choose",
+      "chooseSlotAria": "Choose {{slot}}",
+      "choosePieceAria": "Choose piece · {{count}} eligible",
+      "supportingPieces": "<1>{{count}}</1> pieces in your vault roll at least one priority stat.",
+      "filledProfiles": "<1>{{filled}}</1> of <2>{{total}}</2> roll types you could own (archetype + tertiary + slot) are in your vault.",
+      "redundantOverlap": "Empty slots remain despite redundant rolls. Prioritize fills over more dupes.",
+      "gapsIntro": "Empty combinations that would help this combo.",
+      "overlapsIntro": "Three or more pieces in the same combination.",
+      "piecesCount": "{{count}} pieces",
+      "orderLabel": "Order:"
+    }
+  },
+  "duel": {
+    "title": "Compare {{class}} duplicates",
+    "subtitle": {
+      "wrapUp": "Review this group, then continue",
+      "bucketMeta": "{{slot}} · {{archetype}} · {{tertiary}} · {{count}} items",
+      "bucketProgress": "{{meta}} · {{progress}}",
+      "noDupes": "No duplicate armor to compare for this class",
+      "chooseGroup": "Choose a duplicate group to start",
+      "startingNext": "Starting next duplicate group…"
+    },
+    "resetBucket": "Reset bucket",
+    "preparing": "Preparing comparisons…",
+    "queueEmpty": {
+      "title": "Queue empty",
+      "summary": "{{keep}} keep · {{junk}} junk queued.",
+      "reviewTags": "Review tags",
+      "restartQueue": "Restart queue",
+      "clearSession": "Clear {{class}} session"
+    },
+    "noDuplicates": {
+      "title": "No duplicates to compare",
+      "body": "No duplicate buckets match your rules for {{class}}. Try loosening dupe rules in Settings or load a fresh vault snapshot."
+    },
+    "noGroupsInQueue": "No duplicate groups in queue. Loosen dupe rules in Settings or restart the queue.",
+    "skipGroup": "Skip group (S)",
+    "restoringSession": "Restoring session…",
+    "confirm": {
+      "switchBucket": "Switch bucket? In-progress picks and junk tags for the current bucket will be cleared.",
+      "resetBucket": "Reset this bucket? All in-progress picks, junk tags, and compare progress will be cleared. The bucket stays in your queue.",
+      "clearClassSession": "Clear all {{class}} compare progress and queued tags for this class? This cannot be undone."
+    },
+    "chooser": {
+      "title": "Choose a duplicate group",
+      "kicker": "Compare duplicates",
+      "intro": "Pick which {{class}} armor group to compare first. You can switch groups later from the header.",
+      "listAria": "{{class}} duplicate groups"
+    },
+    "wrapUp": {
+      "title": "Review this duplicate group",
+      "kicker": "Bucket complete",
+      "allPairsDecided": "All duel pairs decided",
+      "chooseNext": "Choose a group to compare next",
+      "nextGroupsAria": "Next duplicate groups",
+      "continueNext": "Continue to next group",
+      "applyTagsContinue": "Apply tags & continue",
+      "chooseDifferent": "Choose a different group",
+      "backToSummary": "Back to summary",
+      "whatsNext": "What's next",
+      "tagsFootnote": "Tags queue when you continue. Nothing is applied until you review.",
+      "stats": {
+        "keeps": "Keeps",
+        "junkQueued": "Junk queued",
+        "preferEliminated": "Prefer eliminated",
+        "pairsDecided": "Pairs decided",
+        "inGroup": "In this group"
+      },
+      "breakdown": {
+        "keepBoth": "Keep both: {{count}}",
+        "keepSide": "Keep side: {{count}}",
+        "junkedInDuels": "Junked in duels: {{count}}",
+        "preferInPlay": "Prefer still in play: {{count}}"
+      },
+      "piece_one": "{{count}} piece",
+      "piece_other": "{{count}} pieces",
+      "sessionLast": "Last group in your queue",
+      "sessionLeft_one": "{{count}} group left after this",
+      "sessionLeft_other": "{{count}} groups left after this"
+    },
+    "bucket": {
+      "label": "Bucket",
+      "select": "Select bucket",
+      "dupeBucketsAria": "Duplicate buckets"
+    },
+    "keyboard": {
+      "aria": "Compare keyboard shortcuts",
+      "left": "Left",
+      "both": "Both",
+      "right": "Right",
+      "keep": "Keep",
+      "prefer": "Prefer",
+      "junk": "Junk"
+    },
+    "compare": {
+      "suggested": "Suggested",
+      "sameRoll": "Same roll",
+      "compareSides": "Compare sides",
+      "suggestedPick": "Suggested pick: ",
+      "vs": "vs",
+      "fitTitle": "How well this piece fits your saved preferences",
+      "powerTitle": "Power level",
+      "identicalRolls": "Identical rolls. Keep one, junk one, keep both, or pass.",
+      "suppressedSuggestion": "Both strong · last of tier. Prefer, pass, keep, or junk one or both.",
+      "buildOptimalPrefix": "Combo optimal for ",
+      "orPassKeepJunk": "· or pass / keep / junk",
+      "evenMatch": "Even match. Prefer, pass, keep, or junk one or both.",
+      "eliminated": "Eliminated from bracket",
+      "actionKeep": "Keep",
+      "pass": "Pass",
+      "preferred": "Preferred",
+      "tuningLabel": "Tuning: {{stat}}",
+      "setFootnote": "Set: {{name}}",
+      "loss_one": "1 loss",
+      "loss_other": "{{count}} losses",
+      "lossRemaining_one": "{{count}} more prefer loss before junk at bucket end",
+      "lossRemaining_other": "{{count}} more prefer losses before junk at bucket end",
+      "keyboardHints": "Hover buttons for outcomes · ↑ keep both · Space pass · ↓ junk both · Ctrl+←/→ junk sides",
+      "aria": {
+        "keepLeft": "Keep left. {{outcome}}",
+        "keepRight": "Keep right. {{outcome}}",
+        "keepBoth": "Keep both. {{outcome}}",
+        "preferLeft": "Prefer left. {{outcome}}",
+        "preferRight": "Prefer right. {{outcome}}",
+        "passPair": "Pass pair. {{outcome}}",
+        "junkLeft": "Junk left. {{outcome}}",
+        "junkRight": "Junk right. {{outcome}}",
+        "junkBoth": "Junk both. {{outcome}}"
+      },
+      "outcomes": {
+        "prefer": "Prefer this side. The loser needs {{threshold}} prefer losses before junk at bucket end.",
+        "keepSide": "Keep this when bucket finishes · other stays in bracket",
+        "keepBoth": "Both kept when bucket finishes",
+        "junkOne": "Junk this now · other stays in bracket (no winner)",
+        "junkBoth": "Both junked now",
+        "pass": "Skip this pair. Neither is tagged; both are re-queued."
+      }
+    },
+    "progress": {
+      "noGroups": "No duplicate groups",
+      "lastInQueue": "Last group in your queue"
+    }
+  },
+  "dupes": {
+    "grouping": {
+      "sameArmorSet": {
+        "label": "Require same armor set",
+        "help": "Only group or compare pieces from the same set. Off: same slot + archetype + tertiary across all sets."
+      },
+      "sameTuningStat": {
+        "label": "Require same tuning stat",
+        "help": "Split by tuning stat (e.g. Weapons vs Grenade). Off: mixed tuning stats in one bucket."
+      }
+    },
+    "respectKeepFavorite": {
+      "label": "Respect DIM keep and favorite when picking junk",
+      "help": "When on, keep- and favorite-tagged pieces are not suggested as junk in dupe flows."
+    },
+    "excludeJunk": {
+      "label": "Exclude junk-tagged pieces from dupe counts"
+    },
+    "presets": {
+      "loose": {
+        "label": "Loose"
+      },
+      "standard": {
+        "label": "Standard"
+      },
+      "setAware": {
+        "label": "Set-aware"
+      },
+      "tuning": {
+        "label": "Tuning"
+      },
+      "strict": {
+        "label": "Strict"
+      }
+    },
+    "impactCompact": {
+      "buckets": "dupe buckets ·",
+      "decisions": "decisions ·",
+      "pieces": "{{count}} pieces included"
+    },
+    "suggestions": {
+      "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+      "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+      "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+      "standardDefault": "Standard preset for your vault size."
+    },
+    "matchStyle": {
+      "custom": "Custom",
+      "usingPreset": "Using {{label}}",
+      "usingCustomRules": "Using custom rules",
+      "cardBody": {
+        "loose": "Compare pieces in the same slot without requiring the same armor set or tuning stat.",
+        "standard": "Compare by slot, archetype, and tertiary without requiring the same armor set.",
+        "setAware": "Groups duplicates by armor set · works well for most vaults.",
+        "tuning": "Groups duplicates by tuning stat, even across different armor sets.",
+        "strict": "Requires the same armor set and tuning stat for a duplicate match."
+      },
+      "customMix": "Custom mix: {{armorSet}}, {{tuningStat}}.",
+      "armorSetSame": "same armor set",
+      "armorSetAny": "any armor set",
+      "tuningStatSame": "same tuning stat",
+      "tuningStatAny": "any tuning stat",
+      "dimTagsRespect": "DIM keep and favorite tags count when suggesting junk.",
+      "dimTagsIgnore": "Keep and favorite tags are not used when suggesting junk."
+    }
+  },
+  "errors": {
+    "boundary": {
+      "title": "Something went wrong",
+      "body": "{{appName}} hit an unexpected error. Your preferences and queued tags in local storage are usually unaffected.",
+      "reload": "Reload app",
+      "goHome": "Go home"
+    },
+    "oauth": {
+      "completingLogin": "Completing Bungie login…",
+      "exchangingCode": "Exchanging authorization code…",
+      "loadingVault": "Loading your vault…",
+      "firstLoadNote": "First load downloads the game manifest and may take a minute.",
+      "bungieDenied": "Bungie denied login: {{error}}",
+      "noAuthCode": "No authorization code returned: try signing in again.",
+      "stateMismatch": "OAuth state mismatch: often caused by a stale tab or blocked session storage. Return to login and try again.",
+      "loginFailed": "Login failed",
+      "backToLogin": "Back to login",
+      "suffix": "Try signing in again. If the problem persists, contact the site administrator.",
+      "devChecklistIntro": "Bungie app checklist (local dev):",
+      "devRedirect": "Redirect URL: {{uri}}",
+      "devOrigin": "Origin: {{origin}}",
+      "devClientId": "Client ID matches your Bungie application ({{clientId}})",
+      "devApiKey": "API key is from the same Bungie application",
+      "devRestart": "Restart the dev server after changing credentials"
+    },
+    "env": {
+      "bungieSignInUnavailableDev": "Sign-in is not enabled in this build.",
+      "bungieSignInUnavailable": "Sign-in is not available on this deployment.",
+      "bungieCredentialsMissingDev": "Bungie sign-in is not enabled in this environment.",
+      "bungieCredentialsMissing": "Sign-in is not available on this deployment. Contact the site administrator.",
+      "bungieSecretMissingDev": "Bungie sign-in is not fully enabled in this environment.",
+      "dimSyncUnavailableDev": "DIM sync is not enabled in this environment.",
+      "dimSyncUnavailable": "Applying tags to DIM is not available on this deployment. Contact the site administrator."
+    },
+    "vault": {
+      "sessionExpired": "Your Bungie session may have expired. Sign out and sign in again.",
+      "forbidden": "Bungie rejected the request. Try signing in again, or contact the site administrator if this continues.",
+      "manifest": "Manifest download failed. Check your connection and retry: the first load can take a minute.",
+      "network": "Network error. Check your connection or try again in a moment.",
+      "membership": "Could not resolve your Destiny membership. Make sure the account has Destiny 2 characters."
+    },
+    "applyTagsFailed": "Failed to apply tags",
+    "partialApply": "Applied {{ok}} of {{total}} tags. {{failed}} failed: retry or remove from queue."
+  },
+  "footer": {
+    "aria": {
+      "siteLinks": "Site links",
+      "kofi": "Support on Ko-fi"
+    },
+    "links": {
+      "newoReport": "newo.report",
+      "github": "GitHub"
+    }
+  },
+  "game": {
+    "classes": {
+      "titan": "Titan",
+      "hunter": "Hunter",
+      "warlock": "Warlock"
+    },
+    "stats": {
+      "weapons": "Weapons",
+      "grenade": "Grenade",
+      "super": "Super",
+      "melee": "Melee",
+      "health": "Health",
+      "class": "Class"
+    },
+    "archetypes": {
+      "gunner": "Gunner",
+      "grenadier": "Grenadier",
+      "paragon": "Paragon",
+      "brawler": "Brawler",
+      "bulwark": "Bulwark",
+      "specialist": "Specialist"
+    },
+    "slots": {
+      "helmet": "Helmet",
+      "arms": "Arms",
+      "chest": "Chest",
+      "legs": "Legs",
+      "classItem": "Class Item"
+    },
+    "roll": {
+      "tertiary": "{{stat}} tertiary",
+      "tuning": "{{stat}} tuning",
+      "tuningLabel": "Tuning: {{stat}}",
+      "preferred": "Preferred",
+      "none": "none"
+    },
+    "labels": {
+      "separator": " · "
+    },
+    "achievability": {
+      "ready": "Ready",
+      "almost": "Almost",
+      "needBetterRolls": "Need better rolls",
+      "covered": "Covered",
+      "weakTuning": "Weak tuning",
+      "gap": "Gap",
+      "idealTuning": "Ideal tuning",
+      "tuned": "Tuned",
+      "archetypeOnly": "Archetype only",
+      "noFit": "No fit"
+    },
+    "armorDiff": {
+      "sameStatSplit": "Same stat split",
+      "sameStatsTuning": "Same stats & tuning",
+      "sameRoll": "Same roll",
+      "decideSetOrTuning": "Decide by set or tuning",
+      "decideTuning": "Decide by tuning",
+      "decideSet": "Decide by set",
+      "sameExceptPower": "Same everything except power/location",
+      "identicalRoll": "Identical roll. Pick either one."
+    },
+    "fit": {
+      "poorMatch": "Poor match",
+      "closeCall": "Close call"
+    },
+    "scoring": {
+      "calibrateForAccuracy": "Calibrate preferences for better accuracy"
+    },
+    "heatmap": {
+      "mixedTuning": "Mixed tuning stats in bucket",
+      "dupeBucket": "dupe bucket"
+    },
+    "dominator": {
+      "differentStatSplit": "Different stat split",
+      "sameAfterTuning": "Same after tuning",
+      "beatsPiece": "Beats this piece",
+      "statComparison": "Stat comparison",
+      "tuningCoverage": "Tuning coverage",
+      "aheadOn": "Ahead on",
+      "everyTuningLayout": "every tuning layout"
+    },
+    "minTier": {
+      "tier5Only": "Tier 5 only"
+    },
+    "diff": {
+      "tuning": "Tuning",
+      "set": "Set",
+      "setFootnote": "Set: {{name}}",
+      "power": "Power",
+      "masterwork": "Masterwork",
+      "noSet": "No set",
+      "yes": "Yes",
+      "no": "No",
+      "tuningVs": "Tuning: {{a}} vs {{b}}"
+    }
+  },
+  "home": {
+    "tagline": "Compare duplicate armor and queue DIM tags. Nothing is dismantled here.",
+    "resumeSession": "Resume previous session",
+    "footerNote": "Vault via Bungie.net. Tags via DIM. Sign out in Settings.",
+    "signInWithBungie": "Sign in with Bungie"
+  },
+  "layout": {
+    "aria": {
+      "guardianClass": "Guardian class"
+    }
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "calibrate": "Calibrate",
+    "browse": "Browse",
+    "combos": "Combos",
+    "compare": "Compare",
+    "review": "Review",
+    "autoFilters": "Auto filters",
+    "settings": "Settings",
+    "mobile": {
+      "dashboard": "Dash",
+      "calibrate": "Cal",
+      "autoFilters": "Filters",
+      "settings": "Set"
+    },
+    "aria": {
+      "mobile": "Mobile navigation"
+    }
+  },
+  "onboarding": {
+    "restoringSession": "Restoring Bungie session…",
+    "redirectingLogin": "Redirecting to login…",
+    "vaultTrimTitle": "Vault trim goal",
+    "tieredFound": "Found <1>{{count}}</1> tiered armor <2>{{pieceWord}}</2><3>{{t5Block}}</3>.",
+    "piece_one": "piece",
+    "piece_other": "pieces",
+    "t5Block": " (<1>{{count}}</1> at Tier 5)",
+    "noTieredFound": "No tiered armor found<1>{{parsedHint}}</1>. Imports tiered armor (T1–T5) only; legacy and untiered gear is skipped.",
+    "parsedHint": " (parsed {{count}} items from vault)",
+    "keepGoalHeading": "How much do you want to keep?",
+    "keepGoalIntro": "Sets how aggressively we suggest trimming duplicate Tier 5 armor during cleaning.",
+    "keepGoalSummary": "Keep goal: about {{total}} Tier 5 total (about {{perClass}} per class).",
+    "keepGoalExcess": " You have about <1>{{excess}}</1> above that goal.",
+    "keepGoalAtTarget": " You are at or below that goal.",
+    "signOutBack": "Sign out",
+    "keepOptions": {
+      "lean": {
+        "label": "Lean",
+        "blurb": "Trim aggressively · clear most duplicate buckets"
+      },
+      "balanced": {
+        "label": "Balanced",
+        "blurb": "Clear obvious dupes, keep variety for builds"
+      },
+      "options": {
+        "label": "Keep options",
+        "blurb": "Keep extra stat rolls and set combos; lighter trimming"
+      },
+      "hoarder": {
+        "label": "Hoarder",
+        "blurb": "Only trim blatant duplicates; maximize options"
+      },
+      "description": "{{blurb}} (~{{perClass}} Tier 5 per class)"
+    },
+    "backAria": "Go back"
+  },
+  "review": {
+    "title": "Review tags",
+    "summary": "{{total}} queued · {{keep}} keep · {{junk}} junk. Apply writes queued tags; rows note existing DIM tags when different.",
+    "applied": "Tags applied to DIM Sync.",
+    "openJunkInDim": "Open junk in DIM",
+    "partialApplied": "Partially applied: {{count}} tags succeeded. Failed items remain in the queue.",
+    "retryFailed": "Retry {{count}} failed",
+    "empty": "No pending tags.",
+    "compareDupes": "Compare duplicates",
+    "table": {
+      "item": "Item",
+      "copyDimSr": "Copy DIM query",
+      "archetype": "Archetype",
+      "tertiary": "Tertiary",
+      "tuning": "Tuning",
+      "class": "Class",
+      "combo": "Combo",
+      "appliesToDim": "Applies to DIM",
+      "none": "None"
+    },
+    "copy": {
+      "ids": "Copy id: query",
+      "junk": "Copy tag:junk search",
+      "junkIds": "Copy junk ids only",
+      "copied": "Copied!",
+      "announcement": "{{label}} copied to clipboard."
+    },
+    "removeFromQueue": "Remove from queue",
+    "applyTags": "Apply {{count}} tags to DIM",
+    "applying": "Applying…",
+    "clearPending": "Clear pending tags",
+    "clearSession": "Clear session",
+    "backToDashboard": "Back to dashboard",
+    "confirm": {
+      "clearPending": "Clear all {{count}} pending tags? They will not be applied to DIM. Compare session progress is kept.",
+      "clearSession": "Clear the entire compare session? Pending tags and in-progress compare state will be reset."
+    },
+    "alreadyInDim": "Already in DIM: {{summary}}"
+  },
+  "rulesOnboarding": {
+    "title": "How should duplicates match?",
+    "intro": "We group similar armor rolls so you can pick a keeper and tag the rest in DIM. You can change this anytime in Settings.",
+    "restoringSession": "Restoring Bungie session…",
+    "redirectingLogin": "Redirecting to login…",
+    "loadingVault": "Loading vault…",
+    "retryVaultLoad": "Retry vault load",
+    "refreshing": "Refreshing…",
+    "noTieredArmor": "No tiered armor in scope at your minimum tier",
+    "tieredPiecesImported": "({{count}} tiered pieces imported)",
+    "tieredArmorFootnote": "Only in-game tiered gear (T1–T5) is included. Lower the minimum tier in Settings if needed.",
+    "recommendedPresetSr": "Recommended preset",
+    "useRecommended": "Use recommended",
+    "customizeRules": "Customize rules",
+    "hideCustomization": "Hide customization",
+    "customizeIntro": "Tighten or loosen what counts as a duplicate. Presets in Settings set these in one click.",
+    "matchStyleLabel": "Match style:",
+    "previewByClass": "Preview by class",
+    "suggestions": "Suggestions",
+    "usePreset": "Use {{label}}",
+    "impact": {
+      "none": "No duplicate groups found for {{class}} at your current tier.",
+      "summary": "About {{buckets}} duplicate {{groupWord}} · roughly {{review}} {{rollWord}} to compare ({{class}})",
+      "group_one": "group",
+      "group_other": "groups",
+      "roll_one": "roll",
+      "roll_other": "rolls"
+    },
+    "aria": {
+      "dupeRules": "Dupe rules"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "account": {
+      "heading": "Account",
+      "signedInAs": "Signed in as <1>{{name}}</1>",
+      "parsedCount": "{{count}} tiered armor pieces parsed (vault, all characters, postmaster)",
+      "signOutNote": "Sign out clears Bungie and DIM tokens from this browser session (session storage only). Preferences stay in local storage.",
+      "signOutButton": "Sign out and clear tokens"
+    },
+    "dupeRules": {
+      "heading": "Dupe rules",
+      "intro": "Shared rules for heatmap, compare, browse, and redundant-roll lists.",
+      "scopeHeading": "Scope: which pieces count",
+      "minTierLabel": "Minimum gear tier",
+      "minTierHelp": "Vault import still loads tiers 1 through 5. Only pieces at or above this tier enter dupe buckets and redundant-roll checks.",
+      "groupingHeading": "Grouping: what counts as a \"dupe\"",
+      "groupingIntro": "Pieces always match on class, slot, archetype, and tertiary stat. These options add stricter splits, and they apply to redundant-roll comparisons too.",
+      "dimTagsHeading": "DIM tags when counting dupes",
+      "dimTagsIntro": "Tagged pieces stay visible but can be left out of dupe bucket sizes and review counts.",
+      "liveImpact": "Live impact (global rules, Hunter vault)"
+    },
+    "classDupeRules": {
+      "heading": "{{class}} dupe rules",
+      "usingClass": "Using {{class}} (change class in header). Classes share global rules by default. Apply a preset to one class without changing others.",
+      "customRules": "{{class}} uses custom rules ·",
+      "resetToGlobal": "reset to global"
+    },
+    "dupePresets": {
+      "heading": "Dupe presets"
+    },
+    "dashboardLink": "Dashboard",
+    "language": {
+      "heading": "Language",
+      "useBrowser": "Use browser language",
+      "useBrowserHelp": "When on, the app follows your browser language. When off, use the language you pick below."
+    },
+    "developer": {
+      "heading": "Developer",
+      "bungie": "Bungie: {{status}}",
+      "dimSync": "DIM Sync: {{status}}"
+    },
+    "reviewTags": {
+      "heading": "Review tags"
+    },
+    "classPrefs": {
+      "heading": "{{class}} preferences",
+      "usingClass": "Using {{class}} (change class in header). Per-class stat and archetype weights from calibration. Dupe rules are shared unless overridden per class.",
+      "calibrations": "{{count}} calibrations · confidence {{confidence}}",
+      "topStats": "Top stats:",
+      "topArchetypes": "Top archetypes:",
+      "recalibrate": "Recalibrate {{class}}",
+      "exportPrefs": "Export prefs",
+      "importPrefs": "Import prefs",
+      "resetClass": "Reset {{class}} preferences",
+      "resetAll": "Reset all classes",
+      "imported": "Preferences imported.",
+      "invalidFile": "Invalid prefs file.",
+      "openReview": "Open review page",
+      "clearPending": "Clear pending tags",
+      "queued_one": "{{count}} tag queued to apply in DIM.",
+      "queued_other": "{{count}} tags queued to apply in DIM.",
+      "nonePending": "No pending tags.",
+      "confirmClearPending": "Clear all {{count}} pending tags? They will not be applied to DIM.",
+      "confirmResetClass": "Reset {{class}} preferences to defaults? Stat weights, calibration choices, and learned weights for this class will be cleared.",
+      "confirmResetAll": "Reset preferences for all classes to defaults? Stat weights, calibration choices, and learned weights will be cleared for Hunter, Titan, and Warlock. Dupe rules and other settings are kept."
+    }
+  },
+  "vault": {
+    "loading": "Loading vault…",
+    "refreshing": "Refreshing…",
+    "refreshingStatus": "Refreshing… {{status}}",
+    "loadVault": "Load vault",
+    "noDataYet": "No vault data yet.",
+    "noDataBrowseHint": "Load your vault from the dashboard first.",
+    "noDataBuildHint": "No vault data yet. Load your vault from the dashboard.",
+    "retryVaultLoad": "Retry vault load",
+    "signOutInSettings": "Sign out in Settings",
+    "dismiss": "Dismiss",
+    "tieredArmorTitle": "Armor you tiered in-game (Tier 1-5). Legacy gear and never-tiered pieces are excluded from import. Dupe scope uses your minimum tier setting.",
+    "dupeRulesImpact": "Load vault to preview impact."
+  }
+}

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
+import { statLabel, archetypeLabel, slotLabel } from '@/i18n/gameCopy';
+import { useTranslation } from 'react-i18next';
 import { SlotIcon } from '@/components/SlotIcon';
-import { ARCHETYPE_LABELS, SLOT_LABELS, STAT_LABELS } from '@/lib/constants';
 import {
   activeBucketItemCount,
   bucketKeyString,
@@ -27,12 +28,11 @@ interface BucketWrapUpPanelProps {
 }
 
 function bucketPrimaryLine(bucket: DupeBucket): string {
-  return `${ARCHETYPE_LABELS[bucket.key.archetype]} · ${STAT_LABELS[bucket.key.tertiaryStat]}`;
+  return `${archetypeLabel(bucket.key.archetype)} · ${statLabel(bucket.key.tertiaryStat)}`;
 }
 
-function bucketSecondaryLine(bucket: DupeBucket, count: number): string {
-  const itemLabel = count === 1 ? '1 piece' : `${count} pieces`;
-  return `${SLOT_LABELS[bucket.key.armorSlot]} · ${itemLabel}`;
+function bucketSecondaryLine(bucket: DupeBucket, _count: number, pieceLabel: string): string {
+  return `${slotLabel(bucket.key.armorSlot)} · ${pieceLabel}`;
 }
 
 function StatCell({ label, value }: { label: string; value: number }) {
@@ -47,9 +47,11 @@ function StatCell({ label, value }: { label: string; value: number }) {
 function BucketIdentity({
   bucket,
   status,
+  pieceLabel,
 }: {
   bucket: DupeBucket;
   status: string;
+  pieceLabel: string;
 }) {
   const count = activeBucketItemCount(bucket);
 
@@ -61,7 +63,7 @@ function BucketIdentity({
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-base font-semibold text-white leading-tight">{bucketPrimaryLine(bucket)}</p>
-          <p className="text-sm text-white/65 mt-0.5">{bucketSecondaryLine(bucket, count)}</p>
+          <p className="text-sm text-white/65 mt-0.5">{bucketSecondaryLine(bucket, count, pieceLabel)}</p>
           <p className="text-xs text-accent-dim mt-2">{status}</p>
         </div>
       </div>
@@ -81,26 +83,34 @@ export function BucketWrapUpPanel({
   onSelectBucket,
   onCancelChooseBucket,
 }: BucketWrapUpPanelProps) {
+  const { t } = useTranslation('duel');
   const sortedOthers = useMemo(() => sortBucketsForPicker(otherBuckets), [otherBuckets]);
   const groupsRemaining = wrapUpGroupsRemainingAfterCurrent(groupsInQueue);
   const sessionContext = formatWrapUpSessionContext(groupsRemaining);
-  const continueLabel = nextBucket ? 'Continue to next group' : 'Apply tags & continue';
+  const continueLabel = nextBucket
+    ? t('wrapUp.continueNext')
+    : t('wrapUp.applyTagsContinue');
+  const pieceLabel = (count: number) => t('wrapUp.piece', { count });
 
   return (
     <div className="text-left py-8 ui-card w-full max-w-lg mx-auto px-6">
       <p className="text-[0.65rem] font-medium uppercase tracking-wide text-muted mb-1">
-        Bucket complete
+        {t('wrapUp.kicker')}
       </p>
-      <h2 className="ui-heading text-xl font-medium text-white mb-5">Review this duplicate group</h2>
+      <h2 className="ui-heading text-xl font-medium text-white mb-5">{t('wrapUp.title')}</h2>
 
-      <BucketIdentity bucket={bucket} status="All duel pairs decided" />
+      <BucketIdentity
+        bucket={bucket}
+        status={t('wrapUp.allPairsDecided')}
+        pieceLabel={pieceLabel(activeBucketItemCount(bucket))}
+      />
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
-        <StatCell label="Keeps" value={report.keepCount} />
-        <StatCell label="Junk queued" value={report.junkCount} />
-        <StatCell label="Prefer eliminated" value={report.tournamentEliminatedCount} />
-        <StatCell label="Pairs decided" value={report.pairsActed} />
-        <StatCell label="In this group" value={report.totalItems} />
+        <StatCell label={t('wrapUp.stats.keeps')} value={report.keepCount} />
+        <StatCell label={t('wrapUp.stats.junkQueued')} value={report.junkCount} />
+        <StatCell label={t('wrapUp.stats.preferEliminated')} value={report.tournamentEliminatedCount} />
+        <StatCell label={t('wrapUp.stats.pairsDecided')} value={report.pairsActed} />
+        <StatCell label={t('wrapUp.stats.inGroup')} value={report.totalItems} />
       </div>
 
       {(report.keptBothCount > 0 ||
@@ -108,11 +118,17 @@ export function BucketWrapUpPanel({
         report.explicitJunkCount > 0 ||
         report.preferInProgressCount > 0) && (
         <ul className="text-xs text-muted space-y-1 mb-5 px-0.5">
-          {report.keptBothCount > 0 && <li>Keep both: {report.keptBothCount}</li>}
-          {report.keptSideCount > 0 && <li>Keep side: {report.keptSideCount}</li>}
-          {report.explicitJunkCount > 0 && <li>Junked in duels: {report.explicitJunkCount}</li>}
+          {report.keptBothCount > 0 && (
+            <li>{t('wrapUp.breakdown.keepBoth', { count: report.keptBothCount })}</li>
+          )}
+          {report.keptSideCount > 0 && (
+            <li>{t('wrapUp.breakdown.keepSide', { count: report.keptSideCount })}</li>
+          )}
+          {report.explicitJunkCount > 0 && (
+            <li>{t('wrapUp.breakdown.junkedInDuels', { count: report.explicitJunkCount })}</li>
+          )}
           {report.preferInProgressCount > 0 && (
-            <li>Prefer still in play: {report.preferInProgressCount}</li>
+            <li>{t('wrapUp.breakdown.preferInPlay', { count: report.preferInProgressCount })}</li>
           )}
         </ul>
       )}
@@ -120,7 +136,7 @@ export function BucketWrapUpPanel({
       {!choosingBucket && (
         <div className="rounded-md border border-border bg-surface-2 px-4 py-3 mb-6">
           <p className="text-[0.65rem] font-medium uppercase tracking-wide text-muted mb-2">
-            What&apos;s next
+            {t('wrapUp.whatsNext')}
           </p>
           {nextBucket ? (
             <>
@@ -128,7 +144,12 @@ export function BucketWrapUpPanel({
                 {bucketPrimaryLine(nextBucket)}
               </p>
               <p className="text-xs text-white/65 mt-0.5">
-                {bucketSecondaryLine(nextBucket, activeBucketItemCount(nextBucket))} · {sessionContext}
+                {bucketSecondaryLine(
+                  nextBucket,
+                  activeBucketItemCount(nextBucket),
+                  pieceLabel(activeBucketItemCount(nextBucket)),
+                )}{' '}
+                · {sessionContext}
               </p>
             </>
           ) : (
@@ -148,17 +169,17 @@ export function BucketWrapUpPanel({
               onClick={onStartChooseBucket}
               className="ui-btn-secondary flex-1 px-6 py-3"
             >
-              Choose a different group
+              {t('wrapUp.chooseDifferent')}
             </button>
           )}
         </div>
       ) : (
         <div>
-          <p className="text-sm font-medium text-white mb-1">Choose a group to compare next</p>
+          <p className="text-sm font-medium text-white mb-1">{t('wrapUp.chooseNext')}</p>
           <p className="text-xs text-muted mb-3">{sessionContext}</p>
           <ul
             role="listbox"
-            aria-label="Next duplicate groups"
+            aria-label={t('wrapUp.nextGroupsAria')}
             className="rounded-md border border-border bg-surface-2 max-h-[min(16rem,40vh)] overflow-y-auto mb-4"
           >
             {sortedOthers.map((b) => {
@@ -177,7 +198,7 @@ export function BucketWrapUpPanel({
                         {bucketPrimaryLine(b)}
                       </span>
                       <span className="text-xs text-white/65 leading-snug">
-                        {bucketSecondaryLine(b, count)}
+                        {bucketSecondaryLine(b, count, pieceLabel(count))}
                       </span>
                     </span>
                   </button>
@@ -190,13 +211,13 @@ export function BucketWrapUpPanel({
             onClick={onCancelChooseBucket}
             className="ui-btn-secondary w-full sm:w-auto px-6 py-2 text-sm"
           >
-            Back to summary
+            {t('wrapUp.backToSummary')}
           </button>
         </div>
       )}
 
       <p className="m-0 mt-5 pt-4 text-[0.6875rem] leading-relaxed text-muted border-t border-border/40">
-        Tags queue when you continue. Nothing is applied until you review.
+        {t('wrapUp.tagsFootnote')}
       </p>
     </div>
   );

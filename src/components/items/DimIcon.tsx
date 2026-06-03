@@ -14,8 +14,6 @@ const DIM_LOGO_PATHS = [
   },
 ] as const;
 
-export const DIM_BRAND_COLOR = '#e8a534';
-
 export interface DimIconProps {
   className?: string;
   size?: number;

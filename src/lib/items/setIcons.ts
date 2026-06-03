@@ -162,7 +162,3 @@ export function armorSetIconUrls(
     .map((entry) => bungieIconUrl(entry.icon))
     .filter((url): url is string => Boolean(url));
 }
-
-export function uniqueSetTargetHashes(hashes: number[]): number[] {
-  return [...new Set(hashes)];
-}

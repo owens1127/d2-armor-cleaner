@@ -12,7 +12,12 @@ import { createPortal } from 'react-dom';
 import type { ArmorPiece, ClassPreferenceProfile, Stat } from '@/types';
 import { StatIcon } from '@/components/StatIcon';
 import { ArmorCard, statCompareMap } from '@/components/duel/ArmorCard';
-import { STAT_LABELS } from '@/lib/constants';
+import {
+  dominatorCaptionLabelCopy,
+  dominatorEveryTuningLayoutCopy,
+  dominatorHeaderCopy,
+  statLabel,
+} from '@/i18n/gameCopy';
 import {
   comparableStatDeltas,
   formatBeatsOn,
@@ -93,7 +98,7 @@ function StatDeltaRow({ beats }: { beats: DominatorResult['beatsOn'] }) {
           className={`inline-flex items-center gap-1.5 text-sm px-2 py-1 rounded-md ${statDeltaPillClass(delta)}`}
         >
           <StatIcon stat={stat} size="sm" variant="glyph" />
-          <span>{STAT_LABELS[stat]}</span>
+          <span>{statLabel(stat)}</span>
           <span className="tabular-nums font-medium">{formatStatDelta(delta)}</span>
         </span>
       ))}
@@ -103,11 +108,6 @@ function StatDeltaRow({ beats }: { beats: DominatorResult['beatsOn'] }) {
 
 function isComparableDominatorPair(candidate: ArmorPiece, result: DominatorResult): boolean {
   return result.dominator.tertiaryStat === candidate.tertiaryStat;
-}
-
-function popoverHeader(reason: DominatorPopoverReason, statSplit: boolean): string {
-  if (statSplit) return 'Different stat split';
-  return reason === 'tuning-equivalent' ? 'Same after tuning' : 'Beats this piece';
 }
 
 export interface ComparisonCaption {
@@ -120,14 +120,7 @@ export function comparisonCaption(
   tuningMutual: boolean,
   statSplit: boolean,
 ): ComparisonCaption {
-  void statSplit;
-  if (statSplit) {
-    return { label: 'Stat comparison' };
-  }
-  if (reason === 'tuning-equivalent') {
-    return { label: tuningMutual ? 'Tuning coverage' : 'Ahead on' };
-  }
-  return { label: 'Stat comparison' };
+  return { label: dominatorCaptionLabelCopy(reason, tuningMutual, statSplit) };
 }
 
 export function DominatorPopoverContent({
@@ -148,7 +141,7 @@ export function DominatorPopoverContent({
   const caption = comparisonCaption(reason, tuningMutual, statSplit);
   const beatsText =
     reason === 'tuning-equivalent' && tuningMutual && statDeltas.every((b) => b.delta === 0)
-      ? 'every tuning layout'
+      ? dominatorEveryTuningLayoutCopy()
       : formatBeatsOn(statDeltas);
   const showSummaryLine =
     statDeltas.length === 0 ||
@@ -157,7 +150,9 @@ export function DominatorPopoverContent({
 
   return (
     <div className="w-[min(22rem,calc(100vw-2rem))] text-sm text-white/90">
-      <p className="text-sm font-semibold text-white mb-3">{popoverHeader(reason, statSplit)}</p>
+      <p className="text-sm font-semibold text-white mb-3">
+        {dominatorHeaderCopy(reason, statSplit)}
+      </p>
       <ArmorCard
         piece={dominator}
         breakdown={dominatorBreakdown}

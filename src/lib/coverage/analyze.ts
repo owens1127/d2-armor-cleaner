@@ -1,12 +1,12 @@
+import { intrinsicStats } from '@/lib/armor/intrinsicCompare';
+import { slotLabel } from '@/i18n/gameCopy';
 import {
-  ARCHETYPE_STATS,
   ARCHETYPES,
+  ARCHETYPE_STATS,
   ARMOR_SLOTS,
   isImpossibleCell,
-  SLOT_LABELS,
   STATS,
 } from '@/lib/constants';
-import { intrinsicStats } from '@/lib/armor/intrinsicCompare';
 import { MASTERWORK_STAT_BONUS } from '@/lib/armor/effectiveStats';
 import { formatDupeBucketLabel } from '@/lib/dupes/queue';
 import type {
@@ -621,5 +621,5 @@ export function analyzeBuildBalance(analyses: CoverageAnalysis[]): BuildBalanceI
 }
 
 export function formatSlotCoverageLabel(slot: ArmorSlot, covered: boolean): string {
-  return `${SLOT_LABELS[slot]} · ${covered ? 'covered' : 'gap'}`;
+  return `${slotLabel(slot)} · ${covered ? 'covered' : 'gap'}`;
 }

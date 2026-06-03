@@ -1,20 +1,49 @@
+import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { AppBootstrap } from '@/components/AppBootstrap';
+import { PageFallback } from '@/components/PageFallback';
+import { RequireAuth } from '@/components/routing/RequireAuth';
+import { RequireOnboardingComplete } from '@/components/routing/RequireOnboardingComplete';
 import { HomePage } from '@/pages/HomePage';
-import { RulesOnboardingPage } from '@/pages/RulesOnboardingPage';
-import { InventorySnapshotPage } from '@/pages/InventorySnapshotPage';
-import { CalibratePage } from '@/pages/CalibratePage';
-import { DashboardPage } from '@/pages/DashboardPage';
-import { DuelPage } from '@/pages/DuelPage';
-import { ReviewPage } from '@/pages/ReviewPage';
-import { AutoFiltersPage } from '@/pages/AutoFiltersPage';
-import { SettingsPage } from '@/pages/SettingsPage';
-import { BrowsePage } from '@/pages/BrowsePage';
-import { BuildPage } from '@/pages/BuildPage';
-import { BROWSE_REDUNDANT_QUERY } from '@/lib/nav';
 import { OAuthCallbackPage } from '@/pages/OAuthCallbackPage';
+import { BROWSE_REDUNDANT_QUERY } from '@/lib/nav';
 import { settingsPath } from '@/lib/nav';
 import { useSessionStore } from '@/stores';
+
+const RulesOnboardingPage = lazy(() =>
+  import('@/pages/RulesOnboardingPage').then((m) => ({ default: m.RulesOnboardingPage })),
+);
+const InventorySnapshotPage = lazy(() =>
+  import('@/pages/InventorySnapshotPage').then((m) => ({ default: m.InventorySnapshotPage })),
+);
+const CalibratePage = lazy(() =>
+  import('@/pages/CalibratePage').then((m) => ({ default: m.CalibratePage })),
+);
+const DashboardPage = lazy(() =>
+  import('@/pages/DashboardPage').then((m) => ({ default: m.DashboardPage })),
+);
+const DuelPage = lazy(() =>
+  import('@/pages/DuelPage').then((m) => ({ default: m.DuelPage })),
+);
+const ReviewPage = lazy(() =>
+  import('@/pages/ReviewPage').then((m) => ({ default: m.ReviewPage })),
+);
+const AutoFiltersPage = lazy(() =>
+  import('@/pages/AutoFiltersPage').then((m) => ({ default: m.AutoFiltersPage })),
+);
+const SettingsPage = lazy(() =>
+  import('@/pages/SettingsPage').then((m) => ({ default: m.SettingsPage })),
+);
+const BrowsePage = lazy(() =>
+  import('@/pages/BrowsePage').then((m) => ({ default: m.BrowsePage })),
+);
+const BuildPage = lazy(() =>
+  import('@/pages/BuildPage').then((m) => ({ default: m.BuildPage })),
+);
+
+function LazyPage({ children }: { children: React.ReactNode }) {
+  return <Suspense fallback={<PageFallback />}>{children}</Suspense>;
+}
 
 function LegacyCleanRedirect() {
   const { class: classParam } = useParams<{ class: string }>();
@@ -55,24 +84,98 @@ export default function App() {
     <>
       <AppBootstrap />
       <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/home" element={<HomePage />} />
-      <Route path="/oauth/callback" element={<OAuthCallbackPage />} />
-      <Route path="/onboarding/rules" element={<RulesOnboardingPage />} />
-      <Route path="/onboarding/inventory" element={<InventorySnapshotPage />} />
-      <Route path="/onboarding/calibrate" element={<CalibratePage />} />
-      <Route path="/dashboard/:class" element={<DashboardPage />} />
-      <Route path="/duel/:class" element={<DuelPage />} />
-      <Route path="/clean/:class" element={<LegacyCleanRedirect />} />
-      <Route path="/browse/:class" element={<BrowsePage />} />
-      <Route path="/combos/:class" element={<BuildPage />} />
-      <Route path="/build/:class" element={<LegacyBuildRedirect />} />
-      <Route path="/dismantle/:class" element={<LegacyDismantleRedirect />} />
-      <Route path="/review" element={<ReviewPage />} />
-      <Route path="/auto-filters" element={<AutoFiltersPage />} />
-      <Route path="/settings" element={<SettingsRedirect />} />
-      <Route path="/settings/:class" element={<SettingsPage />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/oauth/callback" element={<OAuthCallbackPage />} />
+        <Route element={<RequireAuth />}>
+          <Route
+            path="/onboarding/rules"
+            element={
+              <LazyPage>
+                <RulesOnboardingPage />
+              </LazyPage>
+            }
+          />
+          <Route
+            path="/onboarding/inventory"
+            element={
+              <LazyPage>
+                <InventorySnapshotPage />
+              </LazyPage>
+            }
+          />
+          <Route
+            path="/onboarding/calibrate"
+            element={
+              <LazyPage>
+                <CalibratePage />
+              </LazyPage>
+            }
+          />
+          <Route element={<RequireOnboardingComplete />}>
+            <Route
+              path="/dashboard/:class"
+              element={
+                <LazyPage>
+                  <DashboardPage />
+                </LazyPage>
+              }
+            />
+            <Route
+              path="/duel/:class"
+              element={
+                <LazyPage>
+                  <DuelPage />
+                </LazyPage>
+              }
+            />
+            <Route path="/clean/:class" element={<LegacyCleanRedirect />} />
+            <Route
+              path="/browse/:class"
+              element={
+                <LazyPage>
+                  <BrowsePage />
+                </LazyPage>
+              }
+            />
+            <Route
+              path="/combos/:class"
+              element={
+                <LazyPage>
+                  <BuildPage />
+                </LazyPage>
+              }
+            />
+            <Route path="/build/:class" element={<LegacyBuildRedirect />} />
+            <Route path="/dismantle/:class" element={<LegacyDismantleRedirect />} />
+            <Route
+              path="/review"
+              element={
+                <LazyPage>
+                  <ReviewPage />
+                </LazyPage>
+              }
+            />
+            <Route
+              path="/auto-filters"
+              element={
+                <LazyPage>
+                  <AutoFiltersPage />
+                </LazyPage>
+              }
+            />
+            <Route path="/settings" element={<SettingsRedirect />} />
+            <Route
+              path="/settings/:class"
+              element={
+                <LazyPage>
+                  <SettingsPage />
+                </LazyPage>
+              }
+            />
+          </Route>
+        </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );
