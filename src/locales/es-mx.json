@@ -870,7 +870,7 @@
     "summary": "{{total}} en cola · {{keep}} conservar · {{junk}} basura. Aplicar escribe las etiquetas en cola; las filas indican etiquetas DIM existentes cuando difieren.",
     "applied": "Etiquetas aplicadas en DIM Sync.",
     "openJunkInDim": "Abrir basura en DIM",
-    "partialApplied": "Aplicación parcial: {{count}} etiquetas correctas. Los fallidos permanecen en la cola.",
+    "partialApplied": "Aplicación parcial: {{count}} etiquetas correctas. Las fallidas permanecen en la cola.",
     "retryFailed": "Reintentar {{count}} fallidos",
     "empty": "No hay etiquetas pendientes.",
     "compareDupes": "Comparar duplicados",

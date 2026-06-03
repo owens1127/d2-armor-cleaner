@@ -223,7 +223,7 @@
     "stepHeader": "第 {{current}} / {{total}} 步 · {{step}}",
     "classTitle": "你要校準哪個職業？",
     "archetypeTitle": "按偏好排列原型",
-    "archetypeInstruction": "最偏好的在頂部。拖動行或使用箭頭。列出全部六種原型；是否擁有該原型不影響列表。",
+    "archetypeInstruction": "最偏好的在頂部。拖曳行或使用箭頭。列出全部六種原型；是否擁有該原型不影響清單。",
     "tertiaryTitle": "排列第三屬性",
     "tuningTitle": "排列調優屬性",
     "setsTitle": "按偏好排列護甲套裝",
@@ -241,11 +241,11 @@
     "skipTuningStats": "跳過調優屬性",
     "skipArmorSets": "跳過護甲套裝",
     "nextArchetype": "下一個原型",
-    "setsInstruction": "最偏好的在頂部。來自倉庫的套裝，按你擁有的件數排序。拖動或使用箭頭按鈕重排。",
+    "setsInstruction": "最偏好的在頂部。來自倉庫的套裝，按你擁有的件數排序。拖曳或使用箭頭按鈕重排。",
     "contextSetPrefs": "護甲套裝偏好",
     "unknownSet": "未知套裝",
     "rankTheseStats": "排列這些屬性：",
-    "dragRowsHint": "拖動行或使用箭頭。最重要的在頂部。",
+    "dragRowsHint": "拖曳行或使用箭頭。最重要的在頂部。",
     "archetypeProgress": "原型 {{current}} / {{total}}"
   },
   "common": {
@@ -402,7 +402,7 @@
         "title": "審核冗餘 roll",
         "detail_one": "{{count}} 件嚴格劣於你保留的另一 roll",
         "detail_other": "{{count}} 件嚴格劣於你保留的另一 roll",
-        "cta": "開啟列表"
+        "cta": "開啟清單"
       },
       "taggedKeep": {
         "title": "審核 DIM 標記的重複",
@@ -683,7 +683,7 @@
       "sessionExpired": "你的 Bungie 工作階段可能已過期。請登出後重新登入。",
       "forbidden": "Bungie 拒絕了請求。請重新登入；若持續出現請聯絡網站管理員。",
       "manifest": "清單下載失敗。請檢查網路後重試：首次載入可能需要一分鐘。",
-      "network": "網路錯誤。請檢查連接或稍後再試。",
+      "network": "網路錯誤。請檢查連線或稍後再試。",
       "membership": "無法解析你的 Destiny 會員資訊。請確認帳戶擁有 Destiny 2 角色。"
     },
     "applyTagsFailed": "套用標籤失敗",
@@ -955,7 +955,7 @@
     },
     "dupeRules": {
       "heading": "重複規則",
-      "intro": "熱力圖、對比、瀏覽與冗餘 roll 列表的共享規則。",
+      "intro": "熱力圖、對比、瀏覽與冗餘 roll 清單的共享規則。",
       "scopeHeading": "範圍：哪些護甲計入",
       "minTierLabel": "最低裝備階",
       "minTierHelp": "倉庫匯入仍會載入 T1–T5。僅達到或超過此階的護甲進入重複桶與冗餘 roll 檢查。",

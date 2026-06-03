@@ -1,9 +1,9 @@
 {
   "autoFilters": {
     "title": "Filtri automatici",
-    "intro": "Metti in coda tag scarto automaticamente al caricamento o aggiornamento della cripta. I tag keep e favorite non vengono mai applicati automaticamente.",
+    "intro": "Metti in coda tag scarto automaticamente al caricamento o aggiornamento della cripta. I tag mantieni e preferito non vengono mai applicati automaticamente.",
     "rulesHeading": "Regole",
-    "rulesBody": "I pezzi corrispondenti vengono messi in coda come junk in Revisione (come il junk manuale). I keep non vengono mai taggati automaticamente: tag keep/favorite DIM, keep in sospeso o pezzi conservati in un gruppo di duplicati in confronto.",
+    "rulesBody": "I pezzi corrispondenti vengono messi in coda come scarto in Revisione (come lo scarto manuale). I mantieni non vengono mai taggati automaticamente: tag mantieni/preferito DIM, mantieni in sospeso o pezzi conservati in un gruppo di duplicati in confronto.",
     "noRules": "Nessuna regola ancora.",
     "addRule": "Aggiungi regola",
     "addRuleHeading": "Aggiungi regola",
@@ -29,7 +29,7 @@
       "anyOf": "Qualsiasi tra",
       "noneOf": "Nessuno tra"
     },
-    "operatorsIntro": "Ogni filtro può essere <1>È</1>, <2>Non è</2>, <3>Qualsiasi tra</3> o <4>Nessuno tra</4> (es. pezzi junk del Cacciatore il cui archetipo non è tra Baluardo, Paragon).",
+    "operatorsIntro": "Ogni filtro può essere <1>È</1>, <2>Non è</2>, <3>Qualsiasi tra</3> o <4>Nessuno tra</4> (es. pezzi junk del Cacciatore il cui archetipo non è tra Bulwark, Paragon).",
     "livePreview_one": "Anteprima live: {{count}} pezzo verrebbe messo in coda al prossimo caricamento cripta (esclusi keep, favorite e già junk).",
     "livePreview_other": "Anteprima live: {{count}} pezzi verrebbero messi in coda al prossimo caricamento cripta (esclusi keep, favorite e già junk).",
     "setFallback": "Set {{hash}}",
@@ -163,18 +163,18 @@
       "hideRollDetails": "Nascondi dettagli tipo di roll",
       "tagAll": "Tagga tutti:",
       "bulkNoTaggable": "Nessun pezzo taggabile",
-      "bulkClearKeep": "Rimuovi keep da tutti",
-      "bulkMarkKeep": "Segna tutti come keep",
+      "bulkClearKeep": "Rimuovi mantieni da tutti",
+      "bulkMarkKeep": "Segna tutti come mantieni",
       "bulkAllFavorited": "Tutti già preferiti",
       "bulkMarkFavorite": "Segna tutti come preferiti",
-      "bulkClearJunk": "Rimuovi junk da tutti",
-      "bulkMarkJunk": "Segna tutti come junk",
-      "tagKeep": "Applica keep in DIM",
-      "tagKeepRemove": "Rimuovi keep da DIM",
-      "tagFavorite": "Applica favorite in DIM",
-      "tagFavoriteAlready": "Già favorite in DIM",
-      "tagJunk": "Applica junk in DIM",
-      "tagJunkRemove": "Rimuovi junk da DIM",
+      "bulkClearJunk": "Rimuovi scarto da tutti",
+      "bulkMarkJunk": "Segna tutti come scarto",
+      "tagKeep": "Applica mantieni in DIM",
+      "tagKeepRemove": "Rimuovi mantieni da DIM",
+      "tagFavorite": "Applica preferito in DIM",
+      "tagFavoriteAlready": "Già preferito in DIM",
+      "tagJunk": "Applica scarto in DIM",
+      "tagJunkRemove": "Rimuovi scarto da DIM",
       "choose": "Scegli",
       "chooseSlot": "Scegli {{slot}}",
       "choosePiece": "Scegli pezzo · {{count}} idonei",
@@ -367,7 +367,7 @@
       },
       "setupAutoFilters": {
         "title": "Configura filtri automatici",
-        "detail": "Metti in coda tag junk al caricamento della cripta per roll che non vuoi mai tenere",
+        "detail": "Metti in coda tag scarto al caricamento della cripta per roll che non vuoi mai tenere",
         "cta": "Configura filtri"
       },
       "setupCombos": {
@@ -406,8 +406,8 @@
       },
       "taggedKeep": {
         "title": "Rivedi duplicati taggati in DIM",
-        "detail_one": "{{count}} candidato duplicato già taggato keep o favorite in DIM",
-        "detail_other": "{{count}} candidati duplicati già taggati keep o favorite in DIM",
+        "detail_one": "{{count}} candidato duplicato già taggato mantieni o preferito in DIM",
+        "detail_other": "{{count}} candidati duplicati già taggati mantieni o preferito in DIM",
         "cta": "Sfoglia cripta"
       },
       "heavyBuckets": {
@@ -462,7 +462,7 @@
     "preparing": "Preparazione confronti…",
     "queueEmpty": {
       "title": "Coda vuota",
-      "summary": "{{keep}} tieni · {{junk}} scarto in coda.",
+      "summary": "{{keep}} mantieni · {{junk}} scarto in coda.",
       "reviewTags": "Revisione tag",
       "restartQueue": "Riavvia coda",
       "clearSession": "Cancella sessione {{class}}"
@@ -475,8 +475,8 @@
     "skipGroup": "Salta gruppo (S)",
     "restoringSession": "Ripristino sessione…",
     "confirm": {
-      "switchBucket": "Cambiare gruppo? Le scelte in corso e i tag junk per il gruppo attuale verranno cancellati.",
-      "resetBucket": "Reimpostare questo gruppo? Tutte le scelte in corso, i tag junk e il progresso di confronto verranno cancellati. Il gruppo resta in coda.",
+      "switchBucket": "Cambiare gruppo? Le scelte in corso e i tag scarto per il gruppo attuale verranno cancellati.",
+      "resetBucket": "Reimpostare questo gruppo? Tutte le scelte in corso, i tag scarto e il progresso di confronto verranno cancellati. Il gruppo resta in coda.",
       "clearClassSession": "Cancellare tutto il progresso di confronto {{class}} e i tag in coda? Irreversibile."
     },
     "chooser": {
@@ -559,8 +559,8 @@
       "setFootnote": "Set: {{name}}",
       "loss_one": "1 sconfitta",
       "loss_other": "{{count}} sconfitte",
-      "lossRemaining_one": "{{count}} altra sconfitta prefer prima dello scarto a fine gruppo",
-      "lossRemaining_other": "{{count}} altre sconfitte prefer prima dello scarto a fine gruppo",
+      "lossRemaining_one": "{{count}} altra sconfitta prefer prima del junk a fine gruppo",
+      "lossRemaining_other": "{{count}} altre sconfitte prefer prima del junk a fine gruppo",
       "keyboardHints": "Passa il cursore sui pulsanti per gli esiti · ↑ tieni entrambi · Barra spaziatrice Passa · ↓ junk entrambi · Ctrl+←/→ junk lato",
       "aria": {
         "keepLeft": "Tieni sinistra. {{outcome}}",
@@ -591,11 +591,11 @@
       }
     },
     "respectKeepFavorite": {
-      "label": "Rispetta keep e favorite DIM nella scelta dello scarto",
-      "help": "Se attivo, i pezzi con tag keep o favorite non vengono suggeriti come scarto nei flussi duplicati."
+      "label": "Rispetta mantieni e preferito DIM nella scelta dello scarto",
+      "help": "Se attivo, i pezzi con tag mantieni o preferito non vengono suggeriti come scarto nei flussi duplicati."
     },
     "excludeJunk": {
-      "label": "Escludi pezzi con tag junk dal conteggio duplicati"
+      "label": "Escludi pezzi con tag scarto dal conteggio duplicati"
     },
     "presets": {
       "loose": {
@@ -635,13 +635,13 @@
       "armorSetAny": "qualsiasi set di armatura",
       "tuningStatSame": "stessa statistica di tuning",
       "tuningStatAny": "qualsiasi statistica di tuning",
-      "dimTagsRespect": "I tag DIM keep e favorite contano quando si suggerisce lo scarto.",
-      "dimTagsIgnore": "I tag keep e favorite non vengono usati quando si suggerisce lo scarto."
+      "dimTagsRespect": "I tag DIM mantieni e preferito contano quando si suggerisce lo scarto.",
+      "dimTagsIgnore": "I tag mantieni e preferito non vengono usati quando si suggerisce lo scarto."
     },
     "suggestions": {
       "setAwareHeavy": "{{totalT5}} pezzi Tier 5 e {{heavyBuckets}} gruppi con 5+ oggetti. Usa lo stesso set di armatura per evitare falsi duplicati.",
       "looseSmallVault": "Cripta piccola: regole larghe mostreranno più gruppi duplicati.",
-      "ignoreTaggedKeep": "{{count}} candidati duplicato già taggati keep o favorite in DIM.",
+      "ignoreTaggedKeep": "{{count}} candidati duplicato già taggati mantieni o preferito in DIM.",
       "standardDefault": "Preset standard per la dimensione della tua cripta."
     }
   },
@@ -867,9 +867,9 @@
   },
   "review": {
     "title": "Revisione tag",
-    "summary": "{{total}} in coda · {{keep}} tieni · {{junk}} scarto. Applica scrive i tag in coda; le righe indicano i tag DIM esistenti se diversi.",
+    "summary": "{{total}} in coda · {{keep}} mantieni · {{junk}} scarto. Applica scrive i tag in coda; le righe indicano i tag DIM esistenti se diversi.",
     "applied": "Tag applicati a DIM Sync.",
-    "openJunkInDim": "Apri junk in DIM",
+    "openJunkInDim": "Apri scarto in DIM",
     "partialApplied": "Applicazione parziale: {{count}} tag riusciti. Gli elementi non riusciti restano in coda.",
     "retryFailed": "Riprova {{count}} non riusciti",
     "empty": "Nessun tag in sospeso.",
@@ -888,7 +888,7 @@
     "copy": {
       "ids": "Copia query id:",
       "junk": "Copia ricerca tag:junk",
-      "junkIds": "Copia solo id junk",
+      "junkIds": "Copia solo id scarto",
       "copied": "Copiato!",
       "announcement": "{{label}} copiato negli appunti."
     },

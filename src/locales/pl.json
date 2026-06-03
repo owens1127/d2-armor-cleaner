@@ -1,13 +1,13 @@
 {
   "autoFilters": {
     "title": "Filtry automatyczne",
-    "intro": "Automatycznie kolejkuj tagi śmieci przy ładowaniu lub odświeżeniu skarbca. Tagi zachowaj i ulubione nigdy nie są ustawiane automatycznie.",
+    "intro": "Automatycznie kolejkuj tagi junk przy ładowaniu lub odświeżeniu skarbca. Tagi keep i favorite nigdy nie są ustawiane automatycznie.",
     "noRules": "Brak reguł.",
     "addRule": "Dodaj regułę",
     "classLabel": "Klasa",
     "operatorsIntro": "Każdy filtr może być <1>Jest</1>, <2>Nie jest</2>, <3>Dowolny z</3> lub <4>Żaden z</4> (np. junk dla Łowcy, gdy archetyp nie jest Strzelcem).",
     "rulesHeading": "Reguły",
-    "rulesBody": "Pasujące elementy trafiają do kolejki jako śmieci w Przeglądzie (jak ręczne tagowanie śmieci). Tagi zachowaj nigdy nie są ustawiane automatycznie: zachowaj/ulubione w DIM, oczekujący zachowaj lub elementy zachowane w grupie pojedynku.",
+    "rulesBody": "Pasujące elementy trafiają do kolejki jako junk w Przeglądzie (jak ręczne tagowanie junk). Tagi keep nigdy nie są ustawiane automatycznie: keep/favorite w DIM, oczekujący keep lub elementy zachowane w grupie pojedynku.",
     "deleteRule": "Usuń",
     "allClasses": "Wszystkie klasy",
     "archetypeLabel": "Archetyp",
@@ -70,11 +70,11 @@
     },
     "dimTags": {
       "untagged": "Bez tagu",
-      "keep": "Zachowaj",
-      "junk": "Śmieci",
-      "favorite": "Ulubione",
-      "infuse": "Wzmocnij",
-      "archive": "Archiwum"
+      "keep": "Keep",
+      "junk": "Junk",
+      "favorite": "Favorite",
+      "infuse": "Infuse",
+      "archive": "Archive"
     },
     "sort": {
       "matchDesc": "Dopasowanie % (wys. → nisk.)",
@@ -163,18 +163,18 @@
       "hideRollDetails": "Ukryj szczegóły typów ról",
       "tagAll": "Otaguj wszystkie:",
       "bulkNoTaggable": "Brak elementów do otagowania",
-      "bulkClearKeep": "Usuń zachowaj u wszystkich",
-      "bulkMarkKeep": "Oznacz wszystkie jako zachowaj",
+      "bulkClearKeep": "Usuń keep u wszystkich",
+      "bulkMarkKeep": "Oznacz wszystkie jako keep",
       "bulkAllFavorited": "Wszystkie w ulubionych",
-      "bulkMarkFavorite": "Oznacz wszystkie jako ulubione",
-      "bulkClearJunk": "Usuń śmieci u wszystkich",
-      "bulkMarkJunk": "Oznacz wszystkie jako śmieci",
-      "tagKeep": "Otaguj zachowaj w DIM",
-      "tagKeepRemove": "Usuń tag zachowaj w DIM",
-      "tagFavorite": "Otaguj ulubione w DIM",
-      "tagFavoriteAlready": "Już ulubione w DIM",
-      "tagJunk": "Otaguj śmieci w DIM",
-      "tagJunkRemove": "Usuń tag śmieci w DIM",
+      "bulkMarkFavorite": "Oznacz wszystkie jako favorite",
+      "bulkClearJunk": "Usuń junk u wszystkich",
+      "bulkMarkJunk": "Oznacz wszystkie jako junk",
+      "tagKeep": "Otaguj keep w DIM",
+      "tagKeepRemove": "Usuń tag keep w DIM",
+      "tagFavorite": "Otaguj favorite w DIM",
+      "tagFavoriteAlready": "Już favorite w DIM",
+      "tagJunk": "Otaguj junk w DIM",
+      "tagJunkRemove": "Usuń tag junk w DIM",
       "choose": "Wybierz",
       "chooseSlot": "Wybierz {{slot}}",
       "choosePiece": "Wybierz element · {{count}} kwalifikujących się",
@@ -462,7 +462,7 @@
     "preparing": "Przygotowywanie porównań…",
     "queueEmpty": {
       "title": "Kolejka pusta",
-      "summary": "{{keep}} zachowaj · {{junk}} śmieci w kolejce.",
+      "summary": "{{keep}} keep · {{junk}} junk w kolejce.",
       "reviewTags": "Przejrzyj tagi",
       "restartQueue": "Uruchom kolejkę ponownie",
       "clearSession": "Wyczyść sesję {{class}}"
@@ -498,8 +498,8 @@
       "whatsNext": "Co dalej",
       "tagsFootnote": "Tagi trafiają do kolejki po kontynuacji. Nic nie jest stosowane, dopóki nie przejdziesz przeglądu.",
       "stats": {
-        "keeps": "Zachowaj",
-        "junkQueued": "Śmieci w kolejce",
+        "keeps": "Keep",
+        "junkQueued": "Junk w kolejce",
         "preferEliminated": "Wyeliminowane przez prefer",
         "pairsDecided": "Pary rozstrzygnięte",
         "inGroup": "W tej grupie"
@@ -507,7 +507,7 @@
       "breakdown": {
         "keepBoth": "Zachowaj oba: {{count}}",
         "keepSide": "Zachowaj stronę: {{count}}",
-        "junkedInDuels": "Śmieci w pojedynkach: {{count}}",
+        "junkedInDuels": "Junk w pojedynkach: {{count}}",
         "preferInPlay": "Preferencje nadal aktywne: {{count}}"
       },
       "piece_one": "{{count}} element",
@@ -526,31 +526,31 @@
       "left": "Lewo",
       "both": "Oba",
       "right": "Prawo",
-      "keep": "Zachowaj",
+      "keep": "Keep",
       "prefer": "Preferuj",
-      "junk": "Śmieci"
+      "junk": "Junk"
     },
     "compare": {
       "suggested": "Sugerowane",
       "sameRoll": "Ta sama rola",
       "compareSides": "Porównaj strony",
       "suggestedPick": "Sugerowany wybór: ",
-      "vs": "kontra",
+      "vs": "vs",
       "fitTitle": "Jak dobrze ten element pasuje do zapisanych preferencji",
       "powerTitle": "Poziom mocy",
       "identicalRolls": "Identyczne role. Zachowaj jeden, oznacz jeden jako junk, zachowaj oba lub pomiń parę.",
       "suppressedSuggestion": "Oba mocne · ostatni w drabince. Preferuj, pomiń, keep lub junk — jeden lub oba.",
       "buildOptimalPrefix": "Optymalne dla kombinacji ",
-      "orPassKeepJunk": "· lub pomiń / zachowaj / śmieci",
-      "evenMatch": "Remis. Preferuj, pomiń, zachowaj lub śmieci — jeden lub oba.",
+      "orPassKeepJunk": "· lub pomiń / keep / junk",
+      "evenMatch": "Remis. Preferuj, pomiń, keep lub junk — jeden lub oba.",
       "eliminated": "Wyeliminowany z drabinki",
-      "actionKeep": "Zachowaj",
+      "actionKeep": "Keep",
       "outcomes": {
         "prefer": "Preferuj tę stronę. Przegrany potrzebuje {{threshold}} porażek «prefer», zanim junk na końcu grupy.",
-        "keepSide": "Zachowaj po zakończeniu grupy · druga strona zostaje w drabince",
+        "keepSide": "Keep po zakończeniu grupy · druga strona zostaje w drabince",
         "keepBoth": "Oba zachowane po zakończeniu grupy",
-        "junkOne": "Śmieci teraz · druga zostaje w drabince (bez zwycięzcy)",
-        "junkBoth": "Oba jako śmieci teraz",
+        "junkOne": "Junk teraz · druga zostaje w drabince (bez zwycięzcy)",
+        "junkBoth": "Oba junk teraz",
         "pass": "Pomiń tę parę. Bez tagów; oba wracają do kolejki."
       },
       "pass": "Pomiń",
@@ -569,9 +569,9 @@
         "preferLeft": "Preferuj lewo. {{outcome}}",
         "preferRight": "Preferuj prawo. {{outcome}}",
         "passPair": "Pomiń parę. {{outcome}}",
-        "junkLeft": "Śmieci lewo. {{outcome}}",
-        "junkRight": "Śmieci prawo. {{outcome}}",
-        "junkBoth": "Śmieci oba. {{outcome}}"
+        "junkLeft": "Junk lewo. {{outcome}}",
+        "junkRight": "Junk prawo. {{outcome}}",
+        "junkBoth": "Junk oba. {{outcome}}"
       }
     },
     "progress": {
@@ -591,11 +591,11 @@
       }
     },
     "respectKeepFavorite": {
-      "label": "Uwzględniaj tagi DIM zachowaj i ulubione przy wyborze śmieci",
-      "help": "Gdy włączone, elementy z tagiem zachowaj lub ulubione nie są sugerowane jako śmieci w przepływach duplikatów."
+      "label": "Uwzględniaj tagi DIM keep i favorite przy wyborze junk",
+      "help": "Gdy włączone, elementy z tagiem keep lub favorite nie są sugerowane jako junk w przepływach duplikatów."
     },
     "excludeJunk": {
-      "label": "Wyklucz elementy z tagiem śmieci z liczenia duplikatów"
+      "label": "Wyklucz elementy z tagiem junk z liczenia duplikatów"
     },
     "presets": {
       "loose": {
@@ -635,13 +635,13 @@
       "armorSetAny": "dowolny zestaw pancerza",
       "tuningStatSame": "ta sama statystyka strojenia",
       "tuningStatAny": "dowolna statystyka strojenia",
-      "dimTagsRespect": "Tagi DIM zachowaj i ulubione są uwzględniane przy sugerowaniu śmieci.",
-      "dimTagsIgnore": "Tagi zachowaj i ulubione nie są używane przy sugerowaniu śmieci."
+      "dimTagsRespect": "Tagi DIM keep i favorite są uwzględniane przy sugerowaniu junk.",
+      "dimTagsIgnore": "Tagi keep i favorite nie są używane przy sugerowaniu junk."
     },
     "suggestions": {
       "setAwareHeavy": "{{totalT5}} elementów poziomu 5 i {{heavyBuckets}} grup z 5+ elementami. Użyj tego samego zestawu pancerza, aby uniknąć fałszywych duplikatów.",
       "looseSmallVault": "Mały skarbiec: luźne reguły wydobędą więcej grup duplikatów.",
-      "ignoreTaggedKeep": "{{count}} kandydatów na duplikat już otagowanych zachowaj lub ulubione w DIM.",
+      "ignoreTaggedKeep": "{{count}} kandydatów na duplikat już otagowanych keep lub favorite w DIM.",
       "standardDefault": "Standardowy preset dla rozmiaru Twojego skarbca."
     }
   },
@@ -867,9 +867,9 @@
   },
   "review": {
     "title": "Przegląd tagów",
-    "summary": "{{total}} w kolejce · {{keep}} zachowaj · {{junk}} śmieci. Zastosowanie zapisuje tagi w kolejce; wiersze pokazują istniejące tagi DIM, gdy się różnią.",
+    "summary": "{{total}} w kolejce · {{keep}} keep · {{junk}} junk. Zastosowanie zapisuje tagi w kolejce; wiersze pokazują istniejące tagi DIM, gdy się różnią.",
     "applied": "Tagi zastosowane w DIM Sync.",
-    "openJunkInDim": "Otwórz śmieci w DIM",
+    "openJunkInDim": "Otwórz junk w DIM",
     "partialApplied": "Częściowo zastosowano: {{count}} tagów powiodło się. Nieudane pozostały w kolejce.",
     "retryFailed": "Ponów {{count}} nieudanych",
     "empty": "Brak oczekujących tagów.",
