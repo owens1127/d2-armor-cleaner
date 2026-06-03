@@ -70,11 +70,11 @@
     },
     "dimTags": {
       "untagged": "Senza tag",
-      "keep": "Keep",
-      "junk": "Junk",
-      "favorite": "Favorite",
-      "infuse": "Infuse",
-      "archive": "Archive"
+      "keep": "Mantieni",
+      "junk": "Scarto",
+      "favorite": "Preferito",
+      "infuse": "Infondi",
+      "archive": "Archivia"
     },
     "sort": {
       "matchDesc": "Corrispondenza % (alta → bassa)",
@@ -498,8 +498,8 @@
       "whatsNext": "Prossimi passi",
       "tagsFootnote": "I tag vengono messi in coda continuando. Nulla viene applicato prima della revisione.",
       "stats": {
-        "keeps": "Keep",
-        "junkQueued": "Junk in coda",
+        "keeps": "Mantieni",
+        "junkQueued": "Scarto in coda",
         "preferEliminated": "Preferiti eliminati",
         "pairsDecided": "Coppie decise",
         "inGroup": "In questo gruppo"
@@ -507,7 +507,7 @@
       "breakdown": {
         "keepBoth": "Tieni entrambi: {{count}}",
         "keepSide": "Tieni un lato: {{count}}",
-        "junkedInDuels": "Junk nei confronti: {{count}}",
+        "junkedInDuels": "Scarto nei confronti: {{count}}",
         "preferInPlay": "Preferiti ancora attivi: {{count}}"
       },
       "piece_one": "{{count}} pezzo",
@@ -526,9 +526,9 @@
       "left": "Sinistra",
       "both": "Entrambi",
       "right": "Destra",
-      "keep": "Keep",
+      "keep": "Mantieni",
       "prefer": "Preferisci",
-      "junk": "Junk"
+      "junk": "Scarto"
     },
     "compare": {
       "suggested": "Suggerito",
@@ -538,19 +538,19 @@
       "vs": "contro",
       "fitTitle": "Quanto bene questo pezzo si adatta alle preferenze salvate",
       "powerTitle": "Livello di potenza",
-      "identicalRolls": "Roll identici. Tieni, junk, entrambi o passa.",
-      "suppressedSuggestion": "Entrambi forti · ultimo del tier. Preferisci, passa, keep o junk.",
+      "identicalRolls": "Roll identici. Mantieni, scarto, entrambi o passa.",
+      "suppressedSuggestion": "Entrambi forti · ultimo del tier. Preferisci, passa, mantieni o scarto.",
       "buildOptimalPrefix": "Combo ottimale per ",
-      "orPassKeepJunk": "· oppure passa / keep / junk",
-      "evenMatch": "Pareggio. Preferisci, passa, keep o junk.",
+      "orPassKeepJunk": "· oppure passa / mantieni / scarto",
+      "evenMatch": "Pareggio. Preferisci, passa, mantieni o scarto.",
       "eliminated": "Eliminato dal tabellone",
-      "actionKeep": "Tieni",
+      "actionKeep": "Mantieni",
       "outcomes": {
         "prefer": "Preferisci questo lato. Il perdente serve {{threshold}} sconfitte prefer prima del junk.",
-        "keepSide": "Keep a fine gruppo · l'altro resta nel tabellone",
+        "keepSide": "Mantieni a fine gruppo · l'altro resta nel tabellone",
         "keepBoth": "Entrambi tenuti alla fine",
-        "junkOne": "Junk ora · l'altro resta nel tabellone (nessun vincitore)",
-        "junkBoth": "Entrambi junk ora",
+        "junkOne": "Scarto ora · l'altro resta nel tabellone (nessun vincitore)",
+        "junkBoth": "Entrambi scarto ora",
         "pass": "Passa la coppia. Nessun tag, entrambi rimessi in coda."
       },
       "pass": "Passa",
@@ -569,9 +569,9 @@
         "preferLeft": "Preferisci sinistra. {{outcome}}",
         "preferRight": "Preferisci destra. {{outcome}}",
         "passPair": "Passa coppia. {{outcome}}",
-        "junkLeft": "Junk sinistra. {{outcome}}",
-        "junkRight": "Junk destra. {{outcome}}",
-        "junkBoth": "Junk entrambi. {{outcome}}"
+        "junkLeft": "Scarto sinistra. {{outcome}}",
+        "junkRight": "Scarto destra. {{outcome}}",
+        "junkBoth": "Scarto entrambi. {{outcome}}"
       }
     },
     "progress": {
