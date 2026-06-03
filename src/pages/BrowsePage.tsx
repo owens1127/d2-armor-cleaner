@@ -73,6 +73,7 @@ export function BrowsePage() {
     classStates[classType]?.activeDupeRules ??
     globalDupeRules;
   const redundantPeerScope = redundantPeerScopeFromDupeRules(classDupeRules);
+  const dupeMinTier = classDupeRules.minTier;
   const { applyTagDirect, pendingTags, bucketJunkedIds, bucketKeptBothIds } = useSessionStore();
   const redundantOnly = isBrowseRedundantActive(searchParams);
 
@@ -136,7 +137,7 @@ export function BrowsePage() {
   const matchesItemFilters = useCallback(
     (item: ArmorPiece) => {
       const q = query.trim().toLowerCase();
-      if ((item.tier ?? 0) < globalDupeRules.minTier) return false;
+      if ((item.tier ?? 0) < dupeMinTier) return false;
       if (slot !== 'all' && item.armorSlot !== slot) return false;
       if (archetype !== 'all' && item.archetype !== archetype) return false;
       if (setFilter !== 'all' && item.armorSet?.hash !== setFilter) return false;
@@ -161,7 +162,7 @@ export function BrowsePage() {
       setFilter,
       dimTag,
       dupesOnly,
-      globalDupeRules.minTier,
+      dupeMinTier,
     ],
   );
 
@@ -187,9 +188,10 @@ export function BrowsePage() {
       redundantPeerScope,
       classPrefs,
       dismantleExclusions,
+      dupeMinTier,
     );
     return new Set(candidates.map((c) => c.item.instanceId));
-  }, [allItems, classType, redundantPeerScope, classPrefs, dismantleExclusions]);
+  }, [allItems, classType, redundantPeerScope, classPrefs, dismantleExclusions, dupeMinTier]);
 
   const tuningRedundantBySlot = useMemo(() => {
     if (redundantOnly) return new Map<ArmorSlot, ReturnType<typeof findTuningRedundantMap>>();
@@ -215,19 +217,21 @@ export function BrowsePage() {
         redundantPeerScope,
         classPrefs,
         dismantleExclusions,
+        dupeMinTier,
       ),
-    [allItems, classType, redundantPeerScope, classPrefs, dismantleExclusions],
+    [allItems, classType, redundantPeerScope, classPrefs, dismantleExclusions, dupeMinTier],
   );
 
   const redundantGroups = useMemo(() => {
     if (!redundantOnly) return [];
-    const activeClassItems = filterDismantleItems(classItems, dismantleExclusions);
+    const activeClassItems = filterDismantleItems(classItems, dismantleExclusions, dupeMinTier);
     const raw = findDismantleBySlot(
       allItems,
       classType,
       redundantPeerScope,
       classPrefs,
       dismantleExclusions,
+      dupeMinTier,
     );
     const candidates = [...raw.values()].flat();
     const groups = buildRedundantBrowseGroups(
@@ -258,6 +262,7 @@ export function BrowsePage() {
     classItems,
     matchesItemFilters,
     strictlyLowerOnly,
+    dupeMinTier,
   ]);
 
   const redundantFilteredCount = useMemo(
@@ -301,7 +306,7 @@ export function BrowsePage() {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     const items = classItems
-      .filter((i) => (i.tier ?? 0) >= globalDupeRules.minTier)
+      .filter((i) => (i.tier ?? 0) >= dupeMinTier)
       .filter((i) => slot === 'all' || i.armorSlot === slot)
       .filter((i) => archetype === 'all' || i.archetype === archetype)
       .filter((i) => setFilter === 'all' || i.armorSet?.hash === setFilter)
@@ -341,7 +346,7 @@ export function BrowsePage() {
     redundantRollIds,
     dominatorsBySlot,
     query,
-    globalDupeRules.minTier,
+    dupeMinTier,
     sortOrder,
     matchTotals,
     buildFitTotals,
@@ -658,10 +663,10 @@ export function BrowsePage() {
             <p className="text-muted text-sm mt-1 max-w-2xl">
               {t('summary', {
                 filtered: filtered.length,
-                total: classItems.filter((i) => (i.tier ?? 0) >= globalDupeRules.minTier).length,
+                total: classItems.filter((i) => (i.tier ?? 0) >= dupeMinTier).length,
                 sortLabel: browseSortLabelCopy(sortOrder),
               })}
-              {redundantRollIds.size > 0 && (
+              {totalRedundantCount > 0 && (
                 <>
                   {' '}
                   ·{' '}
@@ -669,7 +674,7 @@ export function BrowsePage() {
                     to={`/browse/${classType}?redundant=1`}
                     className="text-white/80 hover:text-white underline"
                   >
-                    {t('redundantLink', { count: redundantRollIds.size })}
+                    {t('redundantLink', { count: totalRedundantCount })}
                   </Link>
                 </>
               )}

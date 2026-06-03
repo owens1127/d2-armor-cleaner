@@ -389,7 +389,19 @@ export function DuelPage() {
       bucketChallengerIds,
       actedPairKeys,
     );
-    if (!next) return;
+    if (!next) {
+      if (isBucketReadyForWrapUp(duelItems, actedPairKeys, true)) {
+        triggerBucketWrapUpIfReady(duelItems);
+      } else {
+        const fallback = initTournamentSkippingResolved(duelItems, actedPairKeys);
+        if (fallback) {
+          syncTournament(fallback);
+        } else {
+          syncTournament({ champion: null, challengerQueue: [] });
+        }
+      }
+      return;
+    }
 
     setChampion(next.champion);
     setChallengerQueue(next.challengerQueue);
@@ -434,13 +446,15 @@ export function DuelPage() {
       return;
     }
     const next = initTournamentSkippingResolved(duelItems, actedPairKeys);
-    if (!next) return;
-    setChampion(next.champion);
-    setChallengerQueue(next.challengerQueue);
-    setBucketTournament(
-      next.champion?.instanceId ?? null,
-      next.challengerQueue.map((i) => i.instanceId),
-    );
+    if (!next) {
+      if (isBucketReadyForWrapUp(duelItems, actedPairKeys, true)) {
+        triggerBucketWrapUpIfReady(duelItems);
+      } else {
+        syncTournament({ champion: null, challengerQueue: [] });
+      }
+      return;
+    }
+    syncTournament(next);
   }, [duelItems, champion, challenger, actedPairKeys.join(',')]);
 
   const classPrefs = getClassPrefs(profile, classType);
