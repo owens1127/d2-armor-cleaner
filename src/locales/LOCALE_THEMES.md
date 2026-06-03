@@ -74,5 +74,4 @@ npm run build
 | Script | Purpose |
 |--------|---------|
 | `scripts/sync-locale-keys.mjs` | Propagate new keys from `en.json` (can introduce English placeholders — re-audit after) |
-| `scripts/find-verbatim-en-bleed.mjs` | Report keys still identical to English in 3+ locales |
-| `scripts/apply-locale-theme-fixes.mjs` | One-off batch patches for theme fixes (only overwrites when value still equals English) |
+| `scripts/find-verbatim-en-bleed.mjs` | Report keys still identical to English in 3+ locales (see allowlist in script) |
