@@ -799,7 +799,10 @@
     "tagline": "Porównuj zduplikowany pancerz i kolejkuj tagi DIM. Nic nie jest tu demontowane.",
     "resumeSession": "Wznów poprzednią sesję",
     "footerNote": "Skarbiec przez Bungie.net. Tagi przez DIM. Wyloguj w Ustawieniach.",
-    "signInWithBungie": "Zaloguj przez Bungie"
+    "signInWithBungie": "Zaloguj przez Bungie",
+    "clearedBannerTitle": "Local data cleared",
+    "clearedBannerBody": "Do a hard refresh so the app reloads without stale bundles: Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac).",
+    "clearedBannerDismiss": "Dismiss"
   },
   "layout": {
     "aria": {
@@ -967,7 +970,13 @@
     "language": {
       "heading": "Język",
       "useBrowser": "Użyj języka przeglądarki",
-      "useBrowserHelp": "Gdy włączone, aplikacja podąża za językiem przeglądarki. Gdy wyłączone, użyj języka wybranego poniżej."
+      "useBrowserHelp": "Gdy włączone, aplikacja podąża za językiem przeglądarki. Gdy wyłączone, użyj języka wybranego poniżej.",
+      "changeConfirm": {
+        "title": "Change language?",
+        "message": "Switching language refreshes Destiny game names from Bungie and reloads the app. This may take a moment.",
+        "confirm": "Yes, switch",
+        "cancel": "Cancel"
+      }
     },
     "developer": {
       "heading": "Deweloper",
@@ -998,6 +1007,14 @@
       "confirmClearPending": "Wyczyścić wszystkie {{count}} oczekujących tagów? Nie zostaną zastosowane w DIM.",
       "confirmResetClass": "Zresetować preferencje {{class}} do domyślnych? Wagi statystyk, wybory kalibracji i wagi nauczone dla tej klasy zostaną usunięte.",
       "confirmResetAll": "Zresetować preferencje wszystkich klas do domyślnych? Wagi statystyk, wybory kalibracji i wagi nauczone zostaną usunięte dla Huntera, Titana i Warlocka. Reguły duplikatów i inne ustawienia pozostają."
+    },
+    "clearLocalData": {
+      "heading": "Local data",
+      "description": "Fixes stuck locale names, bad vault cache, or bad onboarding state. Signs you out and clears IndexedDB (vault and manifest per locale), session tokens, compare sessions, and pending tags. Migration flag dac-storage-migrated-v1 is cleared only on a full reset.",
+      "button": "Clear local data",
+      "confirm": "Clear local app data and sign out?\n\nThis removes vault cache, manifest cache, Bungie/DIM tokens, compare sessions, and pending tags from this browser.",
+      "confirmResetPrefs": "Also reset calibration preferences, dupe rules, onboarding, and the storage migration flag?\n\nChoose OK for a full reset. Cancel keeps prefs, dupe rules, onboarding, and language choice.",
+      "clearing": "Clearing…"
     }
   },
   "vault": {

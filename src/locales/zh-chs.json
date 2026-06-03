@@ -799,7 +799,10 @@
     "tagline": "对比重复护甲并排队 DIM 标签。此处不会分解任何装备。",
     "resumeSession": "恢复上次会话",
     "footerNote": "仓库经 Bungie.net。标签经 DIM。在设置中退出登录。",
-    "signInWithBungie": "使用 Bungie 登录"
+    "signInWithBungie": "使用 Bungie 登录",
+    "clearedBannerTitle": "Local data cleared",
+    "clearedBannerBody": "Do a hard refresh so the app reloads without stale bundles: Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac).",
+    "clearedBannerDismiss": "Dismiss"
   },
   "layout": {
     "aria": {
@@ -967,7 +970,13 @@
     "language": {
       "heading": "语言",
       "useBrowser": "使用浏览器语言",
-      "useBrowserHelp": "开启时，应用跟随浏览器语言。关闭时，使用下方所选语言。"
+      "useBrowserHelp": "开启时，应用跟随浏览器语言。关闭时，使用下方所选语言。",
+      "changeConfirm": {
+        "title": "Change language?",
+        "message": "Switching language refreshes Destiny game names from Bungie and reloads the app. This may take a moment.",
+        "confirm": "Yes, switch",
+        "cancel": "Cancel"
+      }
     },
     "developer": {
       "heading": "开发者",
@@ -998,6 +1007,14 @@
       "confirmClearPending": "清除全部 {{count}} 个待处理标签？它们不会应用到 DIM。",
       "confirmResetClass": "将 {{class}} 偏好重置为默认？该职业的属性权重、校准选择与学习权重将被清除。",
       "confirmResetAll": "将所有职业的偏好重置为默认？猎人、泰坦、术士的属性权重、校准选择与学习权重将被清除。重复规则及其他设置会保留。"
+    },
+    "clearLocalData": {
+      "heading": "Local data",
+      "description": "Fixes stuck locale names, bad vault cache, or bad onboarding state. Signs you out and clears IndexedDB (vault and manifest per locale), session tokens, compare sessions, and pending tags. Migration flag dac-storage-migrated-v1 is cleared only on a full reset.",
+      "button": "Clear local data",
+      "confirm": "Clear local app data and sign out?\n\nThis removes vault cache, manifest cache, Bungie/DIM tokens, compare sessions, and pending tags from this browser.",
+      "confirmResetPrefs": "Also reset calibration preferences, dupe rules, onboarding, and the storage migration flag?\n\nChoose OK for a full reset. Cancel keeps prefs, dupe rules, onboarding, and language choice.",
+      "clearing": "Clearing…"
     }
   },
   "vault": {

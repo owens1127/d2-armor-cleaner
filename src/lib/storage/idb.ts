@@ -59,6 +59,16 @@ export function idbGetAllKeys(db: IDBDatabase, store: string): Promise<string[]>
   });
 }
 
+export function deleteIndexedDb(name: string): Promise<void> {
+  if (typeof indexedDB === 'undefined') return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.deleteDatabase(name);
+    req.onsuccess = () => resolve();
+    req.onblocked = () => resolve();
+    req.onerror = () => reject(req.error ?? new Error(`IndexedDB delete failed: ${name}`));
+  });
+}
+
 export function openLegacyDb(name: string, version: number, store: string): Promise<IDBDatabase | null> {
   if (typeof indexedDB === 'undefined') return Promise.resolve(null);
   return new Promise((resolve) => {

@@ -799,7 +799,10 @@
     "tagline": "Compara armadura duplicada y encola etiquetas DIM. Aquí no se desmantela nada.",
     "resumeSession": "Reanudar sesión anterior",
     "footerNote": "Cámara vía Bungie.net. Etiquetas vía DIM. Cierra sesión en Ajustes.",
-    "signInWithBungie": "Iniciar sesión con Bungie"
+    "signInWithBungie": "Iniciar sesión con Bungie",
+    "clearedBannerTitle": "Local data cleared",
+    "clearedBannerBody": "Do a hard refresh so the app reloads without stale bundles: Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac).",
+    "clearedBannerDismiss": "Dismiss"
   },
   "layout": {
     "aria": {
@@ -967,7 +970,13 @@
     "language": {
       "heading": "Idioma",
       "useBrowser": "Usar idioma del navegador",
-      "useBrowserHelp": "Activado: la aplicación sigue el idioma del navegador. Desactivado: usa el idioma que elijas abajo."
+      "useBrowserHelp": "Activado: la aplicación sigue el idioma del navegador. Desactivado: usa el idioma que elijas abajo.",
+      "changeConfirm": {
+        "title": "¿Cambiar idioma?",
+        "message": "Al cambiar el idioma se actualizan los nombres del juego desde Bungie y se recarga la aplicación. Puede tardar un momento.",
+        "confirm": "Sí, cambiar",
+        "cancel": "Cancelar"
+      }
     },
     "developer": {
       "heading": "Desarrollador",
@@ -998,6 +1007,14 @@
       "confirmClearPending": "¿Borrar las {{count}} etiquetas pendientes? No se aplicarán en DIM.",
       "confirmResetClass": "¿Restablecer las preferencias de {{class}} por defecto? Se borrarán los pesos de estadísticas, las elecciones de calibración y los pesos aprendidos de esta clase.",
       "confirmResetAll": "¿Restablecer las preferencias de todas las clases por defecto? Se borrarán los pesos de estadísticas, las elecciones de calibración y los pesos aprendidos de Hunter, Titan y Warlock. Se conservarán las reglas de duplicados y demás ajustes."
+    },
+    "clearLocalData": {
+      "heading": "Datos locales",
+      "description": "Corrige nombres de idioma bloqueados, caché de cámara incorrecta o estado de introducción dañado. Cierra sesión y borra IndexedDB (cámara y manifiesto por idioma), tokens de sesión, sesiones de comparación y etiquetas pendientes. La marca de migración dac-storage-migrated-v1 solo se borra en un reinicio completo.",
+      "button": "Borrar datos locales",
+      "confirm": "¿Borrar los datos locales de la app y cerrar sesión?\n\nEsto elimina la caché de cámara, la caché del manifiesto, los tokens de Bungie/DIM, las sesiones de comparación y las etiquetas pendientes de este navegador.",
+      "confirmResetPrefs": "¿También restablecer preferencias de calibración, reglas de duplicados, introducción y la marca de migración de almacenamiento?\n\nAceptar para reinicio completo. Cancelar conserva preferencias, reglas de duplicados, introducción e idioma.",
+      "clearing": "Borrando…"
     }
   },
   "vault": {

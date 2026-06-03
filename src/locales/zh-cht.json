@@ -799,7 +799,10 @@
     "tagline": "對比重複護甲並排隊 DIM 標籤。此處不會分解任何裝備。",
     "resumeSession": "恢復上次工作階段",
     "footerNote": "倉庫經 Bungie.net。標籤經 DIM。在設定中登出。",
-    "signInWithBungie": "使用 Bungie 登入"
+    "signInWithBungie": "使用 Bungie 登入",
+    "clearedBannerTitle": "Local data cleared",
+    "clearedBannerBody": "Do a hard refresh so the app reloads without stale bundles: Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac).",
+    "clearedBannerDismiss": "Dismiss"
   },
   "layout": {
     "aria": {
@@ -967,7 +970,13 @@
     "language": {
       "heading": "語言",
       "useBrowser": "使用瀏覽器語言",
-      "useBrowserHelp": "開啟時，應用程式會跟隨瀏覽器語言。關閉時，使用下方選擇的語言。"
+      "useBrowserHelp": "開啟時，應用程式會跟隨瀏覽器語言。關閉時，使用下方選擇的語言。",
+      "changeConfirm": {
+        "title": "Change language?",
+        "message": "Switching language refreshes Destiny game names from Bungie and reloads the app. This may take a moment.",
+        "confirm": "Yes, switch",
+        "cancel": "Cancel"
+      }
     },
     "developer": {
       "heading": "開發者",
@@ -998,6 +1007,14 @@
       "confirmClearPending": "清除全部 {{count}} 個待處理標籤？它們不會套用到 DIM。",
       "confirmResetClass": "將 {{class}} 偏好重設為預設？該職業的屬性權重、校準選擇與學習權重將被清除。",
       "confirmResetAll": "將所有職業的偏好重設為預設？獵人、泰坦、術士的屬性權重、校準選擇與學習權重將被清除。重複規則及其他設定會保留。"
+    },
+    "clearLocalData": {
+      "heading": "Local data",
+      "description": "Fixes stuck locale names, bad vault cache, or bad onboarding state. Signs you out and clears IndexedDB (vault and manifest per locale), session tokens, compare sessions, and pending tags. Migration flag dac-storage-migrated-v1 is cleared only on a full reset.",
+      "button": "Clear local data",
+      "confirm": "Clear local app data and sign out?\n\nThis removes vault cache, manifest cache, Bungie/DIM tokens, compare sessions, and pending tags from this browser.",
+      "confirmResetPrefs": "Also reset calibration preferences, dupe rules, onboarding, and the storage migration flag?\n\nChoose OK for a full reset. Cancel keeps prefs, dupe rules, onboarding, and language choice.",
+      "clearing": "Clearing…"
     }
   },
   "vault": {

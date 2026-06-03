@@ -27,6 +27,7 @@ import { isBungieConfigured } from '@/lib/bungie/auth';
 import { getDimApiKey } from '@/lib/dim/tags';
 import { isDevBuild } from '@/lib/env';
 import { clearSession } from '@/lib/bungie/loadVault';
+import { clearLocalAppData } from '@/lib/storage/clearLocalData';
 import { clearOnboardingProgress } from '@/lib/onboarding/storage';
 import { useAuthStore, useSessionStore, useVaultStore, resetVaultStore } from '@/stores';
 import { usePrefsStore } from '@/stores';
@@ -61,6 +62,7 @@ export function SettingsPage() {
   const clearPendingTags = useSessionStore((s) => s.clearPendingTags);
   const importInputRef = useRef<HTMLInputElement>(null);
   const [importMsg, setImportMsg] = useState<string | null>(null);
+  const [clearingLocalData, setClearingLocalData] = useState(false);
 
   useEffect(() => {
     if (!location.hash) return;
@@ -88,6 +90,18 @@ export function SettingsPage() {
     setMembership(null);
     resetVaultStore();
     navigate('/');
+  }
+
+  async function handleClearLocalData() {
+    if (!confirm(t('clearLocalData.confirm'))) return;
+    const resetPrefsAndOnboarding = confirm(t('clearLocalData.confirmResetPrefs'));
+    setClearingLocalData(true);
+    try {
+      await clearLocalAppData({ resetPrefsAndOnboarding });
+      navigate('/', { state: { clearedLocalData: true }, replace: true });
+    } finally {
+      setClearingLocalData(false);
+    }
   }
 
   return (
@@ -150,6 +164,22 @@ export function SettingsPage() {
               })}
             </p>
           )}
+          <div className="mt-4 pt-4 border-t border-border">
+            <h3 className="text-xs font-semibold uppercase text-muted mb-2">
+              {t('clearLocalData.heading')}
+            </h3>
+            <p className="text-sm text-muted mb-3 leading-relaxed">
+              {t('clearLocalData.description')}
+            </p>
+            <button
+              type="button"
+              disabled={clearingLocalData}
+              onClick={() => void handleClearLocalData()}
+              className="text-sm text-danger hover:underline disabled:opacity-50"
+            >
+              {clearingLocalData ? t('clearLocalData.clearing') : t('clearLocalData.button')}
+            </button>
+          </div>
         </section>
       )}
 

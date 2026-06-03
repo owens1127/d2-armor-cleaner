@@ -799,7 +799,10 @@
     "tagline": "중복 방어구를 비교하고 DIM 태그를 대기열에 넣습니다. 여기서는 분해하지 않습니다.",
     "resumeSession": "이전 세션 이어하기",
     "footerNote": "금고는 Bungie.net, 태그는 DIM. 로그아웃은 설정에서.",
-    "signInWithBungie": "Bungie로 로그인"
+    "signInWithBungie": "Bungie로 로그인",
+    "clearedBannerTitle": "Local data cleared",
+    "clearedBannerBody": "Do a hard refresh so the app reloads without stale bundles: Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac).",
+    "clearedBannerDismiss": "Dismiss"
   },
   "layout": {
     "aria": {
@@ -967,7 +970,13 @@
     "language": {
       "heading": "언어",
       "useBrowser": "브라우저 언어 사용",
-      "useBrowserHelp": "켜면 앱이 브라우저 언어를 따릅니다. 끄면 아래에서 고른 언어를 사용합니다."
+      "useBrowserHelp": "켜면 앱이 브라우저 언어를 따릅니다. 끄면 아래에서 고른 언어를 사용합니다.",
+      "changeConfirm": {
+        "title": "Change language?",
+        "message": "Switching language refreshes Destiny game names from Bungie and reloads the app. This may take a moment.",
+        "confirm": "Yes, switch",
+        "cancel": "Cancel"
+      }
     },
     "developer": {
       "heading": "개발자",
@@ -998,6 +1007,14 @@
       "confirmClearPending": "대기 중인 태그 {{count}}개를 모두 지울까요? DIM에 적용되지 않습니다.",
       "confirmResetClass": "{{class}} 설정을 기본값으로 초기화할까요? 이 클래스의 스탯 가중치, 보정 선택, 학습 가중치가 지워집니다.",
       "confirmResetAll": "모든 클래스 설정을 기본값으로 초기화할까요? 헌터, 타이탄, 워록의 스탯 가중치, 보정 선택, 학습 가중치가 지워집니다. 중복 규칙 및 기타 설정은 유지됩니다."
+    },
+    "clearLocalData": {
+      "heading": "Local data",
+      "description": "Fixes stuck locale names, bad vault cache, or bad onboarding state. Signs you out and clears IndexedDB (vault and manifest per locale), session tokens, compare sessions, and pending tags. Migration flag dac-storage-migrated-v1 is cleared only on a full reset.",
+      "button": "Clear local data",
+      "confirm": "Clear local app data and sign out?\n\nThis removes vault cache, manifest cache, Bungie/DIM tokens, compare sessions, and pending tags from this browser.",
+      "confirmResetPrefs": "Also reset calibration preferences, dupe rules, onboarding, and the storage migration flag?\n\nChoose OK for a full reset. Cancel keeps prefs, dupe rules, onboarding, and language choice.",
+      "clearing": "Clearing…"
     }
   },
   "vault": {

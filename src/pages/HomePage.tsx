@@ -1,4 +1,5 @@
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '@/components/Layout';
 import { SignInWithBungieButton } from '@/components/SignInWithBungieButton';
@@ -8,11 +9,23 @@ import { authenticatedLandingPath } from '@/lib/nav';
 import { APP_TITLE } from '@/lib/site';
 import { useAuthStore, useSessionStore } from '@/stores';
 
+type HomeLocationState = { clearedLocalData?: boolean };
+
 export function HomePage() {
   const { t } = useTranslation('home');
   const navigate = useNavigate();
+  const location = useLocation();
   const { membership, setMembership } = useAuthStore();
   const activeNavClass = useSessionStore((s) => s.activeNavClass);
+  const [showClearedBanner, setShowClearedBanner] = useState(
+    () => (location.state as HomeLocationState | null)?.clearedLocalData === true,
+  );
+
+  useEffect(() => {
+    if ((location.state as HomeLocationState | null)?.clearedLocalData) {
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location.pathname, location.state, navigate]);
 
   if (membership) {
     return <Navigate to={authenticatedLandingPath(activeNavClass)} replace />;
@@ -32,6 +45,23 @@ export function HomePage() {
   return (
     <Layout>
       <div className="max-w-xl mx-auto py-6 sm:py-8">
+        {showClearedBanner && (
+          <div
+            className="mb-6 rounded-xl border border-accent/40 bg-surface-2/80 px-4 py-3 text-sm"
+            role="status"
+          >
+            <p className="font-medium text-white">{t('clearedBannerTitle')}</p>
+            <p className="mt-1 text-muted leading-relaxed">{t('clearedBannerBody')}</p>
+            <button
+              type="button"
+              onClick={() => setShowClearedBanner(false)}
+              className="mt-2 text-xs text-accent-dim hover:text-white"
+            >
+              {t('clearedBannerDismiss')}
+            </button>
+          </div>
+        )}
+
         <header className="mb-8">
           <h1 className="ui-heading text-3xl sm:text-4xl font-semibold tracking-tight text-white">
             {APP_TITLE}

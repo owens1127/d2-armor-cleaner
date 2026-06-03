@@ -1,8 +1,15 @@
+import i18n from 'i18next';
+import { normalizeLocale } from '@/i18n/manifestLocales';
 import { analyzeDesiredBuilds } from '@/lib/coverage/analyze';
 import type { CoverageAnalysis } from '@/lib/coverage/analyze';
 import type { BuildProfile } from '@/lib/coverage/builds';
 import { countEligibleBuildBadgesByInstance } from '@/lib/coverage/loadout';
 import type { ArmorPiece, ClassPreferenceProfile, ClassType, DupeBucket, Stat } from '@/types';
+
+/** UI manifest locale tag for vault compute cache keys (display names/icons). */
+export function vaultDisplayLocaleTag(): string {
+  return normalizeLocale(i18n.resolvedLanguage ?? i18n.language);
+}
 
 const MAX_CACHE_ENTRIES = 24;
 
@@ -28,13 +35,13 @@ function mixPiece(hash: number, piece: ArmorPiece): number {
   return h;
 }
 
-/** Vault armor fingerprint - invalidates when pieces or roll-relevant fields change. */
+/** Vault armor fingerprint - invalidates when pieces, roll fields, or display locale change. */
 export function fingerprintArmorItems(items: readonly ArmorPiece[]): string {
   let h = 0x811c9dc5;
   for (const piece of items) {
     h = mixPiece(h, piece);
   }
-  return `${items.length}:${h.toString(36)}`;
+  return `${items.length}:${vaultDisplayLocaleTag()}:${h.toString(36)}`;
 }
 
 export function fingerprintDupeBuckets(buckets: readonly DupeBucket[]): string {

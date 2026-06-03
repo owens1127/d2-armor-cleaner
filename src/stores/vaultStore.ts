@@ -496,6 +496,17 @@ export function resetVaultStore(): void {
   });
 }
 
+/** Reload dupe rules and onboarding flags from storage after a partial local clear. */
+export function reloadVaultStoreFromStorage(): void {
+  const rules = loadStoredDupeRules();
+  useVaultStore.setState({
+    globalDupeRules: rules.global,
+    strictness: rules.strictness,
+    classRuleOverrides: rules.classOverrides,
+    onboardingComplete: localStorage.getItem(LS_ONBOARDING) === 'true',
+  });
+}
+
 export function startVaultHydrate(): Promise<boolean> {
   vaultHydratePromise = (async () => {
     if (!hasActiveSession()) return false;

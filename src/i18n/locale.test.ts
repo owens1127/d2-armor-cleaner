@@ -10,6 +10,7 @@ import { dupeSuggestionReason } from '@/i18n/dupesCopy';
 import { i18n } from '@/i18n';
 import * as loadVault from '@/lib/bungie/loadVault';
 import * as manifest from '@/lib/bungie/manifest';
+import * as manifestDisplay from '@/lib/armor/manifestDisplay';
 import {
   resetManifestLocaleSyncForTests,
   syncManifestToAppLocale,
@@ -151,13 +152,18 @@ describe('manifest locale sync', () => {
     vi.spyOn(manifest, 'getLoadedManifestLocale').mockReturnValue('en');
     vi.spyOn(manifest, 'clearManifestMemoryCache').mockImplementation(() => undefined);
     vi.spyOn(loadVault, 'hasActiveSession').mockReturnValue(true);
+    const relocalize = vi
+      .spyOn(manifestDisplay, 'relocalizeVaultDisplayFromManifest')
+      .mockResolvedValue(undefined);
     const reload = vi.spyOn(manifest, 'reloadManifestForLocale');
 
     await syncManifestToAppLocale('de');
 
     expect(manifest.clearManifestMemoryCache).toHaveBeenCalled();
-    expect(loadLiveVaultMock).toHaveBeenCalledWith({ background: true });
+    expect(relocalize).toHaveBeenCalledWith('de');
+    expect(loadLiveVaultMock).toHaveBeenCalledWith({ background: true, force: true });
     expect(reload).not.toHaveBeenCalled();
+    relocalize.mockRestore();
     reload.mockRestore();
   });
 });

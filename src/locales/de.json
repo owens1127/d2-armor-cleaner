@@ -799,7 +799,10 @@
     "tagline": "Rüstungsduplikate vergleichen und DIM-Tags in die Warteschlange stellen. Hier wird nichts verschrottet.",
     "resumeSession": "Vorherige Sitzung fortsetzen",
     "footerNote": "Tresor über Bungie.net. Tags über DIM. Abmelden unter Einstellungen.",
-    "signInWithBungie": "Mit Bungie anmelden"
+    "signInWithBungie": "Mit Bungie anmelden",
+    "clearedBannerTitle": "Local data cleared",
+    "clearedBannerBody": "Do a hard refresh so the app reloads without stale bundles: Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac).",
+    "clearedBannerDismiss": "Dismiss"
   },
   "layout": {
     "aria": {
@@ -967,7 +970,13 @@
     "language": {
       "heading": "Sprache",
       "useBrowser": "Browsersprache verwenden",
-      "useBrowserHelp": "Wenn aktiv, folgt die App der Browsersprache. Wenn aus, die unten gewählte Sprache."
+      "useBrowserHelp": "Wenn aktiv, folgt die App der Browsersprache. Wenn aus, die unten gewählte Sprache.",
+      "changeConfirm": {
+        "title": "Change language?",
+        "message": "Switching language refreshes Destiny game names from Bungie and reloads the app. This may take a moment.",
+        "confirm": "Yes, switch",
+        "cancel": "Cancel"
+      }
     },
     "developer": {
       "heading": "Entwickler",
@@ -998,6 +1007,14 @@
       "confirmClearPending": "Alle {{count}} ausstehenden Tags löschen? Sie werden nicht in DIM übernommen.",
       "confirmResetClass": "{{class}}-Einstellungen auf Standard zurücksetzen? Stat-Gewichte, Kalibrierungswahl und gelernte Gewichte für diese Klasse werden gelöscht.",
       "confirmResetAll": "Einstellungen für alle Klassen auf Standard zurücksetzen? Stat-Gewichte, Kalibrierungswahl und gelernte Gewichte werden für Hunter, Titan und Warlock gelöscht. Duplikat-Regeln und andere Einstellungen bleiben erhalten."
+    },
+    "clearLocalData": {
+      "heading": "Local data",
+      "description": "Fixes stuck locale names, bad vault cache, or bad onboarding state. Signs you out and clears IndexedDB (vault and manifest per locale), session tokens, compare sessions, and pending tags. Migration flag dac-storage-migrated-v1 is cleared only on a full reset.",
+      "button": "Clear local data",
+      "confirm": "Clear local app data and sign out?\n\nThis removes vault cache, manifest cache, Bungie/DIM tokens, compare sessions, and pending tags from this browser.",
+      "confirmResetPrefs": "Also reset calibration preferences, dupe rules, onboarding, and the storage migration flag?\n\nChoose OK for a full reset. Cancel keeps prefs, dupe rules, onboarding, and language choice.",
+      "clearing": "Clearing…"
     }
   },
   "vault": {
