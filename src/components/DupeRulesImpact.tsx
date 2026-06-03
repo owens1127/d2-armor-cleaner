@@ -42,7 +42,11 @@ export function DupeRulesImpact({
       impact.buckets === 0
         ? `No duplicate groups for ${classLabel} at this tier.`
         : `About ${impact.buckets} duplicate ${groupWord} · roughly ${impact.review} ${rollWord} to compare`;
-    return <p className={`text-sm text-muted ${className}`}>{line}</p>;
+    return (
+      <p className={`text-sm text-muted min-h-[2.75rem] leading-relaxed ${className}`}>
+        {line}
+      </p>
+    );
   }
 
   return (

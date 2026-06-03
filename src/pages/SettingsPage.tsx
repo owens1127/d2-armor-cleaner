@@ -9,6 +9,14 @@ import {
 } from '@/lib/nav/hashScroll';
 import { useScrollToLocationHash } from '@/lib/nav/useScrollToLocationHash';
 import { DUPE_MIN_TIER_VALUES, DUPE_PRESETS, formatDupeMinTierLabel } from '@/lib/constants';
+import {
+  DUPE_EXCLUDE_JUNK_LABEL,
+  DUPE_GROUPING_TOGGLES,
+  DUPE_RESPECT_KEEP_FAVORITE_HELP,
+  DUPE_RESPECT_KEEP_FAVORITE_LABEL,
+  respectDimKeepFavoriteChecked,
+  respectDimKeepFavoritePatch,
+} from '@/lib/dupes/ruleUi';
 import { isBungieConfigured } from '@/lib/bungie/auth';
 import { getDimApiKey } from '@/lib/dim/tags';
 import { isDevBuild } from '@/lib/env';
@@ -25,24 +33,6 @@ import { ARCHETYPE_LABELS, CLASS_LABELS, CLASSES, STAT_LABELS, STATS } from '@/l
 import { parseImportedPrefs } from '@/lib/prefs/storage';
 import { useEffect, useRef, useState } from 'react';
 import type { ClassType } from '@/types';
-
-const DUPE_GROUPING_TOGGLES = [
-  {
-    key: 'sameArmorSet' as const,
-    label: 'Require same armor set',
-    help: 'Only group or compare pieces from the same set. Off: same slot + archetype + tertiary across all sets.',
-  },
-  {
-    key: 'sameTuningStat' as const,
-    label: 'Require same tuning stat',
-    help: 'Split by tuning stat (e.g. Weapons vs Grenade). Off: mixed tuning stats in one bucket.',
-  },
-] as const;
-
-const DUPE_TAG_TOGGLES = [
-  { key: 'ignoreTaggedKeep' as const, label: 'Ignore DIM keep / favorite' },
-  { key: 'ignoreTaggedJunk' as const, label: 'Ignore DIM junk' },
-] as const;
 
 export function SettingsPage() {
   useScrollToLocationHash();
@@ -383,22 +373,36 @@ export function SettingsPage() {
 
         <div className="rounded-xl border border-border bg-surface-2/50 p-4 space-y-3">
           <h3 className="text-xs font-semibold uppercase tracking-wide text-muted">
-            DIM tags: exclude from dupe counts
+            DIM tags when counting dupes
           </h3>
           <p className="text-xs text-muted -mt-2">
-            Tagged pieces stay visible but do not inflate dupe bucket sizes or review counts.
+            Tagged pieces stay visible but can be left out of dupe bucket sizes and review counts.
           </p>
-          {DUPE_TAG_TOGGLES.map(({ key, label }) => (
-            <label key={key} className="flex items-center gap-2 text-sm cursor-pointer">
-              <input
-                type="checkbox"
-                checked={globalDupeRules[key]}
-                onChange={(e) => setGlobalDupeRules({ [key]: e.target.checked })}
-                className="accent-accent"
-              />
-              {label}
-            </label>
-          ))}
+          <label className="flex gap-3 text-sm cursor-pointer">
+            <input
+              type="checkbox"
+              checked={respectDimKeepFavoriteChecked(globalDupeRules)}
+              onChange={(e) =>
+                setGlobalDupeRules(respectDimKeepFavoritePatch(e.target.checked))
+              }
+              className="accent-accent mt-0.5"
+            />
+            <span>
+              <span className="block">{DUPE_RESPECT_KEEP_FAVORITE_LABEL}</span>
+              <span className="block text-xs text-muted mt-0.5">
+                {DUPE_RESPECT_KEEP_FAVORITE_HELP}
+              </span>
+            </span>
+          </label>
+          <label className="flex items-center gap-2 text-sm cursor-pointer">
+            <input
+              type="checkbox"
+              checked={globalDupeRules.ignoreTaggedJunk}
+              onChange={(e) => setGlobalDupeRules({ ignoreTaggedJunk: e.target.checked })}
+              className="accent-accent"
+            />
+            {DUPE_EXCLUDE_JUNK_LABEL}
+          </label>
         </div>
 
         <div className="pt-2 border-t border-border">

@@ -4,6 +4,17 @@ import { DupeRulesImpactTabs } from '@/components/DupeRulesImpactTabs';
 import { Layout } from '@/components/Layout';
 import { OnboardingBackButton } from '@/components/onboarding/OnboardingBackButton';
 import { DUPE_PRESETS } from '@/lib/constants';
+import {
+  dupeMatchStyleCardDescription,
+  dupeMatchStyleCardHeadline,
+  dupeMatchStyleLabel,
+} from '@/lib/dupes/rules';
+import {
+  DUPE_GROUPING_TOGGLES,
+  DUPE_RESPECT_KEEP_FAVORITE_LABEL,
+  respectDimKeepFavoriteChecked,
+  respectDimKeepFavoritePatch,
+} from '@/lib/dupes/ruleUi';
 import { dupeBucketCount, groupIntoBuckets, itemsToReview } from '@/lib/dupes/group';
 import { hasActiveSession, restoreMembership, clearSession } from '@/lib/bungie/loadVault';
 import { resetBootstrapVaultLoad } from '@/lib/bungie/vaultBootstrap';
@@ -15,7 +26,7 @@ import {
   markRulesPhase,
 } from '@/lib/onboarding/storage';
 import { useAuthStore, useSessionStore, useVaultStore, resetVaultStore } from '@/stores';
-import type { DupeRuleConfig, DupeRuleSuggestion } from '@/types';
+import type { DupeRuleConfig } from '@/types';
 
 const RECOMMENDED_PRESET_ID = 'setAware';
 
@@ -23,8 +34,7 @@ function isSetAwareRules(rules: DupeRuleConfig): boolean {
   return (
     rules.sameArmorSet &&
     !rules.sameTuningStat &&
-    rules.ignoreTaggedKeep &&
-    rules.ignoreTaggedFavorite
+    !respectDimKeepFavoriteChecked(rules)
   );
 }
 
@@ -37,20 +47,12 @@ function formatImpactLine(buckets: number, review: number, classLabel = 'Hunter'
   return `About ${buckets} duplicate ${groupWord} · roughly ${review} ${rollWord} to compare (${classLabel})`;
 }
 
-function formatSuggestionImpact(impact: DupeRuleSuggestion['impact']): string {
-  const groupWord = impact.buckets === 1 ? 'group' : 'groups';
-  const rollWord = impact.itemsToReview === 1 ? 'roll' : 'rolls';
-  return `About ${impact.buckets} duplicate ${groupWord} · roughly ${impact.itemsToReview} ${rollWord} to compare`;
-}
-
 export function RulesOnboardingPage() {
   const navigate = useNavigate();
   const { membership, setMembership } = useAuthStore();
   const {
     classStates,
     globalDupeRules,
-    strictness,
-    setStrictness,
     applyPreset,
     setGlobalDupeRules,
     loadLiveVault,
@@ -104,6 +106,9 @@ export function RulesOnboardingPage() {
   const hunter = classStates.hunter;
   const suggestions = hunter?.ruleSuggestions ?? [];
   const usingRecommended = isSetAwareRules(globalDupeRules);
+  const matchStyleLabel = dupeMatchStyleLabel(globalDupeRules);
+  const matchStyleHeadline = dupeMatchStyleCardHeadline(globalDupeRules);
+  const matchStyleDescription = dupeMatchStyleCardDescription(globalDupeRules);
 
   const hunterImpact = useMemo(() => {
     if (!hunter) return null;
@@ -200,11 +205,8 @@ export function RulesOnboardingPage() {
                 : 'border-border bg-surface-2/50'
             }`}
           >
-            <p className="text-sm font-medium text-white">Start with Set-aware</p>
-            <p className="mt-1 text-sm text-muted leading-relaxed">
-              Groups duplicates by armor set · works well for most vaults. DIM keep and favorite
-              tags are ignored when picking junk.
-            </p>
+            <p className="text-sm font-medium text-white">{matchStyleHeadline}</p>
+            <p className="mt-1 text-sm text-muted leading-relaxed">{matchStyleDescription}</p>
             {hunterImpact && (
               <p className="mt-3 text-sm text-muted">
                 {formatImpactLine(hunterImpact.buckets, hunterImpact.review)}
@@ -241,99 +243,62 @@ export function RulesOnboardingPage() {
         </div>
 
         {showCustomize && (
-          <section className="mb-10 space-y-8 border-t border-border/60 pt-8">
-            {hunter && (
-              <div className="grid sm:grid-cols-3 gap-3 text-sm">
-                <SecondaryStat label="Tier 5 armor" value={hunter.profile.totalT5} />
-                <SecondaryStat
-                  label="Duplicate groups"
-                  value={hunter.buckets.filter((b) => b.hasDupes).length}
-                />
-                <SecondaryStat
-                  label="Large groups (5+)"
-                  value={hunter.profile.totalT5 > 0 ? hunter.profile.heavyBuckets : 0}
-                />
-              </div>
-            )}
-
-            <div>
-              <label className="text-xs text-muted block mb-2">
-                Match strictness: {strictness}
-              </label>
-              <input
-                type="range"
-                min={0}
-                max={100}
-                value={strictness}
-                onChange={(e) => setStrictness(Number(e.target.value))}
-                className="w-full accent-accent"
-              />
-              <div className="flex gap-2 mt-3 flex-wrap">
-                {Object.entries(DUPE_PRESETS).map(([id, { label }]) => (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => applyPreset(id)}
-                    className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
-                      id === RECOMMENDED_PRESET_ID && usingRecommended
-                        ? 'border-accent/40 bg-white/5 text-white'
-                        : 'border-border hover:bg-white/5 text-muted hover:text-white'
-                    }`}
-                  >
-                    {label}
-                  </button>
+          <section className="mb-10 space-y-6 border-t border-border/60 pt-8">
+            <div className="space-y-4">
+              <p className="text-sm text-muted">
+                Tighten or loosen what counts as a duplicate. Presets in Settings set these in one
+                click.
+              </p>
+              <p className="text-xs text-muted">
+                Match style:{' '}
+                <span className="text-white/90 font-medium">{matchStyleLabel}</span>
+              </p>
+              <div className="flex flex-col gap-3 text-sm" role="group" aria-label="Dupe rules">
+                {DUPE_GROUPING_TOGGLES.map(({ key, label }) => (
+                  <Toggle
+                    key={key}
+                    label={label}
+                    checked={globalDupeRules[key]}
+                    onChange={(v) => setGlobalDupeRules({ [key]: v })}
+                  />
                 ))}
+                <Toggle
+                  label={DUPE_RESPECT_KEEP_FAVORITE_LABEL}
+                  checked={respectDimKeepFavoriteChecked(globalDupeRules)}
+                  onChange={(v) => setGlobalDupeRules(respectDimKeepFavoritePatch(v))}
+                />
               </div>
             </div>
 
-            {suggestions.length > 0 && (
-              <div className="space-y-3">
-                <h3 className="text-xs font-medium uppercase tracking-wide text-muted">
-                  Suggestions
-                </h3>
-                {suggestions.map((s, i) => (
-                  <div key={i} className="border border-border rounded-lg p-4 bg-surface-2/50">
-                    <p className="text-sm text-white/90">{s.reason}</p>
-                    <p className="text-xs text-muted mt-2">{formatSuggestionImpact(s.impact)}</p>
-                    {s.presetId && (
-                      <button
-                        type="button"
-                        onClick={() => applyPreset(s.presetId!)}
-                        className="mt-3 text-xs text-accent-dim hover:text-white transition-colors"
-                      >
-                        Use {DUPE_PRESETS[s.presetId]?.label ?? s.presetId}
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            <div className="flex flex-col gap-3 text-sm">
-              <Toggle
-                label="Only compare same armor set"
-                checked={globalDupeRules.sameArmorSet}
-                onChange={(v) => setGlobalDupeRules({ sameArmorSet: v })}
-              />
-              <Toggle
-                label="Only compare same tuning stat"
-                checked={globalDupeRules.sameTuningStat}
-                onChange={(v) => setGlobalDupeRules({ sameTuningStat: v })}
-              />
-              <Toggle
-                label="Ignore DIM keep and favorite tags"
-                checked={globalDupeRules.ignoreTaggedKeep}
-                onChange={(v) =>
-                  setGlobalDupeRules({ ignoreTaggedKeep: v, ignoreTaggedFavorite: v })
-                }
-              />
-            </div>
-
-            <div className="rounded-xl border border-border bg-surface-2/50 p-4">
+            <div className="rounded-xl border border-border bg-surface-2/50 p-4 min-h-[9.5rem]">
               <h3 className="text-xs font-medium uppercase tracking-wide text-muted mb-3">
                 Preview by class
               </h3>
               <DupeRulesImpactTabs rules={globalDupeRules} plainLanguage />
+            </div>
+
+            <div className="min-h-[6.5rem] space-y-3" aria-live="polite">
+              {suggestions.length > 0 && (
+                <>
+                  <h3 className="text-xs font-medium uppercase tracking-wide text-muted">
+                    Suggestions
+                  </h3>
+                  {suggestions.map((s, i) => (
+                    <div key={i} className="border border-border rounded-lg p-4 bg-surface-2/50">
+                      <p className="text-sm text-white/90">{s.reason}</p>
+                      {s.presetId && (
+                        <button
+                          type="button"
+                          onClick={() => applyPreset(s.presetId!)}
+                          className="mt-3 text-xs text-accent-dim hover:text-white transition-colors"
+                        >
+                          Use {DUPE_PRESETS[s.presetId]?.label ?? s.presetId}
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           </section>
         )}
@@ -343,15 +308,6 @@ export function RulesOnboardingPage() {
         </div>
       </div>
     </Layout>
-  );
-}
-
-function SecondaryStat({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="border border-border/80 rounded-lg px-3 py-2 bg-surface-2/30">
-      <div className="text-lg font-semibold text-white tabular-nums">{value}</div>
-      <div className="text-xs text-muted">{label}</div>
-    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 import type { ClassType, DupeRuleConfig } from '@/types';
 import { migrateRedundantPrefsIntoDupeRules } from '@/lib/dupes/migrateRedundantPrefs';
-import { mergeDupeRules } from '@/lib/dupes/rules';
+import { mergeDupeRules, reconcileStrictnessWithRules } from '@/lib/dupes/rules';
 import { LS_DUPE_RULES } from '@/lib/storage/keys';
 
 export interface StoredDupeRules {
@@ -13,9 +13,10 @@ export function loadStoredDupeRules(): StoredDupeRules {
   try {
     const raw = localStorage.getItem(LS_DUPE_RULES);
     if (!raw) {
+      const global = migrateRedundantPrefsIntoDupeRules(mergeDupeRules());
       return {
-        global: migrateRedundantPrefsIntoDupeRules(mergeDupeRules()),
-        strictness: 50,
+        global,
+        strictness: reconcileStrictnessWithRules(global, 50),
         classOverrides: {},
       };
     }
@@ -24,9 +25,13 @@ export function loadStoredDupeRules(): StoredDupeRules {
       parsed.global as Partial<DupeRuleConfig> & Record<string, unknown>,
     );
     const global = migrateRedundantPrefsIntoDupeRules(mergedGlobal);
+    const strictness = reconcileStrictnessWithRules(
+      global,
+      parsed.strictness ?? 50,
+    );
     const result = {
       global,
-      strictness: parsed.strictness ?? 50,
+      strictness,
       classOverrides: parsed.classOverrides ?? {},
     };
     if (
@@ -37,9 +42,10 @@ export function loadStoredDupeRules(): StoredDupeRules {
     }
     return result;
   } catch {
+    const global = migrateRedundantPrefsIntoDupeRules(mergeDupeRules());
     return {
-      global: migrateRedundantPrefsIntoDupeRules(mergeDupeRules()),
-      strictness: 50,
+      global,
+      strictness: reconcileStrictnessWithRules(global, 50),
       classOverrides: {},
     };
   }

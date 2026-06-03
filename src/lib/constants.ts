@@ -294,6 +294,7 @@ export const DUPE_PRESETS: Record<
       sameArmorSet: false,
       sameTuningStat: false,
       ignoreTaggedKeep: false,
+      ignoreTaggedFavorite: false,
     },
   },
   standard: {

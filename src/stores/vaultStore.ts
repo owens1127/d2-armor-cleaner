@@ -12,7 +12,7 @@ import type {
   TagValue,
 } from '@/types';
 import { CLASSES, DUPE_PRESETS } from '@/lib/constants';
-import { mergeDupeRules } from '@/lib/dupes/rules';
+import { mergeDupeRules, strictnessForPreset } from '@/lib/dupes/rules';
 import { LS_ONBOARDING } from '@/lib/storage/keys';
 import { buildClassVaultState } from '@/lib/dupes/suggest';
 import { scoreAllItems } from '@/lib/scoring/score';
@@ -337,9 +337,10 @@ export const useVaultStore = create<VaultStore>((set, get) => ({
 
   setGlobalDupeRules: (partial) => {
     const globalDupeRules = mergeDupeRules({ ...get().globalDupeRules, ...partial });
-    set({ globalDupeRules });
+    const strictness = get().strictness;
+    set({ globalDupeRules, strictness });
     get().refreshClassStates();
-    const { classStates, strictness } = get();
+    const { classStates } = get();
     persistDupeRules(globalDupeRules, strictness, classStates);
   },
 
@@ -367,9 +368,12 @@ export const useVaultStore = create<VaultStore>((set, get) => ({
       set({ classRuleOverrides: newOverrides, classStates: nextStates, allItems: scored });
       persistDupeRules(globalDupeRules, strictness, nextStates);
     } else {
-      set({ globalDupeRules: rules });
+      const strictness = DUPE_PRESETS[presetId]
+        ? strictnessForPreset(presetId)
+        : get().strictness;
+      set({ globalDupeRules: rules, strictness });
       get().refreshClassStates();
-      persistDupeRules(rules, get().strictness, get().classStates);
+      persistDupeRules(rules, strictness, get().classStates);
     }
   },
 

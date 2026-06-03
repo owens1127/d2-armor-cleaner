@@ -23,7 +23,7 @@ Open **https://localhost:5173** and click **Sign in with Bungie.net**.
 4. Fill `.env` using names from `.env.example` (`VITE_D2_ARMOR_CLEANER_*`). Legacy `VITE_BUNGIE_*` / `VITE_DIM_API_KEY` still work for one release.
 5. Click **Sign in with Bungie.net**
 
-> **DIM app name:** If you registered DIM before the rename, your production API key may still be tied to an app named `vaultcleaner` (or similar). That is fine: only the origin and key matter, not the display name. No `.env` changes needed.
+> **DIM app name:** If you registered DIM before the rename, your production API key may still show an older app label in the DIM portal. That is fine: only the origin and key matter, not the display name. No `.env` changes needed.
 
 ## What's built (v0.1)
 
@@ -63,7 +63,7 @@ Connect the repo in the [Cloudflare dashboard](https://dash.cloudflare.com) (Pag
 
 - **Client-only SPA**: Vite, React 19, TypeScript, Tailwind 4, Zustand
 - **APIs**: Bungie.net (inventory) + DIM Sync (tags)
-- **Storage**: localStorage (prefs, dupe rules), sessionStorage (OAuth, clean session), IndexedDB (manifest + vault cache under `d2-armor-cleaner`). On first load after upgrade, legacy `vc-*`, `vault-cleaner-*`, and `dupewise-vault` data is copied to new keys automatically.
+- **Storage**: localStorage (prefs, dupe rules), sessionStorage (OAuth, clean session), IndexedDB (manifest + vault cache under `d2-armor-cleaner`). On first load after upgrade, `migrateStorage()` copies any data still under pre-rename keys into current `dac-*` / `d2-armor-cleaner` stores (once per browser).
 
 ## License
 

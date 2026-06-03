@@ -124,7 +124,7 @@ async function migrateIndexedDb(): Promise<void> {
   appDb.close();
 }
 
-/** Copy legacy Vault Cleaner / Dupewise storage to D2 Armor Cleaner keys (once per browser). */
+/** Copy pre-rename browser storage to D2 Armor Cleaner keys (once per browser). */
 export async function migrateStorage(): Promise<void> {
   if (typeof localStorage === 'undefined' || typeof sessionStorage === 'undefined') return;
   if (localStorage.getItem(LS_MIGRATION_FLAG) === '1') return;

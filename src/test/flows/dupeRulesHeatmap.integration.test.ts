@@ -105,6 +105,16 @@ describe('settings sameArmorSet toggle → heatmap counts', () => {
     expect(after.buckets.length).toBeGreaterThan(before.buckets.length);
   });
 
+  it('does not snap strictness when grouping rules change via checkboxes', () => {
+    const items = splitSetHelmVault();
+    seedVaultStore(items, mergeDupeRules({ sameArmorSet: false }));
+    useVaultStore.setState({ strictness: 12 });
+
+    useVaultStore.getState().setGlobalDupeRules({ sameArmorSet: true });
+
+    expect(useVaultStore.getState().strictness).toBe(12);
+  });
+
   it('excludes junk-tagged pieces from heatmap after duel junk + session tags', async () => {
     const { useSessionStore } = await import('@/stores');
     const items = splitSetHelmVault();

@@ -46,7 +46,7 @@ export const IDB_VAULT_STORE = 'snapshots';
 export const IDB_MANIFEST_STORE = 'manifest';
 export const IDB_MANIFEST_KEY = 'destiny-manifest';
 
-/** Legacy keys migrated on first load (Vault Cleaner / Dupewise). */
+/** Pre-rename storage keys; migrated once by migrateStorage(). */
 export const LEGACY = {
   lsPrefs: 'vault-cleaner-prefs',
   lsDupeRules: 'vc-dupe-rules',

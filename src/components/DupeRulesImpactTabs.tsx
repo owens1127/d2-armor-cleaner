@@ -19,15 +19,20 @@ export function DupeRulesImpactTabs({ rules, plainLanguage }: DupeRulesImpactTab
             key={c}
             type="button"
             onClick={() => setClassType(c)}
-            className={`px-3 py-1 rounded-md text-sm capitalize ${
-              classType === c ? 'bg-white/10' : 'text-muted hover:text-white'
+            aria-pressed={classType === c}
+            className={`px-3 py-1 rounded-md text-sm capitalize transition-colors ${
+              classType === c
+                ? 'bg-white/10 text-white ring-1 ring-white/20'
+                : 'text-muted hover:text-white hover:bg-white/5'
             }`}
           >
             {c}
           </button>
         ))}
       </div>
-      <DupeRulesImpact rules={rules} classType={classType} plainLanguage={plainLanguage} />
+      <div className={plainLanguage ? 'min-h-[4.5rem]' : undefined}>
+        <DupeRulesImpact rules={rules} classType={classType} plainLanguage={plainLanguage} />
+      </div>
     </div>
   );
 }
