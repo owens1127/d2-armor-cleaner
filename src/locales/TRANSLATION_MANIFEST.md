@@ -1,6 +1,6 @@
 # Translation manifest (English source)
 
-English JSON under `src/locales/en/` is the single source of truth before per-locale translation subagents run.
+English JSON in `src/locales/en.json` is the single source of truth before per-locale translation subagents run.
 
 ## Namespace key counts
 
@@ -31,15 +31,15 @@ Registered in `src/i18n/resources.ts` and loaded in `src/i18n/index.ts` / `src/i
 
 ## Translator instructions
 
-1. Copy `src/locales/en/<namespace>.json` to `src/locales/<locale>/<namespace>.json` for each manifest locale (`de`, `es`, `es-mx`, `fr`, `it`, `ja`, `ko`, `pl`, `pt-br`, `ru`, `zh-chs`, `zh-cht`).
-2. Translate string values only; keep JSON keys identical.
+1. Copy `src/locales/en.json` to `src/locales/<locale>.json` for each manifest locale (`de`, `es`, `es-mx`, `fr`, `it`, `ja`, `ko`, `pl`, `pt-br`, `ru`, `zh-chs`, `zh-cht`).
+2. Translate string values only; keep JSON keys and top-level namespace structure identical.
 3. Do **not** translate:
    - Interpolation tokens: `{{name}}`, `{{count}}`, `<1>...</1>` (i18next / Trans component markup).
    - Destiny proper nouns and armor set names from the Bungie manifest (in-game item names stay as returned by the API).
    - DIM query syntax (`id:`, `tag:junk`, etc.).
 4. Game terms in `CLASS_LABELS`, `STAT_LABELS`, `ARCHETYPE_LABELS`, `SLOT_LABELS` in `src/lib/constants.ts` may remain English until a dedicated `game.json` expansion; UI chrome around them should use locale files.
 5. Plural keys use i18next suffixes (`_one`, `_other`) where present (e.g. `onboarding:piece_one`).
-6. After translating a locale, register full namespace imports in `src/i18n/resources.ts` (stub locales currently ship `common` only, plus `es` `home`).
+6. After translating a locale, run `node scripts/sync-locale-keys.mjs` so new English keys propagate; `src/i18n/resources.ts` loads all `src/locales/*.json` via glob.
 
 ## Lib copy helpers (non-React)
 

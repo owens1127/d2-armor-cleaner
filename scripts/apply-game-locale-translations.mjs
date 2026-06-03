@@ -265,11 +265,14 @@ PATCHES['zh-cht'].game.diff.noSet = '無套裝';
 for (const locale of LOCALES) {
   const patch = PATCHES[locale];
   if (!patch) continue;
+  const filePath = path.join(LOCALES_DIR, `${locale}.json`);
+  const bundle = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   for (const [namespace, data] of Object.entries(patch)) {
-    const filePath = path.join(LOCALES_DIR, locale, `${namespace}.json`);
-    const existing = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    deepMerge(existing, data);
-    fs.writeFileSync(filePath, `${JSON.stringify(existing, null, 2)}\n`, 'utf8');
+    if (!bundle[namespace] || typeof bundle[namespace] !== 'object') {
+      bundle[namespace] = {};
+    }
+    deepMerge(bundle[namespace], data);
   }
+  fs.writeFileSync(filePath, `${JSON.stringify(bundle, null, 2)}\n`, 'utf8');
   console.log(`Applied game/duel: ${locale}`);
 }

@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import { resources, SUPPORTED_LOCALES, type AppNamespaces } from './resources';
+import { resources, SUPPORTED_LOCALES } from './resources';
 
 const SOURCE_LOCALE = 'en';
 const MAX_MISSING_KEYS_IN_MESSAGE = 25;
 
-const localeJsonModules = import.meta.glob('../locales/*/*.json', {
+const localeJsonModules = import.meta.glob('../locales/*.json', {
   eager: true,
 }) as Record<string, { default: unknown }>;
 
-function localeNamespaceKey(locale: string, namespace: string): string {
-  return `../locales/${locale}/${namespace}.json`;
+function localeFileKey(locale: string): string {
+  return `../locales/${locale}.json`;
 }
 
 function flattenKeys(value: unknown, prefix = ''): string[] {
@@ -38,42 +38,32 @@ function formatMissingKeys(keys: string[]): string {
 }
 
 describe('locale completeness', () => {
-  it('defines every English key for each supported locale and namespace', () => {
-    const namespaces = Object.keys(resources.en) as AppNamespaces[];
-    const enKeysByNamespace = Object.fromEntries(
-      namespaces.map((namespace) => {
-        const moduleKey = localeNamespaceKey(SOURCE_LOCALE, namespace);
-        const enJson = localeJsonModules[moduleKey]?.default;
-        expect(enJson, `missing English namespace file: ${namespace}.json`).toBeDefined();
-        return [namespace, flattenKeys(enJson).sort()];
-      }),
-    ) as Record<AppNamespaces, string[]>;
+  it('defines every English key for each supported locale', () => {
+    const enBundle = localeJsonModules[localeFileKey(SOURCE_LOCALE)]?.default;
+    expect(enBundle, 'missing English locale file: en.json').toBeDefined();
+    const enKeys = flattenKeys(enBundle).sort();
 
     const failures: string[] = [];
 
     for (const locale of SUPPORTED_LOCALES) {
-      for (const namespace of namespaces) {
-        const expectedKeys = enKeysByNamespace[namespace];
-        const moduleKey = localeNamespaceKey(locale, namespace);
-        const localeJson = localeJsonModules[moduleKey]?.default;
+      const moduleKey = localeFileKey(locale);
+      const localeBundle = localeJsonModules[moduleKey]?.default;
 
-        if (localeJson === undefined) {
-          failures.push(
-            `${locale}/${namespace}.json: file missing (${expectedKeys.length} keys expected from en)`,
-          );
-          continue;
-        }
+      if (localeBundle === undefined) {
+        failures.push(`${locale}.json: file missing (${enKeys.length} keys expected from en)`);
+        continue;
+      }
 
-        const localeKeys = new Set(flattenKeys(localeJson));
-        const missing = expectedKeys.filter((key) => !localeKeys.has(key));
-        if (missing.length > 0) {
-          failures.push(
-            `${locale}/${namespace}.json: missing ${missing.length} key(s): ${formatMissingKeys(missing)}`,
-          );
-        }
+      const localeKeys = new Set(flattenKeys(localeBundle));
+      const missing = enKeys.filter((key) => !localeKeys.has(key));
+      if (missing.length > 0) {
+        failures.push(
+          `${locale}.json: missing ${missing.length} key(s): ${formatMissingKeys(missing)}`,
+        );
       }
     }
 
     expect(failures, failures.join('\n')).toEqual([]);
+    expect(Object.keys(resources.en).length).toBeGreaterThan(0);
   });
 });

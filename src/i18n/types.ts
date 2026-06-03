@@ -1,8 +1,8 @@
-import type { resources } from './resources';
+import type enBundle from '../locales/en.json';
 
 declare module 'i18next' {
   interface CustomTypeOptions {
     defaultNS: 'common';
-    resources: (typeof resources)['en'];
+    resources: typeof enBundle;
   }
 }

@@ -1,5 +1,5 @@
 /**
- * Deep-merge missing keys from en into other locale namespace files.
+ * Deep-merge missing keys from en.json into other locale files.
  * Existing translations are preserved; only missing keys get English fallbacks.
  */
 import fs from 'fs';
@@ -39,24 +39,17 @@ function deepMergeMissing(target, source) {
   return target;
 }
 
-const enDir = path.join(LOCALES_DIR, SOURCE);
-const namespaces = fs.readdirSync(enDir).filter((f) => f.endsWith('.json'));
+const enPath = path.join(LOCALES_DIR, `${SOURCE}.json`);
+const enJson = JSON.parse(fs.readFileSync(enPath, 'utf8'));
 
 for (const locale of TARGET_LOCALES) {
-  const localeDir = path.join(LOCALES_DIR, locale);
-  if (!fs.existsSync(localeDir)) fs.mkdirSync(localeDir, { recursive: true });
-
-  for (const file of namespaces) {
-    const enPath = path.join(enDir, file);
-    const targetPath = path.join(localeDir, file);
-    const enJson = JSON.parse(fs.readFileSync(enPath, 'utf8'));
-    let targetJson = {};
-    if (fs.existsSync(targetPath)) {
-      targetJson = JSON.parse(fs.readFileSync(targetPath, 'utf8'));
-    }
-    deepMergeMissing(targetJson, enJson);
-    fs.writeFileSync(targetPath, `${JSON.stringify(targetJson, null, 2)}\n`, 'utf8');
+  const targetPath = path.join(LOCALES_DIR, `${locale}.json`);
+  let targetJson = {};
+  if (fs.existsSync(targetPath)) {
+    targetJson = JSON.parse(fs.readFileSync(targetPath, 'utf8'));
   }
+  deepMergeMissing(targetJson, enJson);
+  fs.writeFileSync(targetPath, `${JSON.stringify(targetJson, null, 2)}\n`, 'utf8');
 }
 
-console.log(`Synced ${namespaces.length} namespaces into ${TARGET_LOCALES.length} locales.`);
+console.log(`Synced en.json into ${TARGET_LOCALES.length} locales.`);

@@ -1,0 +1,1017 @@
+{
+  "autoFilters": {
+    "title": "Автофильтры",
+    "intro": "Автоматически ставить в очередь метки junk при загрузке или обновлении хранилища. Keep и favorite никогда не помечаются автоматически.",
+    "noRules": "Правил пока нет.",
+    "addRule": "Добавить правило",
+    "classLabel": "Класс",
+    "operatorsIntro": "Каждый фильтр может быть <1>Is</1>, <2>Is not</2>, <3>Any of</3> или <4>None of</4> (например, junk-части Hunter, чей архетип не Gunner).",
+    "rulesHeading": "Regeln",
+    "rulesBody": "Passende Teile werden in der Übersicht als Müll in die Warteschlange gestellt (wie manuelles Müll-Tagging). Keeps werden nie automatisch getaggt: DIM keep/Favorit, ausstehendes Keep oder Teile aus einem Duell-Bucket.",
+    "deleteRule": "Löschen",
+    "allClasses": "Alle Klassen",
+    "archetypeLabel": "Archetyp",
+    "tertiaryStatLabel": "Tertiärwert",
+    "tuningStatLabel": "Tuningwert",
+    "slotLabel": "Slot",
+    "armorSetLabel": "Rüstungsset",
+    "any": "Beliebig",
+    "addValue": "Wert hinzufügen…",
+    "pickValue": "Wert wählen…",
+    "matchMode": "Abgleichmodus",
+    "matchModeDisabled": "Abgleichmodus (zuerst einen Wert wählen)",
+    "operators": {
+      "is": "Ist",
+      "isNot": "Ist nicht",
+      "anyOf": "Eines von",
+      "noneOf": "Keines von"
+    },
+    "livePreview_one": "Live-Vorschau: {{count}} Teil würde beim nächsten Tresor-Laden in die Warteschlange (ohne Keeps, Favoriten und bereits als Müll markierte).",
+    "livePreview_other": "Live-Vorschau: {{count}} Teile würden beim nächsten Tresor-Laden in die Warteschlange (ohne Keeps, Favoriten und bereits als Müll markierte).",
+    "setFallback": "Set {{hash}}",
+    "addRuleHeading": "Regel hinzufügen",
+    "enableRule": "Regel aktivieren: {{label}}",
+    "disableRule": "Regel deaktivieren: {{label}}",
+    "removeValue": "{{label}} entfernen",
+    "describe": {
+      "allClasses": "Alle Klassen",
+      "tertiary": "{{stat}} Tertiär",
+      "tuning": "{{stat}} Tuning",
+      "setFallback": "Set {{hash}}",
+      "anyOf": "eines von {{labels}}",
+      "noneOf": "keines von {{labels}}",
+      "not": "NICHT {{label}}"
+    }
+  },
+  "browse": {
+    "title": "Обзор брони {{class}}",
+    "summary": "{{filtered}} из {{total}} предметов · {{sortLabel}}",
+    "redundantLink": "{{count}} избыточных роллов",
+    "loadVaultFirst": "Сначала загрузите хранилище с панели.",
+    "filters": {
+      "slot": "Слот",
+      "archetype": "Архетип",
+      "search": "Поиск",
+      "armorSet": "Сет брони",
+      "dimTag": "Метка DIM",
+      "sort": "Сортировка",
+      "combo": "Комбо",
+      "allSlots": "Все слоты",
+      "allArchetypes": "Все архетипы",
+      "allSets": "Все сеты",
+      "any": "Любой",
+      "anyCombo": "Любое комбо",
+      "armorNamePlaceholder": "Название брони…",
+      "statLowerOnly": "Только ниже по статам",
+      "dupesOnly": "Только дубликаты",
+      "strictlyLowerOnly": "Только строго ниже",
+      "redundantOnly": "Только избыточные роллы",
+      "supportsComboOnly": "Только под комбо"
+    },
+    "dimTags": {
+      "untagged": "Без метки",
+      "keep": "Keep",
+      "junk": "Junk",
+      "favorite": "Favorite",
+      "infuse": "Infuse",
+      "archive": "Archive"
+    },
+    "sort": {
+      "matchDesc": "Совпадение % (выс. → низ.)",
+      "matchAsc": "Совпадение % (низ. → выс.)",
+      "preference": "Предпочтение",
+      "buildFitDesc": "Под комбо (выс. → низ.)",
+      "matchDescHint": "по совпадению % (сначала наиболее подходящие)",
+      "matchAscHint": "по совпадению % (сначала наименее подходящие)",
+      "buildFitHint": "по соответствию комбо",
+      "preferenceHint": "по предпочтению"
+    },
+    "copyIds": "Скопировать {{count}} id: в запросе",
+    "copied": "Скопировано!",
+    "reviewTagsLink": "Проверить метки сравнения/триажа ({{count}})",
+    "redundant": {
+      "pickOne": "Выберите один для сохранения",
+      "noRedundant": "Нет избыточных роллов",
+      "noMatches": "Нет совпадений",
+      "noMatchFilters": "No redundant rolls match the current filters.",
+      "noneToShow": "No redundant rolls to show."
+    },
+    "noItemsMatch": "No items match these filters.",
+    "backToDashboard": "Back to dashboard",
+    "dupeBadge": "dupe"
+  },
+  "build": {
+    "title": "Комбо {{class}}",
+    "intro": "Лучшие предметы из хранилища для каждой цели ролла в вашем комбо.",
+    "combosHeading": "Комбо",
+    "setBonuses": "Бонусы сета",
+    "setBonusesOptional": "Бонусы сета (необязательно)",
+    "includeInCoverage": "Включить в покрытие",
+    "comboNameAria": "Название комбо",
+    "maxCombos": "Максимум {{max}} комбо на класс.",
+    "orderLabel": "Reihenfolge:",
+    "noneOption": "Keine",
+    "twoTwoMix": " · 2+2 Mix",
+    "editor": {
+      "intro": "Wähle 2–4 Werte in Reihenfolge und optionale Set-Boni (z. B. Ferropotent 2pc + Smoke Jumper 2pc). Wir empfehlen das beste Teil pro Slot für Werte und Sets.",
+      "unsavedHint": "Ungespeicherte Änderungen · speichern oder abbrechen für die Leseansicht.",
+      "editingHint": "Combo bearbeiten · nach Abschluss speichern oder abbrechen.",
+      "allSavedHint": "Alle Combos gespeichert · Bearbeiten auf einer Karte zum Ändern.",
+      "emptyList": "Keine Combos für diese Klasse. Unten hinzufügen für Roll-Empfehlungen und Sortierung.",
+      "unsaved": "Ungespeichert",
+      "saved": "Gespeichert",
+      "on": "An",
+      "off": "Aus",
+      "edit": "Bearbeiten",
+      "remove": "Entfernen",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "addStat": "Wert hinzufügen",
+      "priority1": "1. Priorität",
+      "priority2": "2. Priorität",
+      "priority3": "3. Priorität",
+      "priority4": "4. Priorität",
+      "priorityN": "Priorität {{n}}",
+      "setBonus2pc": "2er-Bonus",
+      "setBonus4pcSame": "Gleiches Set (4pc)",
+      "setBonus4pcMix": "Zweites Set (2pc Mix) oder 4pc",
+      "setBonusHint": "Ein Set für 2pc, dann dasselbe für 4pc oder ein zweites Set für 2+2 Mix.",
+      "loadVaultForSets": "Tresor laden, um Sets aus dem Inventar zu wählen.",
+      "firstSet2pc": "Erstes Set (2pc)",
+      "twoPcOnly": "Nur 2pc (erstes Set)",
+      "set4pcSuffix": "{{name}} (4pc)",
+      "set2pcMixSuffix": "{{name}} (2pc Mix)",
+      "targetLabel": "Ziel:",
+      "addStatCount": "+ Wert ({{current}}/{{max}})",
+      "addCombo": "Combo hinzufügen",
+      "addAnotherCombo": "Weitere Combo",
+      "viewCoverageLink": "{{class}}-Combo-Abdeckung anzeigen"
+    },
+    "coverage": {
+      "heading": "Deine Combos",
+      "intro": "Bestes Teil pro Slot für jedes optimale Roll-Muster (Archetyp + Tertiär + Tuning)",
+      "empty": "Noch keine Combos. 2–4 Wert-Prioritäten im Combos-Bereich unten hinzufügen.",
+      "editCombos": "Combos bearbeiten",
+      "setPrioritiesHint": "Wert-Prioritäten setzen, um Roll-Ziele zu sehen",
+      "recommendedHeading": "Empfohlene Teile",
+      "recommendedHint": "DIM-Tags und Suche für das Raster unten",
+      "browseVault": "Tresor durchsuchen",
+      "setTarget": "Set-Ziel:",
+      "vaultPiecesShort": "nicht genug Tresor-Teile",
+      "conflictingSets": "Diese Set-Ziele brauchen mehr als fünf Teile · Combo anpassen.",
+      "showRollDetails": "Roll-Details anzeigen",
+      "hideRollDetails": "Roll-Details ausblenden",
+      "tagAll": "Alle taggen:",
+      "bulkNoTaggable": "Keine taggbaren Teile",
+      "bulkClearKeep": "Keep bei allen entfernen",
+      "bulkMarkKeep": "Alle als Keep",
+      "bulkAllFavorited": "Alle favorisiert",
+      "bulkMarkFavorite": "Alle favorisieren",
+      "bulkClearJunk": "Müll bei allen entfernen",
+      "bulkMarkJunk": "Alle als Müll",
+      "tagKeep": "Keep in DIM taggen",
+      "tagKeepRemove": "Keep-Tag in DIM entfernen",
+      "tagFavorite": "Favorit in DIM",
+      "tagFavoriteAlready": "Bereits in DIM favorisiert",
+      "tagJunk": "Müll in DIM",
+      "tagJunkRemove": "Müll-Tag in DIM entfernen",
+      "choose": "Wählen",
+      "chooseSlot": "{{slot}} wählen",
+      "choosePiece": "Teil wählen · {{count}} passend",
+      "eligible_one": "{{count}} passendes Teil",
+      "eligible_other": "{{count}} passende Teile",
+      "anyArchetype": "Beliebiger Archetyp",
+      "tier": "Stufe {{tier}}",
+      "comboFallback": "Combo",
+      "rollRoleCombined": "Tertiär + Tuning",
+      "rollRoleTertiary": "Tertiär",
+      "rollRoleTuning": "Tuning",
+      "notComboPriority": "{{stat}} · keine Combo-Priorität",
+      "archetypeBonus": "{{stat}} vom Archetyp (+{{bonus}})",
+      "rollCombinedTitle": "{{stat}} Tertiär+Tuning (+{{tertiaryBonus}} +{{tuningBonus}})",
+      "rollTertiaryTitle": "{{stat}} Tertiär (+{{bonus}})",
+      "rollTuningTitle": "{{stat}} Tuning (+{{bonus}})",
+      "detailsSupporting": "{{count}} Tresor-Teile rollen mindestens eine Priorität.",
+      "detailsProfiles": "{{filled}} von {{possible}} möglichen Roll-Typen sind im Tresor.",
+      "detailsRedundantOverlap": "Leere Slots trotz Redundanz · Füllen vor mehr Duplikaten.",
+      "gapsHeading": "Roll-Typen zum Farmen",
+      "gapsIntro": "Leere Kombinationen, die dieser Combo helfen.",
+      "gapsEmpty": "Nichts Offensichtliches fehlt in der Matrix.",
+      "overlapsHeading": "Roll-Typen mit vielen Duplikaten",
+      "overlapsIntro": "Drei oder mehr Teile in derselben Kombination.",
+      "overlapsEmpty": "Keine schweren Duplikate in einem Roll-Typ.",
+      "overlapCount_one": "{{count}} Teil",
+      "overlapCount_other": "{{count}} Teile",
+      "gapAllPriorities": "alle Prioritäten",
+      "gapMultiplePriorities": "mehrere Prioritäten",
+      "gapOnePriority": "eine Priorität",
+      "chooseEligibleTitle": "{{count}} passende Teile im Tresor"
+    }
+  },
+  "calibrate": {
+    "title": "Калибровка предпочтений",
+    "calibratingClass": "Калибровка {{class}}.",
+    "choicesSaved_one": "Сохранён 1 выбор",
+    "choicesSaved_other": "Сохранено выборов: {{count}}",
+    "steps": {
+      "class": "Класс",
+      "archetype": "Архетипы",
+      "tertiary": "Третичные статы",
+      "tuning": "Статы тюнинга",
+      "sets": "Сеты брони"
+    },
+    "stepHeader": "Шаг {{current}} из {{total}} · {{step}}",
+    "classTitle": "Какой класс калибруете?",
+    "archetypeTitle": "Ранжируйте архетипы по предпочтению",
+    "archetypeInstruction": "Самые предпочтительные сверху. Перетаскивайте строки или используйте стрелки. Все шесть архетипов в списке; наличие в хранилище не ограничивает список.",
+    "tertiaryTitle": "Ранжируйте третичные статы",
+    "tuningTitle": "Ранжируйте статы тюнинга",
+    "setsTitle": "Ранжируйте сеты брони по предпочтению",
+    "skipAllArchetypes": "Пропустить все архетипы",
+    "showBonusDetails": "Показать детали бонусов",
+    "bonusUnavailable": "Детали бонусов недоступны",
+    "noSetBonuses": "Бонусы сета не указаны",
+    "continue": "Continue",
+    "goToDashboard": "Go to dashboard",
+    "noArmorSets": "No armor sets to compare.",
+    "savedNextStep": "Saved · Next step",
+    "skipTertiaryArchetype": "Skip {{archetype}} tertiary",
+    "skipTertiaryStats": "Skip tertiary stats",
+    "skipTuningArchetype": "Skip {{archetype}} tuning",
+    "skipTuningStats": "Skip tuning stats",
+    "skipArmorSets": "Skip armor sets",
+    "nextArchetype": "Next archetype",
+    "setsInstruction": "Most preferred at the top. Sets from your vault, ordered by how many pieces you own. Drag to reorder or use arrow buttons.",
+    "contextSetPrefs": "Armor set preferences",
+    "unknownSet": "Unknown set",
+    "rankTheseStats": "Rank these stats:",
+    "dragRowsHint": "Drag rows or use the arrows. Most important at the top.",
+    "archetypeProgress": "{{current}} of {{total}} archetypes"
+  },
+  "common": {
+    "language": "Язык",
+    "languageEn": "English",
+    "languageFr": "Français",
+    "languageEs": "Español",
+    "languageEsMx": "Español (México)",
+    "languageDe": "Deutsch",
+    "languageIt": "Italiano",
+    "languageJa": "日本語",
+    "languageKo": "한국어",
+    "languagePl": "Polski",
+    "languagePtBr": "Português (Brasil)",
+    "languageRu": "Русский",
+    "languageZhChs": "简体中文",
+    "languageZhCht": "繁體中文",
+    "continue": "Продолжить",
+    "save": "Сохранить",
+    "back": "Назад",
+    "skip": "Пропустить",
+    "signOut": "Выйти",
+    "retry": "Повторить",
+    "retrying": "Повтор…",
+    "pleaseWait": "Подождите",
+    "copied": "Скопировано!",
+    "none": "Нет",
+    "configured": "настроено",
+    "notConfigured": "не настроено",
+    "developer": "Разработчик",
+    "openReviewPage": "Открыть страницу проверки",
+    "clearPendingTags": "Очистить ожидающие метки",
+    "exportPrefs": "Экспорт настроек",
+    "importPrefs": "Импорт настроек",
+    "preferencesImported": "Настройки импортированы.",
+    "invalidPrefsFile": "Неверный файл настроек.",
+    "topStats": "Лучшие статы:",
+    "topArchetypes": "Лучшие архетипы:",
+    "recalibrateClass": "Перекалибровать {{class}}",
+    "resetClassPrefs": "Сбросить настройки {{class}}",
+    "resetAllClasses": "Сбросить все классы",
+    "confirm": {
+      "clearPendingTags": "Очистить все {{count}} ожидающих меток? Они не будут применены в DIM.",
+      "resetClassPrefs": "Сбросить настройки {{class}} по умолчанию? Веса статов, выбор калибровки и обученные веса для этого класса будут удалены.",
+      "resetAllClassPrefs": "Сбросить настройки всех классов по умолчанию? Веса статов, выбор калибровки и обученные веса будут удалены для Hunter, Titan и Warlock. Правила дубликатов и другие настройки сохранятся."
+    },
+    "classPrefs": {
+      "heading": "Настройки {{class}}",
+      "usingClass": "Используется {{class}} (смените класс в шапке). Веса статов и архетипов по классам из калибровки. Правила дубликатов общие, если не переопределены для класса.",
+      "calibrations": "{{count}} калибровок · уверенность {{confidence}}"
+    },
+    "reviewTags": {
+      "heading": "Проверка меток",
+      "queued_one": "{{count}} метка в очереди на применение в DIM.",
+      "queued_other": "{{count}} меток в очереди на применение в DIM.",
+      "none": "Нет ожидающих меток."
+    },
+    "dev": {
+      "dimKeyHint": "Локальный ключ DIM: POST на api.destinyitemmanager.com/new_app с origin {{origin}}."
+    },
+    "dimCopy": {
+      "queryFor": "DIM-Abfrage für {{name}} kopieren",
+      "queryCopied": "DIM-Abfrage für {{name}} in die Zwischenablage kopiert.",
+      "searchShown": "DIM-Suche für angezeigte Teile kopieren",
+      "searchShownCopied": "DIM-Suche für angezeigte Teile kopiert.",
+      "searchGroup": "DIM-Suche für alle {{count}} Teile in dieser Gruppe kopieren",
+      "searchGroupCopied": "DIM-Suche für alle {{count}} Teile in dieser Gruppe kopiert."
+    }
+  },
+  "dashboard": {
+    "title": "Хранилище {{class}}",
+    "summary": "{{tieredCount}} брони {{class}} с уровнем · {{dupeScopeCount}} {{minTierLabel}} в области дубликатов · {{buckets}} корзин · ~{{review}} решений",
+    "customDupeRules": "· свои правила дубликатов",
+    "tieredAccount": "· {{count}} брони с уровнем (аккаунт)",
+    "customRulesBanner": "Для {{class}} свои правила дубликатов",
+    "nextSteps": "Дальше",
+    "browseAllArmor": "Обзор всей брони",
+    "redundantRolls": "Избыточные роллы ({{count}})",
+    "refreshVault": "Обновить хранилище",
+    "armorView": "Вид брони",
+    "archetypeView": "Вид архетипов",
+    "heatmapSlot": "Слот теплокарты",
+    "allSlots": "Все слоты",
+    "insights": {
+      "continueSetup": {
+        "title": "Продолжить настройку",
+        "detail": "Завершите калибровку, чтобы подсказки по хранилищу соответствовали приоритетам",
+        "cta": "Продолжить"
+      },
+      "continueCalibration": {
+        "title": "Продолжить калибровку",
+        "detail": "Продолжите с того места, где остановились",
+        "cta": "Продолжить"
+      },
+      "calibratePreferences": {
+        "title": "Калибровка предпочтений",
+        "detail": "Задайте приоритеты статов, архетипов и сетов для этого класса",
+        "cta": "Калибровать"
+      },
+      "completeCalibration": {
+        "title": "Завершить калибровку",
+        "detail": "Низкая уверенность · ещё несколько выборов улучшат подсказки по дубликатам и комбо",
+        "cta": "Калибровать"
+      },
+      "improveCalibration": {
+        "title": "Улучшить калибровку",
+        "detail": "Средняя уверенность · больше выборов улучшит ранжирование и подсказки по покрытию",
+        "cta": "Калибровать"
+      },
+      "recalibrateStale": {
+        "title": "Перекалибровать предпочтения",
+        "detail": "Последняя калибровка была давно · роллы в хранилище могли измениться",
+        "cta": "Перекалибровать"
+      },
+      "recalibrateDefault": {
+        "title": "Перекалибровать предпочтения",
+        "detail": "Обновляйте веса статов, архетипов и сетов для класса в любое время",
+        "cta": "Перекалибровать"
+      },
+      "setupAutoFilters": {
+        "title": "Настроить автофильтры",
+        "detail": "Ставить метки junk при загрузке хранилища для роллов, которые не хотите оставлять",
+        "cta": "Настроить фильтры"
+      },
+      "setupCombos": {
+        "title": "Настроить комбо",
+        "detail": "Выберите 2–4 приоритетных стата на комбо · {{countLabel}}",
+        "cta": "Настроить комбо"
+      },
+      "addAnotherCombo": {
+        "title": "Добавить комбо",
+        "detail": "Комбо: {{countLabel}} · добавьте ещё 1",
+        "cta": "Добавить комбо"
+      },
+      "addMoreCombos": {
+        "title": "Добавить комбо",
+        "detail": "{{countLabel}} · добавьте ещё {{remaining}}",
+        "cta": "Добавить комбо"
+      },
+      "fixCoverage": {
+        "title": "Исправить покрытие: {{label}}",
+        "cta": "Открыть комбо"
+      },
+      "browseUpgrades": {
+        "title": "Искать улучшения: {{label}}",
+        "cta": "Обзор хранилища"
+      },
+      "compareLargest": {
+        "title": "Сравнить: {{label}}",
+        "detail": "{{count}} предметов в самой большой корзине дубликатов",
+        "cta": "Сравнить эту группу"
+      },
+      "redundantRolls": {
+        "title": "Проверить избыточные роллы",
+        "detail_one": "{{count}} предмет строго хуже другого ролла, который вы оставляете",
+        "detail_other": "{{count}} предметов строго хуже другого ролла, который вы оставляете",
+        "cta": "Открыть список"
+      },
+      "taggedKeep": {
+        "title": "Проверить дубликаты с метками DIM",
+        "detail_one": "{{count}} кандидат в дубликаты уже с меткой keep или favorite в DIM",
+        "detail_other": "{{count}} кандидатов в дубликаты уже с меткой keep или favorite в DIM",
+        "cta": "Обзор хранилища"
+      },
+      "heavyBuckets": {
+        "title": "Разобрать тяжёлые корзины",
+        "detail_one": "{{count}} корзина с 5+ предметами. Используйте теплокарту, чтобы выбрать один.",
+        "detail_other": "{{count}} корзин с 5+ предметами. Используйте теплокарту, чтобы выбрать один.",
+        "cta": "Сравнить дубликаты"
+      },
+      "fixCoverageNoVault": "В хранилище пока нет брони с вашими приоритетными статами",
+      "fixCoverageNeedSlot": "Нужен {{slot}} с вашими приоритетами",
+      "fixCoverageSlots": "Заполнено слотов в рекомендуемом лоадауте: {{filled}}/{{total}}",
+      "browseNoArmor": "В хранилище пока нет брони с этими статами",
+      "browseGaps": "{{count}} тип ролла для поиска лучшего соответствия",
+      "browseGaps_other": "{{count}} типов роллов для поиска лучшего соответствия",
+      "browseCompare": "Сравнить броню в хранилище с вашими комбо"
+    },
+    "buildLink": {
+      "title": "Ваши комбо"
+    },
+    "coverage": {
+      "yourCombos": "Ваши комбо",
+      "setPriorities": "Задайте приоритеты статов в комбо, чтобы увидеть цели роллов",
+      "recommendedPieces": "Рекомендуемые предметы",
+      "rollTypesHunt": "Типы роллов для поиска",
+      "nothingMissing": "В матрице ничего очевидно не пропущено.",
+      "rollTypesMany": "Типы роллов, которых у вас много",
+      "noHeavyDuplicates": "Нет тяжёлых дубликатов одного типа ролла.",
+      "tagAll": "Пометить все:",
+      "choose": "Choose",
+      "chooseSlotAria": "Choose {{slot}}",
+      "choosePieceAria": "Choose piece · {{count}} eligible",
+      "supportingPieces": "<1>{{count}}</1> pieces in your vault roll at least one priority stat.",
+      "filledProfiles": "<1>{{filled}}</1> of <2>{{total}}</2> roll types you could own (archetype + tertiary + slot) are in your vault.",
+      "redundantOverlap": "Empty slots remain despite redundant rolls. Prioritize fills over more dupes.",
+      "gapsIntro": "Empty combinations that would help this combo.",
+      "overlapsIntro": "Three or more pieces in the same combination.",
+      "piecesCount": "{{count}} pieces",
+      "orderLabel": "Order:"
+    }
+  },
+  "duel": {
+    "title": "Сравнение дубликатов {{class}}",
+    "subtitle": {
+      "wrapUp": "Проверьте эту группу, затем продолжите",
+      "bucketMeta": "{{slot}} · {{archetype}} · {{tertiary}} · {{count}} предметов",
+      "bucketProgress": "{{meta}} · {{progress}}",
+      "noDupes": "Нет дубликатов брони для сравнения у этого класса",
+      "chooseGroup": "Выберите группу дубликатов для начала",
+      "startingNext": "Запуск следующей группы дубликатов…"
+    },
+    "resetBucket": "Сбросить корзину",
+    "preparing": "Подготовка сравнений…",
+    "queueEmpty": {
+      "title": "Очередь пуста",
+      "summary": "{{keep}} keep · {{junk}} junk в очереди.",
+      "reviewTags": "Проверить метки",
+      "restartQueue": "Перезапустить очередь",
+      "clearSession": "Очистить сессию {{class}}"
+    },
+    "noDuplicates": {
+      "title": "Нет дубликатов для сравнения",
+      "body": "Нет корзин дубликатов по вашим правилам для {{class}}. Ослабьте правила в Настройках или загрузите свежий снимок хранилища."
+    },
+    "noGroupsInQueue": "В очереди нет групп дубликатов. Ослабьте правила в Настройках или перезапустите очередь.",
+    "skipGroup": "Пропустить группу (S)",
+    "restoringSession": "Восстановление сессии…",
+    "confirm": {
+      "switchBucket": "Сменить корзину? Текущие выборы и метки junk для этой корзины будут сброшены.",
+      "resetBucket": "Сбросить эту корзину? Все текущие выборы, метки junk и прогресс сравнения будут сброшены. Корзина останется в очереди.",
+      "clearClassSession": "Gesamten {{class}}-Vergleichsfortschritt und Warteschlangen-Tags löschen? Nicht rückgängig."
+    },
+    "chooser": {
+      "title": "Выберите группу дубликатов",
+      "kicker": "Duplikate vergleichen",
+      "intro": "Wähle zuerst eine {{class}}-Gruppe. Später im Header wechseln.",
+      "listAria": "{{class}} duplicate groups"
+    },
+    "wrapUp": {
+      "title": "Проверка группы дубликатов",
+      "chooseNext": "Выберите группу для следующего сравнения",
+      "nextGroupsAria": "Следующие группы дубликатов",
+      "kicker": "Bucket abgeschlossen",
+      "allPairsDecided": "Alle Duell-Paare entschieden",
+      "continueNext": "Weiter zur nächsten Gruppe",
+      "applyTagsContinue": "Tags anwenden & weiter",
+      "chooseDifferent": "Andere Gruppe wählen",
+      "backToSummary": "Zurück zur Zusammenfassung",
+      "whatsNext": "Als Nächstes",
+      "tagsFootnote": "Tags werden beim Weiter in die Warteschlange gelegt. Erst nach der Übersicht angewendet.",
+      "stats": {
+        "keeps": "Keeps",
+        "junkQueued": "Müll in Warteschlange",
+        "preferEliminated": "Prefer ausgeschieden",
+        "pairsDecided": "Paare entschieden",
+        "inGroup": "In dieser Gruppe"
+      },
+      "breakdown": {
+        "keepBoth": "Beide behalten: {{count}}",
+        "keepSide": "Seite behalten: {{count}}",
+        "junkedInDuels": "In Duellen als Müll: {{count}}",
+        "preferInPlay": "Prefer noch aktiv: {{count}}"
+      },
+      "piece_one": "{{count}} Teil",
+      "piece_other": "{{count}} Teile",
+      "sessionLast": "Letzte Gruppe in der Warteschlange",
+      "sessionLeft_one": "{{count}} Gruppe danach übrig",
+      "sessionLeft_other": "{{count}} Gruppen danach übrig"
+    },
+    "bucket": {
+      "label": "Корзина",
+      "select": "Выбрать корзину",
+      "dupeBucketsAria": "Корзины дубликатов"
+    },
+    "keyboard": {
+      "aria": "Горячие клавиши сравнения",
+      "left": "Слева",
+      "both": "Оба",
+      "right": "Справа",
+      "keep": "Keep",
+      "prefer": "Предпочесть",
+      "junk": "Junk"
+    },
+    "compare": {
+      "suggested": "Предложено",
+      "sameRoll": "Тот же ролл",
+      "compareSides": "Стороны сравнения",
+      "suggestedPick": "Предложенный выбор: ",
+      "vs": "против",
+      "fitTitle": "Насколько предмет подходит вашим сохранённым предпочтениям",
+      "powerTitle": "Уровень силы",
+      "identicalRolls": "Gleiche Rolls. Eins behalten, eins Müll, beide behalten oder passen.",
+      "suppressedSuggestion": "Beide stark · letztes des Tiers. Prefer, Pass, Keep oder Müll.",
+      "buildOptimalPrefix": "Combo-optimal für ",
+      "orPassKeepJunk": "· oder Pass / Keep / Müll",
+      "evenMatch": "Gleichstand. Prefer, Pass, Keep oder Müll für eines oder beide.",
+      "eliminated": "Aus dem Bracket ausgeschieden",
+      "actionKeep": "Keep",
+      "outcomes": {
+        "prefer": "Diese Seite bevorzugen. Verlierer braucht {{threshold}} Prefer-Niederlagen vor Müll am Bucket-Ende.",
+        "keepSide": "Keep am Bucket-Ende · andere Seite bleibt im Bracket",
+        "keepBoth": "Beide am Bucket-Ende behalten",
+        "junkOne": "Jetzt Müll · andere bleibt im Bracket (kein Sieger)",
+        "junkBoth": "Beide jetzt Müll",
+        "pass": "Paar überspringen. Keine Tags, beide erneut in der Warteschlange."
+      },
+      "pass": "Pass",
+      "preferred": "Preferred",
+      "tuningLabel": "Tuning: {{stat}}",
+      "setFootnote": "Set: {{name}}",
+      "loss_one": "1 loss",
+      "loss_other": "{{count}} losses",
+      "lossRemaining_one": "{{count}} more prefer loss before junk at bucket end",
+      "lossRemaining_other": "{{count}} more prefer losses before junk at bucket end",
+      "keyboardHints": "Hover buttons for outcomes · ↑ keep both · Space pass · ↓ junk both · Ctrl+←/→ junk sides",
+      "aria": {
+        "keepLeft": "Keep left. {{outcome}}",
+        "keepRight": "Keep right. {{outcome}}",
+        "keepBoth": "Keep both. {{outcome}}",
+        "preferLeft": "Prefer left. {{outcome}}",
+        "preferRight": "Prefer right. {{outcome}}",
+        "passPair": "Pass pair. {{outcome}}",
+        "junkLeft": "Junk left. {{outcome}}",
+        "junkRight": "Junk right. {{outcome}}",
+        "junkBoth": "Junk both. {{outcome}}"
+      }
+    },
+    "progress": {
+      "noGroups": "Нет групп дубликатов",
+      "lastInQueue": "Последняя группа в очереди"
+    }
+  },
+  "dupes": {
+    "grouping": {
+      "sameArmorSet": {
+        "label": "Требовать тот же сет брони",
+        "help": "Группировать или сравнивать только предметы из одного сета. Выкл.: один слот + архетип + третичный по всем сетам."
+      },
+      "sameTuningStat": {
+        "label": "Требовать тот же стат тюнинга",
+        "help": "Разделять по стату тюнинга (напр. Weapons vs Grenade). Выкл.: смешанные статы тюнинга в одной корзине."
+      }
+    },
+    "respectKeepFavorite": {
+      "label": "Учитывать DIM keep и favorite при выборе junk",
+      "help": "Если включено, предметы с метками keep и favorite не предлагаются как junk в потоках дубликатов."
+    },
+    "excludeJunk": {
+      "label": "Исключать предметы с меткой junk из подсчёта дубликатов"
+    },
+    "presets": {
+      "loose": {
+        "label": "Свободный"
+      },
+      "standard": {
+        "label": "Стандартный"
+      },
+      "setAware": {
+        "label": "По сетам"
+      },
+      "tuning": {
+        "label": "По тюнингу"
+      },
+      "strict": {
+        "label": "Строгий"
+      }
+    },
+    "impactCompact": {
+      "buckets": "корзин дубликатов ·",
+      "decisions": "решений ·",
+      "pieces": "включено предметов: {{count}}"
+    },
+    "matchStyle": {
+      "custom": "Свои правила",
+      "usingPreset": "Используется {{label}}",
+      "usingCustomRules": "Используются свои правила",
+      "cardBody": {
+        "loose": "Сравнивать предметы в одном слоте без требования того же сета или стата тюнинга.",
+        "standard": "Сравнивать по слоту, архетипу и третичному без требования того же сета.",
+        "setAware": "Группирует дубликаты по сету брони · подходит для большинства хранилищ.",
+        "tuning": "Группирует дубликаты по стату тюнинга, даже из разных сетов.",
+        "strict": "Для совпадения дубликата нужны тот же сет и тот же стат тюнинга."
+      },
+      "customMix": "Своя комбинация: {{armorSet}}, {{tuningStat}}.",
+      "armorSetSame": "тот же сет брони",
+      "armorSetAny": "любой сет брони",
+      "tuningStatSame": "тот же стат тюнинга",
+      "tuningStatAny": "любой стат тюнинга",
+      "dimTagsRespect": "Метки DIM keep и favorite учитываются при предложении junk.",
+      "dimTagsIgnore": "Метки keep и favorite не учитываются при предложении junk."
+    },
+    "suggestions": {
+      "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+      "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+      "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+      "standardDefault": "Standard preset for your vault size."
+    }
+  },
+  "errors": {
+    "boundary": {
+      "title": "Что-то пошло не так",
+      "body": "{{appName}} столкнулся с неожиданной ошибкой. Ваши настройки и метки в очереди в локальном хранилище обычно не затрагиваются.",
+      "reload": "Перезагрузить приложение",
+      "goHome": "На главную"
+    },
+    "oauth": {
+      "completingLogin": "Завершение входа через Bungie…",
+      "exchangingCode": "Обмен кода авторизации…",
+      "loadingVault": "Загрузка хранилища…",
+      "firstLoadNote": "Первая загрузка скачивает манифест игры и может занять минуту.",
+      "bungieDenied": "Bungie отклонил вход: {{error}}",
+      "noAuthCode": "Код авторизации не получен: попробуйте войти снова.",
+      "stateMismatch": "Несовпадение OAuth state: часто из‑за устаревшей вкладки или заблокированного session storage. Вернитесь на вход и попробуйте снова.",
+      "loginFailed": "Вход не удался",
+      "backToLogin": "К входу",
+      "suffix": "Попробуйте войти снова. Если проблема сохраняется, свяжитесь с администратором сайта.",
+      "devChecklistIntro": "Чеклист приложения Bungie (локальная разработка):",
+      "devRedirect": "Redirect URL: {{uri}}",
+      "devOrigin": "Origin: {{origin}}",
+      "devClientId": "Client ID совпадает с приложением Bungie ({{clientId}})",
+      "devApiKey": "API key из того же приложения Bungie",
+      "devRestart": "Перезапустите dev-сервер после смены учётных данных"
+    },
+    "env": {
+      "bungieSignInUnavailableDev": "Вход в этой сборке не включён.",
+      "bungieSignInUnavailable": "Вход недоступен на этом развёртывании.",
+      "bungieCredentialsMissingDev": "Вход через Bungie в этой среде не включён.",
+      "bungieCredentialsMissing": "Вход недоступен на этом развёртывании. Свяжитесь с администратором сайта.",
+      "bungieSecretMissingDev": "Вход через Bungie в этой среде включён не полностью.",
+      "dimSyncUnavailableDev": "Синхронизация DIM в этой среде не включена.",
+      "dimSyncUnavailable": "Применение меток в DIM недоступно на этом развёртывании. Свяжитесь с администратором сайта."
+    },
+    "vault": {
+      "sessionExpired": "Сессия Bungie могла истечь. Выйдите и войдите снова.",
+      "forbidden": "Bungie отклонил запрос. Попробуйте войти снова или свяжитесь с администратором, если это повторяется.",
+      "manifest": "Не удалось загрузить манифест. Проверьте соединение и повторите: первая загрузка может занять минуту.",
+      "network": "Сетевая ошибка. Проверьте соединение или попробуйте через мгновение.",
+      "membership": "Не удалось определить членство Destiny. Убедитесь, что на аккаунте есть персонажи Destiny 2."
+    },
+    "applyTagsFailed": "Не удалось применить метки",
+    "partialApply": "Применено {{ok}} из {{total}} меток. Не удалось: {{failed}} — повторите или удалите из очереди."
+  },
+  "footer": {
+    "aria": {
+      "siteLinks": "Ссылки сайта",
+      "kofi": "Поддержать на Ko-fi"
+    },
+    "links": {
+      "newoReport": "newo.report",
+      "github": "GitHub"
+    }
+  },
+  "game": {
+    "achievability": {
+      "ready": "Готово",
+      "almost": "Почти",
+      "needBetterRolls": "Нужны лучшие роллы",
+      "covered": "Покрыто",
+      "weakTuning": "Слабый тюнинг",
+      "gap": "Пробел",
+      "idealTuning": "Идеальный тюнинг",
+      "tuned": "Настроено",
+      "archetypeOnly": "Только архетип",
+      "noFit": "Не подходит"
+    },
+    "armorDiff": {
+      "sameStatSplit": "Тот же расклад статов",
+      "sameStatsTuning": "Те же статы и тюнинг",
+      "sameRoll": "Тот же ролл",
+      "decideSetOrTuning": "Решить по сету или тюнингу",
+      "decideTuning": "Решить по тюнингу",
+      "decideSet": "Решить по сету",
+      "sameExceptPower": "Всё то же, кроме силы/расположения",
+      "identicalRoll": "Идентичный ролл. Выберите любой."
+    },
+    "fit": {
+      "poorMatch": "Слабое совпадение",
+      "closeCall": "На грани"
+    },
+    "scoring": {
+      "calibrateForAccuracy": "Откалибруйте предпочтения для большей точности"
+    },
+    "heatmap": {
+      "mixedTuning": "Разные статы тюнинга в корзине",
+      "dupeBucket": "корзина дубликатов"
+    },
+    "minTier": {
+      "tier5Only": "Только Tier 5"
+    },
+    "diff": {
+      "tuning": "Tuning",
+      "set": "Set",
+      "power": "Power",
+      "masterwork": "Masterwork",
+      "noSet": "Без сета",
+      "yes": "Yes",
+      "no": "No",
+      "tuningVs": "Tuning: {{a}} vs {{b}}",
+      "setFootnote": "Сет: {{name}}"
+    },
+    "dominator": {
+      "differentStatSplit": "Andere Wertverteilung",
+      "sameAfterTuning": "Nach Tuning gleich",
+      "beatsPiece": "Schlägt dieses Teil",
+      "statComparison": "Wertvergleich",
+      "tuningCoverage": "Tuning-Abdeckung",
+      "aheadOn": "Vorn bei",
+      "everyTuningLayout": "jedes Tuning-Layout"
+    },
+    "classes": {
+      "titan": "Титан",
+      "hunter": "Охотник",
+      "warlock": "Варлок"
+    },
+    "stats": {
+      "weapons": "Оружие",
+      "grenade": "Граната",
+      "super": "Супер",
+      "melee": "Ближний бой",
+      "health": "Здоровье",
+      "class": "Класс"
+    },
+    "archetypes": {
+      "gunner": "Gunner",
+      "grenadier": "Grenadier",
+      "paragon": "Paragon",
+      "brawler": "Brawler",
+      "bulwark": "Bulwark",
+      "specialist": "Specialist"
+    },
+    "slots": {
+      "helmet": "Helmet",
+      "arms": "Arms",
+      "chest": "Chest",
+      "legs": "Legs",
+      "classItem": "Class Item"
+    },
+    "roll": {
+      "tertiary": "{{stat}} tertiary",
+      "tuning": "{{stat}} tuning",
+      "tuningLabel": "Tuning: {{stat}}",
+      "preferred": "Preferred",
+      "none": "none"
+    },
+    "labels": {
+      "separator": " · "
+    }
+  },
+  "home": {
+    "tagline": "Сравнивайте дубликаты брони и ставьте метки в очередь для DIM. Здесь ничего не разбирается.",
+    "resumeSession": "Продолжить прошлую сессию",
+    "footerNote": "Хранилище через Bungie.net. Метки через DIM. Выход — в Настройках.",
+    "signInWithBungie": "Войти через Bungie"
+  },
+  "layout": {
+    "aria": {
+      "guardianClass": "Класс стража"
+    }
+  },
+  "nav": {
+    "dashboard": "Панель",
+    "calibrate": "Калибровка",
+    "browse": "Обзор",
+    "combos": "Комбо",
+    "compare": "Сравнение",
+    "review": "Проверка",
+    "autoFilters": "Автофильтры",
+    "settings": "Настройки",
+    "mobile": {
+      "dashboard": "Панель",
+      "calibrate": "Калиб.",
+      "autoFilters": "Фильтры",
+      "settings": "Настр."
+    },
+    "aria": {
+      "mobile": "Мобильная навигация"
+    }
+  },
+  "onboarding": {
+    "restoringSession": "Восстановление сессии Bungie…",
+    "redirectingLogin": "Перенаправление на вход…",
+    "vaultTrimTitle": "Цель сокращения хранилища",
+    "tieredFound": "Найдено <1>{{count}}</1> брони с уровнем <2>{{pieceWord}}</2><3>{{t5Block}}</3>.",
+    "piece_one": "предмет",
+    "piece_other": "предметов",
+    "t5Block": " (<1>{{count}}</1> на Tier 5)",
+    "noTieredFound": "Брони с уровнем не найдено<1>{{parsedHint}}</1>. Импортируется только броня с уровнем (T1–T5); устаревшая и безуровневая пропускается.",
+    "parsedHint": " (разобрано {{count}} предметов из хранилища)",
+    "keepGoalHeading": "Сколько хотите оставить?",
+    "keepGoalIntro": "Задаёт, насколько агрессивно предлагать сокращение дубликатов Tier 5 при очистке.",
+    "keepGoalSummary": "Цель: около {{total}} Tier 5 всего (около {{perClass}} на класс).",
+    "keepGoalExcess": " У вас примерно на <1>{{excess}}</1> больше этой цели.",
+    "keepGoalAtTarget": " Вы на цели или ниже.",
+    "signOutBack": "Выйти",
+    "keepOptions": {
+      "lean": {
+        "label": "Минимум",
+        "blurb": "Сокращать агрессивно · убрать большинство корзин дубликатов"
+      },
+      "balanced": {
+        "label": "Сбалансированно",
+        "blurb": "Убрать явные дубликаты, оставить разнообразие для билдов"
+      },
+      "options": {
+        "label": "С запасом",
+        "blurb": "Оставить лишние роллы статов и комбо сетов; мягче сокращение"
+      },
+      "hoarder": {
+        "label": "Копилка",
+        "blurb": "Убирать только явные дубликаты; максимум вариантов"
+      },
+      "description": "{{blurb}} (~{{perClass}} Tier 5 на класс)"
+    },
+    "backAria": "Назад"
+  },
+  "review": {
+    "title": "Проверка меток",
+    "summary": "В очереди: {{total}} · {{keep}} keep · {{junk}} junk. Применение записывает метки в очереди; в строках указаны существующие метки DIM, если они отличаются.",
+    "applied": "Метки применены в DIM Sync.",
+    "openJunkInDim": "Открыть junk в DIM",
+    "partialApplied": "Применено частично: {{count}} меток успешно. Неудачные остались в очереди.",
+    "retryFailed": "Повторить {{count}} неудачных",
+    "empty": "Нет ожидающих меток.",
+    "compareDupes": "Сравнить дубликаты",
+    "table": {
+      "item": "Предмет",
+      "copyDimSr": "Копировать запрос DIM",
+      "archetype": "Архетип",
+      "tertiary": "Третичный",
+      "tuning": "Тюнинг",
+      "class": "Класс",
+      "combo": "Комбо",
+      "appliesToDim": "Применится в DIM",
+      "none": "Нет"
+    },
+    "copy": {
+      "ids": "Копировать запрос id:",
+      "junk": "Копировать поиск tag:junk",
+      "junkIds": "Копировать только id junk",
+      "copied": "Скопировано!",
+      "announcement": "{{label}} скопировано в буфер обмена."
+    },
+    "removeFromQueue": "Убрать из очереди",
+    "applyTags": "Применить {{count}} меток в DIM",
+    "applying": "Применение…",
+    "clearPending": "Очистить ожидающие метки",
+    "clearSession": "Очистить сессию",
+    "backToDashboard": "На панель",
+    "confirm": {
+      "clearPending": "Очистить все {{count}} ожидающих меток? Они не будут применены в DIM. Прогресс сессии сравнения сохранится.",
+      "clearSession": "Очистить всю сессию сравнения? Ожидающие метки и текущее состояние сравнения будут сброшены."
+    },
+    "alreadyInDim": "Уже в DIM: {{summary}}"
+  },
+  "rulesOnboarding": {
+    "title": "Как должны совпадать дубликаты?",
+    "intro": "Мы группируем похожие роллы брони, чтобы вы выбрали один для сохранения и пометили остальное в DIM. Это можно изменить в любое время в Настройках.",
+    "restoringSession": "Восстановление сессии Bungie…",
+    "redirectingLogin": "Перенаправление на вход…",
+    "loadingVault": "Загрузка хранилища…",
+    "retryVaultLoad": "Повторить загрузку хранилища",
+    "refreshing": "Обновление…",
+    "noTieredArmor": "Нет брони с уровнем в области при вашем минимальном уровне",
+    "tieredPiecesImported": "(импортировано предметов с уровнем: {{count}})",
+    "tieredArmorFootnote": "Только игровая броня с уровнем (T1–T5). При необходимости снизьте минимальный уровень в Настройках.",
+    "recommendedPresetSr": "Рекомендуемый пресет",
+    "useRecommended": "Использовать рекомендуемый",
+    "customizeRules": "Настроить правила",
+    "hideCustomization": "Скрыть настройку",
+    "customizeIntro": "Ужесточите или ослабьте, что считается дубликатом. Пресеты в Настройках задают это одним кликом.",
+    "matchStyleLabel": "Стиль совпадения:",
+    "previewByClass": "Предпросмотр по классу",
+    "suggestions": "Предложения",
+    "usePreset": "Использовать {{label}}",
+    "impact": {
+      "none": "Групп дубликатов для {{class}} при текущем уровне не найдено.",
+      "summary": "Около {{buckets}} {{groupWord}} дубликатов · примерно {{review}} {{rollWord}} для сравнения ({{class}})",
+      "group_one": "группа",
+      "group_other": "групп",
+      "roll_one": "ролл",
+      "roll_other": "роллов"
+    },
+    "aria": {
+      "dupeRules": "Правила дубликатов"
+    }
+  },
+  "settings": {
+    "title": "Настройки",
+    "account": {
+      "heading": "Аккаунт",
+      "signedInAs": "Вход выполнен как <1>{{name}}</1>",
+      "parsedCount": "Разобрано предметов брони с уровнем: {{count}} (хранилище, все персонажи, почтамат)",
+      "signOutNote": "Выход удаляет токены Bungie и DIM из сессии браузера (только session storage). Настройки остаются в local storage.",
+      "signOutButton": "Выйти и очистить токены"
+    },
+    "dupeRules": {
+      "heading": "Правила дубликатов",
+      "intro": "Общие правила для теплокарты, сравнения, обзора и списков избыточных роллов.",
+      "scopeHeading": "Область: какие предметы учитываются",
+      "minTierLabel": "Минимальный уровень экипировки",
+      "minTierHelp": "Импорт хранилища по-прежнему загружает уровни 1–5. В корзины дубликатов и проверки избыточности попадают только предметы от этого уровня и выше.",
+      "groupingHeading": "Группировка: что считается «дубликатом»",
+      "groupingIntro": "Предметы всегда совпадают по классу, слоту, архетипу и третичному стату. Эти опции добавляют более строгие разделения; они же применяются к сравнению избыточных роллов.",
+      "dimTagsHeading": "Метки DIM при подсчёте дубликатов",
+      "dimTagsIntro": "Помеченные предметы остаются видимыми, но могут не учитываться в размере корзин и в счётчиках проверки.",
+      "liveImpact": "Текущее влияние (глобальные правила, хранилище Hunter)"
+    },
+    "classDupeRules": {
+      "heading": "Правила дубликатов {{class}}",
+      "usingClass": "Используется {{class}} (смените класс в шапке). Классы по умолчанию используют глобальные правила. Примените пресет к одному классу, не меняя остальные.",
+      "customRules": "Для {{class}} свои правила ·",
+      "resetToGlobal": "сбросить на глобальные"
+    },
+    "dupePresets": {
+      "heading": "Пресеты дубликатов"
+    },
+    "dashboardLink": "Панель",
+    "language": {
+      "heading": "Язык",
+      "useBrowser": "Язык браузера",
+      "useBrowserHelp": "Если включено, приложение следует языку браузера. Если выключено — используется выбранный ниже язык."
+    },
+    "developer": {
+      "heading": "Разработчик",
+      "bungie": "Bungie: {{status}}",
+      "dimSync": "DIM Sync: {{status}}"
+    },
+    "reviewTags": {
+      "heading": "Проверка меток"
+    },
+    "classPrefs": {
+      "heading": "Настройки {{class}}",
+      "usingClass": "Используется {{class}} (смените класс в шапке). Веса статов и архетипов по классам из калибровки. Правила дубликатов общие, если не переопределены для класса.",
+      "calibrations": "{{count}} калибровок · уверенность {{confidence}}",
+      "topStats": "Лучшие статы:",
+      "topArchetypes": "Лучшие архетипы:",
+      "recalibrate": "Перекалибровать {{class}}",
+      "exportPrefs": "Экспорт настроек",
+      "importPrefs": "Импорт настроек",
+      "resetClass": "Сбросить настройки {{class}}",
+      "resetAll": "Сбросить все классы",
+      "imported": "Настройки импортированы.",
+      "invalidFile": "Неверный файл настроек.",
+      "openReview": "Открыть страницу проверки",
+      "clearPending": "Очистить ожидающие метки",
+      "queued_one": "{{count}} метка в очереди на применение в DIM.",
+      "queued_other": "{{count}} меток в очереди на применение в DIM.",
+      "nonePending": "Нет ожидающих меток.",
+      "confirmClearPending": "Очистить все {{count}} ожидающих меток? Они не будут применены в DIM.",
+      "confirmResetClass": "Сбросить настройки {{class}} по умолчанию? Веса статов, выбор калибровки и обученные веса для этого класса будут удалены.",
+      "confirmResetAll": "Сбросить настройки всех классов по умолчанию? Веса статов, выбор калибровки и обученные веса будут удалены для Hunter, Titan и Warlock. Правила дубликатов и другие настройки сохранятся."
+    }
+  },
+  "vault": {
+    "loading": "Загрузка хранилища…",
+    "refreshing": "Обновление…",
+    "refreshingStatus": "Обновление… {{status}}",
+    "loadVault": "Загрузить хранилище",
+    "noDataYet": "Данных хранилища пока нет.",
+    "noDataBrowseHint": "Сначала загрузите хранилище с панели.",
+    "noDataBuildHint": "Данных хранилища пока нет. Загрузите хранилище с панели.",
+    "retryVaultLoad": "Повторить загрузку хранилища",
+    "signOutInSettings": "Выйти в Настройках",
+    "dismiss": "Закрыть",
+    "tieredArmorTitle": "Броня с уровнем в игре (Tier 1–5). Устаревшая и безуровневая экипировка не импортируется. Область дубликатов зависит от минимального уровня в настройках.",
+    "dupeRulesImpact": "Загрузите хранилище, чтобы увидеть влияние."
+  }
+}

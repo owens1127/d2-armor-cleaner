@@ -1,0 +1,1018 @@
+{
+  "autoFilters": {
+    "title": "Filtres automatiques",
+    "intro": "Met en file des étiquettes junk automatiquement au chargement ou à l’actualisation du coffre. Les keep et favorite ne sont jamais étiquetés automatiquement.",
+    "noRules": "Aucune règle pour l’instant.",
+    "addRule": "Ajouter une règle",
+    "classLabel": "Classe",
+    "operatorsIntro": "Chaque filtre peut être <1>Est</1>, <2>N’est pas</2>, <3>L’un de</3> ou <4>Aucun de</4> (ex. pièces junk Hunter dont l’archétype n’est pas Gunner).",
+    "rulesHeading": "Règles",
+    "rulesBody": "Les pièces correspondantes sont mises en file comme junk dans Révision (comme le junk manuel). Les keeps ne sont jamais tagués auto : keep/favori DIM, keep en attente ou pièces gardées dans un bucket de duel.",
+    "deleteRule": "Supprimer",
+    "allClasses": "Toutes les classes",
+    "archetypeLabel": "Archétype",
+    "tertiaryStatLabel": "Stat tertiaire",
+    "tuningStatLabel": "Stat tuning",
+    "slotLabel": "Emplacement",
+    "armorSetLabel": "Set d'armure",
+    "any": "Tous",
+    "addValue": "Ajouter une valeur…",
+    "pickValue": "Choisir une valeur…",
+    "matchMode": "Mode de correspondance",
+    "matchModeDisabled": "Mode (choisir une valeur d'abord)",
+    "operators": {
+      "is": "Est",
+      "isNot": "N'est pas",
+      "anyOf": "L'un de",
+      "noneOf": "Aucun de"
+    },
+    "livePreview_one": "Aperçu : {{count}} pièce serait en file au prochain chargement (hors keeps, favoris et junk déjà).",
+    "livePreview_other": "Aperçu : {{count}} pièces seraient en file au prochain chargement (hors keeps, favoris et junk déjà).",
+    "setFallback": "Set {{hash}}",
+    "addRuleHeading": "Ajouter une règle",
+    "enableRule": "Activer la règle : {{label}}",
+    "disableRule": "Désactiver la règle : {{label}}",
+    "removeValue": "Retirer {{label}}",
+    "describe": {
+      "allClasses": "Toutes les classes",
+      "tertiary": "{{stat}} tertiaire",
+      "tuning": "{{stat}} tuning",
+      "setFallback": "set {{hash}}",
+      "anyOf": "l'un de {{labels}}",
+      "noneOf": "aucun de {{labels}}",
+      "not": "PAS {{label}}"
+    }
+  },
+  "browse": {
+    "title": "Parcourir l’armure {{class}}",
+    "summary": "{{filtered}} sur {{total}} pièces · {{sortLabel}}",
+    "redundantLink": "{{count}} rolls redondants",
+    "loadVaultFirst": "Chargez d’abord votre coffre depuis le tableau de bord.",
+    "filters": {
+      "slot": "Emplacement",
+      "archetype": "Archétype",
+      "search": "Recherche",
+      "armorSet": "Set d’armure",
+      "dimTag": "Étiquette DIM",
+      "sort": "Tri",
+      "combo": "Combo",
+      "allSlots": "Tous les emplacements",
+      "allArchetypes": "Tous les archétypes",
+      "allSets": "Tous les sets",
+      "any": "Tous",
+      "anyCombo": "N’importe quel combo",
+      "armorNamePlaceholder": "Nom de l’armure…",
+      "statLowerOnly": "Stats inférieures uniquement",
+      "dupesOnly": "Doublons uniquement",
+      "strictlyLowerOnly": "Strictement inférieur uniquement",
+      "redundantOnly": "Rolls redondants uniquement",
+      "supportsComboOnly": "Compatible combo uniquement"
+    },
+    "dimTags": {
+      "untagged": "Sans étiquette",
+      "keep": "Keep",
+      "junk": "Junk",
+      "favorite": "Favorite",
+      "infuse": "Infuse",
+      "archive": "Archive"
+    },
+    "sort": {
+      "matchDesc": "Correspondance % (élevé → bas)",
+      "matchAsc": "Correspondance % (bas → élevé)",
+      "preference": "Préférence",
+      "buildFitDesc": "Adéquation combo (élevé → bas)",
+      "matchDescHint": "trié par % de correspondance (plus compatible d’abord)",
+      "matchAscHint": "trié par % de correspondance (moins compatible d’abord)",
+      "buildFitHint": "trié par adéquation combo",
+      "preferenceHint": "trié par préférence"
+    },
+    "copyIds": "Copier requête {{count}} id:",
+    "copied": "Copié !",
+    "reviewTagsLink": "Réviser les étiquettes de comparaison/triage ({{count}})",
+    "redundant": {
+      "pickOne": "Choisissez-en une à garder",
+      "noRedundant": "Aucun roll redondant",
+      "noMatches": "Aucune correspondance",
+      "noMatchFilters": "No redundant rolls match the current filters.",
+      "noneToShow": "No redundant rolls to show."
+    },
+    "noItemsMatch": "No items match these filters.",
+    "backToDashboard": "Back to dashboard",
+    "dupeBadge": "dupe"
+  },
+  "build": {
+    "title": "Combos {{class}}",
+    "intro": "Meilleures pièces du coffre pour chaque cible de roll de votre combo.",
+    "combosHeading": "Combos",
+    "setBonuses": "Bonus de set",
+    "setBonusesOptional": "Bonus de set (facultatif)",
+    "includeInCoverage": "Inclure dans la couverture",
+    "comboNameAria": "Nom du combo",
+    "maxCombos": "Maximum {{max}} combos par classe.",
+    "orderLabel": "Ordre :",
+    "noneOption": "Aucun",
+    "twoTwoMix": " · mix 2+2",
+    "editor": {
+      "intro": "Choisissez 2 à 4 stats dans l'ordre et des bonus de set optionnels. Nous recommandons la meilleure pièce par emplacement.",
+      "unsavedHint": "Modifications non enregistrées · enregistrez ou annulez.",
+      "editingHint": "Édition du combo · enregistrez ou annulez à la fin.",
+      "allSavedHint": "Tous les combos enregistrés · Modifier sur une carte.",
+      "emptyList": "Aucun combo pour cette classe. Ajoutez-en un ci-dessous.",
+      "unsaved": "Non enregistré",
+      "saved": "Enregistré",
+      "on": "Oui",
+      "off": "Non",
+      "edit": "Modifier",
+      "remove": "Retirer",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "addStat": "Ajouter une stat",
+      "priority1": "1re priorité",
+      "priority2": "2e priorité",
+      "priority3": "3e priorité",
+      "priority4": "4e priorité",
+      "priorityN": "Priorité {{n}}",
+      "setBonus2pc": "Bonus 2 pièces",
+      "setBonus4pcSame": "Même set (4pc)",
+      "setBonus4pcMix": "Second set (mix 2pc) ou 4pc",
+      "setBonusHint": "Un set pour 2pc, puis le même pour 4pc ou un second pour mix 2+2.",
+      "loadVaultForSets": "Chargez le coffre pour choisir des sets.",
+      "firstSet2pc": "Premier set (2pc)",
+      "twoPcOnly": "2pc seulement",
+      "set4pcSuffix": "{{name}} (4pc)",
+      "set2pcMixSuffix": "{{name}} (mix 2pc)",
+      "targetLabel": "Cible :",
+      "addStatCount": "+ stat ({{current}}/{{max}})",
+      "addCombo": "Ajouter un combo",
+      "addAnotherCombo": "Ajouter un autre combo",
+      "viewCoverageLink": "Voir la couverture combo {{class}}"
+    },
+    "coverage": {
+      "heading": "Vos combos",
+      "intro": "Meilleure pièce par emplacement pour chaque roll optimal",
+      "empty": "Pas encore de combo. Ajoutez 2–4 priorités de stats ci-dessous.",
+      "editCombos": "Modifier les combos",
+      "setPrioritiesHint": "Définissez des priorités pour voir les rolls cibles",
+      "recommendedHeading": "Pièces recommandées",
+      "recommendedHint": "Tags DIM et recherche pour la grille",
+      "browseVault": "Parcourir le coffre",
+      "setTarget": "Cible de set :",
+      "vaultPiecesShort": "pas assez de pièces",
+      "conflictingSets": "Ces cibles nécessitent plus de cinq pièces · ajustez le combo.",
+      "showRollDetails": "Afficher les détails de roll",
+      "hideRollDetails": "Masquer les détails de roll",
+      "tagAll": "Tout taguer :",
+      "bulkNoTaggable": "Aucune pièce taggable",
+      "bulkClearKeep": "Retirer keep sur tout",
+      "bulkMarkKeep": "Tout en keep",
+      "bulkAllFavorited": "Tout en favori",
+      "bulkMarkFavorite": "Tout favoriser",
+      "bulkClearJunk": "Retirer junk sur tout",
+      "bulkMarkJunk": "Tout en junk",
+      "tagKeep": "Tag keep dans DIM",
+      "tagKeepRemove": "Retirer keep dans DIM",
+      "tagFavorite": "Favori dans DIM",
+      "tagFavoriteAlready": "Déjà favori dans DIM",
+      "tagJunk": "Junk dans DIM",
+      "tagJunkRemove": "Retirer junk dans DIM",
+      "choose": "Choisir",
+      "chooseSlot": "Choisir {{slot}}",
+      "choosePiece": "Choisir · {{count}} éligibles",
+      "eligible_one": "{{count}} pièce éligible",
+      "eligible_other": "{{count}} pièces éligibles",
+      "anyArchetype": "Tout archétype",
+      "tier": "Palier {{tier}}",
+      "comboFallback": "Combo",
+      "rollRoleCombined": "tertiaire + tuning",
+      "rollRoleTertiary": "tertiaire",
+      "rollRoleTuning": "tuning",
+      "notComboPriority": "{{stat}} · pas priorité combo",
+      "archetypeBonus": "{{stat}} de l'archétype (+{{bonus}})",
+      "rollCombinedTitle": "{{stat}} tertiaire+tuning (+{{tertiaryBonus}} +{{tuningBonus}})",
+      "rollTertiaryTitle": "{{stat}} tertiaire (+{{bonus}})",
+      "rollTuningTitle": "{{stat}} tuning (+{{bonus}})",
+      "detailsSupporting": "{{count}} pièces roulent au moins une priorité.",
+      "detailsProfiles": "{{filled}} sur {{possible}} types de roll possibles dans le coffre.",
+      "detailsRedundantOverlap": "Emplacements vides malgré les doublons · remplissez d'abord.",
+      "gapsHeading": "Rolls à chercher",
+      "gapsIntro": "Combinaisons vides utiles pour ce combo.",
+      "gapsEmpty": "Rien d'évident ne manque.",
+      "overlapsHeading": "Rolls en surplus",
+      "overlapsIntro": "Trois pièces ou plus dans la même combinaison.",
+      "overlapsEmpty": "Pas de lourds doublons sur un roll.",
+      "overlapCount_one": "{{count}} pièce",
+      "overlapCount_other": "{{count}} pièces",
+      "gapAllPriorities": "toutes les priorités",
+      "gapMultiplePriorities": "plusieurs priorités",
+      "gapOnePriority": "une priorité",
+      "chooseEligibleTitle": "{{count}} pièces éligibles dans le coffre"
+    }
+  },
+  "calibrate": {
+    "title": "Calibrer les préférences",
+    "calibratingClass": "Calibration de {{class}}.",
+    "choicesSaved_one": "1 choix enregistré",
+    "choicesSaved_other": "{{count}} choix enregistrés",
+    "steps": {
+      "class": "Classe",
+      "archetype": "Archétypes",
+      "tertiary": "Stats tertiaires",
+      "tuning": "Stats d’ajustement",
+      "sets": "Sets d’armure"
+    },
+    "stepHeader": "Étape {{current}} sur {{total}} · {{step}}",
+    "classTitle": "Quelle classe calibrez-vous ?",
+    "archetypeTitle": "Classer les archétypes par préférence",
+    "archetypeInstruction": "Le plus préféré en haut. Glissez les lignes ou utilisez les flèches. Les six archétypes sont listés ; la possession dans le coffre ne limite pas la liste.",
+    "tertiaryTitle": "Classer les stats tertiaires",
+    "tuningTitle": "Classer les stats d’ajustement",
+    "setsTitle": "Classer les sets d’armure par préférence",
+    "skipAllArchetypes": "Ignorer tous les archétypes",
+    "showBonusDetails": "Afficher les détails de bonus",
+    "bonusUnavailable": "Détails de bonus indisponibles",
+    "noSetBonuses": "Aucun bonus de set listé",
+    "continue": "Continue",
+    "goToDashboard": "Go to dashboard",
+    "noArmorSets": "No armor sets to compare.",
+    "savedNextStep": "Saved · Next step",
+    "skipTertiaryArchetype": "Skip {{archetype}} tertiary",
+    "skipTertiaryStats": "Skip tertiary stats",
+    "skipTuningArchetype": "Skip {{archetype}} tuning",
+    "skipTuningStats": "Skip tuning stats",
+    "skipArmorSets": "Skip armor sets",
+    "nextArchetype": "Next archetype",
+    "setsInstruction": "Most preferred at the top. Sets from your vault, ordered by how many pieces you own. Drag to reorder or use arrow buttons.",
+    "contextSetPrefs": "Armor set preferences",
+    "unknownSet": "Unknown set",
+    "rankTheseStats": "Rank these stats:",
+    "dragRowsHint": "Drag rows or use the arrows. Most important at the top.",
+    "archetypeProgress": "{{current}} of {{total}} archetypes"
+  },
+  "common": {
+    "language": "Langue",
+    "languageEn": "English",
+    "languageFr": "Français",
+    "languageEs": "Español",
+    "languageEsMx": "Español (México)",
+    "languageDe": "Deutsch",
+    "languageIt": "Italiano",
+    "languageJa": "日本語",
+    "languageKo": "한국어",
+    "languagePl": "Polski",
+    "languagePtBr": "Português (Brasil)",
+    "languageRu": "Русский",
+    "languageZhChs": "简体中文",
+    "languageZhCht": "繁體中文",
+    "continue": "Continuer",
+    "save": "Enregistrer",
+    "back": "Retour",
+    "skip": "Ignorer",
+    "signOut": "Se déconnecter",
+    "retry": "Réessayer",
+    "retrying": "Nouvelle tentative…",
+    "pleaseWait": "Veuillez patienter",
+    "copied": "Copié !",
+    "none": "Aucun",
+    "configured": "configuré",
+    "notConfigured": "non configuré",
+    "developer": "Développeur",
+    "openReviewPage": "Ouvrir la page de révision",
+    "clearPendingTags": "Effacer les étiquettes en attente",
+    "exportPrefs": "Exporter les préférences",
+    "importPrefs": "Importer les préférences",
+    "preferencesImported": "Préférences importées.",
+    "invalidPrefsFile": "Fichier de préférences invalide.",
+    "topStats": "Meilleures stats :",
+    "topArchetypes": "Meilleurs archétypes :",
+    "recalibrateClass": "Recalibrer {{class}}",
+    "resetClassPrefs": "Réinitialiser les préférences {{class}}",
+    "resetAllClasses": "Réinitialiser toutes les classes",
+    "confirm": {
+      "clearPendingTags": "Effacer les {{count}} étiquettes en attente ? Elles ne seront pas appliquées dans DIM.",
+      "resetClassPrefs": "Réinitialiser les préférences {{class}} par défaut ? Les pondérations de stats, les choix de calibration et les pondérations apprises pour cette classe seront effacés.",
+      "resetAllClassPrefs": "Réinitialiser les préférences de toutes les classes par défaut ? Les pondérations de stats, les choix de calibration et les pondérations apprises seront effacés pour Hunter, Titan et Warlock. Les règles de doublons et les autres paramètres sont conservés."
+    },
+    "classPrefs": {
+      "heading": "Préférences {{class}}",
+      "usingClass": "Utilisation de {{class}} (changez de classe dans l’en-tête). Pondérations de stats et d’archétypes par classe issues de la calibration. Les règles de doublons sont partagées sauf surcharge par classe.",
+      "calibrations": "{{count}} calibrations · confiance {{confidence}}"
+    },
+    "reviewTags": {
+      "heading": "Étiquettes de révision",
+      "queued_one": "{{count}} étiquette en file pour application dans DIM.",
+      "queued_other": "{{count}} étiquettes en file pour application dans DIM.",
+      "none": "Aucune étiquette en attente."
+    },
+    "dev": {
+      "dimKeyHint": "Clé DIM locale : POST vers api.destinyitemmanager.com/new_app avec l’origine {{origin}}."
+    },
+    "dimCopy": {
+      "queryFor": "Copier la requête DIM pour {{name}}",
+      "queryCopied": "Requête DIM pour {{name}} copiée.",
+      "searchShown": "Copier la recherche DIM des pièces affichées",
+      "searchShownCopied": "Recherche DIM des pièces affichées copiée.",
+      "searchGroup": "Copier la recherche DIM des {{count}} pièces du groupe",
+      "searchGroupCopied": "Recherche DIM des {{count}} pièces du groupe copiée."
+    }
+  },
+  "dashboard": {
+    "title": "Coffre {{class}}",
+    "summary": "{{tieredCount}} armures {{class}} classées · {{dupeScopeCount}} {{minTierLabel}} dans la portée des doublons · {{buckets}} groupes de doublons · ~{{review}} décisions",
+    "customDupeRules": "· règles de doublons personnalisées",
+    "tieredAccount": "· {{count}} armures classées (compte)",
+    "customRulesBanner": "{{class}} utilise des règles de doublons personnalisées",
+    "nextSteps": "Prochaines étapes",
+    "browseAllArmor": "Parcourir toute l’armure",
+    "redundantRolls": "Rolls redondants ({{count}})",
+    "refreshVault": "Actualiser le coffre",
+    "armorView": "Vue armure",
+    "archetypeView": "Vue archétype",
+    "heatmapSlot": "Emplacement heatmap",
+    "allSlots": "Tous les emplacements",
+    "insights": {
+      "continueSetup": {
+        "title": "Poursuivre la configuration",
+        "detail": "Terminez la calibration pour que les suggestions du coffre correspondent à vos priorités",
+        "cta": "Continuer"
+      },
+      "continueCalibration": {
+        "title": "Poursuivre la calibration",
+        "detail": "Reprenez là où vous vous êtes arrêté dans la calibration des préférences",
+        "cta": "Continuer"
+      },
+      "calibratePreferences": {
+        "title": "Calibrer les préférences",
+        "detail": "Définissez les priorités de stats, d’archétypes et de sets pour cette classe",
+        "cta": "Calibrer"
+      },
+      "completeCalibration": {
+        "title": "Terminer la calibration",
+        "detail": "Faible confiance · quelques choix de plus affinent les suggestions de doublons et de combos",
+        "cta": "Calibrer"
+      },
+      "improveCalibration": {
+        "title": "Améliorer la calibration",
+        "detail": "Confiance moyenne · plus de choix améliorent le classement et les indications de couverture",
+        "cta": "Calibrer"
+      },
+      "recalibrateStale": {
+        "title": "Recalibrer les préférences",
+        "detail": "Votre dernière calibration date · les rolls du coffre ont peut-être changé",
+        "cta": "Recalibrer"
+      },
+      "recalibrateDefault": {
+        "title": "Recalibrer les préférences",
+        "detail": "Mettez à jour les pondérations de stats, d’archétypes et de sets pour cette classe à tout moment",
+        "cta": "Recalibrer"
+      },
+      "setupAutoFilters": {
+        "title": "Configurer les filtres auto",
+        "detail": "Mettez en file des étiquettes junk au chargement du coffre pour les rolls que vous ne gardez jamais",
+        "cta": "Configurer les filtres"
+      },
+      "setupCombos": {
+        "title": "Configurer les combos",
+        "detail": "Choisissez 2 à 4 stats prioritaires par combo · {{countLabel}}",
+        "cta": "Configurer les combos"
+      },
+      "addAnotherCombo": {
+        "title": "Ajouter un autre combo",
+        "detail": "{{countLabel}} combos · ajoutez-en 1 de plus",
+        "cta": "Ajouter des combos"
+      },
+      "addMoreCombos": {
+        "title": "Ajouter plus de combos",
+        "detail": "{{countLabel}} · ajoutez {{remaining}} combos de plus",
+        "cta": "Ajouter des combos"
+      },
+      "fixCoverage": {
+        "title": "Corriger la couverture {{label}}",
+        "cta": "Ouvrir Combos"
+      },
+      "browseUpgrades": {
+        "title": "Parcourir les améliorations pour {{label}}",
+        "cta": "Parcourir le coffre"
+      },
+      "compareLargest": {
+        "title": "Comparer {{label}}",
+        "detail": "{{count}} pièces dans votre plus grand groupe de doublons",
+        "cta": "Comparer ce groupe"
+      },
+      "redundantRolls": {
+        "title": "Réviser les rolls redondants",
+        "detail_one": "{{count}} pièce strictement inférieure à un autre roll que vous gardez",
+        "detail_other": "{{count}} pièces strictement inférieures à un autre roll que vous gardez",
+        "cta": "Ouvrir la liste"
+      },
+      "taggedKeep": {
+        "title": "Réviser les doublons étiquetés DIM",
+        "detail_one": "{{count}} candidat doublon déjà étiqueté keep ou favorite dans DIM",
+        "detail_other": "{{count}} candidats doublons déjà étiquetés keep ou favorite dans DIM",
+        "cta": "Parcourir le coffre"
+      },
+      "heavyBuckets": {
+        "title": "Vider les gros groupes de doublons",
+        "detail_one": "{{count}} groupe avec 5+ objets. Utilisez la heatmap pour en choisir un.",
+        "detail_other": "{{count}} groupes avec 5+ objets. Utilisez la heatmap pour en choisir un.",
+        "cta": "Comparer les doublons"
+      },
+      "fixCoverageNoVault": "Aucune pièce du coffre ne roll encore vos stats prioritaires",
+      "fixCoverageNeedSlot": "Il faut un {{slot}} qui roll vos priorités",
+      "fixCoverageSlots": "{{filled}}/{{total}} emplacements remplis dans le loadout recommandé",
+      "browseNoArmor": "Aucune armure de votre coffre ne roll encore ces stats",
+      "browseGaps": "{{count}} type de roll à chercher pour un meilleur fit",
+      "browseGaps_other": "{{count}} types de roll à chercher pour un meilleur fit",
+      "browseCompare": "Comparer l’armure du coffre à vos combos"
+    },
+    "buildLink": {
+      "title": "Vos combos"
+    },
+    "coverage": {
+      "yourCombos": "Vos combos",
+      "setPriorities": "Définissez les priorités de stats sur un combo pour voir les cibles de roll",
+      "recommendedPieces": "Pièces recommandées",
+      "rollTypesHunt": "Types de roll à chercher",
+      "nothingMissing": "Rien d’évident ne manque à votre matrice.",
+      "rollTypesMany": "Types de roll dont vous en avez beaucoup",
+      "noHeavyDuplicates": "Pas de gros doublons dans un seul type de roll.",
+      "tagAll": "Tout étiqueter :",
+      "choose": "Choose",
+      "chooseSlotAria": "Choose {{slot}}",
+      "choosePieceAria": "Choose piece · {{count}} eligible",
+      "supportingPieces": "<1>{{count}}</1> pieces in your vault roll at least one priority stat.",
+      "filledProfiles": "<1>{{filled}}</1> of <2>{{total}}</2> roll types you could own (archetype + tertiary + slot) are in your vault.",
+      "redundantOverlap": "Empty slots remain despite redundant rolls. Prioritize fills over more dupes.",
+      "gapsIntro": "Empty combinations that would help this combo.",
+      "overlapsIntro": "Three or more pieces in the same combination.",
+      "piecesCount": "{{count}} pieces",
+      "orderLabel": "Order:"
+    }
+  },
+  "duel": {
+    "title": "Comparer les doublons {{class}}",
+    "subtitle": {
+      "wrapUp": "Révisez ce groupe, puis continuez",
+      "bucketMeta": "{{slot}} · {{archetype}} · {{tertiary}} · {{count}} objets",
+      "bucketProgress": "{{meta}} · {{progress}}",
+      "noDupes": "Aucune armure en double à comparer pour cette classe",
+      "chooseGroup": "Choisissez un groupe de doublons pour commencer",
+      "startingNext": "Démarrage du prochain groupe de doublons…"
+    },
+    "resetBucket": "Réinitialiser le groupe",
+    "preparing": "Préparation des comparaisons…",
+    "queueEmpty": {
+      "title": "File vide",
+      "summary": "{{keep}} keep · {{junk}} junk en file.",
+      "reviewTags": "Réviser les étiquettes",
+      "restartQueue": "Redémarrer la file",
+      "clearSession": "Effacer la session {{class}}"
+    },
+    "noDuplicates": {
+      "title": "Aucun doublon à comparer",
+      "body": "Aucun groupe de doublons ne correspond à vos règles pour {{class}}. Essayez d’assouplir les règles dans Paramètres ou chargez un nouvel instantané du coffre."
+    },
+    "noGroupsInQueue": "Aucun groupe de doublons en file. Assouplissez les règles dans Paramètres ou redémarrez la file.",
+    "skipGroup": "Ignorer le groupe (S)",
+    "restoringSession": "Restauration de la session…",
+    "confirm": {
+      "switchBucket": "Changer de groupe ? Les choix en cours et les étiquettes junk du groupe actuel seront effacés.",
+      "resetBucket": "Réinitialiser ce groupe ? Tous les choix en cours, les étiquettes junk et la progression de comparaison seront effacés. Le groupe reste dans votre file.",
+      "clearClassSession": "Effacer toute la progression de comparaison {{class}} et les tags en file ? Irréversible."
+    },
+    "chooser": {
+      "title": "Choisir un groupe de doublons",
+      "kicker": "Comparer les doublons",
+      "intro": "Choisissez d'abord un groupe {{class}}. Changez plus tard dans l'en-tête.",
+      "listAria": "{{class}} duplicate groups"
+    },
+    "wrapUp": {
+      "title": "Réviser ce groupe de doublons",
+      "chooseNext": "Choisissez un groupe à comparer ensuite",
+      "nextGroupsAria": "Prochains groupes de doublons",
+      "kicker": "Bucket terminé",
+      "allPairsDecided": "Toutes les paires de duel décidées",
+      "continueNext": "Continuer vers le groupe suivant",
+      "applyTagsContinue": "Appliquer les tags et continuer",
+      "chooseDifferent": "Choisir un autre groupe",
+      "backToSummary": "Retour au résumé",
+      "whatsNext": "Suite",
+      "tagsFootnote": "Les tags sont mis en file en continuant. Rien n'est appliqué avant la révision.",
+      "stats": {
+        "keeps": "Keeps",
+        "junkQueued": "Junk en file",
+        "preferEliminated": "Prefer éliminés",
+        "pairsDecided": "Paires décidées",
+        "inGroup": "Dans ce groupe"
+      },
+      "breakdown": {
+        "keepBoth": "Garder les deux : {{count}}",
+        "keepSide": "Garder un côté : {{count}}",
+        "junkedInDuels": "Junk en duels : {{count}}",
+        "preferInPlay": "Prefer encore actifs : {{count}}"
+      },
+      "piece_one": "{{count}} pièce",
+      "piece_other": "{{count}} pièces",
+      "sessionLast": "Dernier groupe de la file",
+      "sessionLeft_one": "{{count}} groupe restant après",
+      "sessionLeft_other": "{{count}} groupes restants après"
+    },
+    "bucket": {
+      "label": "Groupe",
+      "select": "Sélectionner un groupe",
+      "dupeBucketsAria": "Groupes de doublons"
+    },
+    "keyboard": {
+      "aria": "Raccourcis clavier de comparaison",
+      "left": "Gauche",
+      "both": "Les deux",
+      "right": "Droite",
+      "keep": "Keep",
+      "prefer": "Préférer",
+      "junk": "Junk",
+      "pass": "Passer"
+    },
+    "compare": {
+      "suggested": "Suggéré",
+      "sameRoll": "Même roll",
+      "compareSides": "Comparer les côtés",
+      "suggestedPick": "Choix suggéré : ",
+      "vs": "vs",
+      "fitTitle": "À quel point cette pièce correspond à vos préférences enregistrées",
+      "powerTitle": "Niveau de puissance",
+      "identicalRolls": "Rolls identiques. Gardez, junk, les deux ou passez.",
+      "suppressedSuggestion": "Les deux forts · dernier du palier. Prefer, passez, keep ou junk.",
+      "buildOptimalPrefix": "Combo optimal pour ",
+      "orPassKeepJunk": "· ou passez / keep / junk",
+      "evenMatch": "Égalité. Prefer, passez, keep ou junk.",
+      "eliminated": "Éliminé du bracket",
+      "actionKeep": "Keep",
+      "outcomes": {
+        "prefer": "Préférer ce côté. Le perdant a besoin de {{threshold}} défaites prefer avant junk.",
+        "keepSide": "Keep à la fin du bucket · l'autre reste au bracket",
+        "keepBoth": "Les deux gardés à la fin",
+        "junkOne": "Junk maintenant · l'autre reste (pas de gagnant)",
+        "junkBoth": "Les deux junk maintenant",
+        "pass": "Passer la paire. Aucun tag, les deux remis en file."
+      },
+      "pass": "Passer",
+      "preferred": "Preferred",
+      "tuningLabel": "Tuning: {{stat}}",
+      "setFootnote": "Set : {{name}}",
+      "loss_one": "1 loss",
+      "loss_other": "{{count}} losses",
+      "lossRemaining_one": "{{count}} more prefer loss before junk at bucket end",
+      "lossRemaining_other": "{{count}} more prefer losses before junk at bucket end",
+      "keyboardHints": "Hover buttons for outcomes · ↑ keep both · Space pass · ↓ junk both · Ctrl+←/→ junk sides",
+      "aria": {
+        "keepLeft": "Keep left. {{outcome}}",
+        "keepRight": "Keep right. {{outcome}}",
+        "keepBoth": "Keep both. {{outcome}}",
+        "preferLeft": "Prefer left. {{outcome}}",
+        "preferRight": "Prefer right. {{outcome}}",
+        "passPair": "Pass pair. {{outcome}}",
+        "junkLeft": "Junk left. {{outcome}}",
+        "junkRight": "Junk right. {{outcome}}",
+        "junkBoth": "Junk both. {{outcome}}"
+      }
+    },
+    "progress": {
+      "noGroups": "Aucun groupe de doublons",
+      "lastInQueue": "Dernier groupe de votre file"
+    }
+  },
+  "dupes": {
+    "grouping": {
+      "sameArmorSet": {
+        "label": "Exiger le même set d’armure",
+        "help": "Ne regrouper ou comparer que les pièces du même set. Désactivé : même emplacement + archétype + tertiaire sur tous les sets."
+      },
+      "sameTuningStat": {
+        "label": "Exiger la même stat d’ajustement",
+        "help": "Séparer par stat d’ajustement (ex. Armes vs Grenade). Désactivé : stats d’ajustement mélangées dans un même groupe."
+      }
+    },
+    "respectKeepFavorite": {
+      "label": "Respecter les étiquettes DIM keep et favorite pour le rebut",
+      "help": "Activé : les pièces étiquetées keep ou favorite ne sont pas suggérées comme rebut dans les flux de doublons."
+    },
+    "excludeJunk": {
+      "label": "Exclure les pièces étiquetées junk des comptages de doublons"
+    },
+    "presets": {
+      "loose": {
+        "label": "Souple"
+      },
+      "standard": {
+        "label": "Standard"
+      },
+      "setAware": {
+        "label": "Par set"
+      },
+      "tuning": {
+        "label": "Ajustement"
+      },
+      "strict": {
+        "label": "Strict"
+      }
+    },
+    "impactCompact": {
+      "buckets": "groupes de doublons ·",
+      "decisions": "décisions ·",
+      "pieces": "{{count}} pièces incluses"
+    },
+    "matchStyle": {
+      "custom": "Personnalisé",
+      "usingPreset": "Utilisation de {{label}}",
+      "usingCustomRules": "Utilisation de règles personnalisées",
+      "cardBody": {
+        "loose": "Comparer les pièces du même emplacement sans exiger le même set ou la même stat d’ajustement.",
+        "standard": "Comparer par emplacement, archétype et tertiaire sans exiger le même set.",
+        "setAware": "Regroupe les doublons par set d’armure · convient à la plupart des coffres.",
+        "tuning": "Regroupe les doublons par stat d’ajustement, même entre sets différents.",
+        "strict": "Exige le même set et la même stat d’ajustement pour une correspondance de doublon."
+      },
+      "customMix": "Mix personnalisé : {{armorSet}}, {{tuningStat}}.",
+      "armorSetSame": "même set d’armure",
+      "armorSetAny": "n’importe quel set",
+      "tuningStatSame": "même stat d’ajustement",
+      "tuningStatAny": "n’importe quelle stat d’ajustement",
+      "dimTagsRespect": "Les étiquettes DIM keep et favorite comptent pour suggérer le rebut.",
+      "dimTagsIgnore": "Les étiquettes keep et favorite ne sont pas utilisées pour suggérer le rebut."
+    },
+    "suggestions": {
+      "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+      "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+      "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+      "standardDefault": "Standard preset for your vault size."
+    }
+  },
+  "errors": {
+    "boundary": {
+      "title": "Une erreur s’est produite",
+      "body": "{{appName}} a rencontré une erreur inattendue. Vos préférences et les étiquettes en file dans le stockage local sont en général intactes.",
+      "reload": "Recharger l’application",
+      "goHome": "Retour à l’accueil"
+    },
+    "oauth": {
+      "completingLogin": "Finalisation de la connexion Bungie…",
+      "exchangingCode": "Échange du code d’autorisation…",
+      "loadingVault": "Chargement de votre coffre…",
+      "firstLoadNote": "Le premier chargement télécharge le manifeste du jeu et peut prendre une minute.",
+      "bungieDenied": "Bungie a refusé la connexion : {{error}}",
+      "noAuthCode": "Aucun code d’autorisation reçu : réessayez de vous connecter.",
+      "stateMismatch": "Incohérence d’état OAuth : souvent causée par un onglet obsolète ou un stockage de session bloqué. Retournez à la connexion et réessayez.",
+      "loginFailed": "Échec de la connexion",
+      "backToLogin": "Retour à la connexion",
+      "suffix": "Réessayez de vous connecter. Si le problème persiste, contactez l’administrateur du site.",
+      "devChecklistIntro": "Liste de contrôle de l’application Bungie (dev local) :",
+      "devRedirect": "URL de redirection : {{uri}}",
+      "devOrigin": "Origine : {{origin}}",
+      "devClientId": "L’ID client correspond à votre application Bungie ({{clientId}})",
+      "devApiKey": "La clé API provient de la même application Bungie",
+      "devRestart": "Redémarrez le serveur de dev après avoir modifié les identifiants"
+    },
+    "env": {
+      "bungieSignInUnavailableDev": "La connexion n’est pas activée dans cette version.",
+      "bungieSignInUnavailable": "La connexion n’est pas disponible sur ce déploiement.",
+      "bungieCredentialsMissingDev": "La connexion Bungie n’est pas activée dans cet environnement.",
+      "bungieCredentialsMissing": "La connexion n’est pas disponible sur ce déploiement. Contactez l’administrateur du site.",
+      "bungieSecretMissingDev": "La connexion Bungie n’est pas entièrement activée dans cet environnement.",
+      "dimSyncUnavailableDev": "La synchronisation DIM n’est pas activée dans cet environnement.",
+      "dimSyncUnavailable": "L’application des étiquettes dans DIM n’est pas disponible sur ce déploiement. Contactez l’administrateur du site."
+    },
+    "vault": {
+      "sessionExpired": "Votre session Bungie a peut-être expiré. Déconnectez-vous et reconnectez-vous.",
+      "forbidden": "Bungie a rejeté la requête. Réessayez de vous connecter, ou contactez l’administrateur du site si cela continue.",
+      "manifest": "Échec du téléchargement du manifeste. Vérifiez votre connexion et réessayez : le premier chargement peut prendre une minute.",
+      "network": "Erreur réseau. Vérifiez votre connexion ou réessayez dans un instant.",
+      "membership": "Impossible de résoudre votre adhésion Destiny. Assurez-vous que le compte possède des personnages Destiny 2."
+    },
+    "applyTagsFailed": "Échec de l’application des étiquettes",
+    "partialApply": "{{ok}} étiquettes appliquées sur {{total}}. {{failed}} en échec : réessayez ou retirez de la file."
+  },
+  "footer": {
+    "aria": {
+      "siteLinks": "Liens du site",
+      "kofi": "Soutenir sur Ko-fi"
+    },
+    "links": {
+      "newoReport": "newo.report",
+      "github": "GitHub"
+    }
+  },
+  "game": {
+    "achievability": {
+      "ready": "Prêt",
+      "almost": "Presque",
+      "needBetterRolls": "Meilleurs rolls nécessaires",
+      "covered": "Couvert",
+      "weakTuning": "Ajustement faible",
+      "gap": "Manque",
+      "idealTuning": "Ajustement idéal",
+      "tuned": "Ajusté",
+      "archetypeOnly": "Archétype seul",
+      "noFit": "Aucune correspondance"
+    },
+    "armorDiff": {
+      "sameStatSplit": "Même répartition de stats",
+      "sameStatsTuning": "Mêmes stats et ajustement",
+      "sameRoll": "Même roll",
+      "decideSetOrTuning": "Décider par set ou ajustement",
+      "decideTuning": "Décider par ajustement",
+      "decideSet": "Décider par set",
+      "sameExceptPower": "Identique sauf puissance/emplacement",
+      "identicalRoll": "Roll identique. Choisissez l’un ou l’autre."
+    },
+    "fit": {
+      "poorMatch": "Faible correspondance",
+      "closeCall": "Presque équivalent"
+    },
+    "scoring": {
+      "calibrateForAccuracy": "Calibrer les préférences pour plus de précision"
+    },
+    "heatmap": {
+      "mixedTuning": "Stats d’ajustement mélangées dans le groupe",
+      "dupeBucket": "groupe de doublons"
+    },
+    "minTier": {
+      "tier5Only": "Niveau 5 uniquement"
+    },
+    "diff": {
+      "tuning": "Tuning",
+      "set": "Set",
+      "power": "Power",
+      "masterwork": "Masterwork",
+      "noSet": "Pas de set",
+      "yes": "Yes",
+      "no": "No",
+      "tuningVs": "Réglage : {{a}} vs {{b}}",
+      "setFootnote": "Set : {{name}}"
+    },
+    "dominator": {
+      "differentStatSplit": "Répartition de stats différente",
+      "sameAfterTuning": "Identique après tuning",
+      "beatsPiece": "Bat cette pièce",
+      "statComparison": "Comparaison de stats",
+      "tuningCoverage": "Couverture tuning",
+      "aheadOn": "En avance sur",
+      "everyTuningLayout": "chaque disposition de tuning"
+    },
+    "classes": {
+      "titan": "Titan",
+      "hunter": "Chasseur",
+      "warlock": "Arcaniste"
+    },
+    "stats": {
+      "weapons": "Armes",
+      "grenade": "Grenade",
+      "super": "Super",
+      "melee": "Mêlée",
+      "health": "Santé",
+      "class": "Classe"
+    },
+    "archetypes": {
+      "gunner": "Gunner",
+      "grenadier": "Grenadier",
+      "paragon": "Paragon",
+      "brawler": "Brawler",
+      "bulwark": "Bulwark",
+      "specialist": "Specialist"
+    },
+    "slots": {
+      "helmet": "Helmet",
+      "arms": "Arms",
+      "chest": "Chest",
+      "legs": "Legs",
+      "classItem": "Class Item"
+    },
+    "roll": {
+      "tertiary": "{{stat}} tertiary",
+      "tuning": "{{stat}} tuning",
+      "tuningLabel": "Tuning: {{stat}}",
+      "preferred": "Preferred",
+      "none": "none"
+    },
+    "labels": {
+      "separator": " · "
+    }
+  },
+  "home": {
+    "tagline": "Comparez les armures en double et mettez en file des étiquettes DIM. Rien n’est démantelé ici.",
+    "resumeSession": "Reprendre la session précédente",
+    "footerNote": "Coffre via Bungie.net. Étiquettes via DIM. Déconnexion dans Paramètres.",
+    "signInWithBungie": "Se connecter avec Bungie"
+  },
+  "layout": {
+    "aria": {
+      "guardianClass": "Classe du Gardien"
+    }
+  },
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "calibrate": "Calibrer",
+    "browse": "Parcourir",
+    "combos": "Combos",
+    "compare": "Comparer",
+    "review": "Révision",
+    "autoFilters": "Filtres auto",
+    "settings": "Paramètres",
+    "mobile": {
+      "dashboard": "Tableau",
+      "calibrate": "Calib.",
+      "autoFilters": "Filtres",
+      "settings": "Régl."
+    },
+    "aria": {
+      "mobile": "Navigation mobile"
+    }
+  },
+  "onboarding": {
+    "restoringSession": "Restauration de la session Bungie…",
+    "redirectingLogin": "Redirection vers la connexion…",
+    "vaultTrimTitle": "Objectif de réduction du coffre",
+    "tieredFound": "<1>{{count}}</1> armures classées <2>{{pieceWord}}</2> trouvées<3>{{t5Block}}</3>.",
+    "piece_one": "pièce",
+    "piece_other": "pièces",
+    "t5Block": " (<1>{{count}}</1> au niveau 5)",
+    "noTieredFound": "Aucune armure classée trouvée<1>{{parsedHint}}</1>. Importe uniquement les armures classées en jeu (N1–N5) ; l’équipement hérité et non classé est ignoré.",
+    "parsedHint": " ({{count}} objets analysés depuis le coffre)",
+    "keepGoalHeading": "Combien voulez-vous en garder ?",
+    "keepGoalIntro": "Définit l’agressivité des suggestions de réduction des doublons de niveau 5 pendant le nettoyage.",
+    "keepGoalSummary": "Objectif de conservation : environ {{total}} au niveau 5 au total (environ {{perClass}} par classe).",
+    "keepGoalExcess": " Vous avez environ <1>{{excess}}</1> au-dessus de cet objectif.",
+    "keepGoalAtTarget": " Vous êtes à l’objectif ou en dessous.",
+    "signOutBack": "Se déconnecter",
+    "keepOptions": {
+      "lean": {
+        "label": "Minimaliste",
+        "blurb": "Réduction agressive · vider la plupart des groupes de doublons"
+      },
+      "balanced": {
+        "label": "Équilibré",
+        "blurb": "Éliminer les doublons évidents, garder de la variété pour les builds"
+      },
+      "options": {
+        "label": "Garder des options",
+        "blurb": "Garder des rolls de stats et des combos de sets ; réduction légère"
+      },
+      "hoarder": {
+        "label": "Accumulateur",
+        "blurb": "Ne réduire que les doublons flagrants ; maximiser les options"
+      },
+      "description": "{{blurb}} (~{{perClass}} niveau 5 par classe)"
+    },
+    "backAria": "Retour"
+  },
+  "review": {
+    "title": "Révision des étiquettes",
+    "summary": "{{total}} en file · {{keep}} keep · {{junk}} junk. Appliquer écrit les étiquettes en file ; les lignes indiquent les étiquettes DIM existantes si différentes.",
+    "applied": "Étiquettes appliquées à DIM Sync.",
+    "openJunkInDim": "Ouvrir le junk dans DIM",
+    "partialApplied": "Application partielle : {{count}} étiquettes réussies. Les éléments en échec restent en file.",
+    "retryFailed": "Réessayer {{count}} en échec",
+    "empty": "Aucune étiquette en attente.",
+    "compareDupes": "Comparer les doublons",
+    "table": {
+      "item": "Objet",
+      "copyDimSr": "Copier la requête DIM",
+      "archetype": "Archétype",
+      "tertiary": "Tertiaire",
+      "tuning": "Ajustement",
+      "class": "Classe",
+      "combo": "Combo",
+      "appliesToDim": "S’applique à DIM",
+      "none": "Aucun"
+    },
+    "copy": {
+      "ids": "Copier requête id:",
+      "junk": "Copier recherche tag:junk",
+      "junkIds": "Copier uniquement les id junk",
+      "copied": "Copié !",
+      "announcement": "{{label}} copié dans le presse-papiers."
+    },
+    "removeFromQueue": "Retirer de la file",
+    "applyTags": "Appliquer {{count}} étiquettes à DIM",
+    "applying": "Application…",
+    "clearPending": "Effacer les étiquettes en attente",
+    "clearSession": "Effacer la session",
+    "backToDashboard": "Retour au tableau de bord",
+    "confirm": {
+      "clearPending": "Effacer les {{count}} étiquettes en attente ? Elles ne seront pas appliquées dans DIM. La progression de la session de comparaison est conservée.",
+      "clearSession": "Effacer toute la session de comparaison ? Les étiquettes en attente et l’état de comparaison en cours seront réinitialisés."
+    },
+    "alreadyInDim": "Déjà dans DIM : {{summary}}"
+  },
+  "rulesOnboarding": {
+    "title": "Comment les doublons doivent-ils correspondre ?",
+    "intro": "Nous regroupons les rolls d’armure similaires pour que vous choisissiez un gardien et étiquetiez le reste dans DIM. Modifiable à tout moment dans Paramètres.",
+    "restoringSession": "Restauration de la session Bungie…",
+    "redirectingLogin": "Redirection vers la connexion…",
+    "loadingVault": "Chargement du coffre…",
+    "retryVaultLoad": "Réessayer le chargement du coffre",
+    "refreshing": "Actualisation…",
+    "noTieredArmor": "Aucune armure classée dans la portée à votre niveau minimum",
+    "tieredPiecesImported": "({{count}} pièces classées importées)",
+    "tieredArmorFootnote": "Seul l’équipement classé en jeu (N1–N5) est inclus. Baissez le niveau minimum dans Paramètres si besoin.",
+    "recommendedPresetSr": "Préréglage recommandé",
+    "useRecommended": "Utiliser le recommandé",
+    "customizeRules": "Personnaliser les règles",
+    "hideCustomization": "Masquer la personnalisation",
+    "customizeIntro": "Resserrez ou assouplissez ce qui compte comme doublon. Les préréglages dans Paramètres les définissent en un clic.",
+    "matchStyleLabel": "Style de correspondance :",
+    "previewByClass": "Aperçu par classe",
+    "suggestions": "Suggestions",
+    "usePreset": "Utiliser {{label}}",
+    "impact": {
+      "none": "Aucun groupe de doublons trouvé pour {{class}} à votre niveau actuel.",
+      "summary": "Environ {{buckets}} {{groupWord}} de doublons · environ {{review}} {{rollWord}} à comparer ({{class}})",
+      "group_one": "groupe",
+      "group_other": "groupes",
+      "roll_one": "roll",
+      "roll_other": "rolls"
+    },
+    "aria": {
+      "dupeRules": "Règles de doublons"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "account": {
+      "heading": "Compte",
+      "signedInAs": "Connecté en tant que <1>{{name}}</1>",
+      "parsedCount": "{{count}} pièces d’armure classées analysées (coffre, tous les personnages, postmaster)",
+      "signOutNote": "La déconnexion efface les jetons Bungie et DIM de cette session navigateur (stockage de session uniquement). Les préférences restent dans le stockage local.",
+      "signOutButton": "Se déconnecter et effacer les jetons"
+    },
+    "dupeRules": {
+      "heading": "Règles de doublons",
+      "intro": "Règles partagées pour la heatmap, la comparaison, le parcours et les listes de rolls redondants.",
+      "scopeHeading": "Portée : quelles pièces comptent",
+      "minTierLabel": "Niveau d’équipement minimum",
+      "minTierHelp": "L’import du coffre charge toujours les niveaux 1 à 5. Seules les pièces à ce niveau ou au-dessus entrent dans les groupes de doublons et les vérifications de rolls redondants.",
+      "groupingHeading": "Regroupement : ce qui compte comme « doublon »",
+      "groupingIntro": "Les pièces correspondent toujours sur classe, emplacement, archétype et stat tertiaire. Ces options ajoutent des séparations plus strictes, et s’appliquent aussi aux comparaisons de rolls redondants.",
+      "dimTagsHeading": "Étiquettes DIM pour compter les doublons",
+      "dimTagsIntro": "Les pièces étiquetées restent visibles mais peuvent être exclues des tailles de groupes et des comptages de révision.",
+      "liveImpact": "Impact en direct (règles globales, coffre Hunter)"
+    },
+    "classDupeRules": {
+      "heading": "Règles de doublons {{class}}",
+      "usingClass": "Utilisation de {{class}} (changez de classe dans l’en-tête). Les classes partagent les règles globales par défaut. Appliquez un préréglage à une classe sans modifier les autres.",
+      "customRules": "{{class}} utilise des règles personnalisées ·",
+      "resetToGlobal": "réinitialiser aux règles globales"
+    },
+    "dupePresets": {
+      "heading": "Préréglages de doublons"
+    },
+    "dashboardLink": "Tableau de bord",
+    "language": {
+      "heading": "Langue",
+      "useBrowser": "Utiliser la langue du navigateur",
+      "useBrowserHelp": "Activé : l’application suit la langue du navigateur. Désactivé : utilisez la langue choisie ci-dessous."
+    },
+    "developer": {
+      "heading": "Développeur",
+      "bungie": "Bungie : {{status}}",
+      "dimSync": "DIM Sync : {{status}}"
+    },
+    "reviewTags": {
+      "heading": "Étiquettes de révision"
+    },
+    "classPrefs": {
+      "heading": "Préférences {{class}}",
+      "usingClass": "Utilisation de {{class}} (changez de classe dans l’en-tête). Pondérations de stats et d’archétypes par classe issues de la calibration. Les règles de doublons sont partagées sauf surcharge par classe.",
+      "calibrations": "{{count}} calibrations · confiance {{confidence}}",
+      "topStats": "Meilleures stats :",
+      "topArchetypes": "Meilleurs archétypes :",
+      "recalibrate": "Recalibrer {{class}}",
+      "exportPrefs": "Exporter les préférences",
+      "importPrefs": "Importer les préférences",
+      "resetClass": "Réinitialiser les préférences {{class}}",
+      "resetAll": "Réinitialiser toutes les classes",
+      "imported": "Préférences importées.",
+      "invalidFile": "Fichier de préférences invalide.",
+      "openReview": "Ouvrir la page de révision",
+      "clearPending": "Effacer les étiquettes en attente",
+      "queued_one": "{{count}} étiquette en file pour application dans DIM.",
+      "queued_other": "{{count}} étiquettes en file pour application dans DIM.",
+      "nonePending": "Aucune étiquette en attente.",
+      "confirmClearPending": "Effacer les {{count}} étiquettes en attente ? Elles ne seront pas appliquées dans DIM.",
+      "confirmResetClass": "Réinitialiser les préférences {{class}} par défaut ? Les pondérations de stats, les choix de calibration et les pondérations apprises pour cette classe seront effacés.",
+      "confirmResetAll": "Réinitialiser les préférences de toutes les classes par défaut ? Les pondérations de stats, les choix de calibration et les pondérations apprises seront effacés pour Hunter, Titan et Warlock. Les règles de doublons et les autres paramètres sont conservés."
+    }
+  },
+  "vault": {
+    "loading": "Chargement du coffre…",
+    "refreshing": "Actualisation…",
+    "refreshingStatus": "Actualisation… {{status}}",
+    "loadVault": "Charger le coffre",
+    "noDataYet": "Aucune donnée de coffre pour l’instant.",
+    "noDataBrowseHint": "Chargez d’abord votre coffre depuis le tableau de bord.",
+    "noDataBuildHint": "Aucune donnée de coffre pour l’instant. Chargez votre coffre depuis le tableau de bord.",
+    "retryVaultLoad": "Réessayer le chargement du coffre",
+    "signOutInSettings": "Se déconnecter dans Paramètres",
+    "dismiss": "Fermer",
+    "tieredArmorTitle": "Armures que vous avez classées en jeu (niveaux 1 à 5). L’équipement hérité et les pièces jamais classées sont exclus de l’import. La portée des doublons utilise votre niveau minimum.",
+    "dupeRulesImpact": "Chargez le coffre pour prévisualiser l’impact."
+  }
+}

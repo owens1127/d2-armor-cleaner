@@ -1,13 +1,13 @@
 /**
- * One-off: copy missing keys from en locale JSON into other locales (English placeholders).
+ * One-off: copy missing keys from en.json into other locales (English placeholders).
  * Preserves existing translations. Run: node scripts/fill-missing-locale-keys.mjs
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'src', 'locales');
-const enDir = path.join(root, 'en');
+const LOCALES_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'src', 'locales');
+const enPath = path.join(LOCALES_DIR, 'en.json');
 
 function fillMissing(target, source) {
   if (source === null || typeof source !== 'object' || Array.isArray(source)) {
@@ -33,24 +33,23 @@ function fillMissing(target, source) {
   return out;
 }
 
-const namespaces = fs.readdirSync(enDir).filter((f) => f.endsWith('.json'));
-const locales = fs.readdirSync(root).filter((d) => d !== 'en' && fs.statSync(path.join(root, d)).isDirectory());
+const enJson = JSON.parse(fs.readFileSync(enPath, 'utf8'));
+const locales = fs
+  .readdirSync(LOCALES_DIR)
+  .filter((f) => f.endsWith('.json') && f !== 'en.json')
+  .map((f) => f.replace(/\.json$/, ''));
 
 let updated = 0;
 for (const locale of locales) {
-  for (const file of namespaces) {
-    const enPath = path.join(enDir, file);
-    const localePath = path.join(root, locale, file);
-    if (!fs.existsSync(localePath)) continue;
-    const enJson = JSON.parse(fs.readFileSync(enPath, 'utf8'));
-    const localeJson = JSON.parse(fs.readFileSync(localePath, 'utf8'));
-    const merged = fillMissing(localeJson, enJson);
-    const next = `${JSON.stringify(merged, null, 2)}\n`;
-    const prev = `${JSON.stringify(localeJson, null, 2)}\n`;
-    if (next !== prev) {
-      fs.writeFileSync(localePath, next);
-      updated += 1;
-    }
+  const localePath = path.join(LOCALES_DIR, `${locale}.json`);
+  if (!fs.existsSync(localePath)) continue;
+  const localeJson = JSON.parse(fs.readFileSync(localePath, 'utf8'));
+  const merged = fillMissing(localeJson, enJson);
+  const next = `${JSON.stringify(merged, null, 2)}\n`;
+  const prev = `${JSON.stringify(localeJson, null, 2)}\n`;
+  if (next !== prev) {
+    fs.writeFileSync(localePath, next);
+    updated += 1;
   }
 }
-console.log(`Updated ${updated} locale files under ${root}`);
+console.log(`Updated ${updated} locale files under ${LOCALES_DIR}`);
