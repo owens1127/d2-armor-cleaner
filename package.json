@@ -1,6 +1,6 @@
 {
   "name": "d2-armor-cleaner",
-  "description": "Destiny 2 armor duplicate manager · compare rolls, queue keep/junk tags, sync to DIM.",
+  "description": "Destiny 2 vault tool to find duplicate armor, compare rolls, track combo coverage, and queue keep/junk tags for DIM sync.",
   "private": true,
   "version": "0.1.0",
   "type": "module",
