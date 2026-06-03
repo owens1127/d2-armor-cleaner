@@ -1,46 +1,46 @@
 {
   "autoFilters": {
     "title": "Filtros automáticos",
-    "intro": "Encola etiquetas junk automáticamente cuando se carga o actualiza tu bóveda. Nunca se etiquetan automáticamente keep ni favorite.",
+    "intro": "Encola etiquetas de basura automáticamente al cargar o actualizar tu bóveda. Las piezas con etiqueta de conservar o favorito nunca se etiquetan automáticamente.",
     "noRules": "Aún no hay reglas.",
-    "addRule": "Añadir regla",
+    "addRule": "Agregar regla",
     "classLabel": "Clase",
-    "operatorsIntro": "Cada filtro puede ser <1>Es</1>, <2>No es</2>, <3>Cualquiera de</3> o <4>Ninguno de</4> (p. ej. piezas junk de Hunter cuyo arquetipo no es Gunner).",
+    "operatorsIntro": "Cada filtro puede ser <1>Es</1>, <2>No es</2>, <3>Cualquiera de</3> o <4>Ninguno de</4> (p. ej. piezas basura de Cazador cuyo arquetipo no sea Gunner).",
     "rulesHeading": "Reglas",
-    "rulesBody": "Las piezas coincidentes se ponen en cola como basura en Revisión (igual que basura manual). Los keeps nunca se etiquetan automáticamente: keep/favorito DIM, keep pendiente o piezas guardadas en un bucket de duelo.",
+    "rulesBody": "Las piezas coincidentes se ponen en cola como basura en Revisión (igual que basura manual). Las piezas marcadas como conservar nunca se etiquetan automáticamente: conservar o favorito en DIM, conservar pendiente o piezas guardadas en un grupo de duelo.",
     "deleteRule": "Eliminar",
     "allClasses": "Todas las clases",
-    "archetypeLabel": "Archétype",
-    "tertiaryStatLabel": "Stat tertiaire",
-    "tuningStatLabel": "Stat tuning",
-    "slotLabel": "Emplacement",
-    "armorSetLabel": "Set d'armure",
-    "any": "Tous",
-    "addValue": "Ajouter une valeur…",
-    "pickValue": "Choisir une valeur…",
-    "matchMode": "Mode de correspondance",
-    "matchModeDisabled": "Mode (choisir une valeur d'abord)",
+    "archetypeLabel": "Arquetipo",
+    "tertiaryStatLabel": "Estadística terciaria",
+    "tuningStatLabel": "Estadística de afinación",
+    "slotLabel": "Espacio",
+    "armorSetLabel": "Set de armadura",
+    "any": "Cualquiera",
+    "addValue": "Agregar valor…",
+    "pickValue": "Elegir un valor…",
+    "matchMode": "Modo de coincidencia",
+    "matchModeDisabled": "Modo de coincidencia (elige un valor primero)",
     "operators": {
       "is": "Es",
       "isNot": "No es",
       "anyOf": "Cualquiera de",
       "noneOf": "Ninguno de"
     },
-    "livePreview_one": "Aperçu : {{count}} pièce serait en file au prochain chargement (hors keeps, favoris et junk déjà).",
-    "livePreview_other": "Aperçu : {{count}} pièces seraient en file au prochain chargement (hors keeps, favoris et junk déjà).",
+    "livePreview_one": "Vista previa en vivo: {{count}} pieza se encolaría en la próxima carga de la bóveda (sin conservar, favoritos ni basura ya marcada).",
+    "livePreview_other": "Vista previa en vivo: {{count}} piezas se encolarían en la próxima carga de la bóveda (sin conservar, favoritos ni basura ya marcada).",
     "setFallback": "Set {{hash}}",
-    "addRuleHeading": "Ajouter une règle",
-    "enableRule": "Activer la règle : {{label}}",
-    "disableRule": "Désactiver la règle : {{label}}",
-    "removeValue": "Retirer {{label}}",
+    "addRuleHeading": "Agregar regla",
+    "enableRule": "Activar regla: {{label}}",
+    "disableRule": "Desactivar regla: {{label}}",
+    "removeValue": "Quitar {{label}}",
     "describe": {
-      "allClasses": "Toutes les classes",
-      "tertiary": "{{stat}} tertiaire",
-      "tuning": "{{stat}} tuning",
+      "allClasses": "Todas las clases",
+      "tertiary": "{{stat}} terciaria",
+      "tuning": "{{stat}} afinación",
       "setFallback": "set {{hash}}",
-      "anyOf": "l'un de {{labels}}",
-      "noneOf": "aucun de {{labels}}",
-      "not": "PAS {{label}}"
+      "anyOf": "cualquiera de {{labels}}",
+      "noneOf": "ninguno de {{labels}}",
+      "not": "NO {{label}}"
     }
   },
   "browse": {
@@ -70,11 +70,11 @@
     },
     "dimTags": {
       "untagged": "Sin etiqueta",
-      "keep": "Keep",
-      "junk": "Junk",
-      "favorite": "Favorite",
-      "infuse": "Infuse",
-      "archive": "Archive"
+      "keep": "Conservar",
+      "junk": "Basura",
+      "favorite": "Favorito",
+      "infuse": "Infundir",
+      "archive": "Archivo"
     },
     "sort": {
       "matchDesc": "% coincidencia (alto → bajo)",
@@ -88,17 +88,17 @@
     },
     "copyIds": "Copiar consulta id: de {{count}}",
     "copied": "¡Copiado!",
-    "reviewTagsLink": "Revisar etiquetas de comparar/triage ({{count}})",
+    "reviewTagsLink": "Revisar etiquetas de comparar/clasificación ({{count}})",
     "redundant": {
       "pickOne": "Elige una para conservar",
       "noRedundant": "No hay tiradas redundantes",
       "noMatches": "Sin coincidencias",
-      "noMatchFilters": "No redundant rolls match the current filters.",
-      "noneToShow": "No redundant rolls to show."
+      "noMatchFilters": "Ninguna tirada redundante coincide con los filtros actuales.",
+      "noneToShow": "No hay tiradas redundantes para mostrar."
     },
-    "noItemsMatch": "No items match these filters.",
-    "backToDashboard": "Back to dashboard",
-    "dupeBadge": "dupe"
+    "noItemsMatch": "Ningún objeto coincide con estos filtros.",
+    "backToDashboard": "Volver al panel",
+    "dupeBadge": "duplicado"
   },
   "build": {
     "title": "Combos de {{class}}",
@@ -114,98 +114,98 @@
     "twoTwoMix": " · mix 2+2",
     "editor": {
       "intro": "Elige 2–4 estadísticas en orden y bonificaciones de set opcionales. Recomendamos la mejor pieza por ranura.",
-      "unsavedHint": "Modifications non enregistrées · enregistrez ou annulez.",
-      "editingHint": "Édition du combo · enregistrez ou annulez à la fin.",
-      "allSavedHint": "Tous les combos enregistrés · Modifier sur une carte.",
-      "emptyList": "Aucun combo pour cette classe. Ajoutez-en un ci-dessous.",
-      "unsaved": "Non enregistré",
-      "saved": "Enregistré",
+      "unsavedHint": "Cambios sin guardar · guarda o cancela para volver a la vista de solo lectura.",
+      "editingHint": "Editando combo · guarda o cancela al terminar.",
+      "allSavedHint": "Todos los combos guardados · haz clic en Editar en una tarjeta para cambiar la configuración.",
+      "emptyList": "No hay combos guardados para esta clase. Agrega uno abajo para recomendaciones de tirada y orden en Explorar.",
+      "unsaved": "Sin guardar",
+      "saved": "Guardado",
       "on": "Oui",
       "off": "Non",
       "edit": "Editar",
-      "remove": "Retirer",
+      "remove": "Quitar",
       "save": "Guardar",
       "cancel": "Cancelar",
-      "addStat": "Ajouter une stat",
-      "priority1": "1re priorité",
-      "priority2": "2e priorité",
-      "priority3": "3e priorité",
-      "priority4": "4e priorité",
-      "priorityN": "Priorité {{n}}",
-      "setBonus2pc": "Bonus 2 pièces",
-      "setBonus4pcSame": "Même set (4pc)",
+      "addStat": "Agregar estadística",
+      "priority1": "1.ª prioridad",
+      "priority2": "2.ª prioridad",
+      "priority3": "3.ª prioridad",
+      "priority4": "4.ª prioridad",
+      "priorityN": "Prioridad {{n}}",
+      "setBonus2pc": "Bonificación de 2 piezas",
+      "setBonus4pcSame": "Mismo set (4pc)",
       "setBonus4pcMix": "Second set (mix 2pc) ou 4pc",
-      "setBonusHint": "Un set pour 2pc, puis le même pour 4pc ou un second pour mix 2+2.",
-      "loadVaultForSets": "Chargez le coffre pour choisir des sets.",
+      "setBonusHint": "Elige un set para 2pc, luego el mismo set para 4pc o un segundo set para un mix 2+2.",
+      "loadVaultForSets": "Carga tu bóveda para elegir sets de armadura de tu inventario.",
       "firstSet2pc": "Premier set (2pc)",
       "twoPcOnly": "2pc seulement",
       "set4pcSuffix": "{{name}} (4pc)",
       "set2pcMixSuffix": "{{name}} (mix 2pc)",
       "targetLabel": "Cible :",
       "addStatCount": "+ stat ({{current}}/{{max}})",
-      "addCombo": "Ajouter un combo",
-      "addAnotherCombo": "Ajouter un autre combo",
-      "viewCoverageLink": "Voir la couverture combo {{class}}"
+      "addCombo": "Agregar combo",
+      "addAnotherCombo": "Agregar otro combo",
+      "viewCoverageLink": "Ver cobertura de combos de {{class}}"
     },
     "coverage": {
       "heading": "Tus combos",
-      "intro": "Meilleure pièce par emplacement pour chaque roll optimal",
-      "empty": "Pas encore de combo. Ajoutez 2–4 priorités de stats ci-dessous.",
+      "intro": "Mejor pieza por espacio para cada patrón de tirada óptimo (arquetipo + terciaria + afinación)",
+      "empty": "Aún no hay combos. Agrega 2–4 prioridades de estadísticas en la sección Combos abajo.",
       "editCombos": "Modifier les combos",
-      "setPrioritiesHint": "Définissez des priorités pour voir les rolls cibles",
-      "recommendedHeading": "Pièces recommandées",
+      "setPrioritiesHint": "Define prioridades de estadísticas en un combo para ver objetivos de tirada",
+      "recommendedHeading": "Piezas recomendadas",
       "recommendedHint": "Tags DIM et recherche pour la grille",
       "browseVault": "Explorar bóveda",
       "setTarget": "Cible de set :",
-      "vaultPiecesShort": "pas assez de pièces",
-      "conflictingSets": "Ces cibles nécessitent plus de cinq pièces · ajustez le combo.",
-      "showRollDetails": "Afficher les détails de roll",
-      "hideRollDetails": "Masquer les détails de roll",
-      "tagAll": "Tout taguer :",
-      "bulkNoTaggable": "Aucune pièce taggable",
-      "bulkClearKeep": "Retirer keep sur tout",
-      "bulkMarkKeep": "Tout en keep",
+      "vaultPiecesShort": "no hay suficientes piezas en la bóveda",
+      "conflictingSets": "Estos objetivos de set requieren más de cinco piezas de armadura · ajusta tu combo.",
+      "showRollDetails": "Mostrar detalles de tipo de tirada",
+      "hideRollDetails": "Ocultar detalles de tipo de tirada",
+      "tagAll": "Etiquetar todo:",
+      "bulkNoTaggable": "No hay piezas que se puedan etiquetar",
+      "bulkClearKeep": "Quitar conservar en todas",
+      "bulkMarkKeep": "Marcar todas como conservar",
       "bulkAllFavorited": "Tout en favori",
-      "bulkMarkFavorite": "Tout favoriser",
-      "bulkClearJunk": "Retirer junk sur tout",
-      "bulkMarkJunk": "Tout en junk",
-      "tagKeep": "Tag keep dans DIM",
-      "tagKeepRemove": "Retirer keep dans DIM",
+      "bulkMarkFavorite": "Marcar todas como favorito",
+      "bulkClearJunk": "Quitar basura en todas",
+      "bulkMarkJunk": "Marcar todas como basura",
+      "tagKeep": "Etiqueta conservar en DIM",
+      "tagKeepRemove": "Quitar etiqueta conservar en DIM",
       "tagFavorite": "Favori dans DIM",
-      "tagFavoriteAlready": "Déjà favori dans DIM",
-      "tagJunk": "Junk dans DIM",
-      "tagJunkRemove": "Retirer junk dans DIM",
+      "tagFavoriteAlready": "Ya es favorito en DIM",
+      "tagJunk": "Etiqueta basura en DIM",
+      "tagJunkRemove": "Quitar etiqueta basura en DIM",
       "choose": "Elegir",
-      "chooseSlot": "Choisir {{slot}}",
-      "choosePiece": "Choisir · {{count}} éligibles",
-      "eligible_one": "{{count}} pièce éligible",
-      "eligible_other": "{{count}} pièces éligibles",
-      "anyArchetype": "Tout archétype",
+      "chooseSlot": "Elegir {{slot}}",
+      "choosePiece": "Elegir pieza · {{count}} elegibles",
+      "eligible_one": "{{count}} pieza elegible",
+      "eligible_other": "{{count}} piezas elegibles",
+      "anyArchetype": "Cualquier arquetipo",
       "tier": "Palier {{tier}}",
       "comboFallback": "Combo",
-      "rollRoleCombined": "tertiaire + tuning",
-      "rollRoleTertiary": "tertiaire",
-      "rollRoleTuning": "tuning",
-      "notComboPriority": "{{stat}} · pas priorité combo",
-      "archetypeBonus": "{{stat}} de l'archétype (+{{bonus}})",
-      "rollCombinedTitle": "{{stat}} tertiaire+tuning (+{{tertiaryBonus}} +{{tuningBonus}})",
-      "rollTertiaryTitle": "{{stat}} tertiaire (+{{bonus}})",
-      "rollTuningTitle": "{{stat}} tuning (+{{bonus}})",
-      "detailsSupporting": "{{count}} pièces roulent au moins une priorité.",
-      "detailsProfiles": "{{filled}} sur {{possible}} types de roll possibles dans le coffre.",
-      "detailsRedundantOverlap": "Emplacements vides malgré les doublons · remplissez d'abord.",
-      "gapsHeading": "Rolls à chercher",
-      "gapsIntro": "Combinaisons vides utiles pour ce combo.",
-      "gapsEmpty": "Rien d'évident ne manque.",
+      "rollRoleCombined": "terciaria + afinación",
+      "rollRoleTertiary": "terciaria",
+      "rollRoleTuning": "afinación",
+      "notComboPriority": "{{stat}} · no es prioridad del combo",
+      "archetypeBonus": "{{stat}} del arquetipo (+{{bonus}})",
+      "rollCombinedTitle": "{{stat}} terciaria + afinación (+{{tertiaryBonus}} +{{tuningBonus}})",
+      "rollTertiaryTitle": "{{stat}} terciaria (+{{bonus}})",
+      "rollTuningTitle": "{{stat}} afinación (+{{bonus}})",
+      "detailsSupporting": "{{count}} piezas en tu bóveda tienen al menos una estadística prioritaria.",
+      "detailsProfiles": "{{filled}} de {{possible}} tipos de tirada que podrías tener (arquetipo + terciaria + espacio) están en tu bóveda.",
+      "detailsRedundantOverlap": "Quedan espacios vacíos pese a tiradas redundantes. Prioriza llenar espacios antes que más duplicados.",
+      "gapsHeading": "Tipos de tirada por buscar",
+      "gapsIntro": "Combinaciones vacías que ayudarían a este combo.",
+      "gapsEmpty": "No falta nada obvio en tu matriz.",
       "overlapsHeading": "Rolls en surplus",
-      "overlapsIntro": "Trois pièces ou plus dans la même combinaison.",
+      "overlapsIntro": "Tres o más piezas en la misma combinación.",
       "overlapsEmpty": "Pas de lourds doublons sur un roll.",
-      "overlapCount_one": "{{count}} pièce",
-      "overlapCount_other": "{{count}} pièces",
-      "gapAllPriorities": "toutes les priorités",
-      "gapMultiplePriorities": "plusieurs priorités",
-      "gapOnePriority": "une priorité",
-      "chooseEligibleTitle": "{{count}} pièces éligibles dans le coffre"
+      "overlapCount_one": "{{count}} pieza",
+      "overlapCount_other": "{{count}} piezas",
+      "gapAllPriorities": "coincide con todas las prioridades",
+      "gapMultiplePriorities": "coincide con varias prioridades",
+      "gapOnePriority": "coincide con una prioridad",
+      "chooseEligibleTitle": "{{count}} piezas elegibles en la bóveda"
     }
   },
   "calibrate": {
@@ -231,22 +231,22 @@
     "showBonusDetails": "Mostrar detalles de bonificación",
     "bonusUnavailable": "Detalles de bonificación no disponibles",
     "noSetBonuses": "No hay bonificaciones de set listadas",
-    "continue": "Continue",
-    "goToDashboard": "Go to dashboard",
-    "noArmorSets": "No armor sets to compare.",
-    "savedNextStep": "Saved · Next step",
-    "skipTertiaryArchetype": "Skip {{archetype}} tertiary",
-    "skipTertiaryStats": "Skip tertiary stats",
-    "skipTuningArchetype": "Skip {{archetype}} tuning",
-    "skipTuningStats": "Skip tuning stats",
-    "skipArmorSets": "Skip armor sets",
-    "nextArchetype": "Next archetype",
-    "setsInstruction": "Most preferred at the top. Sets from your vault, ordered by how many pieces you own. Drag to reorder or use arrow buttons.",
-    "contextSetPrefs": "Armor set preferences",
-    "unknownSet": "Unknown set",
-    "rankTheseStats": "Rank these stats:",
-    "dragRowsHint": "Drag rows or use the arrows. Most important at the top.",
-    "archetypeProgress": "{{current}} of {{total}} archetypes"
+    "continue": "Continuar",
+    "goToDashboard": "Ir al panel",
+    "noArmorSets": "No hay sets de armadura para comparar.",
+    "savedNextStep": "Guardado · Siguiente paso",
+    "skipTertiaryArchetype": "Omitir terciaria de {{archetype}}",
+    "skipTertiaryStats": "Omitir estadísticas terciarias",
+    "skipTuningArchetype": "Omitir afinación de {{archetype}}",
+    "skipTuningStats": "Omitir estadísticas de afinación",
+    "skipArmorSets": "Omitir sets de armadura",
+    "nextArchetype": "Siguiente arquetipo",
+    "setsInstruction": "El más preferido arriba. Sets de tu bóveda, ordenados por cuántas piezas tienes. Arrastra para reordenar o usa las flechas.",
+    "contextSetPrefs": "Preferencias de set de armadura",
+    "unknownSet": "Set desconocido",
+    "rankTheseStats": "Ordena estas estadísticas:",
+    "dragRowsHint": "Arrastra filas o usa las flechas. Lo más importante arriba.",
+    "archetypeProgress": "{{current}} de {{total}} arquetipos"
   },
   "common": {
     "language": "Idioma",
@@ -307,12 +307,12 @@
       "dimKeyHint": "Clave DIM local: POST a api.destinyitemmanager.com/new_app con origin {{origin}}."
     },
     "dimCopy": {
-      "queryFor": "Copier la requête DIM pour {{name}}",
-      "queryCopied": "Requête DIM pour {{name}} copiée.",
-      "searchShown": "Copier la recherche DIM des pièces affichées",
-      "searchShownCopied": "Recherche DIM des pièces affichées copiée.",
-      "searchGroup": "Copier la recherche DIM des {{count}} pièces du groupe",
-      "searchGroupCopied": "Recherche DIM des {{count}} pièces du groupe copiée."
+      "queryFor": "Copiar consulta DIM para {{name}}",
+      "queryCopied": "Consulta DIM para {{name}} copiada al portapapeles.",
+      "searchShown": "Copiar búsqueda DIM de las piezas mostradas",
+      "searchShownCopied": "Búsqueda DIM de las piezas mostradas copiada al portapapeles.",
+      "searchGroup": "Copiar búsqueda DIM de las {{count}} piezas de este grupo",
+      "searchGroupCopied": "Búsqueda DIM de las {{count}} piezas de este grupo copiada al portapapeles."
     }
   },
   "dashboard": {
@@ -367,7 +367,7 @@
       },
       "setupAutoFilters": {
         "title": "Configurar filtros automáticos",
-        "detail": "Encola etiquetas junk al cargar la bóveda para tiradas que nunca conservarías",
+        "detail": "Encola etiquetas de basura al cargar la bóveda para tiradas que nunca conservarías",
         "cta": "Configurar filtros"
       },
       "setupCombos": {
@@ -376,14 +376,14 @@
         "cta": "Configurar combos"
       },
       "addAnotherCombo": {
-        "title": "Añadir otro combo",
-        "detail": "{{countLabel}} combos · añade 1 más",
-        "cta": "Añadir combos"
+        "title": "Agregar otro combo",
+        "detail": "{{countLabel}} combos · agrega 1 más",
+        "cta": "Agregar combos"
       },
       "addMoreCombos": {
-        "title": "Añadir más combos",
-        "detail": "{{countLabel}} · añade {{remaining}} combos más",
-        "cta": "Añadir combos"
+        "title": "Agregar más combos",
+        "detail": "{{countLabel}} · agrega {{remaining}} combos más",
+        "cta": "Agregar combos"
       },
       "fixCoverage": {
         "title": "Corregir cobertura de {{label}}",
@@ -406,8 +406,8 @@
       },
       "taggedKeep": {
         "title": "Revisar duplicados etiquetados en DIM",
-        "detail_one": "{{count}} candidato a duplicado ya etiquetado keep o favorite en DIM",
-        "detail_other": "{{count}} candidatos a duplicado ya etiquetados keep o favorite en DIM",
+        "detail_one": "{{count}} candidato a duplicado ya etiquetado como conservar o favorito en DIM",
+        "detail_other": "{{count}} candidatos a duplicado ya etiquetados como conservar o favorito en DIM",
         "cta": "Explorar bóveda"
       },
       "heavyBuckets": {
@@ -418,7 +418,7 @@
       },
       "fixCoverageNoVault": "Aún no hay piezas en la bóveda con tus estadísticas prioritarias",
       "fixCoverageNeedSlot": "Falta un {{slot}} con tus prioridades",
-      "fixCoverageSlots": "{{filled}}/{{total}} espacios cubiertos en el loadout recomendado",
+      "fixCoverageSlots": "{{filled}}/{{total}} espacios cubiertos en el equipamiento recomendado",
       "browseNoArmor": "Aún no hay armadura en tu bóveda con estas estadísticas",
       "browseGaps": "{{count}} tipo de tirada por mejorar",
       "browseGaps_other": "{{count}} tipos de tirada por mejorar",
@@ -436,16 +436,16 @@
       "rollTypesMany": "Tipos de tirada que tienes en abundancia",
       "noHeavyDuplicates": "No hay duplicados pesados en un solo tipo de tirada.",
       "tagAll": "Etiquetar todo:",
-      "choose": "Choose",
-      "chooseSlotAria": "Choose {{slot}}",
-      "choosePieceAria": "Choose piece · {{count}} eligible",
-      "supportingPieces": "<1>{{count}}</1> pieces in your vault roll at least one priority stat.",
-      "filledProfiles": "<1>{{filled}}</1> of <2>{{total}}</2> roll types you could own (archetype + tertiary + slot) are in your vault.",
-      "redundantOverlap": "Empty slots remain despite redundant rolls. Prioritize fills over more dupes.",
-      "gapsIntro": "Empty combinations that would help this combo.",
-      "overlapsIntro": "Three or more pieces in the same combination.",
-      "piecesCount": "{{count}} pieces",
-      "orderLabel": "Order:"
+      "choose": "Elegir",
+      "chooseSlotAria": "Elegir {{slot}}",
+      "choosePieceAria": "Elegir pieza · {{count}} elegibles",
+      "supportingPieces": "<1>{{count}}</1> piezas en tu bóveda tienen al menos una estadística prioritaria.",
+      "filledProfiles": "<1>{{filled}}</1> de <2>{{total}}</2> tipos de tirada que podrías tener (arquetipo + terciaria + espacio) están en tu bóveda.",
+      "redundantOverlap": "Quedan espacios vacíos pese a tiradas redundantes. Prioriza llenar espacios antes que más duplicados.",
+      "gapsIntro": "Combinaciones vacías que ayudarían a este combo.",
+      "overlapsIntro": "Tres o más piezas en la misma combinación.",
+      "piecesCount": "{{count}} piezas",
+      "orderLabel": "Orden:"
     }
   },
   "duel": {
@@ -462,7 +462,7 @@
     "preparing": "Preparando comparaciones…",
     "queueEmpty": {
       "title": "Cola vacía",
-      "summary": "{{keep}} keep · {{junk}} junk en cola.",
+      "summary": "{{keep}} conservar · {{junk}} basura en cola.",
       "reviewTags": "Revisar etiquetas",
       "restartQueue": "Reiniciar cola",
       "clearSession": "Borrar sesión de {{class}}"
@@ -475,46 +475,46 @@
     "skipGroup": "Omitir grupo (S)",
     "restoringSession": "Restaurando sesión…",
     "confirm": {
-      "switchBucket": "¿Cambiar de grupo? Se borrarán las elecciones en curso y las etiquetas junk del grupo actual.",
-      "resetBucket": "¿Restablecer este grupo? Se borrarán todas las elecciones en curso, etiquetas junk y el progreso de comparación. El grupo permanece en tu cola.",
-      "clearClassSession": "Effacer toute la progression de comparaison {{class}} et les tags en file ? Irréversible."
+      "switchBucket": "¿Cambiar de grupo? Se borrarán las elecciones en curso y las etiquetas de basura del grupo actual.",
+      "resetBucket": "¿Restablecer este grupo? Se borrarán todas las elecciones en curso, etiquetas de basura y el progreso de comparación. El grupo permanece en tu cola.",
+      "clearClassSession": "¿Borrar todo el progreso de comparación de {{class}} y las etiquetas en cola de esta clase? No se puede deshacer."
     },
     "chooser": {
       "title": "Elige un grupo de duplicados",
-      "kicker": "Comparer les doublons",
-      "intro": "Choisissez d'abord un groupe {{class}}. Changez plus tard dans l'en-tête.",
-      "listAria": "{{class}} duplicate groups"
+      "kicker": "Comparar duplicados",
+      "intro": "Elige qué grupo de armadura {{class}} comparar primero. Puedes cambiar de grupo después desde el encabezado.",
+      "listAria": "Grupos de duplicados de {{class}}"
     },
     "wrapUp": {
       "title": "Revisa este grupo de duplicados",
       "chooseNext": "Elige un grupo para comparar después",
       "nextGroupsAria": "Siguientes grupos de duplicados",
-      "kicker": "Bucket completado",
-      "allPairsDecided": "Toutes les paires de duel décidées",
+      "kicker": "Grupo completado",
+      "allPairsDecided": "Todos los pares de duelo decididos",
       "continueNext": "Continuer vers le groupe suivant",
-      "applyTagsContinue": "Appliquer les tags et continuer",
-      "chooseDifferent": "Choisir un autre groupe",
-      "backToSummary": "Retour au résumé",
+      "applyTagsContinue": "Aplicar etiquetas y continuar",
+      "chooseDifferent": "Elegir otro grupo",
+      "backToSummary": "Volver al resumen",
       "whatsNext": "Siguiente",
-      "tagsFootnote": "Les tags sont mis en file en continuant. Rien n'est appliqué avant la révision.",
+      "tagsFootnote": "Las etiquetas se encolan al continuar. No se aplican hasta que revises.",
       "stats": {
-        "keeps": "Keeps",
-        "junkQueued": "Junk en file",
-        "preferEliminated": "Prefer éliminés",
-        "pairsDecided": "Paires décidées",
+        "keeps": "Conservar",
+        "junkQueued": "Basura en cola",
+        "preferEliminated": "Preferir eliminados",
+        "pairsDecided": "Pares decididos",
         "inGroup": "Dans ce groupe"
       },
       "breakdown": {
-        "keepBoth": "Garder les deux : {{count}}",
-        "keepSide": "Garder un côté : {{count}}",
-        "junkedInDuels": "Junk en duels : {{count}}",
-        "preferInPlay": "Prefer encore actifs : {{count}}"
+        "keepBoth": "Conservar ambos: {{count}}",
+        "keepSide": "Conservar un lado: {{count}}",
+        "junkedInDuels": "Basura en duelos: {{count}}",
+        "preferInPlay": "Preferir aún activos: {{count}}"
       },
-      "piece_one": "{{count}} pièce",
-      "piece_other": "{{count}} pièces",
-      "sessionLast": "Dernier groupe de la file",
-      "sessionLeft_one": "{{count}} groupe restant après",
-      "sessionLeft_other": "{{count}} groupes restants après"
+      "piece_one": "{{count}} pieza",
+      "piece_other": "{{count}} piezas",
+      "sessionLast": "Último grupo en tu cola",
+      "sessionLeft_one": "{{count}} grupo restante después de este",
+      "sessionLeft_other": "{{count}} grupos restantes después de este"
     },
     "bucket": {
       "label": "Grupo",
@@ -526,9 +526,9 @@
       "left": "Izquierda",
       "both": "Ambos",
       "right": "Derecha",
-      "keep": "Keep",
+      "keep": "Conservar",
       "prefer": "Preferir",
-      "junk": "Junk"
+      "junk": "Basura"
     },
     "compare": {
       "suggested": "Sugerido",
@@ -538,40 +538,40 @@
       "vs": "vs",
       "fitTitle": "Qué tan bien encaja esta pieza con tus preferencias guardadas",
       "powerTitle": "Nivel de poder",
-      "identicalRolls": "Tiradas idénticas. Guarda uno, basura uno, ambos o pasa.",
-      "suppressedSuggestion": "Les deux forts · dernier du palier. Prefer, passez, keep ou junk.",
-      "buildOptimalPrefix": "Combo optimal pour ",
-      "orPassKeepJunk": "· ou passez / keep / junk",
-      "evenMatch": "Empate. Prefer, pasa, keep o basura.",
-      "eliminated": "Éliminé du bracket",
-      "actionKeep": "Keep",
+      "identicalRolls": "Tiradas idénticas. Conserva una, marca basura una, conserva ambas o pasa.",
+      "suppressedSuggestion": "Ambas fuertes · última del nivel. Preferir, pasar, conservar o basura.",
+      "buildOptimalPrefix": "Combo óptimo para ",
+      "orPassKeepJunk": "· o pasar / conservar / basura",
+      "evenMatch": "Empate. Preferir, pasar, conservar o basura en una o ambas.",
+      "eliminated": "Eliminado del bracket",
+      "actionKeep": "Conservar",
       "outcomes": {
-        "prefer": "Préférer ce côté. Le perdant a besoin de {{threshold}} défaites prefer avant junk.",
-        "keepSide": "Keep à la fin du bucket · l'autre reste au bracket",
-        "keepBoth": "Les deux gardés à la fin",
-        "junkOne": "Junk maintenant · l'autre reste (pas de gagnant)",
-        "junkBoth": "Les deux junk maintenant",
-        "pass": "Passer la paire. Aucun tag, les deux remis en file."
+        "prefer": "Preferir este lado. El perdedor necesita {{threshold}} derrotas prefer antes de basura al terminar el grupo.",
+        "keepSide": "Conservar al terminar el grupo · el otro sigue en el bracket",
+        "keepBoth": "Ambos conservados al terminar el grupo",
+        "junkOne": "Basura ahora · el otro sigue en el bracket (sin ganador)",
+        "junkBoth": "Ambos en basura ahora",
+        "pass": "Omitir este par. No se etiqueta ninguno; ambos vuelven a la cola."
       },
       "pass": "Pasar",
-      "preferred": "Preferred",
-      "tuningLabel": "Tuning: {{stat}}",
+      "preferred": "Preferido",
+      "tuningLabel": "Afinación: {{stat}}",
       "setFootnote": "Set: {{name}}",
-      "loss_one": "1 loss",
-      "loss_other": "{{count}} losses",
-      "lossRemaining_one": "{{count}} more prefer loss before junk at bucket end",
-      "lossRemaining_other": "{{count}} more prefer losses before junk at bucket end",
-      "keyboardHints": "Hover buttons for outcomes · ↑ keep both · Space pass · ↓ junk both · Ctrl+←/→ junk sides",
+      "loss_one": "1 derrota",
+      "loss_other": "{{count}} derrotas",
+      "lossRemaining_one": "{{count}} derrota prefer más antes de basura al terminar el grupo",
+      "lossRemaining_other": "{{count}} derrotas prefer más antes de basura al terminar el grupo",
+      "keyboardHints": "Pasa el cursor sobre los botones para ver resultados · ↑ conservar ambos · Espacio pasar · ↓ basura ambos · Ctrl+←/→ basura por lado",
       "aria": {
-        "keepLeft": "Keep left. {{outcome}}",
-        "keepRight": "Keep right. {{outcome}}",
-        "keepBoth": "Keep both. {{outcome}}",
-        "preferLeft": "Prefer left. {{outcome}}",
-        "preferRight": "Prefer right. {{outcome}}",
-        "passPair": "Pass pair. {{outcome}}",
-        "junkLeft": "Junk left. {{outcome}}",
-        "junkRight": "Junk right. {{outcome}}",
-        "junkBoth": "Junk both. {{outcome}}"
+        "keepLeft": "Conservar izquierda. {{outcome}}",
+        "keepRight": "Conservar derecha. {{outcome}}",
+        "keepBoth": "Conservar ambos. {{outcome}}",
+        "preferLeft": "Preferir izquierda. {{outcome}}",
+        "preferRight": "Preferir derecha. {{outcome}}",
+        "passPair": "Omitir par. {{outcome}}",
+        "junkLeft": "Basura izquierda. {{outcome}}",
+        "junkRight": "Basura derecha. {{outcome}}",
+        "junkBoth": "Basura ambos. {{outcome}}"
       }
     },
     "progress": {
@@ -591,11 +591,11 @@
       }
     },
     "respectKeepFavorite": {
-      "label": "Respetar keep y favorite de DIM al elegir basura",
-      "help": "Activado: las piezas con etiqueta keep o favorite no se sugieren como basura en flujos de duplicados."
+      "label": "Respetar conservar y favorito de DIM al elegir basura",
+      "help": "Activado: las piezas con etiqueta conservar o favorito no se sugieren como basura en flujos de duplicados."
     },
     "excludeJunk": {
-      "label": "Excluir piezas con etiqueta junk del conteo de duplicados"
+      "label": "Excluir piezas con etiqueta de basura del conteo de duplicados"
     },
     "presets": {
       "loose": {
@@ -635,14 +635,14 @@
       "armorSetAny": "cualquier set de armadura",
       "tuningStatSame": "misma estadística de afinación",
       "tuningStatAny": "cualquier estadística de afinación",
-      "dimTagsRespect": "Las etiquetas keep y favorite de DIM cuentan al sugerir basura.",
-      "dimTagsIgnore": "Las etiquetas keep y favorite no se usan al sugerir basura."
+      "dimTagsRespect": "Las etiquetas conservar y favorito de DIM cuentan al sugerir basura.",
+      "dimTagsIgnore": "Las etiquetas conservar y favorito no se usan al sugerir basura."
     },
     "suggestions": {
-      "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
-      "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
-      "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
-      "standardDefault": "Standard preset for your vault size."
+      "setAwareHeavy": "{{totalT5}} piezas de nivel 5 y {{heavyBuckets}} grupos con 5+ objetos. Usa el mismo set de armadura para evitar falsos duplicados.",
+      "looseSmallVault": "Bóveda pequeña: reglas flexibles mostrarán más grupos de duplicados.",
+      "ignoreTaggedKeep": "{{count}} candidatos a duplicado ya etiquetados como conservar o favorito en DIM.",
+      "standardDefault": "Preset estándar para el tamaño de tu bóveda."
     }
   },
   "errors": {
@@ -665,7 +665,7 @@
       "suffix": "Intenta iniciar sesión de nuevo. Si el problema continúa, contacta al administrador del sitio.",
       "devChecklistIntro": "Lista de verificación de la app Bungie (desarrollo local):",
       "devRedirect": "URL de redirección: {{uri}}",
-      "devOrigin": "Origin: {{origin}}",
+      "devOrigin": "Origen: {{origin}}",
       "devClientId": "El ID de cliente coincide con tu aplicación Bungie ({{clientId}})",
       "devApiKey": "La clave API es de la misma aplicación Bungie",
       "devRestart": "Reinicia el servidor de desarrollo después de cambiar las credenciales"
@@ -737,24 +737,24 @@
       "tier5Only": "Solo nivel 5"
     },
     "diff": {
-      "tuning": "Abstimmung",
+      "tuning": "Afinación",
       "set": "Set",
-      "power": "Power",
-      "masterwork": "Meisterwerk",
-      "noSet": "Kein Set",
-      "yes": "Ja",
-      "no": "Nein",
-      "tuningVs": "Abstimmung: {{a}} vs {{b}}",
+      "power": "Poder",
+      "masterwork": "Obra maestra",
+      "noSet": "Sin set",
+      "yes": "Sí",
+      "no": "No",
+      "tuningVs": "Afinación: {{a}} vs {{b}}",
       "setFootnote": "Set: {{name}}"
     },
     "dominator": {
-      "differentStatSplit": "Répartition de stats différente",
-      "sameAfterTuning": "Identique après tuning",
-      "beatsPiece": "Bat cette pièce",
-      "statComparison": "Comparaison de stats",
-      "tuningCoverage": "Couverture tuning",
-      "aheadOn": "En avance sur",
-      "everyTuningLayout": "chaque disposition de tuning"
+      "differentStatSplit": "Distribución de estadísticas distinta",
+      "sameAfterTuning": "Igual después de afinación",
+      "beatsPiece": "Supera a esta pieza",
+      "statComparison": "Comparación de estadísticas",
+      "tuningCoverage": "Cobertura de afinación",
+      "aheadOn": "Por delante en",
+      "everyTuningLayout": "cada disposición de afinación"
     },
     "classes": {
       "titan": "Titán",
@@ -762,20 +762,20 @@
       "warlock": "Hechicero"
     },
     "stats": {
-      "weapons": "Waffen",
-      "grenade": "Granate",
+      "weapons": "Armas",
+      "grenade": "Granada",
       "super": "Super",
-      "melee": "Nahkampf",
-      "health": "Gesundheit",
-      "class": "Klasse"
+      "melee": "Cuerpo a cuerpo",
+      "health": "Salud",
+      "class": "Clase"
     },
     "archetypes": {
-      "gunner": "Schütze",
+      "gunner": "Gunner",
       "grenadier": "Grenadier",
-      "paragon": "Vorbild",
-      "brawler": "Schläger",
-      "bulwark": "Bollwerk",
-      "specialist": "Spezialist"
+      "paragon": "Paragon",
+      "brawler": "Brawler",
+      "bulwark": "Bulwark",
+      "specialist": "Specialist"
     },
     "slots": {
       "helmet": "Casco",
@@ -785,11 +785,11 @@
       "classItem": "Objeto de clase"
     },
     "roll": {
-      "tertiary": "{{stat}} Tertiär",
-      "tuning": "{{stat}} Abstimmung",
-      "tuningLabel": "Abstimmung: {{stat}}",
-      "preferred": "Bevorzugt",
-      "none": "keine"
+      "tertiary": "{{stat}} terciaria",
+      "tuning": "{{stat}} afinación",
+      "tuningLabel": "Afinación: {{stat}}",
+      "preferred": "Preferido",
+      "none": "ninguna"
     },
     "labels": {
       "separator": " · "
@@ -800,9 +800,9 @@
     "resumeSession": "Reanudar sesión anterior",
     "footerNote": "Bóveda vía Bungie.net. Etiquetas vía DIM. Cierra sesión en Configuración.",
     "signInWithBungie": "Iniciar sesión con Bungie",
-    "clearedBannerTitle": "Local data cleared",
-    "clearedBannerBody": "Do a hard refresh so the app reloads without stale bundles: Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac).",
-    "clearedBannerDismiss": "Dismiss"
+    "clearedBannerTitle": "Datos locales borrados",
+    "clearedBannerBody": "Haz una recarga forzada para que la app cargue sin paquetes antiguos: Ctrl+Mayús+R (Windows/Linux) o Cmd+Mayús+R (Mac).",
+    "clearedBannerDismiss": "Descartar"
   },
   "layout": {
     "aria": {
@@ -867,9 +867,9 @@
   },
   "review": {
     "title": "Revisar etiquetas",
-    "summary": "{{total}} en cola · {{keep}} keep · {{junk}} junk. Aplicar escribe las etiquetas en cola; las filas indican etiquetas DIM existentes cuando difieren.",
+    "summary": "{{total}} en cola · {{keep}} conservar · {{junk}} basura. Aplicar escribe las etiquetas en cola; las filas indican etiquetas DIM existentes cuando difieren.",
     "applied": "Etiquetas aplicadas en DIM Sync.",
-    "openJunkInDim": "Abrir junk en DIM",
+    "openJunkInDim": "Abrir basura en DIM",
     "partialApplied": "Aplicación parcial: {{count}} etiquetas correctas. Los fallidos permanecen en la cola.",
     "retryFailed": "Reintentar {{count}} fallidos",
     "empty": "No hay etiquetas pendientes.",
@@ -972,10 +972,10 @@
       "useBrowser": "Usar idioma del navegador",
       "useBrowserHelp": "Activado: la app sigue el idioma del navegador. Desactivado: usa el idioma que elijas abajo.",
       "changeConfirm": {
-        "title": "Change language?",
-        "message": "Switching language refreshes Destiny game names from Bungie and reloads the app. This may take a moment.",
-        "confirm": "Yes, switch",
-        "cancel": "Cancel"
+        "title": "¿Cambiar idioma?",
+        "message": "Al cambiar el idioma se actualizan los nombres del juego desde Bungie y se recarga la app. Puede tardar un momento.",
+        "confirm": "Sí, cambiar",
+        "cancel": "Cancelar"
       }
     },
     "developer": {
@@ -1009,12 +1009,12 @@
       "confirmResetAll": "¿Restablecer las preferencias de todas las clases a los valores predeterminados? Se borrarán los pesos de estadísticas, las opciones de calibración y los pesos aprendidos de Hunter, Titan y Warlock. Se conservan las reglas de duplicados y demás ajustes."
     },
     "clearLocalData": {
-      "heading": "Local data",
-      "description": "Fixes stuck locale names, bad vault cache, or bad onboarding state. Signs you out and clears IndexedDB (vault and manifest per locale), session tokens, compare sessions, and pending tags. Migration flag dac-storage-migrated-v1 is cleared only on a full reset.",
-      "button": "Clear local data",
-      "confirm": "Clear local app data and sign out?\n\nThis removes vault cache, manifest cache, Bungie/DIM tokens, compare sessions, and pending tags from this browser.",
-      "confirmResetPrefs": "Also reset calibration preferences, dupe rules, onboarding, and the storage migration flag?\n\nChoose OK for a full reset. Cancel keeps prefs, dupe rules, onboarding, and language choice.",
-      "clearing": "Clearing…"
+      "heading": "Datos locales",
+      "description": "Corrige nombres de idioma atascados, caché de bóveda incorrecta o estado de incorporación dañado. Cierra sesión y borra IndexedDB (bóveda y manifiesto por idioma), tokens de sesión, sesiones de comparación y etiquetas pendientes. La bandera de migración dac-storage-migrated-v1 solo se borra en un reinicio completo.",
+      "button": "Borrar datos locales",
+      "confirm": "¿Borrar datos locales de la app y cerrar sesión?\n\nEsto quita la caché de bóveda, caché del manifiesto, tokens Bungie/DIM, sesiones de comparación y etiquetas pendientes de este navegador.",
+      "confirmResetPrefs": "¿También restablecer preferencias de calibración, reglas de duplicados, incorporación y la bandera de migración de almacenamiento?\n\nAceptar = reinicio completo. Cancelar conserva preferencias, reglas de duplicados, incorporación e idioma.",
+      "clearing": "Borrando…"
     }
   },
   "vault": {
