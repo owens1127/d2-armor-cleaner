@@ -123,8 +123,8 @@ describe('classSwitchPath', () => {
 
   it('updates calibrate class query param without dropping other params', () => {
     expect(
-      classSwitchPath('/onboarding/calibrate', '?step=stats&class=hunter', '', 'titan'),
-    ).toBe('/onboarding/calibrate?step=stats&class=titan');
+      classSwitchPath('/onboarding/calibrate', '?step=archetype&class=hunter', '', 'titan'),
+    ).toBe('/onboarding/calibrate?step=archetype&class=titan');
   });
 
   it('returns null on class-agnostic routes so the page type is preserved', () => {

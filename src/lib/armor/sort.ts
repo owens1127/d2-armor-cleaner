@@ -1,42 +1,5 @@
-import type { Archetype, ArmorPiece, ArmorSlot, ClassPreferenceProfile, Stat } from '@/types';
-import { ARCHETYPES, ARMOR_SLOTS, STATS } from '@/lib/constants';
+import type { ArmorPiece, ClassPreferenceProfile } from '@/types';
 import { compareRedundantKeepPriority } from '@/lib/scoring/redundantKeepPriority';
-
-function slotOrder(slot: ArmorSlot): number {
-  const i = ARMOR_SLOTS.indexOf(slot);
-  return i === -1 ? 99 : i;
-}
-
-function archetypeOrder(archetype: Archetype): number {
-  const i = ARCHETYPES.indexOf(archetype);
-  return i === -1 ? 99 : i;
-}
-
-function statOrder(stat: Stat): number {
-  const i = STATS.indexOf(stat);
-  return i === -1 ? 99 : i;
-}
-
-/** Vault-wide list order: slot → archetype → tertiary → interest → power. */
-export function sortArmorLikeTier5(items: ArmorPiece[]): ArmorPiece[] {
-  return [...items].sort((a, b) => {
-    if (Boolean(a.isIgnored) !== Boolean(b.isIgnored)) return a.isIgnored ? 1 : -1;
-
-    const slot = slotOrder(a.armorSlot) - slotOrder(b.armorSlot);
-    if (slot !== 0) return slot;
-
-    const arch = archetypeOrder(a.archetype) - archetypeOrder(b.archetype);
-    if (arch !== 0) return arch;
-
-    const tert = statOrder(a.tertiaryStat) - statOrder(b.tertiaryStat);
-    if (tert !== 0) return tert;
-
-    const want = (b.wantScore ?? 0) - (a.wantScore ?? 0);
-    if (want !== 0) return want;
-
-    return b.power - a.power;
-  });
-}
 
 /** Within a dupe bucket: interest → keep-priority prefs → tuning stat → power. */
 export function sortBucketItems(

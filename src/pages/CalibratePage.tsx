@@ -39,16 +39,15 @@ import {
 } from '@/lib/prefs/calibrationChoices';
 import {
   applyArchetypeOrder,
+  applyDefaultStatWeights,
   applySetOrder,
   applyTertiaryStatOrder,
   applyTuningStatOrder,
-  updateStatRank,
 } from '@/lib/scoring/score';
 import {
   calibrationKeyArchetypeOrder,
   calibrationKeyForRound,
   calibrationKeySetOrder,
-  calibrationKeyStats,
   removeCalibrationKey,
   trimCountedKeysForStep,
   trimCountedKeysWhenReturningToArchetype,
@@ -88,7 +87,6 @@ const STEPS = CALIBRATE_STEPS;
 
 const STEP_LABELS: Record<CalibrateStep, string> = {
   class: 'Class',
-  stats: 'Stat order',
   archetype: 'Archetypes',
   tertiary: 'Tertiary stats',
   tuning: 'Tuning stats',
@@ -129,7 +127,6 @@ export function CalibratePage() {
   const {
     step,
     calibrateClass,
-    statOrder,
     archetypeOrder,
     setOrder,
     archetypeRound,
@@ -260,12 +257,12 @@ export function CalibratePage() {
   }
 
   const tertiaryStats = useMemo(
-    () => calibrationTertiaryStats(classItems, statOrder, currentTertiaryArchetype),
-    [classItems, statOrder, currentTertiaryArchetype],
+    () => calibrationTertiaryStats(classItems, currentTertiaryArchetype),
+    [classItems, currentTertiaryArchetype],
   );
   const tuningStats = useMemo(
-    () => calibrationTuningStats(classItems, statOrder, currentTuningArchetype),
-    [classItems, statOrder, currentTuningArchetype],
+    () => calibrationTuningStats(classItems, currentTuningArchetype),
+    [classItems, currentTuningArchetype],
   );
   const setPieces = useMemo(() => calibrationSetPieces(classItems), [classItems]);
 
@@ -293,7 +290,6 @@ export function CalibratePage() {
     const fromProgress = tertiaryOrderByArchetype[currentTertiaryArchetype] ?? [];
     const fallback = buildTertiaryRanker(
       classItems,
-      statOrder,
       pairwiseDecisions.tertiaryByArchetype[currentTertiaryArchetype] ?? [],
       currentTertiaryArchetype,
     ).getOrderedItems();
@@ -302,7 +298,6 @@ export function CalibratePage() {
     return fromProgress;
   }, [
     classItems,
-    statOrder,
     pairwiseDecisions.tertiaryByArchetype,
     currentTertiaryArchetype,
     tertiaryOrderByArchetype,
@@ -313,7 +308,6 @@ export function CalibratePage() {
     const fromProgress = tuningOrderByArchetype[currentTuningArchetype] ?? [];
     const fallback = buildTuningRanker(
       classItems,
-      statOrder,
       currentTuningArchetype,
       pairwiseDecisions.tuningByArchetype[currentTuningArchetype] ?? [],
     ).getOrderedItems();
@@ -322,7 +316,6 @@ export function CalibratePage() {
     return fromProgress;
   }, [
     classItems,
-    statOrder,
     currentTuningArchetype,
     pairwiseDecisions.tuningByArchetype,
     tuningOrderByArchetype,
@@ -332,10 +325,14 @@ export function CalibratePage() {
   const stepIndex = STEPS.indexOf(step);
   const classSelected = step !== 'class';
 
-  function moveStat(index: number, dir: -1 | 1) {
-    const next = moveRankedItem(statOrder, index, dir);
-    if (!next) return;
-    persistProgress({ statOrder: next });
+  function pickClass(classType: ClassType) {
+    updateClassProfile((p) => applyDefaultStatWeights(p));
+    persistProgress({
+      calibrateClass: classType,
+      step: 'archetype',
+      archetypeRound: 0,
+      archetypeOrder: defaultArchetypeOrder(),
+    });
   }
 
   function moveArchetype(index: number, dir: -1 | 1) {
@@ -360,20 +357,6 @@ export function CalibratePage() {
     const next = moveRankedItem(currentTuningOrder, index, dir);
     if (!next) return;
     persistCurrentTuningOrder(next);
-  }
-
-  function pickClass(classType: ClassType) {
-    persistProgress({ calibrateClass: classType, step: 'stats' });
-  }
-
-  function finishStats() {
-    const key = calibrationKeyStats();
-    applyCalibrationChoice(key, (p) => updateStatRank(p, statOrder));
-    persistProgress({
-      step: 'archetype',
-      archetypeRound: 0,
-      archetypeOrder: defaultArchetypeOrder(),
-    });
   }
 
   function advanceAfterArchetype() {
@@ -578,11 +561,8 @@ export function CalibratePage() {
     }
 
     switch (step) {
-      case 'stats':
-        dropCompletedFrom('stats', { step: 'class' });
-        break;
       case 'archetype':
-        dropCompletedFrom('archetype', { step: 'stats' });
+        dropCompletedFrom('archetype', { step: 'class' });
         break;
       case 'tertiary':
         {
@@ -723,37 +703,6 @@ export function CalibratePage() {
             ))}
           </div>
           <OnboardingStepActions onBack={goBack} />
-        </div>
-      )}
-
-      {step === 'stats' && (
-        <div className="w-full max-w-md min-w-0">
-          <CalibrateStepHeader
-            step="stats"
-            calibrateClass={calibrateClass}
-            classSelected={classSelected}
-            title="Rank stats by priority"
-            instruction="Most important at the top. Drag to reorder or use arrow buttons."
-            contextVisual={<StatGroupIcons stats={statOrder} />}
-            contextLabel="Stat priority order"
-          />
-          <RankedReorderList
-            items={statOrder}
-            getKey={(stat) => stat}
-            getLabel={(stat) => STAT_LABELS[stat]}
-            getLeadingVisual={(stat) => <StatIcon stat={stat} size="sm" variant="glyph" />}
-            onReorder={(next) => persistProgress({ statOrder: next })}
-            onMove={moveStat}
-          />
-          <OnboardingStepActions onBack={goBack}>
-            <button
-              type="button"
-              onClick={finishStats}
-              className="px-5 py-2.5 rounded-lg bg-accent text-surface font-semibold"
-            >
-              Continue
-            </button>
-          </OnboardingStepActions>
         </div>
       )}
 
@@ -1193,16 +1142,6 @@ function RankedReorderList<T extends string | number>({
         );
       })}
     </ul>
-  );
-}
-
-function StatGroupIcons({ stats }: { stats: Stat[] }) {
-  return (
-    <span className="inline-flex items-center gap-1" aria-hidden>
-      {stats.map((stat) => (
-        <StatIcon key={stat} stat={stat} size="sm" variant="glyph" />
-      ))}
-    </span>
   );
 }
 

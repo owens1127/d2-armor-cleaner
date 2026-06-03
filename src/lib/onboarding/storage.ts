@@ -15,11 +15,10 @@ import type { Archetype, ClassType, Stat, VaultKeepPreference } from '@/types';
 
 export type OnboardingPhase = 'rules' | 'inventory' | 'calibrate';
 
-export type CalibrateStep = 'class' | 'stats' | 'archetype' | 'tertiary' | 'tuning' | 'sets';
+export type CalibrateStep = 'class' | 'archetype' | 'tertiary' | 'tuning' | 'sets';
 
 export const CALIBRATE_STEPS: CalibrateStep[] = [
   'class',
-  'stats',
   'archetype',
   'tertiary',
   'tuning',
@@ -51,7 +50,6 @@ export interface PairwiseDecisionLog {
 export interface CalibrateProgress {
   step: CalibrateStep;
   calibrateClass: ClassType;
-  statOrder: Stat[];
   /** User-ranked archetypes (most preferred first). */
   archetypeOrder: Archetype[];
   /** User-ranked armor set hashes (most preferred first). */
@@ -90,7 +88,6 @@ export function defaultCalibrateProgress(): CalibrateProgress {
   return {
     step: 'class',
     calibrateClass: 'hunter',
-    statOrder: [...STATS],
     archetypeOrder: [...ARCHETYPES],
     setOrder: [],
     tertiaryOrderByArchetype: {},
@@ -180,7 +177,6 @@ export function shouldRestoreCalibrateProgressFromStorage(
     saved.tuningArchetypeIndex !== current.tuningArchetypeIndex ||
     saved.setRound !== current.setRound ||
     saved.calibrateClass !== current.calibrateClass ||
-    saved.statOrder.join(',') !== current.statOrder.join(',') ||
     saved.archetypeOrder.join(',') !== current.archetypeOrder.join(',') ||
     saved.setOrder.join(',') !== current.setOrder.join(',') ||
     JSON.stringify(saved.tertiaryOrderByArchetype) !==
@@ -363,7 +359,7 @@ function parsePairwiseDecisionLog(raw: unknown): PairwiseDecisionLog {
 }
 
 function migrateCalibrateStep(step: unknown): CalibrateStep | undefined {
-  if (step === 'mode') return 'stats';
+  if (step === 'mode' || step === 'stats') return 'archetype';
   return isCalibrateStep(step) ? step : undefined;
 }
 
@@ -375,10 +371,6 @@ function parseCalibrateProgress(raw: unknown): CalibrateProgress | undefined {
   };
   const step = migrateCalibrateStep(data.step);
   if (!step) return undefined;
-
-  const statOrder = Array.isArray(data.statOrder)
-    ? data.statOrder.filter((s): s is Stat => typeof s === 'string')
-    : [...STATS];
 
   const archetypeOrder = Array.isArray(data.archetypeOrder)
     ? data.archetypeOrder.filter((a): a is Archetype =>
@@ -422,10 +414,13 @@ function parseCalibrateProgress(raw: unknown): CalibrateProgress | undefined {
       ? data.calibrateClass
       : 'hunter';
 
+  const rawCompletedSteps = Array.isArray(data.completedSteps)
+    ? (data.completedSteps as unknown[])
+    : [];
+
   return {
     step,
     calibrateClass,
-    statOrder: statOrder.length === STATS.length ? statOrder : [...STATS],
     archetypeOrder:
       archetypeOrder.length === ARCHETYPES.length ? archetypeOrder : [...ARCHETYPES],
     setOrder,
@@ -440,11 +435,11 @@ function parseCalibrateProgress(raw: unknown): CalibrateProgress | undefined {
       typeof data.tuningArchetypeIndex === 'number' ? data.tuningArchetypeIndex : 0,
     setRound: typeof data.setRound === 'number' ? data.setRound : 0,
     pairwiseDecisions: parsePairwiseDecisionLog(data.pairwiseDecisions),
-    completedSteps: Array.isArray(data.completedSteps)
-      ? data.completedSteps
-          .map((s) => migrateCalibrateStep(s))
-          .filter((s): s is CalibrateStep => s !== undefined)
-      : [],
+    completedSteps: rawCompletedSteps
+      .filter((s): s is string => typeof s === 'string')
+      .filter((s) => s !== 'stats' && s !== 'mode')
+      .map((s) => migrateCalibrateStep(s))
+      .filter((s): s is CalibrateStep => s !== undefined),
   };
 }
 

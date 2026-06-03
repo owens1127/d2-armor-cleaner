@@ -14,7 +14,7 @@ import {
   hasConfiguredAutoFilters,
 } from '@/lib/dashboard/vaultInsightsActions';
 import { recordCalibrationChoice } from '@/lib/prefs/calibrationChoices';
-import { calibrationKeyStats } from '@/lib/onboarding/calibrateSession';
+import { calibrationKeyArchetypeOrder } from '@/lib/onboarding/calibrateSession';
 import { defaultClassPreferenceProfile } from '@/lib/prefs/profile';
 import { armorPiece, fullBrawlerVault } from '@/test/armorFixtures';
 
@@ -44,7 +44,7 @@ describe('vault insight actions across user steps', () => {
 
     let calibrated = prefs;
     for (let i = 0; i < 15; i++) {
-      calibrated = recordCalibrationChoice(calibrated, `${calibrationKeyStats()}:${i}`);
+      calibrated = recordCalibrationChoice(calibrated, `${calibrationKeyArchetypeOrder()}:${i}`);
     }
     calibrated = { ...calibrated, calibratedAt: Date.now() };
     expect(buildCalibrationInsightAction(calibrated, 'hunter', completeOnboarding)).toMatchObject({

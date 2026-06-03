@@ -8,7 +8,7 @@ import type {
 } from '@/types';
 import { ARCHETYPE_STATS, STATS } from '@/lib/constants';
 import { getCalibrationConfidence } from '@/lib/prefs/calibrationChoices';
-import { getClassPrefs } from '@/lib/prefs/profile';
+import { defaultClassPreferenceProfile, getClassPrefs } from '@/lib/prefs/profile';
 
 export {
   defaultClassPreferenceProfile,
@@ -227,6 +227,14 @@ export function recordTuningPreference(
   return {
     ...prefs,
     tuningWeights: tw,
+    calibratedAt: Date.now(),
+  };
+}
+
+export function applyDefaultStatWeights(prefs: ClassPreferenceProfile): ClassPreferenceProfile {
+  return {
+    ...prefs,
+    statWeights: { ...defaultClassPreferenceProfile().statWeights },
     calibratedAt: Date.now(),
   };
 }

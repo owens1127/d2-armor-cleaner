@@ -22,15 +22,6 @@ export function countVaultTertiaries(
   return counts;
 }
 
-/** Count tertiary stats across all class vault pieces. */
-export function countClassVaultTertiaries(items: ArmorPiece[]): Map<Stat, number> {
-  const counts = new Map<Stat, number>();
-  for (const item of items) {
-    counts.set(item.tertiaryStat, (counts.get(item.tertiaryStat) ?? 0) + 1);
-  }
-  return counts;
-}
-
 /** Archetypes represented in the user's vault for this class. */
 export function archetypesInVault(items: ArmorPiece[]): Archetype[] {
   const counts = new Map<Archetype, number>();
@@ -84,48 +75,31 @@ export function maxArchetypeComparisons(): number {
   return greedyPairwiseCap(ARCHETYPES.length, ARCHETYPE_COMPARISON_CAP);
 }
 
-/**
- * Order stats by vault frequency, then user stat rank from step 3, then canonical order.
- */
-export function orderStatsByVaultAndRank(
-  stats: Stat[],
-  counts: Map<Stat, number>,
-  statRank: Stat[],
-): Stat[] {
-  return [...stats].sort((a, b) => {
-    const countDiff = (counts.get(b) ?? 0) - (counts.get(a) ?? 0);
-    if (countDiff !== 0) return countDiff;
-    const rankDiff = statRank.indexOf(a) - statRank.indexOf(b);
-    if (rankDiff !== 0) return rankDiff;
-    return STATS.indexOf(a) - STATS.indexOf(b);
-  });
-}
-
-/**
- * Tertiary stats to rank: vault-present tertiaries for owned archetypes, or valid
- * tertiaries across owned archetypes when vault is sparse.
- */
+/** Tertiary stats to rank for one focus archetype, or a vault union when unspecified. */
 export function calibrationTertiaryStats(
   items: ArmorPiece[],
-  statRank: Stat[],
   archetype?: Archetype,
 ): Stat[] {
-  const ownedArchetypes = archetype
-    ? [archetype]
-    : (archetypesInVault(items).length > 0 ? archetypesInVault(items) : [...ARCHETYPES]);
-
-  const validTertiaries = new Set<Stat>();
-  for (const arch of ownedArchetypes) {
-    for (const stat of tertiaryStatsForArchetype(arch)) {
-      validTertiaries.add(stat);
-    }
+  if (archetype) {
+    return tertiaryStatsForPairing(archetype, items);
   }
 
-  const counts = countClassVaultTertiaries(items);
-  const vaultPresent = [...validTertiaries].filter((s) => (counts.get(s) ?? 0) > 0);
+  const ownedArchetypes =
+    archetypesInVault(items).length > 0 ? archetypesInVault(items) : [...ARCHETYPES];
+  if (ownedArchetypes.length === 1) {
+    return tertiaryStatsForPairing(ownedArchetypes[0], items);
+  }
 
-  const pool = vaultPresent.length >= 2 ? vaultPresent : [...validTertiaries];
-  return orderStatsByVaultAndRank(pool, counts, statRank);
+  const seen = new Set<Stat>();
+  const stats: Stat[] = [];
+  for (const arch of ownedArchetypes) {
+    for (const stat of tertiaryStatsForPairing(arch, items)) {
+      if (seen.has(stat)) continue;
+      seen.add(stat);
+      stats.push(stat);
+    }
+  }
+  return stats;
 }
 
 export function maxTertiaryComparisons(statCount: number): number {
@@ -155,18 +129,12 @@ export function countClassVaultTuningStats(items: ArmorPiece[]): Map<Stat, numbe
   return counts;
 }
 
-/**
- * Tuning stats to rank for one archetype: vault-present tuning stats when at
- * least two exist, otherwise full stat list with user rank as prior.
- */
+/** Tuning stats to rank for one archetype. */
 export function calibrationTuningStats(
   items: ArmorPiece[],
-  statRank: Stat[],
   archetype: Archetype,
 ): Stat[] {
-  const stats = tuningStatsForPairing(archetype, items);
-  const counts = countVaultTuningStats(items, archetype);
-  return orderStatsByVaultAndRank(stats, counts, statRank);
+  return tuningStatsForPairing(archetype, items);
 }
 
 /** Archetypes to calibrate tuning for (vault-owned, or all six when empty). */
@@ -275,11 +243,10 @@ export function buildArchetypeRanker(
 
 export function buildTertiaryRanker(
   items: ArmorPiece[],
-  statRank: Stat[],
   decisions: PairwiseDecision[],
   archetype?: Archetype,
 ): PairwiseRank<Stat> {
-  const stats = calibrationTertiaryStats(items, statRank, archetype);
+  const stats = calibrationTertiaryStats(items, archetype);
   return replayPairwiseRank<Stat>(stats, decisionsToReplay<Stat>(decisions), {
     priorOrder: stats,
     maxComparisons: maxTertiaryComparisons(stats.length),
@@ -289,11 +256,10 @@ export function buildTertiaryRanker(
 
 export function buildTuningRanker(
   items: ArmorPiece[],
-  statRank: Stat[],
   archetype: Archetype,
   decisions: PairwiseDecision[],
 ): PairwiseRank<Stat> {
-  const stats = calibrationTuningStats(items, statRank, archetype);
+  const stats = calibrationTuningStats(items, archetype);
   return replayPairwiseRank<Stat>(stats, decisionsToReplay<Stat>(decisions), {
     priorOrder: stats,
     maxComparisons: maxTuningComparisons(stats.length),
@@ -324,8 +290,6 @@ export function buildSetRanker(
   });
 }
 
-// --- Legacy helpers kept for tests / vault summaries ---
-
 export function orderTertiaryStatsForCalibration(
   archetype: Archetype,
   items?: ArmorPiece[],
@@ -339,18 +303,6 @@ export function orderTertiaryStatsForCalibration(
     if (countDiff !== 0) return countDiff;
     return valid.indexOf(a) - valid.indexOf(b);
   });
-}
-
-export function vaultTertiarySummary(
-  items: ArmorPiece[],
-  archetype: Archetype,
-): { stats: Stat[]; counts: Map<Stat, number> } | null {
-  const counts = countVaultTertiaries(items, archetype);
-  const stats = orderTertiaryStatsForCalibration(archetype, items).filter(
-    (s) => (counts.get(s) ?? 0) > 0,
-  );
-  if (stats.length === 0) return null;
-  return { stats, counts };
 }
 
 export function tertiaryStatsForPairing(
@@ -389,11 +341,4 @@ export function tuningStatsForPairing(
   const counts = countVaultTuningStats(items, archetype);
   const vaultPresent = ordered.filter((s) => (counts.get(s) ?? 0) > 0);
   return vaultPresent.length >= 2 ? vaultPresent : ordered;
-}
-
-export function topArchetypesFromVault(
-  items: ArmorPiece[],
-  count = 2,
-): Archetype[] {
-  return archetypesInVault(items).slice(0, count);
 }

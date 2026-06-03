@@ -79,8 +79,7 @@ describe('buildArchetypeRanker', () => {
 describe('buildTertiaryRanker', () => {
   it('does not repeat decided pairs', () => {
     const items = [piece('1', 'gunner', 'melee'), piece('2', 'gunner', 'super')];
-    const statRank: Stat[] = ['melee', 'super', 'health', 'class', 'weapons', 'grenade'];
-    const ranker = buildTertiaryRanker(items, statRank, [{ winner: 'melee', loser: 'super' }]);
+    const ranker = buildTertiaryRanker(items, [{ winner: 'melee', loser: 'super' }], 'gunner');
     expect(ranker.nextPair()).toBeNull();
   });
 });
@@ -93,14 +92,13 @@ describe('calibration vault helpers', () => {
       piece('3', 'gunner', 'super', { tuningStat: 'weapons' }),
       piece('4', 'gunner', 'super', { tuningStat: 'melee' }),
     ];
-    const statRank: Stat[] = ['super', 'melee', 'health', 'weapons', 'grenade', 'class'];
-    const stats = calibrationTertiaryStats(items, statRank);
+    const stats = calibrationTertiaryStats(items);
     expect(stats).toContain('melee');
     expect(stats).toContain('super');
-    expect(calibrationTuningStats(items, statRank, 'gunner')).toEqual(
+    expect(calibrationTuningStats(items, 'gunner')).toEqual(
       expect.arrayContaining(['weapons', 'melee']),
     );
-    expect(calibrationTuningStats(items, statRank, 'gunner')).toHaveLength(2);
+    expect(calibrationTuningStats(items, 'gunner')).toHaveLength(2);
   });
 });
 

@@ -11,7 +11,6 @@ import { defaultClassPreferenceProfile } from '@/lib/prefs/profile';
 import {
   compareRedundantKeepPriority,
   redundantKeepRank,
-  redundantKeepTailScore,
   sortByRedundantKeepPriority,
 } from '@/lib/scoring/redundantKeepPriority';
 export interface TuningCoverageResult {
@@ -128,16 +127,6 @@ export function peerCoversAllConfigs(peer: ArmorPiece, candidate: ArmorPiece): b
 /** True when both pieces reach the same tuning layout set. */
 export function mutuallyTuningEquivalent(a: ArmorPiece, b: ArmorPiece): boolean {
   return peerCoversAllConfigs(a, b) && peerCoversAllConfigs(b, a);
-}
-
-/**
- * Heuristic for which interchangeable piece to keep when coverage is mutual.
- * @deprecated Prefer redundantKeepRank with class prefs: MW is only a tiebreaker there.
- */
-export function keepPreferenceScore(item: ArmorPiece): number {
-  let score = redundantKeepTailScore(item);
-  if (item.isMasterwork) score += 500;
-  return score;
 }
 
 function bestCoveragePeer(

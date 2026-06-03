@@ -1,10 +1,6 @@
 import type { Archetype } from '@/types';
 import { CALIBRATE_STEPS, type CalibrateStep } from './storage';
 
-export function calibrationKeyStats(): string {
-  return 'stats';
-}
-
 export function calibrationKeyArchetypeOrder(): string {
   return 'archetype';
 }
@@ -33,7 +29,7 @@ export function trimCountedKeysForStep(
 ): string[] {
   const targetIdx = CALIBRATE_STEPS.indexOf(targetStep);
   return (keys ?? []).filter((key) => {
-    if (key === 'stats') return targetIdx > CALIBRATE_STEPS.indexOf('stats');
+    if (key === 'stats') return false;
     if (key === 'archetype' || key.startsWith('archetype:')) {
       return targetIdx > CALIBRATE_STEPS.indexOf('archetype');
     }

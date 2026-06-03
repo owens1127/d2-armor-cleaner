@@ -13,6 +13,11 @@ function isCalibrateStep(value: string): value is CalibrateStep {
   return CALIBRATE_STEPS.includes(value as CalibrateStep);
 }
 
+function parseStepParam(stepParam: string): CalibrateStep | null {
+  if (stepParam === 'stats' || stepParam === 'mode') return 'archetype';
+  return isCalibrateStep(stepParam) ? stepParam : null;
+}
+
 function isClassType(value: string): value is ClassType {
   return CLASS_VALUES.includes(value as ClassType);
 }
@@ -57,7 +62,7 @@ export function completedStepsBeforeStep(
  * Parse calibrate URL search params.
  *
  * Schema:
- * - `step`: class|stats|archetype|tertiary|tuning|sets
+ * - `step`: class|archetype|tertiary|tuning|sets (legacy `stats` maps to archetype)
  * - `class`: titan|hunter|warlock (when past class step, or preselect on class step)
  * - `round`: 1-based round for tertiary|tuning pairwise steps
  */
@@ -74,20 +79,21 @@ export function parseCalibrateSearchParams(
     return null;
   }
 
-  if (!isCalibrateStep(stepParam)) return null;
+  const step = parseStepParam(stepParam);
+  if (!step) return null;
 
-  const partial: Partial<CalibrateProgress> = { step: stepParam };
+  const partial: Partial<CalibrateProgress> = { step };
 
   if (classParam && isClassType(classParam)) {
     partial.calibrateClass = classParam;
   }
 
-  if (ROUND_STEPS.includes(stepParam)) {
+  if (ROUND_STEPS.includes(step)) {
     const roundParam = params.get('round');
     if (roundParam !== null) {
       const round = Number.parseInt(roundParam, 10);
       if (Number.isFinite(round) && round >= 1) {
-        Object.assign(partial, roundOverridesForStep(stepParam, round - 1));
+        Object.assign(partial, roundOverridesForStep(step, round - 1));
       }
     }
   }

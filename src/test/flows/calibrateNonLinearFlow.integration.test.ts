@@ -48,15 +48,13 @@ describe('calibration non-linear navigation flow', () => {
   it('jumps from early step to later step while preserving in-progress state', () => {
     const progress: CalibrateProgress = {
       ...defaultCalibrateProgress(),
-      step: 'stats',
-      statOrder: ['super', 'weapons', 'health', 'class', 'melee', 'grenade'],
+      step: 'archetype',
       archetypeOrder: ['gunner', 'brawler', 'grenadier', 'paragon', 'bulwark', 'specialist'],
       completedSteps: ['class'],
     };
 
     const jumped = mergeCalibrateProgressFromUrl(progress, { step: 'sets' });
     expect(jumped.step).toBe('sets');
-    expect(jumped.statOrder).toEqual(progress.statOrder);
     expect(jumped.archetypeOrder).toEqual(progress.archetypeOrder);
   });
 
@@ -69,11 +67,11 @@ describe('calibration non-linear navigation flow', () => {
       },
       tuningOrderByArchetype: { gunner: ['weapons', 'super', 'health'] },
       setOrder: [101, 202, 303],
-      completedSteps: ['class', 'stats', 'archetype', 'tertiary'],
+      completedSteps: ['class', 'archetype', 'tertiary'],
     };
 
-    const toStats = mergeCalibrateProgressFromUrl(base, { step: 'stats' });
-    const toSets = mergeCalibrateProgressFromUrl(toStats, { step: 'sets' });
+    const toArchetype = mergeCalibrateProgressFromUrl(base, { step: 'archetype' });
+    const toSets = mergeCalibrateProgressFromUrl(toArchetype, { step: 'sets' });
     const backToTuning = mergeCalibrateProgressFromUrl(toSets, { step: 'tuning' });
 
     expect(backToTuning.step).toBe('tuning');
@@ -91,7 +89,7 @@ describe('calibration non-linear navigation flow', () => {
         gunner: ['weapons', 'super', 'health'],
         paragon: ['super', 'health', 'weapons'],
       },
-      completedSteps: ['class', 'stats', 'archetype'],
+      completedSteps: ['class', 'archetype'],
     };
 
     const toArchetype = mergeCalibrateProgressFromUrl(base, { step: 'archetype' });
@@ -133,6 +131,13 @@ describe('calibration non-linear navigation flow', () => {
     expect(state.calibrateClass).toBe('hunter');
   });
 
+  it('maps legacy stats step URLs to archetype', () => {
+    const params = new URLSearchParams('step=stats&class=hunter');
+    const state = getCalibrateInitialState({ urlClass: 'hunter', searchParams: params });
+    expect(state.step).toBe('archetype');
+    expect(state.calibrateClass).toBe('hunter');
+  });
+
   it('markOnboardingComplete clears sets-step progress and resumes at dashboard', () => {
     markRulesAccepted();
     markInventoryComplete('balanced');
@@ -140,7 +145,7 @@ describe('calibration non-linear navigation flow', () => {
       ...defaultCalibrateProgress(),
       step: 'sets',
       setOrder: [101, 202],
-      completedSteps: ['class', 'stats', 'archetype', 'tertiary', 'tuning'],
+      completedSteps: ['class', 'archetype', 'tertiary', 'tuning'],
     });
 
     markOnboardingComplete();
