@@ -1,4 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   activeBucketItemCount,
   bucketKeyString,
@@ -26,6 +27,7 @@ export function BucketSwitcher({
   completedBuckets = 0,
   sessionTotal,
 }: BucketSwitcherProps) {
+  const { t } = useTranslation('duel');
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const listId = useId();
@@ -67,7 +69,7 @@ export function BucketSwitcher({
 
   return (
     <div ref={rootRef} className="relative flex flex-col gap-1 text-xs w-full min-w-0 max-w-full sm:min-w-[240px] sm:max-w-[360px]">
-      <span className="font-medium uppercase tracking-wide text-[0.65rem] text-muted">Bucket</span>
+      <span className="font-medium uppercase tracking-wide text-[0.65rem] text-muted">{t('bucket.label')}</span>
       <button
         type="button"
         disabled={triggerDisabled}
@@ -96,7 +98,7 @@ export function BucketSwitcher({
             </span>
           </span>
         ) : (
-          <span className="text-sm text-white/65">Select bucket</span>
+          <span className="text-sm text-white/65">{t('bucket.select')}</span>
         )}
         {sorted.length > 1 && (
           <span
@@ -112,7 +114,7 @@ export function BucketSwitcher({
         <ul
           id={listId}
           role="listbox"
-          aria-label="Duplicate buckets"
+          aria-label={t('bucket.dupeBucketsAria')}
           className="absolute z-50 top-full left-0 mt-1 min-w-full w-max max-w-[min(24rem,90vw)] max-h-[min(20rem,60vh)] overflow-y-auto rounded-md border border-border bg-surface-2 shadow-lg"
         >
           {sorted.map((b, i) => {

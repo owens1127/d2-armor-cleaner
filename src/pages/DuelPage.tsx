@@ -1,4 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { classLabel, statLabel, archetypeLabel, slotLabel } from '@/i18n/gameCopy';
+import { useTranslation } from 'react-i18next';
 import { Link, Navigate, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { TransitionFlash } from '@/components/TransitionFlash';
@@ -9,7 +11,6 @@ import { DuelBucketChooser } from '@/components/duel/DuelBucketChooser';
 import { DuelComparePanel } from '@/components/duel/DuelComparePanel';
 import { DuelKeyboardHints, DuelPageCenter } from '@/components/duel/DuelPageShell';
 import { PendingTagsFootnote } from '@/components/duel/PendingTagsFootnote';
-import { hasActiveSession } from '@/lib/bungie/loadVault';
 import {
   advanceAfterPreferLoss,
   advanceAfterResolve,
@@ -22,7 +23,6 @@ import {
   restoreTournament,
   rotatePairToBack,
 } from '@/lib/dupes/duel';
-import { CLASS_LABELS, ARCHETYPE_LABELS, SLOT_LABELS, STAT_LABELS } from '@/lib/constants';
 import {
   activeBucketItemCount,
   bucketKeyString,
@@ -61,7 +61,6 @@ import {
   type BucketDuelUndoSnapshot,
 } from '@/lib/duel/undo';
 import {
-  useAuthStore,
   usePrefsStore,
   useSessionStore,
   useVaultStore,
@@ -70,12 +69,12 @@ import {
 import type { ArmorPiece, DupeBucket, DupeBucketKey } from '@/types';
 
 export function DuelPage() {
+  const { t } = useTranslation(['duel', 'vault', 'common']);
   const { class: classParam } = useParams<{ class: string }>();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const parsedClass = parseClassRouteParam(classParam);
   const classType = classFromRouteParam(classParam);
-  const { membership } = useAuthStore();
   const {
     allItems,
     classStates,
@@ -787,7 +786,7 @@ export function DuelPage() {
     if (
       bucketInProgress &&
       !window.confirm(
-        'Switch bucket? In-progress picks and junk tags for the current bucket will be cleared.',
+        t('confirm.switchBucket'),
       )
     ) {
       return;
@@ -803,7 +802,7 @@ export function DuelPage() {
     if (resolving || !currentBucketKey) return;
     if (
       !window.confirm(
-        'Reset this bucket? All in-progress picks, junk tags, and compare progress will be cleared. The bucket stays in your queue.',
+        t('confirm.resetBucket'),
       )
     ) {
       return;
@@ -846,22 +845,11 @@ export function DuelPage() {
   if (parsedClass === null && classParam !== undefined) {
     return <Navigate to="/duel/hunter" replace />;
   }
-  if (!membership) {
-    if (hasActiveSession()) {
-      return (
-        <DuelPageCenter>
-          <p className="text-lg mb-2">Restoring session…</p>
-        </DuelPageCenter>
-      );
-    }
-    return <Navigate to="/" replace />;
-  }
-
   if (vaultLoading && !classVault) {
     return (
       <DuelPageCenter>
-        <p className="text-lg mb-2">Loading vault…</p>
-        <p className="text-sm text-muted">{vaultStatus ?? 'Please wait'}</p>
+        <p className="text-lg mb-2">{t('vault:loading')}</p>
+        <p className="text-sm text-muted">{vaultStatus ?? t('common:pleaseWait')}</p>
       </DuelPageCenter>
     );
   }
@@ -869,13 +857,13 @@ export function DuelPage() {
   if (!classVault) {
     return (
       <DuelPageCenter>
-        <p className="text-muted mb-4">No vault data yet.</p>
+        <p className="text-muted mb-4">{t('vault:noDataYet')}</p>
         <button
           type="button"
           onClick={() => loadLiveVault()}
           className="px-4 py-2 rounded-lg bg-accent text-surface font-medium"
         >
-          Load vault
+          {t('vault:loadVault')}
         </button>
       </DuelPageCenter>
     );
@@ -905,7 +893,7 @@ export function DuelPage() {
   function handleClearClassSession() {
     if (
       !window.confirm(
-        `Clear all ${CLASS_LABELS[classType]} compare progress and queued tags for this class? This cannot be undone.`,
+        t('confirm.clearClassSession', { class: classLabel(classType) }),
       )
     ) {
       return;
@@ -935,24 +923,31 @@ export function DuelPage() {
           <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
             <div>
               <h1 className="ui-heading text-2xl sm:text-3xl font-semibold tracking-tight">
-                Compare {CLASS_LABELS[classType]} duplicates
+                {t('title', { class: classLabel(classType) })}
               </h1>
               {showingBucketWrapUp ? (
-                <p className="text-sm text-muted mt-1">Review this group, then continue</p>
+                <p className="text-sm text-muted mt-1">{t('subtitle.wrapUp')}</p>
               ) : bucket ? (
                 <p className="text-sm text-muted mt-1">
-                  {SLOT_LABELS[bucket.key.armorSlot]} · {ARCHETYPE_LABELS[bucket.key.archetype]} ·{' '}
-                  {STAT_LABELS[bucket.key.tertiaryStat]}
-                  {' · '}
-                  {activeBucketItemCount(bucket)} items
-                  {inBucketProgress && <> · {formatDuelInBucketProgress(inBucketProgress)}</>}
+                  {t('subtitle.bucketMeta', {
+                    slot: slotLabel(bucket.key.armorSlot),
+                    archetype: archetypeLabel(bucket.key.archetype),
+                    tertiary: statLabel(bucket.key.tertiaryStat),
+                    count: activeBucketItemCount(bucket),
+                  })}
+                  {inBucketProgress && (
+                    <>
+                      {' '}
+                      · {formatDuelInBucketProgress(inBucketProgress)}
+                    </>
+                  )}
                 </p>
               ) : empty ? (
-                <p className="text-sm text-muted mt-1">No duplicate armor to compare for this class</p>
+                <p className="text-sm text-muted mt-1">{t('subtitle.noDupes')}</p>
               ) : needsBucketChoice ? (
-                <p className="text-sm text-muted mt-1">Choose a duplicate group to start</p>
+                <p className="text-sm text-muted mt-1">{t('subtitle.chooseGroup')}</p>
               ) : (
-                <p className="text-sm text-muted mt-1">Starting next duplicate group…</p>
+                <p className="text-sm text-muted mt-1">{t('subtitle.startingNext')}</p>
               )}
             </div>
 
@@ -973,7 +968,7 @@ export function DuelPage() {
                     disabled={resolving}
                     className="ui-btn-secondary px-3 py-1.5 text-xs disabled:opacity-40"
                   >
-                    Reset bucket
+                    {t('resetBucket')}
                   </button>
                 )}
               </div>
@@ -1000,32 +995,32 @@ export function DuelPage() {
 
             {needsBucketChoice && (
               <DuelBucketChooser
-                classLabel={CLASS_LABELS[classType]}
+                classLabel={classLabel(classType)}
                 buckets={pickableBuckets}
                 onSelect={handleChooseBucket}
               />
             )}
 
             {!showingBucketWrapUp && !needsBucketChoice && duelInitializing && (
-              <p className="text-muted text-center">Preparing comparisons…</p>
+              <p className="text-muted text-center">{t('preparing')}</p>
             )}
 
             {!showingBucketWrapUp && queueExhausted && (
               <div className="text-center py-8 ui-card w-full max-w-md mx-auto">
-                <p className="ui-heading text-xl font-medium mb-2">Queue empty</p>
+                <p className="ui-heading text-xl font-medium mb-2">{t('queueEmpty.title')}</p>
                 <p className="text-sm text-muted mb-4">
-                  {tagKeepCount} keep · {tagJunkCount} junk queued.
+                  {t('queueEmpty.summary', { keep: tagKeepCount, junk: tagJunkCount })}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Link to="/review" className="ui-btn-primary inline-block px-8 py-3">
-                    Review tags
+                    {t('queueEmpty.reviewTags')}
                   </Link>
                   <button
                     type="button"
                     onClick={handleRestartQueue}
                     className="ui-btn-secondary px-8 py-3"
                   >
-                    Restart queue
+                    {t('queueEmpty.restartQueue')}
                   </button>
                 </div>
                 <button
@@ -1033,17 +1028,16 @@ export function DuelPage() {
                   onClick={handleClearClassSession}
                   className="mt-4 text-xs text-muted hover:text-danger hover:underline underline-offset-2"
                 >
-                  Clear {CLASS_LABELS[classType]} session
+                  {t('queueEmpty.clearSession', { class: classLabel(classType) })}
                 </button>
               </div>
             )}
 
             {!showingBucketWrapUp && empty && (
               <div className="text-center py-8 ui-card w-full max-w-md mx-auto">
-                <p className="ui-heading text-xl font-medium mb-2">No duplicates to compare</p>
+                <p className="ui-heading text-xl font-medium mb-2">{t('noDuplicates.title')}</p>
                 <p className="text-sm text-muted mb-4">
-                  No duplicate buckets match your rules for {CLASS_LABELS[classType]}. Try loosening
-                  dupe rules in Settings or load a fresh vault snapshot.
+                  {t('noDuplicates.body', { class: classLabel(classType) })}
                 </p>
               </div>
             )}
@@ -1056,7 +1050,7 @@ export function DuelPage() {
               !champion &&
               !challenger && (
               <p className="text-muted text-center">
-                No duplicate groups in queue. Loosen dupe rules in Settings or restart the queue.
+                {t('noGroupsInQueue')}
               </p>
             )}
 

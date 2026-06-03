@@ -1,0 +1,67 @@
+{
+  "title": "Configurações",
+  "account": {
+    "heading": "Conta",
+    "signedInAs": "Conectado como <1>{{name}}</1>",
+    "parsedCount": "{{count}} peças de armadura com tier analisadas (cofre, todos os personagens, mensageiro)",
+    "signOutNote": "Sair remove tokens da Bungie e do DIM desta sessão do navegador (apenas session storage). Preferências permanecem no armazenamento local.",
+    "signOutButton": "Sair e limpar tokens"
+  },
+  "dupeRules": {
+    "heading": "Regras de duplicatas",
+    "intro": "Regras compartilhadas para mapa de calor, comparar, explorar e listas de rolagens redundantes.",
+    "scopeHeading": "Escopo: quais peças contam",
+    "minTierLabel": "Tier mínimo do equipamento",
+    "minTierHelp": "A importação do cofre ainda carrega tiers 1 a 5. Apenas peças neste tier ou acima entram em grupos de duplicatas e checagens de rolagens redundantes.",
+    "groupingHeading": "Agrupamento: o que conta como \"duplicata\"",
+    "groupingIntro": "As peças sempre coincidem em classe, slot, arquétipo e atributo terciário. Estas opções adicionam divisões mais rígidas e também se aplicam a comparações de rolagens redundantes.",
+    "dimTagsHeading": "Tags DIM ao contar duplicatas",
+    "dimTagsIntro": "Peças marcadas continuam visíveis, mas podem ficar de fora do tamanho dos grupos e das contagens de revisão.",
+    "liveImpact": "Impacto ao vivo (regras globais, cofre do Caçador)"
+  },
+  "classDupeRules": {
+    "heading": "Regras de duplicatas de {{class}}",
+    "usingClass": "Usando {{class}} (altere a classe no cabeçalho). As classes compartilham regras globais por padrão. Aplique um preset a uma classe sem alterar as outras.",
+    "customRules": "{{class}} usa regras personalizadas ·",
+    "resetToGlobal": "voltar ao global"
+  },
+  "dupePresets": {
+    "heading": "Presets de duplicatas"
+  },
+  "dashboardLink": "Painel",
+  "language": {
+    "heading": "Idioma",
+    "useBrowser": "Usar idioma do navegador",
+    "useBrowserHelp": "Ligado: o app segue o idioma do navegador. Desligado: use o idioma escolhido abaixo."
+  },
+  "developer": {
+    "heading": "Desenvolvedor",
+    "bungie": "Bungie: {{status}}",
+    "dimSync": "DIM Sync: {{status}}"
+  },
+  "reviewTags": {
+    "heading": "Revisar tags"
+  },
+  "classPrefs": {
+    "heading": "Preferências de {{class}}",
+    "usingClass": "Usando {{class}} (altere a classe no cabeçalho). Pesos de atributos e arquétipos por classe da calibração. Regras de duplicatas são compartilhadas, salvo substituição por classe.",
+    "calibrations": "{{count}} calibrações · confiança {{confidence}}",
+    "topStats": "Atributos principais:",
+    "topArchetypes": "Arquétipos principais:",
+    "recalibrate": "Recalibrar {{class}}",
+    "exportPrefs": "Exportar preferências",
+    "importPrefs": "Importar preferências",
+    "resetClass": "Redefinir preferências de {{class}}",
+    "resetAll": "Redefinir todas as classes",
+    "imported": "Preferências importadas.",
+    "invalidFile": "Arquivo de preferências inválido.",
+    "openReview": "Abrir página de revisão",
+    "clearPending": "Limpar tags pendentes",
+    "queued_one": "{{count}} tag na fila para aplicar no DIM.",
+    "queued_other": "{{count}} tags na fila para aplicar no DIM.",
+    "nonePending": "Nenhuma tag pendente.",
+    "confirmClearPending": "Limpar todas as {{count}} tags pendentes? Elas não serão aplicadas no DIM.",
+    "confirmResetClass": "Redefinir as preferências de {{class}} para o padrão? Pesos de atributos, escolhas de calibração e pesos aprendidos desta classe serão apagados.",
+    "confirmResetAll": "Redefinir as preferências de todas as classes para o padrão? Pesos de atributos, escolhas de calibração e pesos aprendidos serão apagados para Caçador, Titã e Arcanista. Regras de duplicatas e outras configurações são mantidas."
+  }
+}

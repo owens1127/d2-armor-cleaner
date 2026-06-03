@@ -1,10 +1,11 @@
-import { ARMOR_SLOTS, STAT_LABELS, STATS } from '@/lib/constants';
 import {
   decodeBuildId,
   encodeDesiredBuildId,
   isEncodedBuildId,
 } from '@/lib/coverage/buildIdCodec';
 import { formatSetBonusBuildNameSuffix } from '@/lib/coverage/setBonus';
+import { ARMOR_SLOTS, STATS } from '@/lib/constants';
+import { statLabel } from '@/i18n/gameCopy';
 import { defaultClassPreferenceProfile } from '@/lib/prefs/profile';
 import type {
   ArmorPiece,
@@ -408,7 +409,7 @@ export function getDesiredBuilds(
 export function buildProfileFromPrefs(prefs: ClassPreferenceProfile): BuildProfile {
   const statTargets = defaultStatTargetsFromPrefs(prefs);
   const label = statTargets
-    .map(({ stat }) => STAT_LABELS[stat])
+    .map(({ stat }) => statLabel(stat))
     .join(' · ');
   return { id: 'top-stats', label, statTargets };
 }
@@ -461,7 +462,7 @@ export function resolveBuildProfile(
 }
 
 export function formatStatTargetsLabel(targets: StatTarget[]): string {
-  return targets.map(({ stat }) => STAT_LABELS[stat]).join(' → ');
+  return targets.map(({ stat }) => statLabel(stat)).join(' → ');
 }
 
 /** Legacy default before stat-derived names. */
@@ -470,7 +471,7 @@ export const LEGACY_DEFAULT_BUILD_NAME = 'New build';
 /** Slash-separated stat labels, e.g. `Weapons/Super/Grenade`. */
 export function defaultBuildNameFromStatTargets(targets: StatTarget[]): string {
   if (targets.length === 0) return LEGACY_DEFAULT_BUILD_NAME;
-  return targets.map(({ stat }) => STAT_LABELS[stat]).join('/');
+  return targets.map(({ stat }) => statLabel(stat)).join('/');
 }
 
 /** Auto-generated combo name from stat priorities and optional set bonus targets. */

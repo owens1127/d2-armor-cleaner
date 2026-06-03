@@ -1,0 +1,67 @@
+{
+  "language": "Language",
+  "languageEn": "English",
+  "languageFr": "Français",
+  "languageEs": "Español",
+  "languageEsMx": "Español (México)",
+  "languageDe": "Deutsch",
+  "languageIt": "Italiano",
+  "languageJa": "日本語",
+  "languageKo": "한국어",
+  "languagePl": "Polski",
+  "languagePtBr": "Português (Brasil)",
+  "languageRu": "Русский",
+  "languageZhChs": "简体中文",
+  "languageZhCht": "繁體中文",
+  "continue": "Continue",
+  "save": "Save",
+  "back": "Back",
+  "skip": "Skip",
+  "signOut": "Sign out",
+  "retry": "Retry",
+  "retrying": "Retrying…",
+  "pleaseWait": "Please wait",
+  "copied": "Copied!",
+  "dimCopy": {
+    "queryFor": "Copy DIM query for {{name}}",
+    "queryCopied": "Copy DIM query for {{name}} copied to clipboard.",
+    "searchShown": "Copy DIM search for shown pieces",
+    "searchShownCopied": "Copy DIM search for shown pieces copied to clipboard.",
+    "searchGroup": "Copy DIM search for all {{count}} pieces in this group",
+    "searchGroupCopied": "Copy DIM search for all {{count}} pieces in this group copied to clipboard."
+  },
+  "none": "None",
+  "configured": "configured",
+  "notConfigured": "not configured",
+  "developer": "Developer",
+  "openReviewPage": "Open review page",
+  "clearPendingTags": "Clear pending tags",
+  "exportPrefs": "Export prefs",
+  "importPrefs": "Import prefs",
+  "preferencesImported": "Preferences imported.",
+  "invalidPrefsFile": "Invalid prefs file.",
+  "topStats": "Top stats:",
+  "topArchetypes": "Top archetypes:",
+  "recalibrateClass": "Recalibrate {{class}}",
+  "resetClassPrefs": "Reset {{class}} preferences",
+  "resetAllClasses": "Reset all classes",
+  "confirm": {
+    "clearPendingTags": "Clear all {{count}} pending tags? They will not be applied to DIM.",
+    "resetClassPrefs": "Reset {{class}} preferences to defaults? Stat weights, calibration choices, and learned weights for this class will be cleared.",
+    "resetAllClassPrefs": "Reset preferences for all classes to defaults? Stat weights, calibration choices, and learned weights will be cleared for Hunter, Titan, and Warlock. Dupe rules and other settings are kept."
+  },
+  "classPrefs": {
+    "heading": "{{class}} preferences",
+    "usingClass": "Using {{class}} (change class in header). Per-class stat and archetype weights from calibration. Dupe rules are shared unless overridden per class.",
+    "calibrations": "{{count}} calibrations · confidence {{confidence}}"
+  },
+  "reviewTags": {
+    "heading": "Review tags",
+    "queued_one": "{{count}} tag queued to apply in DIM.",
+    "queued_other": "{{count}} tags queued to apply in DIM.",
+    "none": "No pending tags."
+  },
+  "dev": {
+    "dimKeyHint": "Local DIM key: POST to api.destinyitemmanager.com/new_app with origin {{origin}}."
+  }
+}

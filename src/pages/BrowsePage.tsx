@@ -1,16 +1,12 @@
 import { useCallback, useMemo, useState } from 'react';
+import { classLabel, archetypeLabel, slotLabel } from '@/i18n/gameCopy';
+import { CLASSES, ARMOR_SLOTS, ARCHETYPES } from '@/lib/constants';
 import { Link, Navigate, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { browseSortLabelCopy } from '@/i18n/browseCopy';
 import { Layout } from '@/components/Layout';
 import { RedundantRollsBrowse } from '@/components/browse/RedundantRollsBrowse';
 import { ArmorCard } from '@/components/duel/ArmorCard';
-import {
-  ARCHETYPE_LABELS,
-  ARCHETYPES,
-  CLASS_LABELS,
-  CLASSES,
-  ARMOR_SLOTS,
-  SLOT_LABELS,
-} from '@/lib/constants';
 import {
   allDismantleCandidates,
   countDismantleCandidates,
@@ -41,13 +37,9 @@ import {
 import { DominatorPopover } from '@/components/dominance/DominatorPopover';
 import { armorHasDimFavorite } from '@/lib/dim/parseTags';
 import { dimIdQuery } from '@/lib/session/persist';
-import {
-  getOnboardingResumePath,
-  needsOnboardingRedirect,
-} from '@/lib/onboarding/storage';
 import { SS_BROWSE_SORT } from '@/lib/storage/keys';
 import { useVaultFocusRefresh } from '@/lib/vault/useVaultFocusRefresh';
-import { useAuthStore, usePrefsStore, useSessionStore, useVaultStore } from '@/stores';
+import { usePrefsStore, useSessionStore, useVaultStore } from '@/stores';
 import type { Archetype, ArmorPiece, ArmorSlot, ClassType, TagValue } from '@/types';
 
 function readBrowseSort(): BrowseSortOrder {
@@ -64,20 +56,13 @@ function readBrowseSort(): BrowseSortOrder {
   return 'match-desc';
 }
 
-function browseSortLabel(order: BrowseSortOrder): string {
-  if (order === 'match-desc') return 'sorted by match % (most compatible first)';
-  if (order === 'match-asc') return 'sorted by match % (least compatible first)';
-  if (order === 'build-fit-desc') return 'sorted by combo fit';
-  return 'sorted by preference';
-}
-
 export function BrowsePage() {
+  const { t } = useTranslation('browse');
   const { class: classParam } = useParams<{ class: string }>();
   const location = useLocation();
   useVaultFocusRefresh({ refreshOnMount: true });
   const [searchParams, setSearchParams] = useSearchParams();
   const classType = (classParam ?? 'hunter') as ClassType;
-  const { membership } = useAuthStore();
   const { allItems, classStates, globalDupeRules, classRuleOverrides } = useVaultStore();
   const { profile } = usePrefsStore();
   const classPrefs = getClassPrefs(profile, classType);
@@ -367,11 +352,6 @@ export function BrowsePage() {
   if (!CLASSES.includes(classType)) {
     return <Navigate to={`/browse/hunter${location.search}`} replace />;
   }
-  if (!membership) return <Navigate to="/" replace />;
-  if (needsOnboardingRedirect()) {
-    return <Navigate to={getOnboardingResumePath(false)} replace />;
-  }
-
   const state = classStates[classType];
 
   async function copyFilteredIds() {
@@ -406,47 +386,47 @@ export function BrowsePage() {
   const redundantFilterBar = (
     <div className="flex flex-wrap gap-3 mb-6 p-4 border border-border rounded-xl bg-surface-2 min-w-0">
       <label className="flex flex-col gap-1 text-xs text-muted min-w-[5.5rem] flex-1">
-        Slot
+        {t('filters.slot')}
         <select
           value={slot}
           onChange={(e) => setSlot(e.target.value as ArmorSlot | 'all')}
           className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
         >
-          <option value="all">All slots</option>
+          <option value="all">{t('filters.allSlots')}</option>
           {ARMOR_SLOTS.map((s) => (
             <option key={s} value={s}>
-              {SLOT_LABELS[s]}
+              {slotLabel(s)}
             </option>
           ))}
         </select>
       </label>
       <label className="flex flex-col gap-1 text-xs text-muted">
-        Archetype
+        {t('filters.archetype')}
         <select
           value={archetype}
           onChange={(e) => setArchetype(e.target.value as Archetype | 'all')}
           className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
         >
-          <option value="all">All archetypes</option>
+          <option value="all">{t('filters.allArchetypes')}</option>
           {ARCHETYPES.map((a) => (
             <option key={a} value={a}>
-              {ARCHETYPE_LABELS[a]}
+              {archetypeLabel(a)}
             </option>
           ))}
         </select>
       </label>
       <label className="flex flex-col gap-1 text-xs text-muted w-full min-w-0 sm:flex-1 sm:min-w-[10rem]">
-        Search
+        {t('filters.search')}
         <input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Armor name…"
+          placeholder={t('filters.armorNamePlaceholder')}
           className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
         />
       </label>
       <label className="flex flex-col gap-1 text-xs text-muted w-full min-w-0 sm:min-w-[8.75rem]">
-        Armor set
+        {t('filters.armorSet')}
         <select
           value={setFilter === 'all' ? 'all' : String(setFilter)}
           onChange={(e) =>
@@ -454,7 +434,7 @@ export function BrowsePage() {
           }
           className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
         >
-          <option value="all">All sets</option>
+          <option value="all">{t('filters.allSets')}</option>
           {armorSets.map(([hash, name]) => (
             <option key={hash} value={hash}>
               {name}
@@ -463,19 +443,19 @@ export function BrowsePage() {
         </select>
       </label>
       <label className="flex flex-col gap-1 text-xs text-muted">
-        DIM tag
+        {t('filters.dimTag')}
         <select
           value={dimTag}
           onChange={(e) => setDimTag(e.target.value as typeof dimTag)}
           className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
         >
-          <option value="all">Any</option>
-          <option value="untagged">Untagged</option>
-          <option value="keep">Keep</option>
-          <option value="junk">Junk</option>
-          <option value="favorite">Favorite</option>
-          <option value="infuse">Infuse</option>
-          <option value="archive">Archive</option>
+          <option value="all">{t('filters.any')}</option>
+          <option value="untagged">{t('dimTags.untagged')}</option>
+          <option value="keep">{t('dimTags.keep')}</option>
+          <option value="junk">{t('dimTags.junk')}</option>
+          <option value="favorite">{t('dimTags.favorite')}</option>
+          <option value="infuse">{t('dimTags.infuse')}</option>
+          <option value="archive">{t('dimTags.archive')}</option>
         </select>
       </label>
       <label className="flex items-end gap-2 text-sm pb-1.5 cursor-pointer">
@@ -485,7 +465,7 @@ export function BrowsePage() {
           onChange={(e) => setStrictlyLowerOnly(e.target.checked)}
           className="rounded"
         />
-        Stat-lower only
+        {t('filters.statLowerOnly')}
       </label>
     </div>
   );
@@ -493,22 +473,22 @@ export function BrowsePage() {
   const fullBrowseFilterBar = (
     <div className="flex flex-wrap gap-3 mb-6 p-4 border border-border rounded-xl bg-surface-2 min-w-0">
         <label className="flex flex-col gap-1 text-xs text-muted">
-          Sort
+          {t('filters.sort')}
           <select
             value={sortOrder}
             onChange={(e) => updateSortOrder(e.target.value as BrowseSortOrder)}
             className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
           >
-            <option value="match-desc">Match % (high → low)</option>
-            <option value="match-asc">Match % (low → high)</option>
-            <option value="preference">Preference</option>
+            <option value="match-desc">{t('sort.matchDesc')}</option>
+            <option value="match-asc">{t('sort.matchAsc')}</option>
+            <option value="preference">{t('sort.preference')}</option>
             {activeBuildProfile && (
-              <option value="build-fit-desc">Combo fit (high → low)</option>
+              <option value="build-fit-desc">{t('sort.buildFitDesc')}</option>
             )}
           </select>
         </label>
         <label className="flex flex-col gap-1 text-xs text-muted w-full min-w-0 sm:min-w-[8.75rem]">
-          Combo
+          {t('filters.combo')}
           <select
             value={buildFilter}
             onChange={(e) => {
@@ -520,7 +500,7 @@ export function BrowsePage() {
             }}
             className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
           >
-            <option value="all">Any combo</option>
+            <option value="all">{t('filters.anyCombo')}</option>
             {desiredBuilds.map((b) => (
               <option key={b.id} value={b.id}>
                 {b.name}
@@ -529,47 +509,47 @@ export function BrowsePage() {
           </select>
         </label>
         <label className="flex flex-col gap-1 text-xs text-muted">
-          Slot
+          {t('filters.slot')}
           <select
             value={slot}
             onChange={(e) => setSlot(e.target.value as ArmorSlot | 'all')}
             className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
           >
-            <option value="all">All slots</option>
+            <option value="all">{t('filters.allSlots')}</option>
             {ARMOR_SLOTS.map((s) => (
               <option key={s} value={s}>
-                {SLOT_LABELS[s]}
+                {slotLabel(s)}
               </option>
             ))}
           </select>
         </label>
         <label className="flex flex-col gap-1 text-xs text-muted">
-          Archetype
+          {t('filters.archetype')}
           <select
             value={archetype}
             onChange={(e) => setArchetype(e.target.value as Archetype | 'all')}
             className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
           >
-            <option value="all">All archetypes</option>
+            <option value="all">{t('filters.allArchetypes')}</option>
             {ARCHETYPES.map((a) => (
               <option key={a} value={a}>
-                {ARCHETYPE_LABELS[a]}
+                {archetypeLabel(a)}
               </option>
             ))}
           </select>
         </label>
         <label className="flex flex-col gap-1 text-xs text-muted w-full min-w-0 sm:flex-1 sm:min-w-[10rem]">
-          Search
+          {t('filters.search')}
           <input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Armor name…"
+            placeholder={t('filters.armorNamePlaceholder')}
             className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
           />
         </label>
         <label className="flex flex-col gap-1 text-xs text-muted w-full min-w-0 sm:min-w-[8.75rem]">
-          Armor set
+          {t('filters.armorSet')}
           <select
             value={setFilter === 'all' ? 'all' : String(setFilter)}
             onChange={(e) =>
@@ -577,7 +557,7 @@ export function BrowsePage() {
             }
             className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
           >
-            <option value="all">All sets</option>
+            <option value="all">{t('filters.allSets')}</option>
             {armorSets.map(([hash, name]) => (
               <option key={hash} value={hash}>
                 {name}
@@ -586,19 +566,19 @@ export function BrowsePage() {
           </select>
         </label>
         <label className="flex flex-col gap-1 text-xs text-muted">
-          DIM tag
+          {t('filters.dimTag')}
           <select
             value={dimTag}
             onChange={(e) => setDimTag(e.target.value as typeof dimTag)}
             className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
           >
-            <option value="all">Any</option>
-            <option value="untagged">Untagged</option>
-            <option value="keep">Keep</option>
-            <option value="junk">Junk</option>
-            <option value="favorite">Favorite</option>
-            <option value="infuse">Infuse</option>
-            <option value="archive">Archive</option>
+            <option value="all">{t('filters.any')}</option>
+            <option value="untagged">{t('dimTags.untagged')}</option>
+            <option value="keep">{t('dimTags.keep')}</option>
+            <option value="junk">{t('dimTags.junk')}</option>
+            <option value="favorite">{t('dimTags.favorite')}</option>
+            <option value="infuse">{t('dimTags.infuse')}</option>
+            <option value="archive">{t('dimTags.archive')}</option>
           </select>
         </label>
         <label className="flex items-end gap-2 text-sm pb-1.5 cursor-pointer">
@@ -608,7 +588,7 @@ export function BrowsePage() {
             onChange={(e) => setDupesOnly(e.target.checked)}
             className="rounded"
           />
-          Dupes only
+          {t('filters.dupesOnly')}
         </label>
         <label className="flex items-end gap-2 text-sm pb-1.5 cursor-pointer">
           <input
@@ -617,7 +597,7 @@ export function BrowsePage() {
             onChange={(e) => setStrictlyLowerOnly(e.target.checked)}
             className="rounded"
           />
-          Strictly lower only
+          {t('filters.strictlyLowerOnly')}
         </label>
         <label className="flex items-end gap-2 text-sm pb-1.5 cursor-pointer">
           <input
@@ -630,7 +610,7 @@ export function BrowsePage() {
             }
             className="rounded"
           />
-          Redundant rolls only
+          {t('filters.redundantOnly')}
         </label>
         {activeBuildProfile && (
           <label className="flex items-end gap-2 text-sm pb-1.5 cursor-pointer">
@@ -640,7 +620,7 @@ export function BrowsePage() {
               onChange={(e) => setBuildFitOnly(e.target.checked)}
               className="rounded"
             />
-            Supports combo only
+            {t('filters.supportsComboOnly')}
           </label>
         )}
       </div>
@@ -649,7 +629,7 @@ export function BrowsePage() {
   return (
     <Layout>
       {!state && (
-        <p className="text-muted mb-4">Load your vault from the dashboard first.</p>
+        <p className="text-muted mb-4">{t('loadVaultFirst')}</p>
       )}
 
       {redundantOnly ? (
@@ -672,11 +652,15 @@ export function BrowsePage() {
       ) : (
         <>
           <div className="mb-6">
-            <h1 className="text-2xl font-bold">Browse {CLASS_LABELS[classType]} armor</h1>
+            <h1 className="text-2xl font-bold">
+              {t('title', { class: classLabel(classType) })}
+            </h1>
             <p className="text-muted text-sm mt-1 max-w-2xl">
-              {filtered.length} of{' '}
-              {classItems.filter((i) => (i.tier ?? 0) >= globalDupeRules.minTier).length}{' '}
-              pieces · {browseSortLabel(sortOrder)}
+              {t('summary', {
+                filtered: filtered.length,
+                total: classItems.filter((i) => (i.tier ?? 0) >= globalDupeRules.minTier).length,
+                sortLabel: browseSortLabelCopy(sortOrder),
+              })}
               {redundantRollIds.size > 0 && (
                 <>
                   {' '}
@@ -685,7 +669,7 @@ export function BrowsePage() {
                     to={`/browse/${classType}?redundant=1`}
                     className="text-white/80 hover:text-white underline"
                   >
-                    {redundantRollIds.size} redundant rolls
+                    {t('redundantLink', { count: redundantRollIds.size })}
                   </Link>
                 </>
               )}
@@ -701,14 +685,14 @@ export function BrowsePage() {
                 onClick={copyFilteredIds}
                 className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5"
               >
-                {copied ? 'Copied!' : `Copy ${filtered.length} id: query`}
+                {copied ? t('copied') : t('copyIds', { count: filtered.length })}
               </button>
               {pendingTags.length > 0 && (
                 <Link
                   to="/review"
                   className="text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5"
                 >
-                  Review compare/triage tags ({pendingTags.length})
+                  {t('reviewTagsLink', { count: pendingTags.length })}
                 </Link>
               )}
             </div>
@@ -749,7 +733,7 @@ export function BrowsePage() {
                       <div className="armor-card-grid-cell__card relative flex flex-col flex-1 h-full min-h-0">
                         {item.isDupe && (
                           <span className="absolute top-2 right-2 z-10 text-[10px] bg-white/10 text-white/80 px-1.5 py-0.5 rounded-md">
-                            dupe
+                            {t('dupeBadge')}
                           </span>
                         )}
                         <ArmorCard
@@ -769,7 +753,7 @@ export function BrowsePage() {
                     <div className="armor-card-grid-cell__card relative flex flex-col flex-1 h-full min-h-0">
                       {item.isDupe && (
                         <span className="absolute top-2 right-2 z-10 text-[10px] bg-white/10 text-white/80 px-1.5 py-0.5 rounded-md">
-                          dupe
+                          {t('dupeBadge')}
                         </span>
                       )}
                       <ArmorCard
@@ -790,14 +774,14 @@ export function BrowsePage() {
           </div>
 
           {filtered.length === 0 && state && (
-            <p className="text-muted text-center py-12">No items match these filters.</p>
+            <p className="text-muted text-center py-12">{t('noItemsMatch')}</p>
           )}
         </>
       )}
 
       <div className="mt-8">
         <Link to={`/dashboard/${classType}`} className="text-sm text-muted hover:text-white">
-          Back to dashboard
+          {t('backToDashboard')}
         </Link>
       </div>
     </Layout>

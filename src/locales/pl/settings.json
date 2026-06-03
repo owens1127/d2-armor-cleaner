@@ -1,0 +1,67 @@
+{
+  "title": "Ustawienia",
+  "account": {
+    "heading": "Konto",
+    "signedInAs": "Zalogowano jako <1>{{name}}</1>",
+    "parsedCount": "Przetworzono {{count}} poziomowych elementów pancerza (skarbiec, wszystkie postacie, poczta)",
+    "signOutNote": "Wylogowanie usuwa tokeny Bungie i DIM z tej sesji przeglądarki (tylko pamięć sesji). Preferencje pozostają w pamięci lokalnej.",
+    "signOutButton": "Wyloguj i wyczyść tokeny"
+  },
+  "dupeRules": {
+    "heading": "Reguły duplikatów",
+    "intro": "Współdzielone reguły dla mapy cieplnej, porównań, przeglądu i list nadmiarowych ról.",
+    "scopeHeading": "Zakres: które elementy się liczą",
+    "minTierLabel": "Minimalny poziom sprzętu",
+    "minTierHelp": "Import skarbca nadal ładuje poziomy 1–5. Tylko elementy na tym poziomie lub wyżej trafiają do kubełków duplikatów i sprawdzeń nadmiarowych ról.",
+    "groupingHeading": "Grupowanie: co liczy się jako „duplikat”",
+    "groupingIntro": "Elementy zawsze pasują według klasy, slotu, archetypu i statystyki trzeciorzędnej. Te opcje dodają ostrzejsze podziały i dotyczą też porównań nadmiarowych ról.",
+    "dimTagsHeading": "Tagi DIM przy liczeniu duplikatów",
+    "dimTagsIntro": "Otagowane elementy pozostają widoczne, ale mogą być pominięte w rozmiarach kubełków i liczbach przeglądu.",
+    "liveImpact": "Wpływ na żywo (reguły globalne, skarbiec Huntera)"
+  },
+  "classDupeRules": {
+    "heading": "Reguły duplikatów {{class}}",
+    "usingClass": "Używana klasa: {{class}} (zmień klasę w nagłówku). Klasy domyślnie dzielą reguły globalne. Zastosuj preset do jednej klasy bez zmiany innych.",
+    "customRules": "{{class}} używa własnych reguł ·",
+    "resetToGlobal": "przywróć globalne"
+  },
+  "dupePresets": {
+    "heading": "Presety duplikatów"
+  },
+  "dashboardLink": "Panel",
+  "language": {
+    "heading": "Język",
+    "useBrowser": "Użyj języka przeglądarki",
+    "useBrowserHelp": "Gdy włączone, aplikacja podąża za językiem przeglądarki. Gdy wyłączone, użyj języka wybranego poniżej."
+  },
+  "developer": {
+    "heading": "Deweloper",
+    "bungie": "Bungie: {{status}}",
+    "dimSync": "DIM Sync: {{status}}"
+  },
+  "reviewTags": {
+    "heading": "Przegląd tagów"
+  },
+  "classPrefs": {
+    "heading": "Preferencje {{class}}",
+    "usingClass": "Używana klasa: {{class}} (zmień klasę w nagłówku). Wagi statystyk i archetypów per klasa z kalibracji. Reguły duplikatów są współdzielone, chyba że nadpisane dla klasy.",
+    "calibrations": "{{count}} kalibracji · pewność {{confidence}}",
+    "topStats": "Najważniejsze statystyki:",
+    "topArchetypes": "Najważniejsze archetypy:",
+    "recalibrate": "Ponownie skalibruj {{class}}",
+    "exportPrefs": "Eksportuj preferencje",
+    "importPrefs": "Importuj preferencje",
+    "resetClass": "Resetuj preferencje {{class}}",
+    "resetAll": "Resetuj wszystkie klasy",
+    "imported": "Preferencje zaimportowane.",
+    "invalidFile": "Nieprawidłowy plik preferencji.",
+    "openReview": "Otwórz stronę przeglądu",
+    "clearPending": "Wyczyść oczekujące tagi",
+    "queued_one": "{{count}} tag w kolejce do zastosowania w DIM.",
+    "queued_other": "{{count}} tagów w kolejce do zastosowania w DIM.",
+    "nonePending": "Brak oczekujących tagów.",
+    "confirmClearPending": "Wyczyścić wszystkie {{count}} oczekujących tagów? Nie zostaną zastosowane w DIM.",
+    "confirmResetClass": "Zresetować preferencje {{class}} do domyślnych? Wagi statystyk, wybory kalibracji i wagi nauczone dla tej klasy zostaną usunięte.",
+    "confirmResetAll": "Zresetować preferencje wszystkich klas do domyślnych? Wagi statystyk, wybory kalibracji i wagi nauczone zostaną usunięte dla Huntera, Titana i Warlocka. Reguły duplikatów i inne ustawienia pozostają."
+  }
+}

@@ -6,16 +6,9 @@ import {
   tuningStatsDiffer,
 } from '@/lib/armor/diff';
 import { intrinsicStatDelta } from '@/lib/armor/intrinsicCompare';
-import type {
-  ArmorPiece,
-  ClassPreferenceProfile,
-  ClassType,
-  PreferenceProfile,
-  Stat,
-} from '@/types';
+import type { ArmorPiece, ClassPreferenceProfile, Stat } from '@/types';
 import { STATS } from '@/lib/constants';
 import { recordCalibrationChoice } from '@/lib/prefs/calibrationChoices';
-import { getClassPrefs, updateClassPrefs } from '@/lib/prefs/profile';
 import { learningScaleFromPieces } from '@/lib/scoring/learningScale';
 import {
   LR_TUNING,
@@ -156,51 +149,6 @@ export function learnFromCleanPick(
   }
 
   return changed ? next : prefs;
-}
-
-/** @deprecated Use getClassPrefs instead */
-export function getEffectiveProfile(
-  profile: PreferenceProfile,
-  classType: ClassType,
-): ClassPreferenceProfile {
-  return getClassPrefs(profile, classType);
-}
-
-export function learnFromDupeChoice(
-  profile: PreferenceProfile,
-  classType: ClassType,
-  kept: ArmorPiece,
-  junked: ArmorPiece,
-  followedRecommendation: boolean,
-): PreferenceProfile {
-  return updateClassPrefs(profile, classType, (prefs) => {
-    const lr = followedRecommendation ? LR_TUNING * 0.3 : LR_TUNING * 0.6;
-    let next = { ...prefs };
-
-    if (
-      kept.armorSet &&
-      junked.armorSet &&
-      kept.armorSet.hash !== junked.armorSet.hash
-    ) {
-      next = recordPairwiseWin(next, 'setWeights', kept.armorSet.hash, junked.armorSet.hash);
-    }
-
-    if (kept.tertiaryStat !== junked.tertiaryStat) {
-      next = recordTertiaryPreference(next, kept.archetype, kept.tertiaryStat, junked.tertiaryStat);
-    }
-
-    if (kept.tuningStat && junked.tuningStat && kept.tuningStat !== junked.tuningStat) {
-      next = recordTuningPreference(next, kept.archetype, kept.tuningStat, junked.tuningStat, lr);
-    } else if (kept.tuningStat && !junked.tuningStat) {
-      next = recordTuningPreference(next, kept.archetype, kept.tuningStat, kept.tertiaryStat, lr * 0.5);
-    }
-
-    if (!followedRecommendation) {
-      next.calibratedAt = Date.now();
-    }
-
-    return next;
-  });
 }
 
 export type WantLabel =

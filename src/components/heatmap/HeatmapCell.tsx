@@ -1,3 +1,4 @@
+import { heatmapMixedTuningTitleCopy } from '@/i18n/gameCopy';
 import type { ArmorPiece, DupeBucket } from '@/types';
 
 interface HeatmapCellProps {
@@ -48,7 +49,7 @@ export function HeatmapCell({ impossible, bucket, items, onClick, compact = fals
           {hasMixedTuning && (
             <span
               className="absolute bottom-0.5 right-0.5 w-2 h-2 rounded-full bg-white/40"
-              title="Mixed tuning stats in bucket"
+              title={heatmapMixedTuningTitleCopy()}
             />
           )}
         </>

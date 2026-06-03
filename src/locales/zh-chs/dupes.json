@@ -1,0 +1,66 @@
+{
+  "grouping": {
+    "sameArmorSet": {
+      "label": "要求相同护甲套装",
+      "help": "仅将同一套装的护甲分组或对比。关闭时：相同部位 + 原型 + 第三属性，跨套装。"
+    },
+    "sameTuningStat": {
+      "label": "要求相同调优属性",
+      "help": "按调优属性拆分（例如武器 vs 手雷）。关闭时：同一桶内可混合调优属性。"
+    }
+  },
+  "respectKeepFavorite": {
+    "label": "标记垃圾时尊重 DIM 保留与收藏",
+    "help": "开启时，已标保留或收藏的护甲不会在重复流程中被建议为垃圾。"
+  },
+  "excludeJunk": {
+    "label": "从重复计数中排除已标垃圾的护甲"
+  },
+  "presets": {
+    "loose": {
+      "label": "宽松"
+    },
+    "standard": {
+      "label": "标准"
+    },
+    "setAware": {
+      "label": "套装感知"
+    },
+    "tuning": {
+      "label": "调优"
+    },
+    "strict": {
+      "label": "严格"
+    }
+  },
+  "impactCompact": {
+    "buckets": "重复桶 ·",
+    "decisions": "决策 ·",
+    "pieces": "含 {{count}} 件"
+  },
+  "matchStyle": {
+    "custom": "自定义",
+    "usingPreset": "使用 {{label}}",
+    "usingCustomRules": "使用自定义规则",
+    "cardBody": {
+      "loose": "对比相同部位的护甲，不要求相同套装或调优属性。",
+      "standard": "按部位、原型与第三属性对比，不要求相同护甲套装。",
+      "setAware": "按护甲套装分组重复 · 适合大多数仓库。",
+      "tuning": "按调优属性分组重复，即使跨不同护甲套装。",
+      "strict": "重复匹配需相同护甲套装与调优属性。"
+    },
+    "customMix": "自定义组合：{{armorSet}}，{{tuningStat}}。",
+    "armorSetSame": "相同护甲套装",
+    "armorSetAny": "任意护甲套装",
+    "tuningStatSame": "相同调优属性",
+    "tuningStatAny": "任意调优属性",
+    "dimTagsRespect": "建议垃圾时会考虑 DIM 保留与收藏标签。",
+    "dimTagsIgnore": "建议垃圾时不使用保留与收藏标签。"
+  },
+  "suggestions": {
+    "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+    "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+    "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+    "standardDefault": "Standard preset for your vault size."
+  }
+}

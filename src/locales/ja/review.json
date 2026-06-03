@@ -1,0 +1,39 @@
+{
+  "title": "タグをレビュー",
+  "summary": "キュー {{total}} · キープ {{keep}} · ジャンク {{junk}}。適用でキュー内のタグを書き込み。行には既存の DIM タグが異なる場合に記載されます。",
+  "applied": "タグを DIM Sync に適用しました。",
+  "openJunkInDim": "DIM でジャンクを開く",
+  "partialApplied": "一部適用: {{count}} 件のタグが成功しました。失敗した項目はキューに残ります。",
+  "retryFailed": "失敗 {{count}} 件を再試行",
+  "empty": "保留中のタグはありません。",
+  "compareDupes": "重複を比較",
+  "table": {
+    "item": "アイテム",
+    "copyDimSr": "DIM クエリをコピー",
+    "archetype": "アーキタイプ",
+    "tertiary": "第3",
+    "tuning": "チューニング",
+    "class": "クラス",
+    "combo": "コンボ",
+    "appliesToDim": "DIM に適用",
+    "none": "なし"
+  },
+  "copy": {
+    "ids": "id: クエリをコピー",
+    "junk": "tag:junk 検索をコピー",
+    "junkIds": "ジャンク id のみコピー",
+    "copied": "コピーしました！",
+    "announcement": "{{label}} をクリップボードにコピーしました。"
+  },
+  "removeFromQueue": "キューから削除",
+  "applyTags": "{{count}} 件のタグを DIM に適用",
+  "applying": "適用中…",
+  "clearPending": "保留中のタグをクリア",
+  "clearSession": "セッションをクリア",
+  "backToDashboard": "ダッシュボードに戻る",
+  "confirm": {
+    "clearPending": "保留中のタグ {{count}} 件をすべてクリアしますか？DIM には適用されません。比較セッションの進行状況は保持されます。",
+    "clearSession": "比較セッション全体をクリアしますか？保留中のタグと進行中の比較状態がリセットされます。"
+  },
+  "alreadyInDim": "DIM に既にあります: {{summary}}"
+}

@@ -1,4 +1,12 @@
+import { archetypeLabel, classLabel, statLabel, formatArchetypeStatsLabel } from '@/i18n/gameCopy';
+import {
+  CLASSES,
+  ARCHETYPE_STATS,
+  formatArmorSetPerkTierLabel,
+  getArmorSetPerkLines,
+} from '@/lib/constants';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { TransitionFlash } from '@/components/TransitionFlash';
@@ -6,16 +14,7 @@ import { ClassIcon } from '@/components/items/ClassIcon';
 import { OnboardingStepActions } from '@/components/onboarding/OnboardingBackButton';
 import { StatIcon } from '@/components/StatIcon';
 import { ArmorSetIcons } from '@/components/ArmorSetIcons';
-import {
-  ARCHETYPE_LABELS,
-  ARCHETYPE_STATS,
-  CLASS_LABELS,
-  CLASSES,
-  formatArchetypeStatsLabel,
-  formatArmorSetPerkTierLabel,
-  getArmorSetPerkLines,
-  STAT_LABELS,
-} from '@/lib/constants';
+
 import { resolveArmorSetDisplayName, resolveArmorSetInfoForHash } from '@/lib/items/setIcons';
 import { moveRankedItem, reorderRankedItems } from '@/lib/onboarding/rankedOrder';
 import {
@@ -85,14 +84,6 @@ registerCalibrateHmrHandlers();
 
 const STEPS = CALIBRATE_STEPS;
 
-const STEP_LABELS: Record<CalibrateStep, string> = {
-  class: 'Class',
-  archetype: 'Archetypes',
-  tertiary: 'Tertiary stats',
-  tuning: 'Tuning stats',
-  sets: 'Armor sets',
-};
-
 function loadShowSetBonusDetails(): boolean {
   try {
     const stored = sessionStorage.getItem(SS_CALIBRATE_SET_BONUS_DETAILS);
@@ -113,6 +104,7 @@ function persistShowSetBonusDetails(show: boolean): void {
 }
 
 export function CalibratePage() {
+  const { t } = useTranslation('calibrate');
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { profile, updateProfile } = usePrefsStore();
@@ -384,7 +376,7 @@ export function CalibratePage() {
     applyCalibrationChoice(calibrationKeyArchetypeOrder(), (p) =>
       applyArchetypeOrder(p, effectiveArchetypeOrder),
     );
-    setPickFeedback('Saved · Next step');
+    setPickFeedback(t('savedNextStep'));
     advanceAfterArchetype();
   }
 
@@ -405,7 +397,7 @@ export function CalibratePage() {
     const nextIndex = tertiaryArchetypeIndex + 1;
     if (nextIndex < tertiaryArchetypes.length) {
       persistProgress({ tertiaryArchetypeIndex: nextIndex, tertiaryRound: 0 });
-      setPickFeedback(`Saved · Next ${ARCHETYPE_LABELS[tertiaryArchetypes[nextIndex]!]} tertiary`);
+      setPickFeedback(`Saved · Next ${archetypeLabel(tertiaryArchetypes[nextIndex]!)} tertiary`);
       return;
     }
     persistProgress({
@@ -416,7 +408,7 @@ export function CalibratePage() {
       tertiaryArchetypeIndex: 0,
       completedSteps: withCompleted('tertiary'),
     });
-    setPickFeedback('Saved · Next step');
+    setPickFeedback(t('savedNextStep'));
   }
 
   function persistCurrentTuningOrder(nextOrder: Stat[]) {
@@ -437,7 +429,7 @@ export function CalibratePage() {
         tuningArchetypeIndex: nextIndex,
         tuningRound: 0,
       });
-      setPickFeedback(`Saved · Next ${ARCHETYPE_LABELS[tuningArchetypes[nextIndex]!]} tuning`);
+      setPickFeedback(`Saved · Next ${archetypeLabel(tuningArchetypes[nextIndex]!)} tuning`);
       return;
     }
     finishTuningStep();
@@ -455,7 +447,7 @@ export function CalibratePage() {
         completedSteps: nextCompleted,
       });
     }
-    setPickFeedback('Saved · Next step');
+    setPickFeedback(t('savedNextStep'));
   }
 
   function finishSets() {
@@ -651,13 +643,11 @@ export function CalibratePage() {
   return (
     <Layout>
       <TransitionFlash message={pickFeedback} />
-      <h1 className="text-2xl font-bold mb-2">Calibrate preferences</h1>
+      <h1 className="text-2xl font-bold mb-2">{t('title')}</h1>
       {classSelected && (
         <p className="text-neutral-400 mb-2 max-w-xl">
-          Calibrating {CLASS_LABELS[calibrateClass]}.{' '}
-          {savedChoiceCount === 1
-            ? '1 choice saved'
-            : `${savedChoiceCount} choices saved`}.
+          {t('calibratingClass', { class: classLabel(calibrateClass) })}{' '}
+          {t('choicesSaved', { count: savedChoiceCount })}.
         </p>
       )}
 
@@ -676,7 +666,7 @@ export function CalibratePage() {
             } hover:text-white hover:bg-white/10 transition-colors`}
             aria-current={i === stepIndex ? 'step' : undefined}
           >
-            {STEP_LABELS[s]}
+            {t(`steps.${s}`)}
           </button>
         ))}
       </div>
@@ -687,7 +677,7 @@ export function CalibratePage() {
             step="class"
             calibrateClass={calibrateClass}
             classSelected={classSelected}
-            title="Which class are you calibrating?"
+            title={t('classTitle')}
           />
           <div className="grid sm:grid-cols-3 gap-3">
             {CLASSES.map((c) => (
@@ -698,7 +688,7 @@ export function CalibratePage() {
                 className="h-32 cursor-pointer rounded-xl border border-border bg-surface-2 hover:border-white/20 hover:bg-white/5 font-semibold capitalize transition-all flex flex-col items-center justify-center gap-2"
               >
                 <ClassIcon classType={c} size="md" />
-                {CLASS_LABELS[c]}
+                {classLabel(c)}
               </button>
             ))}
           </div>
@@ -712,26 +702,26 @@ export function CalibratePage() {
             step="archetype"
             calibrateClass={calibrateClass}
             classSelected={classSelected}
-            title="Rank archetypes by preference"
-            instruction="Most preferred at the top. Drag rows or use the arrows. All six archetypes are listed; vault ownership does not limit the list."
+            title={t('archetypeTitle')}
+            instruction={t('archetypeInstruction')}
           />
           <RankedReorderList
             items={effectiveArchetypeOrder}
             getKey={(arch) => arch}
-            getLabel={(arch) => ARCHETYPE_LABELS[arch]}
+            getLabel={(arch) => archetypeLabel(arch)}
             emphasizeLabel
             getSecondaryLabel={(arch) => formatArchetypeStatsLabel(arch)}
             getLeadingVisual={(arch) => <ArchetypePairIcons archetype={arch} size="md" />}
             onReorder={(next) => persistProgress({ archetypeOrder: next })}
             onMove={moveArchetype}
           />
-          <OnboardingStepActions onBack={goBack} onSkip={skipArchetype} skipLabel="Skip all archetypes">
+          <OnboardingStepActions onBack={goBack} onSkip={skipArchetype} skipLabel={t('skipAllArchetypes')}>
             <button
               type="button"
               onClick={finishArchetype}
               className="px-5 py-2.5 rounded-lg bg-accent text-surface font-semibold"
             >
-              Continue
+              {t('continue')}
             </button>
           </OnboardingStepActions>
         </div>
@@ -743,7 +733,7 @@ export function CalibratePage() {
             step="tertiary"
             calibrateClass={calibrateClass}
             classSelected={classSelected}
-            title="Rank tertiary stats"
+            title={t('tertiaryTitle')}
             instruction={
               <CalibrateRollRankInstruction
                 archetype={currentTertiaryArchetype}
@@ -757,7 +747,7 @@ export function CalibratePage() {
           <RankedReorderList
             items={effectiveTertiaryOrder}
             getKey={(stat) => stat}
-            getLabel={(stat) => STAT_LABELS[stat]}
+            getLabel={(stat) => statLabel(stat)}
             emphasizeLabel
             getLeadingVisual={(stat) => <StatIcon stat={stat} size="md" variant="glyph" />}
             onReorder={persistTertiaryOrder}
@@ -768,8 +758,8 @@ export function CalibratePage() {
             onSkip={skipTertiaryArchetype}
             skipLabel={
               tertiaryArchetypeIndex + 1 < tertiaryArchetypes.length
-                ? `Skip ${ARCHETYPE_LABELS[currentTertiaryArchetype]} tertiary`
-                : 'Skip tertiary stats'
+                ? t('skipTertiaryArchetype', { archetype: archetypeLabel(currentTertiaryArchetype) })
+                : t('skipTertiaryStats')
             }
           >
             <button
@@ -778,8 +768,8 @@ export function CalibratePage() {
               className="px-5 py-2.5 rounded-lg bg-accent text-surface font-semibold"
             >
               {tertiaryArchetypeIndex + 1 < tertiaryArchetypes.length
-                ? 'Next archetype'
-                : 'Continue'}
+                ? t('nextArchetype')
+                : t('continue')}
             </button>
           </OnboardingStepActions>
         </div>
@@ -791,7 +781,7 @@ export function CalibratePage() {
             step="tuning"
             calibrateClass={calibrateClass}
             classSelected={classSelected}
-            title="Rank tuning stats"
+            title={t('tuningTitle')}
             instruction={
               <CalibrateRollRankInstruction
                 archetype={currentTuningArchetype}
@@ -805,7 +795,7 @@ export function CalibratePage() {
           <RankedReorderList
             items={currentTuningOrder}
             getKey={(stat) => stat}
-            getLabel={(stat) => STAT_LABELS[stat]}
+            getLabel={(stat) => statLabel(stat)}
             emphasizeLabel
             getLeadingVisual={(stat) => <StatIcon stat={stat} size="md" variant="glyph" />}
             onReorder={persistCurrentTuningOrder}
@@ -816,8 +806,8 @@ export function CalibratePage() {
             onSkip={skipTuningArchetype}
             skipLabel={
               tuningArchetypeIndex + 1 < tuningArchetypes.length
-                ? `Skip ${ARCHETYPE_LABELS[currentTuningArchetype]} tuning`
-                : 'Skip tuning stats'
+                ? t('skipTuningArchetype', { archetype: archetypeLabel(currentTuningArchetype) })
+                : t('skipTuningStats')
             }
           >
             <button
@@ -825,7 +815,7 @@ export function CalibratePage() {
               onClick={finishTuningArchetype}
               className="px-5 py-2.5 rounded-lg bg-accent text-surface font-semibold"
             >
-              {tuningArchetypeIndex + 1 < tuningArchetypes.length ? 'Next archetype' : 'Continue'}
+              {tuningArchetypeIndex + 1 < tuningArchetypes.length ? t('nextArchetype') : t('continue')}
             </button>
           </OnboardingStepActions>
         </div>
@@ -837,8 +827,8 @@ export function CalibratePage() {
             step="sets"
             calibrateClass={calibrateClass}
             classSelected={classSelected}
-            title="Rank armor sets by preference"
-            instruction="Most preferred at the top. Sets from your vault, ordered by how many pieces you own. Drag to reorder or use arrow buttons."
+            title={t('setsTitle')}
+            instruction={t('setsInstruction')}
             contextVisual={
               <span className="inline-flex items-center gap-1">
                 {effectiveSetOrder.slice(0, 4).map((hash) => (
@@ -846,7 +836,7 @@ export function CalibratePage() {
                 ))}
               </span>
             }
-            contextLabel="Armor set preferences"
+            contextLabel={t('contextSetPrefs')}
           />
           <CalibrateSetBonusDetailsToggle
             checked={showSetBonusDetails}
@@ -858,7 +848,7 @@ export function CalibratePage() {
           <RankedReorderList
             items={effectiveSetOrder}
             getKey={(hash) => hash}
-            getLabel={(hash) => resolveArmorSetDisplayName(hash, classItems) ?? 'Unknown set'}
+            getLabel={(hash) => resolveArmorSetDisplayName(hash, classItems) ?? t('unknownSet')}
             getLeadingVisual={(hash) => <ArmorSetIcons setHash={hash} items={classItems} size="sm" maxIcons={1} />}
             renderDetails={
               showSetBonusDetails
@@ -875,14 +865,14 @@ export function CalibratePage() {
           <OnboardingStepActions
             onBack={goBack}
             onSkip={completeCalibration}
-            skipLabel="Skip armor sets"
+            skipLabel={t('skipArmorSets')}
           >
             <button
               type="button"
               onClick={finishSets}
               className="px-5 py-2.5 rounded-lg bg-accent text-surface font-semibold"
             >
-              Go to dashboard
+              {t('goToDashboard')}
             </button>
           </OnboardingStepActions>
         </div>
@@ -890,14 +880,14 @@ export function CalibratePage() {
 
       {step === 'sets' && setPieces.length < 2 && (
         <div className="w-full max-w-md min-w-0">
-          <p className="text-neutral-400 mb-4">No armor sets to compare.</p>
+          <p className="text-neutral-400 mb-4">{t('noArmorSets')}</p>
           <OnboardingStepActions onBack={goBack}>
             <button
               type="button"
               onClick={finish}
               className="px-5 py-2.5 rounded-lg bg-accent text-surface font-semibold"
             >
-              Go to dashboard
+              {t('goToDashboard')}
             </button>
           </OnboardingStepActions>
         </div>
@@ -923,12 +913,17 @@ function CalibrateStepHeader({
   contextVisual?: ReactNode;
   contextLabel?: string;
 }) {
+  const { t } = useTranslation('calibrate');
   const stepIndex = STEPS.indexOf(step);
   return (
     <div className="mb-6">
       <p className="text-xs text-muted mb-2">
-        Step {stepIndex + 1} of {STEPS.length} · {STEP_LABELS[step]}
-        {classSelected && ` · ${CLASS_LABELS[calibrateClass]}`}
+        {t('stepHeader', {
+          current: stepIndex + 1,
+          total: STEPS.length,
+          step: t(`steps.${step}`),
+        })}
+        {classSelected && ` · ${classLabel(calibrateClass)}`}
       </p>
       <h2 className="text-xl font-semibold text-white mb-2">{title}</h2>
       {contextVisual && (
@@ -959,6 +954,7 @@ function CalibrateSetBonusDetailsToggle({
   checked: boolean;
   onChange: (show: boolean) => void;
 }) {
+  const { t } = useTranslation('calibrate');
   return (
     <label className="mb-4 flex cursor-pointer items-center gap-2 text-xs text-muted">
       <input
@@ -967,7 +963,7 @@ function CalibrateSetBonusDetailsToggle({
         onChange={(e) => onChange(e.target.checked)}
         className="accent-accent"
       />
-      <span>Show bonus details</span>
+      <span>{t('showBonusDetails')}</span>
     </label>
   );
 }
@@ -993,7 +989,7 @@ function RankDragHandle() {
 function RankedSetBonusDetails({ setInfo }: { setInfo: ArmorSetInfo | undefined }) {
   const perks = getArmorSetPerkLines(setInfo);
   if (perks.length === 0) {
-    return <p className="mt-2 text-xs text-muted">Bonus details unavailable</p>;
+    return <BonusDetailsUnavailable />;
   }
   return (
     <div className="mt-2 space-y-2.5">
@@ -1180,6 +1176,11 @@ function CalibrateInstructionChip({
   );
 }
 
+function BonusDetailsUnavailable() {
+  const { t } = useTranslation('calibrate');
+  return <p className="mt-2 text-xs text-muted">{t('bonusUnavailable')}</p>;
+}
+
 function CalibrateRollRankInstruction({
   archetype,
   archetypeIndex,
@@ -1193,11 +1194,14 @@ function CalibrateRollRankInstruction({
   role: 'tertiary' | 'tuning';
   vaultStats: Stat[];
 }) {
-  const roleLabel = role === 'tertiary' ? 'tertiary stats' : 'tuning stats';
-  const vaultStatLabels = vaultStats.map((stat) => STAT_LABELS[stat]).join(', ');
+  const { t } = useTranslation('calibrate');
+  const roleLabel = role === 'tertiary' ? t('steps.tertiary') : t('steps.tuning');
+  const vaultStatLabels = vaultStats.map((stat) => statLabel(stat)).join(', ');
   const progressLabel =
-    archetypeCount > 1 ? `${archetypeIndex + 1} of ${archetypeCount} archetypes` : '';
-  const contextSummary = `${ARCHETYPE_LABELS[archetype]}${progressLabel ? `, ${progressLabel}` : ''}`;
+    archetypeCount > 1
+      ? t('archetypeProgress', { current: archetypeIndex + 1, total: archetypeCount })
+      : '';
+  const contextSummary = `${archetypeLabel(archetype)}${progressLabel ? `, ${progressLabel}` : ''}`;
   const ariaLabel =
     vaultStats.length > 0
       ? `${contextSummary}. Rank ${roleLabel}: ${vaultStatLabels}.`
@@ -1208,7 +1212,7 @@ function CalibrateRollRankInstruction({
       <div className="flex flex-wrap items-center gap-2">
         <CalibrateInstructionChip>
           <ArchetypePairIcons archetype={archetype} size="sm" />
-          <span className="font-medium">{ARCHETYPE_LABELS[archetype]}</span>
+          <span className="font-medium">{archetypeLabel(archetype)}</span>
         </CalibrateInstructionChip>
         {archetypeCount > 1 && (
           <CalibrateInstructionChip className="tabular-nums text-xs text-muted">
@@ -1218,20 +1222,18 @@ function CalibrateRollRankInstruction({
       </div>
       {vaultStats.length > 0 && (
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
-          <span className="shrink-0 text-xs font-medium text-muted">Rank these stats:</span>
+          <span className="shrink-0 text-xs font-medium text-muted">{t('rankTheseStats')}</span>
           <span className="inline-flex flex-wrap items-center gap-x-2.5 gap-y-1">
             {vaultStats.map((stat) => (
               <span key={stat} className="inline-flex items-center gap-1 text-neutral-300">
                 <StatIcon stat={stat} size="sm" variant="glyph" />
-                <span className="text-xs">{STAT_LABELS[stat]}</span>
+                <span className="text-xs">{statLabel(stat)}</span>
               </span>
             ))}
           </span>
         </div>
       )}
-      <p className="text-xs text-muted">
-        Drag rows or use the arrows. Most important at the top.
-      </p>
+      <p className="text-xs text-muted">{t('dragRowsHint')}</p>
     </div>
   );
 }

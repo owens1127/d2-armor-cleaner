@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
+import { armorDiffNoSetCopy, statLabel } from '@/i18n/gameCopy';
+import { ARCHETYPE_STATS, STATS } from '@/lib/constants';
 import type { ArmorPiece, ClassPreferenceProfile, DupeRuleConfig, ScoreBreakdown, Stat } from '@/types';
 import { WantLabelBadge } from '@/components/WantLabelBadge';
 import { StatIcon } from '@/components/StatIcon';
 import type { WantLabel } from '@/lib/scoring/learn';
 import { formatMatchScore } from '@/lib/scoring/fitDisplay';
-import { ARCHETYPE_STATS, SLOT_LABELS, STAT_LABELS, STATS } from '@/lib/constants';
 import {
   buildArmorSubtitle,
   formatArmorTierBadge,
@@ -56,14 +58,6 @@ export function cardStatsForPiece(piece: ArmorPiece): CardStatEntry[] {
     { stat: piece.tertiaryStat, value: roll[piece.tertiaryStat] ?? 0, role: 'tertiary' },
   ];
   return candidates.filter((entry) => hasIntrinsicStatLine(roll, entry.stat));
-}
-
-export function partitionStats(stats: Stat[], max = MAX_VISIBLE_STATS): {
-  visible: Stat[];
-  overflow: number;
-} {
-  if (stats.length <= max) return { visible: stats, overflow: 0 };
-  return { visible: stats.slice(0, max), overflow: stats.length - max };
 }
 
 export function partitionCardStats(
@@ -131,7 +125,7 @@ function OverflowPill({ count }: { count: number }) {
 }
 
 export function TuningBadge({ stat, differs }: { stat: Stat; differs?: boolean }) {
-  const label = STAT_LABELS[stat];
+  const label = statLabel(stat);
   const text = `Tuning: ${label}`;
   return (
     <span
@@ -162,7 +156,7 @@ export function StatPill({
   highlight?: 'win' | 'lose' | 'tie';
   compact?: boolean;
 }) {
-  const label = STAT_LABELS[stat];
+  const label = statLabel(stat);
   const muted = role === 'tertiary';
   const title = `${label} ${value}`;
 
@@ -295,6 +289,7 @@ export function ArmorCard({
   onToggleFavorite,
   onToggleJunk,
 }: ArmorCardProps) {
+  const { t } = useTranslation('duel');
   const isDuel = variant === 'duel' && opponent;
   const diffs = isDuel ? armorDiffLines(piece, opponent) : [];
   const statDiffs = diffs.filter((d) => d.kind === 'stat');
@@ -306,7 +301,7 @@ export function ArmorCard({
     isDuel && (piece.armorSet?.hash ?? null) !== (opponent.armorSet?.hash ?? null);
   const setInfo =
     isDuel && allItems ? resolveArmorSetInfo(allItems, piece) : piece.armorSet;
-  const setName = setInfo?.name ?? piece.armorSet?.name ?? 'No set';
+  const setName = setInfo?.name ?? piece.armorSet?.name ?? armorDiffNoSetCopy();
   const setPreferred = isDuel ? isPreferredOverOpponent(piece, opponent, classPrefs) : false;
   const tuningDiffers = isDuel && piece.tuningStat !== opponent.tuningStat;
   const sameRollBadge = isDuel ? sameRollBadgeCopy(piece, opponent) : '';
@@ -320,7 +315,7 @@ export function ArmorCard({
 
   const cardStats = cardStatsForPiece(piece);
   const { visible: statsToShow, overflow: statsOverflow } = partitionCardStats(cardStats);
-  const subtitle = buildArmorSubtitle(piece, SLOT_LABELS);
+  const subtitle = buildArmorSubtitle(piece);
   const showBrowseFooter = variant === 'browse';
   const showBrowseTagActions =
     showBrowseFooter &&
@@ -371,11 +366,11 @@ export function ArmorCard({
                 <div className="text-right shrink-0">
                   <div
                     className="text-white/90 text-sm font-medium tabular-nums"
-                    title="How well this piece fits your saved preferences"
+                    title={t('compare.fitTitle')}
                   >
                     {formatMatchScore(breakdown)}
                   </div>
-                  <div className="text-[10px] text-muted tabular-nums" title="Power level">
+                  <div className="text-[10px] text-muted tabular-nums" title={t('compare.powerTitle')}>
                     PL {piece.power}
                   </div>
                 </div>
@@ -383,7 +378,7 @@ export function ArmorCard({
               {variant !== 'duel' && !(preferMatchScore && breakdown) && (
                 <div
                   className="text-white/90 text-sm font-medium tabular-nums"
-                  title="Power level"
+                  title={t('compare.powerTitle')}
                 >
                   {piece.power}
                 </div>

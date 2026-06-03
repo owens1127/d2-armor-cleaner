@@ -1,0 +1,19 @@
+{
+  "dashboard": "Dashboard",
+  "calibrate": "Calibrate",
+  "browse": "Browse",
+  "combos": "Combos",
+  "compare": "Compare",
+  "review": "Review",
+  "autoFilters": "Auto filters",
+  "settings": "Settings",
+  "mobile": {
+    "dashboard": "Dash",
+    "calibrate": "Cal",
+    "autoFilters": "Filters",
+    "settings": "Set"
+  },
+  "aria": {
+    "mobile": "Mobile navigation"
+  }
+}

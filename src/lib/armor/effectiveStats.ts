@@ -51,12 +51,3 @@ export function wornStatsEqual(a: ArmorPiece, b: ArmorPiece, stats: Stat[]): boo
   }
   return true;
 }
-
-/** True when card/compare stats differ from intrinsic roll (masterwork and/or mods). */
-export function effectiveStatsDifferFromBase(item: ArmorPiece): boolean {
-  const eff = effectiveStats(item);
-  for (const stat of STATS) {
-    if ((eff[stat] ?? 0) !== (item.baseStats[stat] ?? 0)) return true;
-  }
-  return false;
-}

@@ -30,16 +30,6 @@ export interface VaultCacheMeta {
 
 import { VAULT_STALE_MS } from '@/lib/vault/refreshPolicy';
 
-export function readVaultCacheMeta(): VaultCacheMeta | null {
-  try {
-    const raw = sessionStorage.getItem(SS_VAULT_META);
-    if (!raw) return null;
-    return JSON.parse(raw) as VaultCacheMeta;
-  } catch {
-    return null;
-  }
-}
-
 function writeVaultCacheMeta(meta: VaultCacheMeta): void {
   sessionStorage.setItem(SS_VAULT_META, JSON.stringify(meta));
 }

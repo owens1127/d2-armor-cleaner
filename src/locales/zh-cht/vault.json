@@ -1,0 +1,14 @@
+{
+  "loading": "正在載入倉庫…",
+  "refreshing": "正在重新整理…",
+  "refreshingStatus": "正在重新整理… {{status}}",
+  "loadVault": "載入倉庫",
+  "noDataYet": "尚無倉庫資料。",
+  "noDataBrowseHint": "請先從儀表板載入倉庫。",
+  "noDataBuildHint": "尚無倉庫資料。請從儀表板載入倉庫。",
+  "retryVaultLoad": "重試載入倉庫",
+  "signOutInSettings": "在設定中登出",
+  "dismiss": "關閉",
+  "tieredArmorTitle": "你在遊戲中升階的護甲（T1–T5）。舊版與從未升階的裝備不會匯入。重複範圍使用你的最低階設定。",
+  "dupeRulesImpact": "載入倉庫以預覽影響。"
+}

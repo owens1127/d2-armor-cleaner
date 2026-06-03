@@ -1,0 +1,44 @@
+{
+  "boundary": {
+    "title": "出了点问题",
+    "body": "{{appName}} 遇到意外错误。本地存储中的偏好与排队标签通常不受影响。",
+    "reload": "重新加载应用",
+    "goHome": "返回首页"
+  },
+  "oauth": {
+    "completingLogin": "正在完成 Bungie 登录…",
+    "exchangingCode": "正在交换授权码…",
+    "loadingVault": "正在加载你的仓库…",
+    "firstLoadNote": "首次加载会下载游戏清单，可能需要一分钟。",
+    "bungieDenied": "Bungie 拒绝登录：{{error}}",
+    "noAuthCode": "未返回授权码：请重新登录。",
+    "stateMismatch": "OAuth 状态不匹配：通常由过期标签页或 session storage 被阻止引起。返回登录页重试。",
+    "loginFailed": "登录失败",
+    "backToLogin": "返回登录",
+    "suffix": "请重新登录。若问题持续，请联系站点管理员。",
+    "devChecklistIntro": "Bungie 应用清单（本地开发）：",
+    "devRedirect": "重定向 URL：{{uri}}",
+    "devOrigin": "Origin：{{origin}}",
+    "devClientId": "Client ID 与你的 Bungie 应用一致（{{clientId}}）",
+    "devApiKey": "API 密钥来自同一 Bungie 应用",
+    "devRestart": "更改凭据后请重启开发服务器"
+  },
+  "env": {
+    "bungieSignInUnavailableDev": "此构建未启用登录。",
+    "bungieSignInUnavailable": "此部署不可用登录。",
+    "bungieCredentialsMissingDev": "此环境未启用 Bungie 登录。",
+    "bungieCredentialsMissing": "此部署不可用登录。请联系站点管理员。",
+    "bungieSecretMissingDev": "此环境未完全启用 Bungie 登录。",
+    "dimSyncUnavailableDev": "此环境未启用 DIM 同步。",
+    "dimSyncUnavailable": "此部署无法将标签应用到 DIM。请联系站点管理员。"
+  },
+  "vault": {
+    "sessionExpired": "你的 Bungie 会话可能已过期。请退出登录后重新登录。",
+    "forbidden": "Bungie 拒绝了请求。请重新登录；若持续出现请联系站点管理员。",
+    "manifest": "清单下载失败。请检查网络后重试：首次加载可能需要一分钟。",
+    "network": "网络错误。请检查连接或稍后再试。",
+    "membership": "无法解析你的 Destiny 会员信息。请确认账户拥有 Destiny 2 角色。"
+  },
+  "applyTagsFailed": "应用标签失败",
+  "partialApply": "已应用 {{ok}} / {{total}} 个标签。{{failed}} 个失败：请重试或从队列移除。"
+}

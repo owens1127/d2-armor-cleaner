@@ -1,0 +1,131 @@
+{
+  "title": "{{class}}-Duplikate vergleichen",
+  "subtitle": {
+    "wrapUp": "Diese Gruppe prüfen, dann weiter",
+    "bucketMeta": "{{slot}} · {{archetype}} · {{tertiary}} · {{count}} Gegenstände",
+    "bucketProgress": "{{meta}} · {{progress}}",
+    "noDupes": "Keine doppelte Rüstung zum Vergleichen für diese Klasse",
+    "chooseGroup": "Wähle eine Duplikat-Gruppe zum Starten",
+    "startingNext": "Nächste Duplikat-Gruppe wird gestartet…"
+  },
+  "resetBucket": "Bucket zurücksetzen",
+  "preparing": "Vergleiche werden vorbereitet…",
+  "queueEmpty": {
+    "title": "Warteschlange leer",
+    "summary": "{{keep}} keep · {{junk}} junk in Warteschlange.",
+    "reviewTags": "Tags prüfen",
+    "restartQueue": "Warteschlange neu starten",
+    "clearSession": "{{class}}-Sitzung löschen"
+  },
+  "noDuplicates": {
+    "title": "Keine Duplikate zum Vergleichen",
+    "body": "Keine Duplikat-Buckets passen zu deinen Regeln für {{class}}. Lockere Duplikat-Regeln in den Einstellungen oder lade einen frischen Tresor-Snapshot."
+  },
+  "noGroupsInQueue": "Keine Duplikat-Gruppen in der Warteschlange. Lockere Duplikat-Regeln in den Einstellungen oder starte die Warteschlange neu.",
+  "skipGroup": "Gruppe überspringen (S)",
+  "restoringSession": "Sitzung wird wiederhergestellt…",
+  "confirm": {
+    "switchBucket": "Bucket wechseln? Laufende Auswahl und Junk-Tags für den aktuellen Bucket werden gelöscht.",
+    "resetBucket": "Diesen Bucket zurücksetzen? Alle laufenden Auswahlen, Junk-Tags und Vergleichsfortschritt werden gelöscht. Der Bucket bleibt in der Warteschlange.",
+    "clearClassSession": "Gesamten {{class}}-Vergleichsfortschritt und Warteschlangen-Tags löschen? Nicht rückgängig."
+  },
+  "chooser": {
+    "title": "Duplikat-Gruppe wählen",
+    "kicker": "Duplikate vergleichen",
+    "intro": "Wähle zuerst eine {{class}}-Gruppe. Später im Header wechseln.",
+    "listAria": "{{class}} duplicate groups"
+  },
+  "wrapUp": {
+    "title": "Diese Duplikat-Gruppe prüfen",
+    "chooseNext": "Gruppe für den nächsten Vergleich wählen",
+    "nextGroupsAria": "Nächste Duplikat-Gruppen",
+    "kicker": "Bucket abgeschlossen",
+    "allPairsDecided": "Alle Duell-Paare entschieden",
+    "continueNext": "Weiter zur nächsten Gruppe",
+    "applyTagsContinue": "Tags anwenden & weiter",
+    "chooseDifferent": "Andere Gruppe wählen",
+    "backToSummary": "Zurück zur Zusammenfassung",
+    "whatsNext": "Als Nächstes",
+    "tagsFootnote": "Tags werden beim Weiter in die Warteschlange gelegt. Erst nach der Übersicht angewendet.",
+    "stats": {
+      "keeps": "Keeps",
+      "junkQueued": "Müll in Warteschlange",
+      "preferEliminated": "Prefer ausgeschieden",
+      "pairsDecided": "Paare entschieden",
+      "inGroup": "In dieser Gruppe"
+    },
+    "breakdown": {
+      "keepBoth": "Beide behalten: {{count}}",
+      "keepSide": "Seite behalten: {{count}}",
+      "junkedInDuels": "In Duellen als Müll: {{count}}",
+      "preferInPlay": "Prefer noch aktiv: {{count}}"
+    },
+    "piece_one": "{{count}} Teil",
+    "piece_other": "{{count}} Teile",
+    "sessionLast": "Letzte Gruppe in der Warteschlange",
+    "sessionLeft_one": "{{count}} Gruppe danach übrig",
+    "sessionLeft_other": "{{count}} Gruppen danach übrig"
+  },
+  "bucket": {
+    "label": "Bucket",
+    "select": "Bucket wählen",
+    "dupeBucketsAria": "Duplikat-Buckets"
+  },
+  "keyboard": {
+    "aria": "Tastenkürzel für Vergleich",
+    "left": "Links",
+    "both": "Beide",
+    "right": "Rechts",
+    "keep": "Keep",
+    "prefer": "Bevorzugen",
+    "junk": "Junk"
+  },
+  "compare": {
+    "suggested": "Vorgeschlagen",
+    "sameRoll": "Gleicher Roll",
+    "compareSides": "Seiten vergleichen",
+    "suggestedPick": "Vorgeschlagene Auswahl: ",
+    "vs": "vs",
+    "fitTitle": "Wie gut dieses Teil zu deinen gespeicherten Einstellungen passt",
+    "powerTitle": "Power-Stufe",
+    "identicalRolls": "Gleiche Rolls. Eins behalten, eins Müll, beide behalten oder passen.",
+    "suppressedSuggestion": "Beide stark · letztes des Tiers. Prefer, Pass, Keep oder Müll.",
+    "buildOptimalPrefix": "Combo-optimal für ",
+    "orPassKeepJunk": "· oder Pass / Keep / Müll",
+    "evenMatch": "Gleichstand. Prefer, Pass, Keep oder Müll für eines oder beide.",
+    "eliminated": "Aus dem Bracket ausgeschieden",
+    "actionKeep": "Keep",
+    "outcomes": {
+      "prefer": "Diese Seite bevorzugen. Verlierer braucht {{threshold}} Prefer-Niederlagen vor Müll am Bucket-Ende.",
+      "keepSide": "Keep am Bucket-Ende · andere Seite bleibt im Bracket",
+      "keepBoth": "Beide am Bucket-Ende behalten",
+      "junkOne": "Jetzt Müll · andere bleibt im Bracket (kein Sieger)",
+      "junkBoth": "Beide jetzt Müll",
+      "pass": "Paar überspringen. Keine Tags, beide erneut in der Warteschlange."
+    },
+    "pass": "Pass",
+    "preferred": "Bevorzugt",
+    "tuningLabel": "Abstimmung: {{stat}}",
+    "setFootnote": "Set: {{name}}",
+    "loss_one": "1 Niederlage",
+    "loss_other": "{{count}} Niederlagen",
+    "lossRemaining_one": "{{count}} weitere Prefer-Niederlage bis Schrott am Bucket-Ende",
+    "lossRemaining_other": "{{count}} weitere Prefer-Niederlagen bis Schrott am Bucket-Ende",
+    "keyboardHints": "Buttons für Ergebnisse · ↑ beide behalten · Leertaste Pass · ↓ beide Schrott · Strg+←/→ Seiten-Schrott",
+    "aria": {
+      "keepLeft": "Links behalten. {{outcome}}",
+      "keepRight": "Rechts behalten. {{outcome}}",
+      "keepBoth": "Beide behalten. {{outcome}}",
+      "preferLeft": "Links bevorzugen. {{outcome}}",
+      "preferRight": "Rechts bevorzugen. {{outcome}}",
+      "passPair": "Paar passen. {{outcome}}",
+      "junkLeft": "Links Schrott. {{outcome}}",
+      "junkRight": "Rechts Schrott. {{outcome}}",
+      "junkBoth": "Beide Schrott. {{outcome}}"
+    }
+  },
+  "progress": {
+    "noGroups": "Keine Duplikat-Gruppen",
+    "lastInQueue": "Letzte Gruppe in deiner Warteschlange"
+  }
+}

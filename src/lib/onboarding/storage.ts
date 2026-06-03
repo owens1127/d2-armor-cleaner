@@ -296,14 +296,6 @@ export function getCalibrateInitialState(options?: {
   return fromStorage;
 }
 
-/**
- * @deprecated Use getCalibrateInitialState: mount must not write storage (avoids
- * overwriting in-progress step with defaults when read path fails).
- */
-export function hydrateCalibratePageState(urlClass?: ClassType): CalibrateProgress {
-  return getCalibrateInitialState({ urlClass });
-}
-
 function isCalibrateStep(value: unknown): value is CalibrateStep {
   return typeof value === 'string' && CALIBRATE_STEPS.includes(value as CalibrateStep);
 }

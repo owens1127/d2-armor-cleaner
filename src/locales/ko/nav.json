@@ -1,0 +1,19 @@
+{
+  "dashboard": "대시보드",
+  "calibrate": "보정",
+  "browse": "찾아보기",
+  "combos": "콤보",
+  "compare": "비교",
+  "review": "검토",
+  "autoFilters": "자동 필터",
+  "settings": "설정",
+  "mobile": {
+    "dashboard": "대시",
+    "calibrate": "보정",
+    "autoFilters": "필터",
+    "settings": "설정"
+  },
+  "aria": {
+    "mobile": "모바일 탐색"
+  }
+}

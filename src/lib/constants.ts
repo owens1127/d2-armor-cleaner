@@ -57,15 +57,6 @@ export const ARCHETYPES: Archetype[] = [
   'specialist',
 ];
 
-export const ARCHETYPE_LABELS: Record<Archetype, string> = {
-  gunner: 'Gunner',
-  grenadier: 'Grenadier',
-  paragon: 'Paragon',
-  brawler: 'Brawler',
-  bulwark: 'Bulwark',
-  specialist: 'Specialist',
-};
-
 export const ARCHETYPE_STATS: Record<Archetype, [Stat, Stat]> = {
   gunner: ['weapons', 'grenade'],
   grenadier: ['grenade', 'super'],
@@ -74,17 +65,6 @@ export const ARCHETYPE_STATS: Record<Archetype, [Stat, Stat]> = {
   bulwark: ['health', 'class'],
   specialist: ['class', 'weapons'],
 };
-
-export function formatArchetypeStatsLabel(archetype: Archetype): string {
-  const [primary, secondary] = ARCHETYPE_STATS[archetype];
-  return `${STAT_LABELS[primary]} · ${STAT_LABELS[secondary]}`;
-}
-
-function truncatePerkText(text: string, max = 48): string {
-  const trimmed = text.trim();
-  if (trimmed.length <= max) return trimmed;
-  return `${trimmed.slice(0, max - 1).trimEnd()}…`;
-}
 
 export interface ArmorSetPerkLine {
   prefix: string;
@@ -128,28 +108,6 @@ export function getArmorSetPerkLines(
   });
 }
 
-function formatArmorSetPerkLine(
-  perk: { name: string; description: string },
-  index: number,
-  truncateAt?: number,
-): string {
-  const { prefix, rawText } = resolveArmorSetPerkLine(perk, index);
-  const text = truncateAt ? truncatePerkText(rawText, truncateAt) : rawText.trim();
-  return `${prefix}: ${text}`;
-}
-
-/** Muted one-line summary of armor set bonuses (truncated for compact UI) */
-export function formatArmorSetPerksLabel(
-  armorSet: ArmorSetInfo | undefined,
-  maxPerks = 2,
-): string {
-  if (!armorSet?.perks.length) return '';
-  return armorSet.perks
-    .slice(0, maxPerks)
-    .map((perk, i) => formatArmorSetPerkLine(perk, i, 48))
-    .join(' · ');
-}
-
 export const ARMOR_SLOTS: ArmorSlot[] = [
   'helmet',
   'arms',
@@ -158,21 +116,7 @@ export const ARMOR_SLOTS: ArmorSlot[] = [
   'classItem',
 ];
 
-export const SLOT_LABELS: Record<ArmorSlot, string> = {
-  helmet: 'Helmet',
-  arms: 'Arms',
-  chest: 'Chest',
-  legs: 'Legs',
-  classItem: 'Class Item',
-};
-
 export const CLASSES: ClassType[] = ['titan', 'hunter', 'warlock'];
-
-export const CLASS_LABELS: Record<ClassType, string> = {
-  titan: 'Titan',
-  hunter: 'Hunter',
-  warlock: 'Warlock',
-};
 
 /** Bungie class symbol icons (DestinyPresentationNodeDefinition, manifest) */
 export const CLASS_ICON_FALLBACK_PATHS: Record<ClassType, string> = {
@@ -286,10 +230,9 @@ export const DEFAULT_DUPE_RULES = {
 
 export const DUPE_PRESETS: Record<
   string,
-  { label: string; rules: Partial<typeof DEFAULT_DUPE_RULES> }
+  { rules: Partial<typeof DEFAULT_DUPE_RULES> }
 > = {
   loose: {
-    label: 'Loose',
     rules: {
       sameArmorSet: false,
       sameTuningStat: false,
@@ -298,7 +241,6 @@ export const DUPE_PRESETS: Record<
     },
   },
   standard: {
-    label: 'Standard',
     rules: {
       sameArmorSet: false,
       sameTuningStat: false,
@@ -306,15 +248,12 @@ export const DUPE_PRESETS: Record<
     },
   },
   setAware: {
-    label: 'Set-aware',
     rules: { sameArmorSet: true, sameTuningStat: false, ignoreTaggedKeep: true },
   },
   tuning: {
-    label: 'Tuning',
     rules: { sameArmorSet: false, sameTuningStat: true, ignoreTaggedKeep: true },
   },
   strict: {
-    label: 'Strict',
     rules: { sameArmorSet: true, sameTuningStat: true, ignoreTaggedKeep: true },
   },
 };

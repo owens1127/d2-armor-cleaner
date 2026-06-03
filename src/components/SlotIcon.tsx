@@ -1,5 +1,5 @@
-import { SLOT_LABELS } from '@/lib/constants';
 import { SLOT_GLYPH_PATHS } from '@/lib/items/slot-glyphs';
+import { slotLabel } from '@/i18n/gameCopy';
 import type { ArmorSlot } from '@/types';
 
 type SlotIconSize = 'sm' | 'md';
@@ -41,7 +41,7 @@ export function SlotIcon({ slot, size = 'sm', className = '' }: SlotIconProps) {
     <span
       className={`inline-flex shrink-0 items-center justify-center text-white/75 ${className}`}
       role="img"
-      aria-label={SLOT_LABELS[slot]}
+      aria-label={slotLabel(slot)}
     >
       <SlotGlyph slot={slot} size={px} />
     </span>

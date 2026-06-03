@@ -4,6 +4,7 @@ import {
   resolveDestinyMembership,
 } from '@/lib/bungie/membership';
 import { resetBootstrapVaultLoad } from '@/lib/bungie/vaultBootstrap';
+import { getAppLocale } from '@/i18n';
 import { loadManifestTables } from '@/lib/bungie/manifest';
 import { fetchProfileInventory } from '@/lib/bungie/profile';
 import { getBungieAccessToken } from '@/lib/bungie/client';
@@ -53,8 +54,9 @@ export async function loadLiveVault(
   const membership = await resolveDestinyMembership();
   setBungieAuthItem(SS_MEMBERSHIP, JSON.stringify(membership));
 
+  const manifestLocale = getAppLocale();
   onProgress?.('Loading Destiny manifest…');
-  const manifest = await loadManifestTables(onProgress);
+  const manifest = await loadManifestTables(onProgress, manifestLocale);
 
   onProgress?.('Fetching inventory…');
   const { items: rawItems, components, rawItemCount, fetchDiagnostics } =

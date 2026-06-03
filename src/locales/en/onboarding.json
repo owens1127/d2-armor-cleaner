@@ -1,0 +1,37 @@
+{
+  "restoringSession": "Restoring Bungie session…",
+  "redirectingLogin": "Redirecting to login…",
+  "vaultTrimTitle": "Vault trim goal",
+  "tieredFound": "Found <1>{{count}}</1> tiered armor <2>{{pieceWord}}</2><3>{{t5Block}}</3>.",
+  "piece_one": "piece",
+  "piece_other": "pieces",
+  "t5Block": " (<1>{{count}}</1> at Tier 5)",
+  "noTieredFound": "No tiered armor found<1>{{parsedHint}}</1>. Imports tiered armor (T1–T5) only; legacy and untiered gear is skipped.",
+  "parsedHint": " (parsed {{count}} items from vault)",
+  "keepGoalHeading": "How much do you want to keep?",
+  "keepGoalIntro": "Sets how aggressively we suggest trimming duplicate Tier 5 armor during cleaning.",
+  "keepGoalSummary": "Keep goal: about {{total}} Tier 5 total (about {{perClass}} per class).",
+  "keepGoalExcess": " You have about <1>{{excess}}</1> above that goal.",
+  "keepGoalAtTarget": " You are at or below that goal.",
+  "signOutBack": "Sign out",
+  "keepOptions": {
+    "lean": {
+      "label": "Lean",
+      "blurb": "Trim aggressively · clear most duplicate buckets"
+    },
+    "balanced": {
+      "label": "Balanced",
+      "blurb": "Clear obvious dupes, keep variety for builds"
+    },
+    "options": {
+      "label": "Keep options",
+      "blurb": "Keep extra stat rolls and set combos; lighter trimming"
+    },
+    "hoarder": {
+      "label": "Hoarder",
+      "blurb": "Only trim blatant duplicates; maximize options"
+    },
+    "description": "{{blurb}} (~{{perClass}} Tier 5 per class)"
+  },
+  "backAria": "Go back"
+}

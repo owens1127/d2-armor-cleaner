@@ -39,7 +39,11 @@ export function suggestDupeRules(
       rule: 'preset',
       presetId: 'setAware',
       recommended: true,
-      reason: `${profile.totalT5} Tier 5 pieces and ${profile.heavyBuckets} buckets with 5+ items. Use same armor set to avoid false dupes.`,
+      reasonKey: 'setAwareHeavy',
+      reasonParams: {
+        totalT5: profile.totalT5,
+        heavyBuckets: profile.heavyBuckets,
+      },
       impact: {
         buckets: setAware.bucketCount,
         itemsToReview: setAware.reviewCount,
@@ -52,7 +56,7 @@ export function suggestDupeRules(
       rule: 'preset',
       presetId: 'loose',
       recommended: true,
-      reason: 'Small vault: loose rules will surface more duplicate buckets.',
+      reasonKey: 'looseSmallVault',
       impact: {
         buckets: results.find((r) => r.presetId === 'loose')!.bucketCount,
         itemsToReview: results.find((r) => r.presetId === 'loose')!.reviewCount,
@@ -64,7 +68,8 @@ export function suggestDupeRules(
     suggestions.push({
       rule: 'ignoreTaggedKeep',
       recommended: true,
-      reason: `${profile.taggedKeepInDupes} dupe candidates already tagged keep or favorite in DIM.`,
+      reasonKey: 'ignoreTaggedKeep',
+      reasonParams: { count: profile.taggedKeepInDupes },
       impact: {
         buckets: standard.bucketCount,
         itemsToReview: standard.reviewCount,
@@ -77,7 +82,7 @@ export function suggestDupeRules(
       rule: 'preset',
       presetId: 'standard',
       recommended: true,
-      reason: 'Standard preset for your vault size.',
+      reasonKey: 'standardDefault',
       impact: {
         buckets: standard.bucketCount,
         itemsToReview: standard.reviewCount,

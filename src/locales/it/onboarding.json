@@ -1,0 +1,37 @@
+{
+  "restoringSession": "Ripristino sessione Bungie…",
+  "redirectingLogin": "Reindirizzamento al login…",
+  "vaultTrimTitle": "Obiettivo riduzione cripta",
+  "tieredFound": "Trovati <1>{{count}}</1> pezzi di armatura con tier <2>{{pieceWord}}</2><3>{{t5Block}}</3>.",
+  "piece_one": "pezzo",
+  "piece_other": "pezzi",
+  "t5Block": " (<1>{{count}}</1> a Tier 5)",
+  "noTieredFound": "Nessuna armatura con tier trovata<1>{{parsedHint}}</1>. Importa solo armature con tier (T1–T5); equipaggiamento legacy e senza tier viene saltato.",
+  "parsedHint": " ({{count}} oggetti analizzati dalla cripta)",
+  "keepGoalHeading": "Quanto vuoi tenere?",
+  "keepGoalIntro": "Definisce quanto aggressivamente suggeriamo di ridurre le armature Tier 5 duplicate durante la pulizia.",
+  "keepGoalSummary": "Obiettivo di conservazione: circa {{total}} Tier 5 in totale (circa {{perClass}} per classe).",
+  "keepGoalExcess": " Hai circa <1>{{excess}}</1> in più rispetto a quell'obiettivo.",
+  "keepGoalAtTarget": " Sei a o sotto quell'obiettivo.",
+  "signOutBack": "Esci",
+  "keepOptions": {
+    "lean": {
+      "label": "Essenziale",
+      "blurb": "Riduzione aggressiva · svuota la maggior parte dei gruppi duplicati"
+    },
+    "balanced": {
+      "label": "Bilanciato",
+      "blurb": "Elimina duplicati evidenti, mantieni varietà per le build"
+    },
+    "options": {
+      "label": "Mantieni opzioni",
+      "blurb": "Tieni roll statistici extra e combo di set; riduzione leggera"
+    },
+    "hoarder": {
+      "label": "Accumulatore",
+      "blurb": "Riduci solo duplicati lampanti; massimizza le opzioni"
+    },
+    "description": "{{blurb}} (~{{perClass}} Tier 5 per classe)"
+  },
+  "backAria": "Indietro"
+}

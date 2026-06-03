@@ -12,35 +12,13 @@ export const VAULT_KEEP_TOTAL_TARGETS: Record<VaultKeepPreference, number> = {
   hoarder: 1200,
 };
 
-const TRIM_STYLE: Record<
-  VaultKeepPreference,
-  { label: string; blurb: string }
-> = {
-  lean: {
-    label: 'Lean',
-    blurb: 'Trim aggressively · clear most duplicate buckets',
-  },
-  balanced: {
-    label: 'Balanced',
-    blurb: 'Clear obvious dupes, keep variety for builds',
-  },
-  options: {
-    label: 'Keep options',
-    blurb: 'Keep extra stat rolls and set combos; lighter trimming',
-  },
-  hoarder: {
-    label: 'Hoarder',
-    blurb: 'Only trim blatant duplicates; maximize options',
-  },
-};
+import {
+  vaultKeepOptionDescription,
+  vaultKeepOptionLabel,
+} from '@/i18n/onboardingCopy';
 
 function targetPerClassForPreference(id: VaultKeepPreference): number {
   return Math.round(getKeepTargetTotal(id) / CLASSES.length);
-}
-
-function formatKeepOptionDescription(id: VaultKeepPreference): string {
-  const perClass = targetPerClassForPreference(id);
-  return `${TRIM_STYLE[id].blurb} (~${perClass} Tier 5 per class)`;
 }
 
 export const VAULT_KEEP_OPTIONS: {
@@ -50,8 +28,8 @@ export const VAULT_KEEP_OPTIONS: {
   targetPerClass: number;
 }[] = (['lean', 'balanced', 'options', 'hoarder'] as const).map((id) => ({
   id,
-  label: TRIM_STYLE[id].label,
-  description: formatKeepOptionDescription(id),
+  label: vaultKeepOptionLabel(id),
+  description: vaultKeepOptionDescription(id),
   targetPerClass: targetPerClassForPreference(id),
 }));
 

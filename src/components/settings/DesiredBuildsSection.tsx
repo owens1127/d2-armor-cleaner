@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
+import { statLabel } from '@/i18n/gameCopy';
+import { STATS } from '@/lib/constants';
+import type { TFunction } from 'i18next';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ArmorSetIcons } from '@/components/ArmorSetIcons';
 import { StatIcon } from '@/components/StatIcon';
-import { STAT_LABELS, STATS } from '@/lib/constants';
 import {
   collectArmorSetsFromItems,
   formatSetBonusTargetsSummary,
@@ -35,7 +38,16 @@ import type { ArmorPiece, ClassType, DesiredBuild, Stat, StatTarget } from '@/ty
 
 const MAX_BUILDS = 8;
 
-const PRIORITY_LABELS = ['1st priority', '2nd priority', '3rd priority', '4th priority'] as const;
+const PRIORITY_KEYS = [
+  'editor.priority1',
+  'editor.priority2',
+  'editor.priority3',
+  'editor.priority4',
+] as const;
+
+function priorityLabel(t: TFunction<'build'>, idx: number): string {
+  return PRIORITY_KEYS[idx] ? t(PRIORITY_KEYS[idx]) : t('editor.priorityN', { n: idx + 1 });
+}
 
 function storedBuilds(
   prefs: ReturnType<typeof getClassPrefs>,
@@ -53,10 +65,11 @@ function statTargetEntry(stat: Stat): StatTarget {
 }
 
 function ComboSaveStatusBadge({ dirty }: { dirty: boolean }) {
+  const { t } = useTranslation('build');
   if (dirty) {
     return (
       <span className="inline-flex items-center gap-1 rounded-md border border-amber-400/35 bg-amber-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-200/90 shrink-0">
-        Unsaved
+        {t('editor.unsaved')}
       </span>
     );
   }
@@ -66,26 +79,27 @@ function ComboSaveStatusBadge({ dirty }: { dirty: boolean }) {
       <span aria-hidden className="text-[11px] leading-none">
         ✓
       </span>
-      Saved
+      {t('editor.saved')}
     </span>
   );
 }
 
 function CoverageIncludeIndicator({ enabled }: { enabled: boolean }) {
+  const { t } = useTranslation('build');
   if (enabled) {
     return (
       <span className="inline-flex items-center gap-1 rounded-md border border-white/15 bg-white/5 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white/80">
         <span aria-hidden className="text-[11px] leading-none">
           ✓
         </span>
-        On
+        {t('editor.on')}
       </span>
     );
   }
 
   return (
     <span className="inline-flex items-center rounded-md border border-border bg-surface px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted">
-      Off
+      {t('editor.off')}
     </span>
   );
 }
@@ -98,6 +112,7 @@ interface ComboReadOnlyViewProps {
 }
 
 function ComboReadOnlyView({ build, vaultItems, onEdit, onRemove }: ComboReadOnlyViewProps) {
+  const { t } = useTranslation('build');
   const enabled = build.enabled !== false;
   const setSummary = formatSetBonusTargetsSummary(
     build.setBonus2pc,
@@ -117,14 +132,14 @@ function ComboReadOnlyView({ build, vaultItems, onEdit, onRemove }: ComboReadOnl
           onClick={onEdit}
           className="text-xs rounded-md border border-white/25 bg-white/10 px-2.5 py-1 text-white hover:bg-white/15"
         >
-          Edit
+          {t('editor.edit')}
         </button>
         <button
           type="button"
           onClick={onRemove}
           className="text-xs text-danger/80 hover:text-danger px-2 py-1"
         >
-          Remove
+          {t('editor.remove')}
         </button>
       </div>
 
@@ -132,16 +147,16 @@ function ComboReadOnlyView({ build, vaultItems, onEdit, onRemove }: ComboReadOnl
         {build.statTargets.map((target, idx) => (
           <div key={`${build.id}-ro-${idx}`} className="flex flex-wrap items-center gap-2">
             <span className="text-xs text-muted min-w-0 sm:min-w-[6.75rem] shrink-0">
-              {PRIORITY_LABELS[idx] ?? `Priority ${idx + 1}`}
+              {priorityLabel(t, idx)}
             </span>
             <StatIcon stat={target.stat} size="sm" variant="glyph" />
-            <span className="text-sm text-white/90">{STAT_LABELS[target.stat]}</span>
+            <span className="text-sm text-white/90">{statLabel(target.stat)}</span>
           </div>
         ))}
       </div>
 
       <div className="flex items-center gap-1.5 text-[11px] text-muted">
-        <span>Order:</span>
+        <span>{t('orderLabel')}</span>
         {build.statTargets.map(({ stat }) => (
           <StatIcon key={stat} stat={stat} size="sm" variant="glyph" />
         ))}
@@ -150,12 +165,12 @@ function ComboReadOnlyView({ build, vaultItems, onEdit, onRemove }: ComboReadOnl
 
       {setSummary ? (
         <div className="pt-1 border-t border-border/60">
-          <p className="text-xs text-muted mb-1">Set bonuses</p>
+          <p className="text-xs text-muted mb-1">{t('setBonuses')}</p>
           <p className="text-sm text-white/80 inline-flex flex-wrap items-center gap-1.5">
             <span>
               {setSummary}
               {isDualTwoPieceMix(build.setBonus2pc, build.setBonus4pc) && (
-                <span className="text-muted"> · 2+2 mix</span>
+                <span className="text-muted">{t('twoTwoMix')}</span>
               )}
             </span>
             {uniqueSetHashes.map((hash) => (
@@ -172,7 +187,7 @@ function ComboReadOnlyView({ build, vaultItems, onEdit, onRemove }: ComboReadOnl
       ) : null}
 
       <div className="flex items-center gap-2 text-xs">
-        <span className="text-muted">Include in coverage</span>
+        <span className="text-muted">{t('includeInCoverage')}</span>
         <CoverageIncludeIndicator enabled={enabled} />
       </div>
     </>
@@ -210,6 +225,7 @@ function ComboEditView({
   onSetBonusChange,
   onEnabledChange,
 }: ComboEditViewProps) {
+  const { t } = useTranslation('build');
   return (
     <>
       <div className="flex flex-wrap items-start gap-2">
@@ -221,7 +237,7 @@ function ComboEditView({
             'flex-1 min-w-0 w-full bg-surface border rounded-md px-2 py-1 text-sm text-white',
             dirty ? 'border-amber-400/35' : 'border-border',
           ].join(' ')}
-          aria-label="Combo name"
+          aria-label={t('comboNameAria')}
         />
         <ComboSaveStatusBadge dirty={dirty} />
         <div className="flex items-center gap-1.5 shrink-0">
@@ -231,14 +247,14 @@ function ComboEditView({
             disabled={!dirty}
             className="text-xs rounded-md border border-white/25 bg-white/10 px-2.5 py-1 text-white hover:bg-white/15 disabled:opacity-40 disabled:hover:bg-white/10"
           >
-            Save
+            {t('editor.save')}
           </button>
           <button
             type="button"
             onClick={onCancel}
             className="text-xs rounded-md border border-border px-2.5 py-1 text-muted hover:text-white hover:border-white/20"
           >
-            Cancel
+            {t('editor.cancel')}
           </button>
         </div>
         <button
@@ -246,7 +262,7 @@ function ComboEditView({
           onClick={onRemove}
           className="text-xs text-danger/80 hover:text-danger px-2 py-1 ml-auto"
         >
-          Remove
+          {t('editor.remove')}
         </button>
       </div>
 
@@ -254,7 +270,7 @@ function ComboEditView({
         {build.statTargets.map((target, idx) => (
           <div key={`${build.id}-${idx}`} className="flex flex-wrap items-end gap-2">
             <label className="flex flex-col gap-1 text-xs text-muted w-full min-w-0 sm:min-w-[6.75rem]">
-              {PRIORITY_LABELS[idx] ?? `Priority ${idx + 1}`}
+              {priorityLabel(t, idx)}
               <select
                 value={target.stat}
                 onChange={(e) => onPriorityStatChange(idx, e.target.value as Stat)}
@@ -268,7 +284,7 @@ function ComboEditView({
                   target.stat,
                 ).map((s) => (
                   <option key={s} value={s}>
-                    {STAT_LABELS[s]}
+                    {statLabel(s)}
                   </option>
                 ))}
               </select>
@@ -279,7 +295,7 @@ function ComboEditView({
                 onClick={() => onRemovePriorityStat(idx)}
                 className="text-xs text-muted hover:text-white pb-1.5"
               >
-                Remove
+                {t('editor.remove')}
               </button>
             )}
           </div>
@@ -290,13 +306,16 @@ function ComboEditView({
             onClick={onAddPriorityStat}
             className="text-xs text-accent-dim hover:text-white"
           >
-            + Add stat ({build.statTargets.length}/{MAX_STAT_PRIORITIES})
+            {t('editor.addStatCount', {
+              current: build.statTargets.length,
+              max: MAX_STAT_PRIORITIES,
+            })}
           </button>
         )}
       </div>
 
       <div className="flex items-center gap-1.5 text-[11px] text-muted">
-        <span>Order:</span>
+        <span>{t('orderLabel')}</span>
         {build.statTargets.map(({ stat }) => (
           <StatIcon key={stat} stat={stat} size="sm" variant="glyph" />
         ))}
@@ -304,16 +323,14 @@ function ComboEditView({
       </div>
 
       <div className="space-y-2 pt-1 border-t border-border/60">
-        <p className="text-xs text-muted">Set bonuses (optional)</p>
+        <p className="text-xs text-muted">{t('setBonusesOptional')}</p>
         {armorSets.length === 0 ? (
-          <p className="text-[11px] text-muted">
-            Load your vault to pick armor sets from your inventory.
-          </p>
+          <p className="text-[11px] text-muted">{t('editor.loadVaultForSets')}</p>
         ) : (
           <>
             <label className="flex flex-col gap-1 text-xs text-muted">
               <span className="inline-flex items-center gap-1.5">
-                First set (2pc)
+                {t('editor.setBonus2pc')}
                 {build.setBonus2pc !== undefined && (
                   <ArmorSetIcons
                     setHash={build.setBonus2pc}
@@ -331,7 +348,7 @@ function ComboEditView({
                   dirty ? 'border-amber-400/35' : 'border-border',
                 ].join(' ')}
               >
-                <option value="">None</option>
+                <option value="">{t('noneOption')}</option>
                 {armorSets.map(({ hash, name }) => (
                   <option key={hash} value={hash}>
                     {name}
@@ -343,8 +360,8 @@ function ComboEditView({
               <label className="flex flex-col gap-1 text-xs text-muted">
                 <span className="inline-flex items-center gap-1.5">
                   {build.setBonus4pc === build.setBonus2pc
-                    ? 'Same set (4pc)'
-                    : 'Second set (2pc mix) or 4pc'}
+                    ? t('editor.setBonus4pcSame')
+                    : t('editor.setBonus4pcMix')}
                   {build.setBonus4pc !== undefined && (
                     <ArmorSetIcons
                       setHash={build.setBonus4pc}
@@ -362,10 +379,12 @@ function ComboEditView({
                     dirty ? 'border-amber-400/35' : 'border-border',
                   ].join(' ')}
                 >
-                  <option value="">2pc only (first set)</option>
+                  <option value="">{t('editor.twoPcOnly')}</option>
                   {armorSets.map(({ hash, name }) => (
                     <option key={hash} value={hash}>
-                      {hash === build.setBonus2pc ? `${name} (4pc)` : `${name} (2pc mix)`}
+                      {hash === build.setBonus2pc
+                        ? t('editor.set4pcSuffix', { name })
+                        : t('editor.set2pcMixSuffix', { name })}
                     </option>
                   ))}
                 </select>
@@ -374,14 +393,14 @@ function ComboEditView({
             {(build.setBonus2pc !== undefined || build.setBonus4pc !== undefined) && (
               <p className="text-[11px] text-white/80 inline-flex flex-wrap items-center gap-1.5">
                 <span>
-                  Target:{' '}
+                  {t('editor.targetLabel')}{' '}
                   {formatSetBonusTargetsSummary(
                     build.setBonus2pc,
                     build.setBonus4pc,
                     vaultItems,
                   ) || '-'}
                   {isDualTwoPieceMix(build.setBonus2pc, build.setBonus4pc) && (
-                    <span className="text-muted"> · 2+2 mix</span>
+                    <span className="text-muted">{t('twoTwoMix')}</span>
                   )}
                 </span>
                 {[build.setBonus2pc, build.setBonus4pc]
@@ -409,7 +428,7 @@ function ComboEditView({
           onChange={(e) => onEnabledChange(e.target.checked)}
           className="accent-accent"
         />
-        Include in coverage
+        {t('includeInCoverage')}
       </label>
     </>
   );
@@ -559,35 +578,27 @@ export function DesiredBuildsSection({
     restoreScrollY(scrollY);
   }
 
+  const { t } = useTranslation('build');
+
   return (
     <section id={COMBOS_SECTION_ID} className="mb-10 max-w-xl space-y-4 scroll-mt-6">
       <div>
-        <h2 className="text-sm font-semibold uppercase text-muted mb-2">Combos</h2>
-        <p className="text-sm text-muted max-w-lg">
-          Pick 2–4 stats in order and optional armor set bonuses (e.g. Ferropotent 2pc + Smoke
-          Jumper 2pc). We recommend the best piece per slot for stat and set alignment.
-        </p>
+        <h2 className="text-sm font-semibold uppercase text-muted mb-2">{t('combosHeading')}</h2>
+        <p className="text-sm text-muted max-w-lg">{t('editor.intro')}</p>
         {editingId !== null ? (
           hasUnsavedChanges ? (
-            <p className="mt-2 text-xs text-amber-200/90">
-              Unsaved changes · save or cancel to return to the read-only view.
-            </p>
+            <p className="mt-2 text-xs text-amber-200/90">{t('editor.unsavedHint')}</p>
           ) : (
-            <p className="mt-2 text-xs text-muted">
-              Editing combo · save or cancel when finished.
-            </p>
+            <p className="mt-2 text-xs text-muted">{t('editor.editingHint')}</p>
           )
         ) : savedBuilds.length > 0 ? (
-          <p className="mt-2 text-xs text-muted">
-            All combos saved · click Edit on a card to change settings.
-          </p>
+          <p className="mt-2 text-xs text-muted">{t('editor.allSavedHint')}</p>
         ) : null}
       </div>
 
       {savedBuilds.length === 0 ? (
         <p className="text-sm text-muted rounded-xl border border-border bg-surface-2/50 px-4 py-3">
-          No combos saved for this class. Add one below for roll recommendations and browse
-          sorting.
+          {t('editor.emptyList')}
         </p>
       ) : (
         <ul className="space-y-3 mb-4">
@@ -645,10 +656,10 @@ export function DesiredBuildsSection({
           disabled={savedBuilds.length >= MAX_BUILDS}
           className="text-xs bg-surface border border-border rounded-lg px-3 py-1.5 disabled:opacity-50 hover:border-white/20"
         >
-          {savedBuilds.length === 0 ? 'Add combo' : 'Add another combo'}
+          {savedBuilds.length === 0 ? t('editor.addCombo') : t('editor.addAnotherCombo')}
         </button>
         {savedBuilds.length >= MAX_BUILDS && (
-          <p className="text-xs text-muted">Maximum {MAX_BUILDS} combos per class.</p>
+          <p className="text-xs text-muted">{t('maxCombos', { max: MAX_BUILDS })}</p>
         )}
       </div>
 
@@ -658,7 +669,7 @@ export function DesiredBuildsSection({
             to={`/combos/${classType}`}
             className="hover:text-white underline-offset-2 hover:underline"
           >
-            View {classType} combo coverage
+            {t('editor.viewCoverageLink', { class: classType })}
           </Link>
           .
         </p>

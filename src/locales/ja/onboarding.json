@@ -1,0 +1,37 @@
+{
+  "restoringSession": "Bungie セッションを復元中…",
+  "redirectingLogin": "ログインにリダイレクト中…",
+  "vaultTrimTitle": "保管庫整理の目標",
+  "tieredFound": "ティア付き防具を <1>{{count}}</1> 件見つけました（<2>{{pieceWord}}</2>）<3>{{t5Block}}</3>。",
+  "piece_one": "件",
+  "piece_other": "件",
+  "t5Block": "（ティア 5 が <1>{{count}}</1> 件）",
+  "noTieredFound": "ティア付き防具は見つかりませんでした<1>{{parsedHint}}</1>。ティア付き防具（T1–T5）のみをインポートします。レガシーと未ティアの装備はスキップされます。",
+  "parsedHint": "（保管庫から {{count}} 件を解析）",
+  "keepGoalHeading": "どのくらい残したいですか？",
+  "keepGoalIntro": "整理時にティア 5 の重複防具をどれだけ積極的に削減するかを設定します。",
+  "keepGoalSummary": "保持目標: 合計約 {{total}} 件のティア 5（クラスあたり約 {{perClass}} 件）。",
+  "keepGoalExcess": " 目標を約 <1>{{excess}}</1> 件上回っています。",
+  "keepGoalAtTarget": " 目標以下または目標どおりです。",
+  "signOutBack": "サインアウト",
+  "keepOptions": {
+    "lean": {
+      "label": "スリム",
+      "blurb": "積極的に整理 · ほとんどの重複バケットをクリア"
+    },
+    "balanced": {
+      "label": "バランス",
+      "blurb": "明らかな重複をクリアし、ビルド用のバリエーションを保持"
+    },
+    "options": {
+      "label": "選択肢を残す",
+      "blurb": "追加のステータスロールとセットコンボを保持 · 軽めの整理"
+    },
+    "hoarder": {
+      "label": "コレクター",
+      "blurb": "明白な重複のみ整理 · 選択肢を最大化"
+    },
+    "description": "{{blurb}}（クラスあたりティア 5 約 {{perClass}} 件）"
+  },
+  "backAria": "戻る"
+}

@@ -1,0 +1,66 @@
+{
+  "grouping": {
+    "sameArmorSet": {
+      "label": "Wymagaj tego samego zestawu pancerza",
+      "help": "Grupuj lub porównuj tylko elementy z tego samego zestawu. Wył.: ten sam slot + archetyp + statystyka trzeciorzędna we wszystkich zestawach."
+    },
+    "sameTuningStat": {
+      "label": "Wymagaj tej samej statystyki strojenia",
+      "help": "Dziel według statystyki strojenia (np. Broń vs Granat). Wył.: mieszane statystyki strojenia w jednym kubełku."
+    }
+  },
+  "respectKeepFavorite": {
+    "label": "Uwzględniaj tagi DIM keep i favorite przy wyborze junk",
+    "help": "Gdy włączone, elementy z tagiem keep lub favorite nie są sugerowane jako junk w przepływach duplikatów."
+  },
+  "excludeJunk": {
+    "label": "Wyklucz elementy z tagiem junk z liczenia duplikatów"
+  },
+  "presets": {
+    "loose": {
+      "label": "Luźny"
+    },
+    "standard": {
+      "label": "Standardowy"
+    },
+    "setAware": {
+      "label": "Świadomy zestawu"
+    },
+    "tuning": {
+      "label": "Strojenie"
+    },
+    "strict": {
+      "label": "Ścisły"
+    }
+  },
+  "impactCompact": {
+    "buckets": "kubełki duplikatów ·",
+    "decisions": "decyzje ·",
+    "pieces": "{{count}} uwzględnionych elementów"
+  },
+  "matchStyle": {
+    "custom": "Własny",
+    "usingPreset": "Używa {{label}}",
+    "usingCustomRules": "Używa własnych reguł",
+    "cardBody": {
+      "loose": "Porównuj elementy w tym samym slocie bez wymagania tego samego zestawu lub statystyki strojenia.",
+      "standard": "Porównuj według slotu, archetypu i statystyki trzeciorzędnej bez wymagania tego samego zestawu.",
+      "setAware": "Grupuje duplikaty według zestawu pancerza · dobrze działa dla większości skarbców.",
+      "tuning": "Grupuje duplikaty według statystyki strojenia, nawet między różnymi zestawami.",
+      "strict": "Wymaga tego samego zestawu i statystyki strojenia, aby uznać duplikat."
+    },
+    "customMix": "Własna mieszanka: {{armorSet}}, {{tuningStat}}.",
+    "armorSetSame": "ten sam zestaw pancerza",
+    "armorSetAny": "dowolny zestaw pancerza",
+    "tuningStatSame": "ta sama statystyka strojenia",
+    "tuningStatAny": "dowolna statystyka strojenia",
+    "dimTagsRespect": "Tagi DIM keep i favorite są uwzględniane przy sugerowaniu junk.",
+    "dimTagsIgnore": "Tagi keep i favorite nie są używane przy sugerowaniu junk."
+  },
+  "suggestions": {
+    "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+    "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+    "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+    "standardDefault": "Standard preset for your vault size."
+  }
+}

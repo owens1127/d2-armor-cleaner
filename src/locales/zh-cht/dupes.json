@@ -1,0 +1,66 @@
+{
+  "grouping": {
+    "sameArmorSet": {
+      "label": "要求相同護甲套裝",
+      "help": "僅將同一套裝的護甲分組或對比。關閉時：相同部位 + 原型 + 第三屬性，跨套裝。"
+    },
+    "sameTuningStat": {
+      "label": "要求相同調校屬性",
+      "help": "按調校屬性拆分（例如武器 vs 手雷）。關閉時：同一桶內可混合調校屬性。"
+    }
+  },
+  "respectKeepFavorite": {
+    "label": "標記垃圾時尊重 DIM 保留與收藏",
+    "help": "開啟時，已標保留或收藏的護甲不會在重複流程中被建議為垃圾。"
+  },
+  "excludeJunk": {
+    "label": "從重複計數中排除已標垃圾的護甲"
+  },
+  "presets": {
+    "loose": {
+      "label": "寬鬆"
+    },
+    "standard": {
+      "label": "標準"
+    },
+    "setAware": {
+      "label": "套裝感知"
+    },
+    "tuning": {
+      "label": "調校"
+    },
+    "strict": {
+      "label": "嚴格"
+    }
+  },
+  "impactCompact": {
+    "buckets": "重複桶 ·",
+    "decisions": "決策 ·",
+    "pieces": "含 {{count}} 件"
+  },
+  "matchStyle": {
+    "custom": "自訂",
+    "usingPreset": "使用 {{label}}",
+    "usingCustomRules": "使用自訂規則",
+    "cardBody": {
+      "loose": "對比相同部位的護甲，不要求相同套裝或調校屬性。",
+      "standard": "按部位、原型與第三屬性對比，不要求相同護甲套裝。",
+      "setAware": "按護甲套裝分組重複 · 適合大多數倉庫。",
+      "tuning": "按調校屬性分組重複，即使跨不同護甲套裝。",
+      "strict": "重複符合需相同護甲套裝與調校屬性。"
+    },
+    "customMix": "自訂組合：{{armorSet}}，{{tuningStat}}。",
+    "armorSetSame": "相同護甲套裝",
+    "armorSetAny": "任意護甲套裝",
+    "tuningStatSame": "相同調校屬性",
+    "tuningStatAny": "任意調校屬性",
+    "dimTagsRespect": "建議垃圾時會考慮 DIM 保留與收藏標籤。",
+    "dimTagsIgnore": "建議垃圾時不使用保留與收藏標籤。"
+  },
+  "suggestions": {
+    "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+    "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+    "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+    "standardDefault": "Standard preset for your vault size."
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "grouping": {
+    "sameArmorSet": {
+      "label": "Require same armor set",
+      "help": "Only group or compare pieces from the same set. Off: same slot + archetype + tertiary across all sets."
+    },
+    "sameTuningStat": {
+      "label": "Require same tuning stat",
+      "help": "Split by tuning stat (e.g. Weapons vs Grenade). Off: mixed tuning stats in one bucket."
+    }
+  },
+  "respectKeepFavorite": {
+    "label": "Respect DIM keep and favorite when picking junk",
+    "help": "When on, keep- and favorite-tagged pieces are not suggested as junk in dupe flows."
+  },
+  "excludeJunk": {
+    "label": "Exclude junk-tagged pieces from dupe counts"
+  },
+  "presets": {
+    "loose": { "label": "Loose" },
+    "standard": { "label": "Standard" },
+    "setAware": { "label": "Set-aware" },
+    "tuning": { "label": "Tuning" },
+    "strict": { "label": "Strict" }
+  },
+  "impactCompact": {
+    "buckets": "dupe buckets ·",
+    "decisions": "decisions ·",
+    "pieces": "{{count}} pieces included"
+  },
+  "suggestions": {
+    "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+    "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+    "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+    "standardDefault": "Standard preset for your vault size."
+  },
+  "matchStyle": {
+    "custom": "Custom",
+    "usingPreset": "Using {{label}}",
+    "usingCustomRules": "Using custom rules",
+    "cardBody": {
+      "loose": "Compare pieces in the same slot without requiring the same armor set or tuning stat.",
+      "standard": "Compare by slot, archetype, and tertiary without requiring the same armor set.",
+      "setAware": "Groups duplicates by armor set · works well for most vaults.",
+      "tuning": "Groups duplicates by tuning stat, even across different armor sets.",
+      "strict": "Requires the same armor set and tuning stat for a duplicate match."
+    },
+    "customMix": "Custom mix: {{armorSet}}, {{tuningStat}}.",
+    "armorSetSame": "same armor set",
+    "armorSetAny": "any armor set",
+    "tuningStatSame": "same tuning stat",
+    "tuningStatAny": "any tuning stat",
+    "dimTagsRespect": "DIM keep and favorite tags count when suggesting junk.",
+    "dimTagsIgnore": "Keep and favorite tags are not used when suggesting junk."
+  }
+}

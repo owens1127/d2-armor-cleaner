@@ -1,0 +1,37 @@
+{
+  "restoringSession": "正在恢复 Bungie 会话…",
+  "redirectingLogin": "正在跳转到登录…",
+  "vaultTrimTitle": "仓库精简目标",
+  "tieredFound": "找到 <1>{{count}}</1> 件升阶护甲 <2>{{pieceWord}}</2><3>{{t5Block}}</3>。",
+  "piece_one": "件",
+  "piece_other": "件",
+  "t5Block": "（其中 <1>{{count}}</1> 件为 T5 阶）",
+  "noTieredFound": "未找到升阶护甲<1>{{parsedHint}}</1>。仅导入升阶护甲（T1–T5）；旧版与未升阶装备会跳过。",
+  "parsedHint": "（从仓库解析了 {{count}} 件物品）",
+  "keepGoalHeading": "你想保留多少？",
+  "keepGoalIntro": "设置清理时对重复 T5 阶护甲的建议精简力度。",
+  "keepGoalSummary": "保留目标：约 {{total}} 件 T5 总计（每职业约 {{perClass}}）。",
+  "keepGoalExcess": " 你比该目标多约 <1>{{excess}}</1>。",
+  "keepGoalAtTarget": " 你已处于或低于该目标。",
+  "signOutBack": "退出登录",
+  "keepOptions": {
+    "lean": {
+      "label": "精简",
+      "blurb": "积极精简 · 清空大多数重复桶"
+    },
+    "balanced": {
+      "label": "均衡",
+      "blurb": "清理明显重复，为配装保留多样性"
+    },
+    "options": {
+      "label": "保留选项",
+      "blurb": "保留额外属性 roll 与套装组合；轻度精简"
+    },
+    "hoarder": {
+      "label": "囤积",
+      "blurb": "仅精简明显重复；最大化选择"
+    },
+    "description": "{{blurb}}（每职业约 {{perClass}} 件 T5）"
+  },
+  "backAria": "返回"
+}

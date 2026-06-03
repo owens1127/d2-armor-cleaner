@@ -1,0 +1,32 @@
+{
+  "title": "¿Cómo deben coincidir los duplicados?",
+  "intro": "Agrupamos tiradas de armadura similares para que elijas una a conservar y etiquetes el resto en DIM. Puedes cambiarlo cuando quieras en Ajustes.",
+  "restoringSession": "Restaurando sesión de Bungie…",
+  "redirectingLogin": "Redirigiendo al inicio de sesión…",
+  "loadingVault": "Cargando la cámara…",
+  "retryVaultLoad": "Reintentar carga de la cámara",
+  "refreshing": "Actualizando…",
+  "noTieredArmor": "No hay armadura escalonada en el alcance con tu nivel mínimo",
+  "tieredPiecesImported": "({{count}} piezas escalonadas importadas)",
+  "tieredArmorFootnote": "Solo se incluye equipo escalonado en el juego (T1–T5). Baja el nivel mínimo en Ajustes si hace falta.",
+  "recommendedPresetSr": "Preset recomendado",
+  "useRecommended": "Usar recomendado",
+  "customizeRules": "Personalizar reglas",
+  "hideCustomization": "Ocultar personalización",
+  "customizeIntro": "Ajusta qué cuenta como duplicado. Los presets en Ajustes configuran esto con un clic.",
+  "matchStyleLabel": "Estilo de coincidencia:",
+  "previewByClass": "Vista previa por clase",
+  "suggestions": "Sugerencias",
+  "usePreset": "Usar {{label}}",
+  "impact": {
+    "none": "No se han encontrado grupos de duplicados para {{class}} con tu nivel actual.",
+    "summary": "Unos {{buckets}} {{groupWord}} de duplicados · unas {{review}} {{rollWord}} que comparar ({{class}})",
+    "group_one": "grupo",
+    "group_other": "grupos",
+    "roll_one": "tirada",
+    "roll_other": "tiradas"
+  },
+  "aria": {
+    "dupeRules": "Reglas de duplicados"
+  }
+}

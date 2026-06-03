@@ -21,9 +21,14 @@ alwaysApply: true
 ## When to delete tests
 
 - Asserts only constant values with no behavior risk.
+- Mirrors of `MANIFEST_LOCALES`, `DUPE_PRESETS`, or locale JSON without runtime i18n.
+- English UI copy that duplicates `src/locales/en/*.json` (use `i18n.changeLanguage` for i18n wiring).
 - Pure string formatting with no logic (covered indirectly by flow tests).
 - Duplicates coverage already in `src/test/flows/`.
 - Shallow component renders with no interaction.
+- CSS/style object string literals with no user-visible outcome.
+
+See `src/test/TEST_AUDIT.md` for the latest suite audit.
 
 ## Where tests live
 

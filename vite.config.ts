@@ -12,6 +12,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts'],
+    setupFiles: ['src/i18n/vitest.setup.ts'],
   },
   server: {
     port: 5173,

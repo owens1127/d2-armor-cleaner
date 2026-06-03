@@ -1,20 +1,22 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { DupeRulesImpactTabs } from '@/components/DupeRulesImpactTabs';
 import { Layout } from '@/components/Layout';
 import { OnboardingBackButton } from '@/components/onboarding/OnboardingBackButton';
-import { DUPE_PRESETS } from '@/lib/constants';
+import {
+  DUPE_GROUPING_TOGGLE_KEYS,
+  dupeGroupingToggleLabel,
+  dupeRespectKeepFavoriteLabel,
+  respectDimKeepFavoriteChecked,
+  respectDimKeepFavoritePatch,
+} from '@/lib/dupes/ruleUi';
 import {
   dupeMatchStyleCardDescription,
   dupeMatchStyleCardHeadline,
   dupeMatchStyleLabel,
+  dupePresetLabel,
 } from '@/lib/dupes/rules';
-import {
-  DUPE_GROUPING_TOGGLES,
-  DUPE_RESPECT_KEEP_FAVORITE_LABEL,
-  respectDimKeepFavoriteChecked,
-  respectDimKeepFavoritePatch,
-} from '@/lib/dupes/ruleUi';
 import { dupeBucketCount, groupIntoBuckets, itemsToReview } from '@/lib/dupes/group';
 import { hasActiveSession, restoreMembership, clearSession } from '@/lib/bungie/loadVault';
 import { resetBootstrapVaultLoad } from '@/lib/bungie/vaultBootstrap';
@@ -25,6 +27,9 @@ import {
   markRulesAccepted,
   markRulesPhase,
 } from '@/lib/onboarding/storage';
+import { dupeSuggestionReason } from '@/i18n/dupesCopy';
+import type { DupeSuggestionReasonKey } from '@/i18n/dupesCopy';
+import { classLabel } from '@/i18n/gameCopy';
 import { useAuthStore, useSessionStore, useVaultStore, resetVaultStore } from '@/stores';
 import type { DupeRuleConfig } from '@/types';
 
@@ -38,16 +43,9 @@ function isSetAwareRules(rules: DupeRuleConfig): boolean {
   );
 }
 
-function formatImpactLine(buckets: number, review: number, classLabel = 'Hunter'): string {
-  if (buckets === 0) {
-    return `No duplicate groups found for ${classLabel} at your current tier.`;
-  }
-  const groupWord = buckets === 1 ? 'group' : 'groups';
-  const rollWord = review === 1 ? 'roll' : 'rolls';
-  return `About ${buckets} duplicate ${groupWord} · roughly ${review} ${rollWord} to compare (${classLabel})`;
-}
-
 export function RulesOnboardingPage() {
+  const { t } = useTranslation('rulesOnboarding');
+  const { t: tc } = useTranslation('common');
   const navigate = useNavigate();
   const { membership, setMembership } = useAuthStore();
   const {
@@ -64,6 +62,19 @@ export function RulesOnboardingPage() {
   } = useVaultStore();
   const [showCustomize, setShowCustomize] = useState(false);
   const seededPreset = useRef(false);
+
+  function formatImpactLine(buckets: number, review: number, className = classLabel('hunter')): string {
+    if (buckets === 0) {
+      return t('impact.none', { class: className });
+    }
+    return t('impact.summary', {
+      buckets,
+      review,
+      class: className,
+      groupWord: t('impact.group', { count: buckets }),
+      rollWord: t('impact.roll', { count: review }),
+    });
+  }
 
   useEffect(() => {
     markRulesPhase();
@@ -125,9 +136,9 @@ export function RulesOnboardingPage() {
       <Layout>
         <div className="py-20 text-center">
           <p className="text-lg mb-2">
-            {mayRestore ? 'Restoring Bungie session…' : 'Redirecting to login…'}
+            {mayRestore ? t('restoringSession') : t('redirectingLogin')}
           </p>
-          <p className="text-sm text-muted">Please wait</p>
+          <p className="text-sm text-muted">{tc('pleaseWait')}</p>
         </div>
       </Layout>
     );
@@ -137,8 +148,8 @@ export function RulesOnboardingPage() {
     return (
       <Layout>
         <div className="py-20 text-center">
-          <p className="text-lg mb-2">Loading vault…</p>
-          <p className="text-sm text-muted">{vaultStatus ?? 'Please wait'}</p>
+          <p className="text-lg mb-2">{t('loadingVault')}</p>
+          <p className="text-sm text-muted">{vaultStatus ?? tc('pleaseWait')}</p>
         </div>
       </Layout>
     );
@@ -160,7 +171,7 @@ export function RulesOnboardingPage() {
             }}
             className="px-4 py-2 rounded-lg bg-accent text-surface font-medium disabled:opacity-50"
           >
-            {vaultLoading || vaultRefreshing ? 'Retrying…' : 'Retry vault load'}
+            {vaultLoading || vaultRefreshing ? tc('retrying') : t('retryVaultLoad')}
           </button>
         </div>
       </Layout>
@@ -172,31 +183,30 @@ export function RulesOnboardingPage() {
       <div className="max-w-xl mx-auto py-6 sm:py-8">
         <header className="mb-8">
           <h1 className="ui-heading text-3xl sm:text-4xl font-semibold tracking-tight text-white">
-            How should duplicates match?
+            {t('title')}
           </h1>
-          <p className="mt-2 text-sm text-muted leading-relaxed max-w-md">
-            We group similar armor rolls so you can pick a keeper and tag the rest in DIM. You can
-            change this anytime in Settings.
-          </p>
+          <p className="mt-2 text-sm text-muted leading-relaxed max-w-md">{t('intro')}</p>
         </header>
 
         {vaultRefreshing && (
           <p className="mb-6 text-sm text-muted border border-border rounded-lg px-3 py-2 bg-surface-2">
-            Refreshing… {vaultStatus}
+            {t('refreshing')} {vaultStatus}
           </p>
         )}
 
         {hunter && hunter.profile.totalT5 === 0 && !vaultLoading && !vaultRefreshing && (
           <p className="mb-6 text-sm text-muted border border-border rounded-lg px-4 py-3 bg-surface-2">
-            No tiered armor in scope at your minimum tier
-            {lastParsedCount !== null ? ` (${lastParsedCount} tiered pieces imported)` : ''}. Only
-            in-game tiered gear (T1–T5) is included. Lower the minimum tier in Settings if needed.
+            {t('noTieredArmor')}
+            {lastParsedCount !== null
+              ? ` ${t('tieredPiecesImported', { count: lastParsedCount })}`
+              : ''}
+            . {t('tieredArmorFootnote')}
           </p>
         )}
 
         <section className="mb-6" aria-labelledby="recommended-preset">
           <h2 id="recommended-preset" className="sr-only">
-            Recommended preset
+            {t('recommendedPresetSr')}
           </h2>
           <div
             className={`rounded-xl border p-4 transition-colors ${
@@ -218,7 +228,7 @@ export function RulesOnboardingPage() {
                 onClick={() => applyPreset(RECOMMENDED_PRESET_ID)}
                 className="mt-3 text-sm text-accent-dim hover:text-white transition-colors"
               >
-                Use recommended
+                {t('useRecommended')}
               </button>
             )}
           </div>
@@ -230,7 +240,7 @@ export function RulesOnboardingPage() {
             onClick={handleContinue}
             className="ui-btn-primary w-full py-3 text-sm font-semibold"
           >
-            Continue
+            {tc('continue')}
           </button>
           <button
             type="button"
@@ -238,32 +248,29 @@ export function RulesOnboardingPage() {
             className="text-sm text-muted hover:text-white transition-colors self-center"
             aria-expanded={showCustomize}
           >
-            {showCustomize ? 'Hide customization' : 'Customize rules'}
+            {showCustomize ? t('hideCustomization') : t('customizeRules')}
           </button>
         </div>
 
         {showCustomize && (
           <section className="mb-10 space-y-6 border-t border-border/60 pt-8">
             <div className="space-y-4">
-              <p className="text-sm text-muted">
-                Tighten or loosen what counts as a duplicate. Presets in Settings set these in one
-                click.
-              </p>
+              <p className="text-sm text-muted">{t('customizeIntro')}</p>
               <p className="text-xs text-muted">
-                Match style:{' '}
+                {t('matchStyleLabel')}{' '}
                 <span className="text-white/90 font-medium">{matchStyleLabel}</span>
               </p>
-              <div className="flex flex-col gap-3 text-sm" role="group" aria-label="Dupe rules">
-                {DUPE_GROUPING_TOGGLES.map(({ key, label }) => (
+              <div className="flex flex-col gap-3 text-sm" role="group" aria-label={t('aria.dupeRules')}>
+                {DUPE_GROUPING_TOGGLE_KEYS.map((key) => (
                   <Toggle
                     key={key}
-                    label={label}
+                    label={dupeGroupingToggleLabel(key)}
                     checked={globalDupeRules[key]}
                     onChange={(v) => setGlobalDupeRules({ [key]: v })}
                   />
                 ))}
                 <Toggle
-                  label={DUPE_RESPECT_KEEP_FAVORITE_LABEL}
+                  label={dupeRespectKeepFavoriteLabel()}
                   checked={respectDimKeepFavoriteChecked(globalDupeRules)}
                   onChange={(v) => setGlobalDupeRules(respectDimKeepFavoritePatch(v))}
                 />
@@ -272,7 +279,7 @@ export function RulesOnboardingPage() {
 
             <div className="rounded-xl border border-border bg-surface-2/50 p-4 min-h-[9.5rem]">
               <h3 className="text-xs font-medium uppercase tracking-wide text-muted mb-3">
-                Preview by class
+                {t('previewByClass')}
               </h3>
               <DupeRulesImpactTabs rules={globalDupeRules} plainLanguage />
             </div>
@@ -281,18 +288,25 @@ export function RulesOnboardingPage() {
               {suggestions.length > 0 && (
                 <>
                   <h3 className="text-xs font-medium uppercase tracking-wide text-muted">
-                    Suggestions
+                    {t('suggestions')}
                   </h3>
                   {suggestions.map((s, i) => (
                     <div key={i} className="border border-border rounded-lg p-4 bg-surface-2/50">
-                      <p className="text-sm text-white/90">{s.reason}</p>
+                      <p className="text-sm text-white/90">
+                        {dupeSuggestionReason(
+                          s.reasonKey as DupeSuggestionReasonKey,
+                          s.reasonParams,
+                        )}
+                      </p>
                       {s.presetId && (
                         <button
                           type="button"
                           onClick={() => applyPreset(s.presetId!)}
                           className="mt-3 text-xs text-accent-dim hover:text-white transition-colors"
                         >
-                          Use {DUPE_PRESETS[s.presetId]?.label ?? s.presetId}
+                          {t('usePreset', {
+                            label: dupePresetLabel(s.presetId),
+                          })}
                         </button>
                       )}
                     </div>
@@ -304,7 +318,7 @@ export function RulesOnboardingPage() {
         )}
 
         <div className="pt-6 border-t border-border/60">
-          <OnboardingBackButton onClick={handleBack} label="Sign out" />
+          <OnboardingBackButton onClick={handleBack} label={tc('signOut')} />
         </div>
       </div>
     </Layout>

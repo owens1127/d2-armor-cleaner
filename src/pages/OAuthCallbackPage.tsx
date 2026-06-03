@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { exchangeBungieCode, getBungieConfig, storeBungieTokens } from '@/lib/bungie/auth';
 import { isDevBuild, oauthFailureDevChecklist, oauthFailureSuffix } from '@/lib/env';
 import { getBungieAccessToken } from '@/lib/bungie/client';
 import { SS_BUNGIE_OAUTH_STATE } from '@/lib/storage/keys';
 import { getOnboardingResumePath, isOnboardingComplete } from '@/lib/onboarding/storage';
+import { i18n } from '@/i18n';
 import { useVaultStore } from '@/stores';
 
 type OAuthDestination =
@@ -33,8 +35,7 @@ function completeOAuthCallback(
     if (!savedState || state !== savedState) {
       return {
         ok: false,
-        error:
-          'OAuth state mismatch: often caused by a stale tab or blocked session storage. Return to login and try again.',
+        error: i18n.t('errors:oauth.stateMismatch'),
       };
     }
 
@@ -56,10 +57,11 @@ function completeOAuthCallback(
 }
 
 export function OAuthCallbackPage() {
+  const { t } = useTranslation(['errors', 'common']);
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const { loadLiveVault } = useVaultStore();
-  const [status, setStatus] = useState('Completing Bungie login…');
+  const [status, setStatus] = useState(() => t('errors:oauth.completingLogin'));
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -70,11 +72,11 @@ export function OAuthCallbackPage() {
     const resumePath = getOnboardingResumePath(isOnboardingComplete());
 
     if (oauthError) {
-      setError(`Bungie denied login: ${oauthError}`);
+      setError(t('errors:oauth.bungieDenied', { error: oauthError }));
       return;
     }
     if (!code) {
-      setError('No authorization code returned: try signing in again.');
+      setError(t('errors:oauth.noAuthCode'));
       return;
     }
 
@@ -83,12 +85,12 @@ export function OAuthCallbackPage() {
       return;
     }
 
-    setStatus('Exchanging authorization code…');
+    setStatus(t('errors:oauth.exchangingCode'));
 
     completeOAuthCallback(code, state, saved, loadLiveVault, isOnboardingComplete())
       .then((result) => {
         if (result.ok) {
-          setStatus('Loading your vault…');
+          setStatus(t('errors:oauth.loadingVault'));
           navigate(result.destination, { replace: true });
           return;
         }
@@ -96,7 +98,7 @@ export function OAuthCallbackPage() {
       })
       .catch((e) => {
         console.error('[oauth]', e);
-        const msg = e instanceof Error ? e.message : 'Login failed';
+        const msg = e instanceof Error ? e.message : t('errors:oauth.loginFailed');
         const { redirectUri, clientId } = getBungieConfig();
         setError(
           msg +
@@ -104,7 +106,7 @@ export function OAuthCallbackPage() {
             (isDevBuild() ? oauthFailureDevChecklist(redirectUri, clientId) : ''),
         );
       });
-  }, [params, navigate, loadLiveVault]);
+  }, [params, navigate, loadLiveVault, t]);
 
   if (error) {
     return (
@@ -115,7 +117,7 @@ export function OAuthCallbackPage() {
           onClick={() => navigate('/')}
           className="px-4 py-2 rounded-lg border border-border hover:bg-white/5 text-sm"
         >
-          Back to login
+          {t('errors:oauth.backToLogin')}
         </button>
       </div>
     );
@@ -124,8 +126,7 @@ export function OAuthCallbackPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-muted gap-2">
       <p>{status}</p>
-      <p className="text-xs opacity-60">First load downloads the game manifest and may take a minute.</p>
+      <p className="text-xs opacity-60">{t('errors:oauth.firstLoadNote')}</p>
     </div>
   );
 }
-

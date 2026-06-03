@@ -1,0 +1,133 @@
+{
+  "title": "{{class}} 仓库",
+  "summary": "{{tieredCount}} 件升阶 {{class}} 护甲 · 重复范围内 {{dupeScopeCount}} 件 {{minTierLabel}} · {{buckets}} 个重复桶 · 约 {{review}} 次决策",
+  "customDupeRules": "· 自定义重复规则",
+  "tieredAccount": "· 账户共 {{count}} 件升阶护甲",
+  "customRulesBanner": "{{class}} 使用自定义重复规则",
+  "nextSteps": "下一步",
+  "browseAllArmor": "浏览全部护甲",
+  "redundantRolls": "冗余 roll（{{count}}）",
+  "refreshVault": "刷新仓库",
+  "armorView": "护甲视图",
+  "archetypeView": "原型视图",
+  "heatmapSlot": "热力图部位",
+  "allSlots": "全部部位",
+  "insights": {
+    "continueSetup": {
+      "title": "继续设置",
+      "detail": "完成校准，使仓库建议符合你的优先级",
+      "cta": "继续"
+    },
+    "continueCalibration": {
+      "title": "继续校准",
+      "detail": "从上次中断的偏好校准处继续",
+      "cta": "继续"
+    },
+    "calibratePreferences": {
+      "title": "校准偏好",
+      "detail": "为这个职业设定属性、原型与套装优先级",
+      "cta": "校准"
+    },
+    "completeCalibration": {
+      "title": "完成校准",
+      "detail": "置信度偏低 · 再选几项可让重复与组合建议更精准",
+      "cta": "校准"
+    },
+    "improveCalibration": {
+      "title": "改进校准",
+      "detail": "置信度中等 · 更多选择可改善排序与覆盖提示",
+      "cta": "校准"
+    },
+    "recalibrateStale": {
+      "title": "重新校准偏好",
+      "detail": "上次校准已有一段时间 · 仓库 roll 可能已变化",
+      "cta": "重新校准"
+    },
+    "recalibrateDefault": {
+      "title": "重新校准偏好",
+      "detail": "随时更新该职业的属性、原型与套装权重",
+      "cta": "重新校准"
+    },
+    "setupAutoFilters": {
+      "title": "设置自动筛选",
+      "detail": "在仓库加载时为绝不保留的 roll 排队垃圾标签",
+      "cta": "设置筛选"
+    },
+    "setupCombos": {
+      "title": "设置组合",
+      "detail": "每个组合选择 2–4 个优先属性 · {{countLabel}}",
+      "cta": "设置组合"
+    },
+    "addAnotherCombo": {
+      "title": "再添加一个组合",
+      "detail": "{{countLabel}} 个组合 · 再添加 1 个",
+      "cta": "添加组合"
+    },
+    "addMoreCombos": {
+      "title": "添加更多组合",
+      "detail": "{{countLabel}} · 再添加 {{remaining}} 个组合",
+      "cta": "添加组合"
+    },
+    "fixCoverage": {
+      "title": "修复 {{label}} 覆盖",
+      "cta": "打开组合"
+    },
+    "browseUpgrades": {
+      "title": "浏览 {{label}} 升级",
+      "cta": "浏览仓库"
+    },
+    "compareLargest": {
+      "title": "对比 {{label}}",
+      "detail": "最大重复桶中有 {{count}} 件",
+      "cta": "对比此组"
+    },
+    "redundantRolls": {
+      "title": "审核冗余 roll",
+      "detail_one": "{{count}} 件严格劣于你保留的另一 roll",
+      "detail_other": "{{count}} 件严格劣于你保留的另一 roll",
+      "cta": "打开列表"
+    },
+    "taggedKeep": {
+      "title": "审核 DIM 标记的重复",
+      "detail_one": "{{count}} 个重复候选已在 DIM 中标记保留或收藏",
+      "detail_other": "{{count}} 个重复候选已在 DIM 中标记保留或收藏",
+      "cta": "浏览仓库"
+    },
+    "heavyBuckets": {
+      "title": "清理臃肿重复桶",
+      "detail_one": "{{count}} 个桶含 5+ 件。使用热力图挑选。",
+      "detail_other": "{{count}} 个桶含 5+ 件。使用热力图挑选。",
+      "cta": "对比重复"
+    },
+    "fixCoverageNoVault": "仓库中尚无 roll 出你优先属性的护甲",
+    "fixCoverageNeedSlot": "需要一件 roll 出你优先属性的 {{slot}}",
+    "fixCoverageSlots": "推荐配装已填 {{filled}}/{{total}} 个部位",
+    "browseNoArmor": "仓库中尚无 roll 出这些属性的护甲",
+    "browseGaps": "{{count}} 种 roll 类型可追求更好契合",
+    "browseGaps_other": "{{count}} 种 roll 类型可追求更好契合",
+    "browseCompare": "将仓库护甲与你的组合对比"
+  },
+  "buildLink": {
+    "title": "你的组合"
+  },
+  "coverage": {
+    "yourCombos": "你的组合",
+    "setPriorities": "在组合上设置属性优先级以查看 roll 目标",
+    "recommendedPieces": "推荐护甲",
+    "rollTypesHunt": "可追求的 roll 类型",
+    "nothingMissing": "矩阵中无明显缺口。",
+    "rollTypesMany": "你拥有较多的 roll 类型",
+    "noHeavyDuplicates": "单一 roll 类型中无大量重复。",
+    "tagAll": "全部标记：",
+    "choose": "Choose",
+    "chooseSlotAria": "Choose {{slot}}",
+    "choosePieceAria": "Choose piece · {{count}} eligible",
+    "supportingPieces": "<1>{{count}}</1> pieces in your vault roll at least one priority stat.",
+    "filledProfiles": "<1>{{filled}}</1> of <2>{{total}}</2> roll types you could own (archetype + tertiary + slot) are in your vault.",
+    "redundantOverlap": "Empty slots remain despite redundant rolls. Prioritize fills over more dupes.",
+    "gapsIntro": "Empty combinations that would help this combo.",
+    "overlapsIntro": "Three or more pieces in the same combination.",
+    "piecesCount": "{{count}} pieces",
+    "orderLabel": "Order:"
+  }
+}

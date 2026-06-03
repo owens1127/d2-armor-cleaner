@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import type { ArmorPiece, ClassPreferenceProfile, DupeRuleConfig, ScoreBreakdown, Stat } from '@/types';
 import { ItemIcon } from '@/components/items/ItemIcon';
 import { StatIcon } from '@/components/StatIcon';
@@ -6,7 +7,14 @@ import { OnlyRollBadge } from '@/components/duel/OnlyRollBadge';
 import { cardStatsForPiece } from '@/components/duel/ArmorCard';
 import { formatArmorTierBadge, hasDisplayTier } from '@/lib/armor/tier';
 import { isSingletonRoll, onlyRollTooltip } from '@/lib/armor/uniqueRoll';
-import { ARCHETYPE_LABELS, STAT_LABELS } from '@/lib/constants';
+import {
+  armorDiffNoSetCopy,
+  armorDiffSetFootnoteCopy,
+  formatArchetypeTertiaryLabel,
+  rollTuningInlineLabel,
+  statLabel,
+} from '@/i18n/gameCopy';
+import { duelKeyLabelCopy } from '@/i18n/duelCopy';
 import { intrinsicStats } from '@/lib/armor/intrinsicCompare';
 import { armorDiffLines } from '@/lib/armor/diff';
 import { resolveArmorSetInfo } from '@/lib/scoring/calibrate';
@@ -22,7 +30,6 @@ import {
 import type { ArmorDiffLine } from '@/lib/armor/diff';
 import type { CardStatEntry } from '@/components/duel/ArmorCard';
 import { BUCKET_ELIMINATION_LOSS_THRESHOLD } from '@/lib/constants';
-import { DUEL_KEY_LABELS } from '@/lib/duel/keyboard';
 import {
   tagJunkBothDuelBtnClass,
   tagJunkDuelBtnClass,
@@ -32,10 +39,10 @@ import {
 import { DuelKeyboardLegend } from '@/components/duel/DuelKeyboardLegend';
 import { lossesUntilElimination } from '@/lib/dupes/duel';
 import {
-  DUEL_IDENTICAL_ROLLS_BANNER,
-  DUEL_SUPPRESSED_SUGGESTION_BANNER,
+  duelIdenticalRollsBannerCopy,
+  duelSuppressedSuggestionBannerCopy,
   formatDuelSuggestionBuildOptimalReason,
-} from '@/lib/duel/suggestion';
+} from '@/i18n/duelCopy';
 
 export interface DuelComparePanelProps {
   left: ArmorPiece;
@@ -89,10 +96,10 @@ function duelSimilaritiesHeader(
   recommended: 'a' | 'b' | 'tie',
 ): string {
   if (left.archetype === right.archetype && left.tertiaryStat === right.tertiaryStat) {
-    return `${ARCHETYPE_LABELS[left.archetype]} · ${STAT_LABELS[left.tertiaryStat]}`;
+    return formatArchetypeTertiaryLabel(left.archetype, left.tertiaryStat);
   }
   const ref = recommended === 'b' ? right : left;
-  return `${ARCHETYPE_LABELS[ref.archetype]} · ${STAT_LABELS[ref.tertiaryStat]}`;
+  return formatArchetypeTertiaryLabel(ref.archetype, ref.tertiaryStat);
 }
 
 function matchingStatEntries(left: ArmorPiece, right: ArmorPiece): CardStatEntry[] {
@@ -112,13 +119,6 @@ const keepSideBtnClass = tagKeepDuelBtnClass(actionBtnBase);
 const keepBothBtnClass = tagKeepBothDuelBtnClass(actionBtnBase);
 const junkSideBtnClass = tagJunkDuelBtnClass(actionBtnBase);
 const junkBothBtnClass = tagJunkBothDuelBtnClass(actionBtnBase);
-
-const PREFER_OUTCOME = `Prefer this side. The loser needs ${BUCKET_ELIMINATION_LOSS_THRESHOLD} prefer losses before junk at bucket end.`;
-const KEEP_SIDE_OUTCOME = 'Keep this when bucket finishes · other stays in bracket';
-const KEEP_BOTH_OUTCOME = 'Both kept when bucket finishes';
-const JUNK_ONE_OUTCOME = 'Junk this now · other stays in bracket (no winner)';
-const JUNK_BOTH_OUTCOME = 'Both junked now';
-const PASS_OUTCOME = 'Skip this pair. Neither is tagged; both are re-queued.';
 
 /** Prevent click focus from scrolling the page stage to the action bar. */
 function preventActionFocusScroll(e: React.MouseEvent) {
@@ -163,104 +163,114 @@ function DuelActionBar({
   onJunkBoth: () => void;
   onPassPair: () => void;
 }) {
+  const { t } = useTranslation('duel');
+  const preferOutcome = t('compare.outcomes.prefer', {
+    threshold: BUCKET_ELIMINATION_LOSS_THRESHOLD,
+  });
+  const keepSideOutcome = t('compare.outcomes.keepSide');
+  const keepBothOutcome = t('compare.outcomes.keepBoth');
+  const junkOneOutcome = t('compare.outcomes.junkOne');
+  const junkBothOutcome = t('compare.outcomes.junkBoth');
+  const passOutcome = t('compare.outcomes.pass');
+
   return (
     <div className="duel-compare__actions flex flex-col gap-2 sm:gap-2.5">
-      <DuelActionGroup label="Keep">
+      <DuelActionGroup label={t('compare.actionKeep')}>
         <button
           type="button"
           onMouseDown={preventActionFocusScroll}
           onClick={onKeepLeft}
-          aria-label={`Keep left. ${KEEP_SIDE_OUTCOME}`}
-          title={`${DUEL_KEY_LABELS.keepLeft} · ${KEEP_SIDE_OUTCOME}`}
+          aria-label={t('compare.aria.keepLeft', { outcome: keepSideOutcome })}
+          title={`${duelKeyLabelCopy('keepLeft')} · ${keepSideOutcome}`}
           className={keepSideBtnClass}
         >
-          Left
+          {t('keyboard.left')}
         </button>
         <button
           type="button"
           onMouseDown={preventActionFocusScroll}
           onClick={onKeepBoth}
-          aria-label={`Keep both. ${KEEP_BOTH_OUTCOME}`}
-          title={`${DUEL_KEY_LABELS.keepBoth} · ${KEEP_BOTH_OUTCOME}`}
+          aria-label={t('compare.aria.keepBoth', { outcome: keepBothOutcome })}
+          title={`${duelKeyLabelCopy('keepBoth')} · ${keepBothOutcome}`}
           className={keepBothBtnClass}
         >
-          Both
+          {t('keyboard.both')}
         </button>
         <button
           type="button"
           onMouseDown={preventActionFocusScroll}
           onClick={onKeepRight}
-          aria-label={`Keep right. ${KEEP_SIDE_OUTCOME}`}
-          title={`${DUEL_KEY_LABELS.keepRight} · ${KEEP_SIDE_OUTCOME}`}
+          aria-label={t('compare.aria.keepRight', { outcome: keepSideOutcome })}
+          title={`${duelKeyLabelCopy('keepRight')} · ${keepSideOutcome}`}
           className={keepSideBtnClass}
         >
-          Right
+          {t('keyboard.right')}
         </button>
       </DuelActionGroup>
 
-      <DuelActionGroup label="Prefer">
+      <DuelActionGroup label={t('keyboard.prefer')}>
         <button
           type="button"
           onMouseDown={preventActionFocusScroll}
           onClick={onPickLeft}
-          aria-label={`Prefer left. ${PREFER_OUTCOME}`}
-          title={`${DUEL_KEY_LABELS.preferLeft} · ${PREFER_OUTCOME}`}
+          aria-label={t('compare.aria.preferLeft', { outcome: preferOutcome })}
+          title={`${duelKeyLabelCopy('preferLeft')} · ${preferOutcome}`}
           className={preferBtnClass}
         >
-          Left
+          {t('keyboard.left')}
         </button>
         <button
           type="button"
           onMouseDown={preventActionFocusScroll}
           onClick={onPassPair}
-          aria-label={`Pass pair. ${PASS_OUTCOME}`}
-          title={`${DUEL_KEY_LABELS.pass} · ${PASS_OUTCOME}`}
+          aria-label={t('compare.aria.passPair', { outcome: passOutcome })}
+          title={`${duelKeyLabelCopy('pass')} · ${passOutcome}`}
           className={passBtnClass}
         >
-          Pass
+          {t('compare.pass')}
         </button>
         <button
           type="button"
           onMouseDown={preventActionFocusScroll}
           onClick={onPickRight}
-          aria-label={`Prefer right. ${PREFER_OUTCOME}`}
-          title={`${DUEL_KEY_LABELS.preferRight} · ${PREFER_OUTCOME}`}
+          aria-label={t('compare.aria.preferRight', { outcome: preferOutcome })}
+          title={`${duelKeyLabelCopy('preferRight')} · ${preferOutcome}`}
           className={preferBtnClass}
         >
-          Right
+          {t('keyboard.right')}
         </button>
       </DuelActionGroup>
 
-      <DuelActionGroup label="Junk">
+      <DuelActionGroup label={t('keyboard.junk')}>
         <button
           type="button"
           onMouseDown={preventActionFocusScroll}
           onClick={onJunkLeft}
-          aria-label={`Junk left. ${JUNK_ONE_OUTCOME}`}
-          title={`${DUEL_KEY_LABELS.junkLeft} · ${JUNK_ONE_OUTCOME}`}
+          aria-label={t('compare.aria.junkLeft', { outcome: junkOneOutcome })}
+          title={`${duelKeyLabelCopy('junkLeft')} · ${junkOneOutcome}`}
           className={junkSideBtnClass}
         >
-          Left
+          {t('keyboard.left')}
         </button>
         <button
           type="button"
           onMouseDown={preventActionFocusScroll}
           onClick={onJunkBoth}
-          aria-label={`Junk both. ${JUNK_BOTH_OUTCOME}`}
-          title={`${DUEL_KEY_LABELS.junkBoth} · ${JUNK_BOTH_OUTCOME}`}
+          aria-label={t('compare.aria.junkBoth', { outcome: junkBothOutcome })}
+          title={`${duelKeyLabelCopy('junkBoth')} · ${junkBothOutcome}`}
           className={junkBothBtnClass}
         >
-          Both
+          {t('keyboard.both')}
         </button>
         <button
           type="button"
           onMouseDown={preventActionFocusScroll}
           onClick={onJunkRight}
-          aria-label={`Junk right. ${JUNK_ONE_OUTCOME}`}
-          title={`${DUEL_KEY_LABELS.junkRight} · ${JUNK_ONE_OUTCOME}`}
+          aria-label={t('compare.aria.junkRight', { outcome: junkOneOutcome })}
+          title={`${duelKeyLabelCopy('junkRight')} · ${junkOneOutcome}`}
           className={junkSideBtnClass}
         >
-          Right
+          {t('keyboard.right')}
         </button>
       </DuelActionGroup>
 
@@ -268,7 +278,7 @@ function DuelActionBar({
         <DuelKeyboardLegend compact />
       </div>
       <p className="m-0 hidden text-center text-[0.625rem] leading-snug text-muted/80 sm:block">
-        Hover buttons for outcomes · ↑ keep both · Space pass · ↓ junk both · Ctrl+←/→ junk sides
+        {t('compare.keyboardHints')}
       </p>
     </div>
   );
@@ -283,7 +293,8 @@ function DuelTuningBadge({
   preferred?: boolean;
   differs?: boolean;
 }) {
-  const label = STAT_LABELS[stat];
+  const { t } = useTranslation('duel');
+  const label = statLabel(stat);
   const muted = Boolean(differs && !preferred);
 
   return (
@@ -295,7 +306,7 @@ function DuelTuningBadge({
             ? 'border-border/40 bg-surface/30'
             : 'border-border/60 bg-surface-3/40'
       }`}
-      title={`Tuning: ${label}`}
+      title={rollTuningInlineLabel(stat)}
     >
       <div
         className={`inline-flex w-full flex-wrap items-center justify-center gap-1 text-[10px] font-semibold leading-snug ${
@@ -303,10 +314,10 @@ function DuelTuningBadge({
         }`}
       >
         <StatIcon stat={stat} size="sm" variant="glyph" />
-        <span>Tuning: {label}</span>
+        <span>{t('compare.tuningLabel', { stat: label })}</span>
         {preferred && differs && (
           <span className="text-[9px] font-medium uppercase tracking-wider text-white/70">
-            Preferred
+            {t('compare.preferred')}
           </span>
         )}
       </div>
@@ -322,7 +333,7 @@ function SharedStatsPills({ entries }: { entries: CardStatEntry[] }) {
         <span
           key={`${entry.role}-${entry.stat}`}
           className="inline-flex items-center gap-0.5 rounded-md bg-white/5 px-1.5 py-1 text-[11px] text-white/85"
-          title={STAT_LABELS[entry.stat]}
+          title={statLabel(entry.stat)}
         >
           <StatIcon stat={entry.stat} size="sm" variant="glyph" />
           <span className="tabular-nums font-medium">{entry.value}</span>
@@ -333,11 +344,12 @@ function SharedStatsPills({ entries }: { entries: CardStatEntry[] }) {
 }
 
 function SameTuningLine({ stat }: { stat: Stat }) {
+  const { t } = useTranslation('duel');
   return (
     <p className="text-[10px] text-center text-white/75 font-medium">
       <span className="inline-flex items-center justify-center gap-1">
         <StatIcon stat={stat} size="sm" variant="glyph" />
-        Tuning: {STAT_LABELS[stat]}
+        {t('compare.tuningLabel', { stat: statLabel(stat) })}
       </span>
     </p>
   );
@@ -391,16 +403,17 @@ function PickCardStatDiffs({
 }
 
 function LossCountBadge({ lossCount }: { lossCount: number }) {
+  const { t } = useTranslation('duel');
   if (lossCount <= 0) return null;
-  const label = lossCount === 1 ? '1 loss' : `${lossCount} losses`;
+  const label = t('compare.loss', { count: lossCount });
   const remaining = lossesUntilElimination(lossCount);
   return (
     <span
       className="text-[9px] uppercase tracking-wider text-amber-300/90"
       title={
         remaining > 0
-          ? `${remaining} more prefer loss${remaining === 1 ? '' : 'es'} before junk at bucket end`
-          : 'Eliminated from bracket'
+          ? t('compare.lossRemaining', { count: remaining })
+          : t('compare.eliminated')
       }
     >
       {label}
@@ -433,6 +446,10 @@ function DuelPickCard({
   lossCount?: number;
   onSelect: () => void;
 }) {
+  const { t } = useTranslation('duel');
+  const preferOutcome = t('compare.outcomes.prefer', {
+    threshold: BUCKET_ELIMINATION_LOSS_THRESHOLD,
+  });
   const tierLabel = hasDisplayTier(piece.tier) ? formatArmorTierBadge(piece.tier) : null;
 
   return (
@@ -442,10 +459,10 @@ function DuelPickCard({
       className="duel-pick-card ui-card flex flex-col items-center text-center w-full h-full min-h-[5.5rem] py-3 px-4 transition-all"
       aria-label={
         side === 'left'
-          ? `Prefer left. ${PREFER_OUTCOME}`
-          : `Prefer right. ${PREFER_OUTCOME}`
+          ? t('compare.aria.preferLeft', { outcome: preferOutcome })
+          : t('compare.aria.preferRight', { outcome: preferOutcome })
       }
-      title={PREFER_OUTCOME}
+      title={preferOutcome}
     >
       <div className="mx-auto">
         <ItemIcon piece={piece} size="lg" />
@@ -461,10 +478,10 @@ function DuelPickCard({
         )}
         <span className="text-[11px] font-semibold text-white/75">{matchLabel}</span>
         {recommended && (
-          <span className="text-[9px] uppercase tracking-wider text-green-400">Suggested</span>
+          <span className="text-[9px] uppercase tracking-wider text-green-400">{t('compare.suggested')}</span>
         )}
         {sameRoll && (
-          <span className="text-[9px] uppercase tracking-wider text-muted">Same roll</span>
+          <span className="text-[9px] uppercase tracking-wider text-muted">{t('compare.sameRoll')}</span>
         )}
         {onlyRoll && <OnlyRollBadge compact tooltip={onlyRollTooltip(piece)} />}
         <LossCountBadge lossCount={lossCount} />
@@ -495,11 +512,14 @@ function DuelDiffStrip({
   const setsDiffer = (left.armorSet?.hash ?? null) !== (right.armorSet?.hash ?? null);
   const sameTuning = left.tuningStat === right.tuningStat;
   const sharedStats = matchingStatEntries(left, right);
+  const { t } = useTranslation('duel');
   const header = duelSimilaritiesHeader(left, right, recommended);
 
   const footnotes: string[] = [];
   if (!setsDiffer) {
-    footnotes.push(`Set: ${left.armorSet?.name ?? 'No set'}`);
+    footnotes.push(
+      armorDiffSetFootnoteCopy(left.armorSet?.name ?? armorDiffNoSetCopy()),
+    );
   }
 
   const hasCenterContent =
@@ -522,7 +542,7 @@ function DuelDiffStrip({
       )}
 
       {!hasCenterContent && footnotes.length === 0 && (
-        <p className="text-[11px] text-center text-muted px-2">Compare sides</p>
+        <p className="text-[11px] text-center text-muted px-2">{t('compare.compareSides')}</p>
       )}
     </div>
   );
@@ -541,8 +561,8 @@ function DuelSetHero({
 }) {
   const leftInfo = resolveArmorSetInfo(allItems, left);
   const rightInfo = resolveArmorSetInfo(allItems, right);
-  const leftName = leftInfo?.name ?? left.armorSet?.name ?? 'No set';
-  const rightName = rightInfo?.name ?? right.armorSet?.name ?? 'No set';
+  const leftName = leftInfo?.name ?? left.armorSet?.name ?? armorDiffNoSetCopy();
+  const rightName = rightInfo?.name ?? right.armorSet?.name ?? armorDiffNoSetCopy();
   const leftPreferred = isPreferredSet(left, right, classPrefs);
   const rightPreferred = isPreferredSet(right, left, classPrefs);
 
@@ -591,6 +611,7 @@ export function DuelComparePanel({
   onTouchEnd,
   disabled = false,
 }: DuelComparePanelProps) {
+  const { t } = useTranslation('duel');
   const lines = armorDiffLines(left, right).filter(
     (l) => l.kind !== 'power' && l.kind !== 'masterwork',
   );
@@ -629,12 +650,12 @@ export function DuelComparePanel({
     >
       <p className="duel-compare__banner text-sm leading-snug truncate">
         {identicalRolls ? (
-          <span className="text-muted">{DUEL_IDENTICAL_ROLLS_BANNER}</span>
+          <span className="text-muted">{duelIdenticalRollsBannerCopy()}</span>
         ) : suggestionSuppressed ? (
-          <span className="text-muted">{DUEL_SUPPRESSED_SUGGESTION_BANNER}</span>
+          <span className="text-muted">{duelSuppressedSuggestionBannerCopy()}</span>
         ) : recommended !== 'tie' ? (
           <>
-            <span className="text-muted">Suggested pick: </span>
+            <span className="text-muted">{t('compare.suggestedPick')}</span>
             <span className="text-white font-medium">
               {suggestLeft ? left.name : right.name}
             </span>
@@ -642,12 +663,10 @@ export function DuelComparePanel({
             {buildOptimalReason ? (
               <span className="text-muted text-xs ml-1.5">· {buildOptimalReason}</span>
             ) : null}
-            <span className="text-muted text-xs ml-1.5">· or pass / keep / junk</span>
+            <span className="text-muted text-xs ml-1.5">{t('compare.orPassKeepJunk')}</span>
           </>
         ) : (
-          <span className="text-muted">
-            Even match. Prefer, pass, keep, or junk one or both.
-          </span>
+          <span className="text-muted">{t('compare.evenMatch')}</span>
         )}
       </p>
 

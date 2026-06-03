@@ -1,0 +1,44 @@
+{
+  "boundary": {
+    "title": "問題が発生しました",
+    "body": "{{appName}} で予期しないエラーが発生しました。ローカルストレージの設定とキュー内のタグは通常影響を受けません。",
+    "reload": "アプリを再読み込み",
+    "goHome": "ホームへ"
+  },
+  "oauth": {
+    "completingLogin": "Bungie ログインを完了中…",
+    "exchangingCode": "認可コードを交換中…",
+    "loadingVault": "保管庫を読み込み中…",
+    "firstLoadNote": "初回読み込みではゲームマニフェストのダウンロードがあり、1 分ほどかかる場合があります。",
+    "bungieDenied": "Bungie がログインを拒否しました: {{error}}",
+    "noAuthCode": "認可コードが返されませんでした: もう一度サインインしてください。",
+    "stateMismatch": "OAuth state が一致しません: 古いタブやセッションストレージのブロックが原因のことがあります。ログインに戻って再試行してください。",
+    "loginFailed": "ログインに失敗しました",
+    "backToLogin": "ログインに戻る",
+    "suffix": "もう一度サインインしてください。問題が続く場合はサイト管理者にお問い合わせください。",
+    "devChecklistIntro": "Bungie アプリのチェックリスト（ローカル開発）:",
+    "devRedirect": "リダイレクト URL: {{uri}}",
+    "devOrigin": "Origin: {{origin}}",
+    "devClientId": "クライアント ID が Bungie アプリケーションと一致（{{clientId}}）",
+    "devApiKey": "API キーが同じ Bungie アプリケーションのもの",
+    "devRestart": "認証情報を変更したら開発サーバーを再起動"
+  },
+  "env": {
+    "bungieSignInUnavailableDev": "このビルドではサインインが有効になっていません。",
+    "bungieSignInUnavailable": "このデプロイではサインインは利用できません。",
+    "bungieCredentialsMissingDev": "この環境では Bungie サインインが有効になっていません。",
+    "bungieCredentialsMissing": "このデプロイではサインインは利用できません。サイト管理者にお問い合わせください。",
+    "bungieSecretMissingDev": "この環境では Bungie サインインが完全には有効になっていません。",
+    "dimSyncUnavailableDev": "この環境では DIM 同期が有効になっていません。",
+    "dimSyncUnavailable": "このデプロイでは DIM へのタグ適用は利用できません。サイト管理者にお問い合わせください。"
+  },
+  "vault": {
+    "sessionExpired": "Bungie セッションの有効期限が切れた可能性があります。サインアウトして再度サインインしてください。",
+    "forbidden": "Bungie がリクエストを拒否しました。再度サインインするか、続く場合はサイト管理者にお問い合わせください。",
+    "manifest": "マニフェストのダウンロードに失敗しました。接続を確認して再試行してください。初回読み込みは 1 分ほどかかることがあります。",
+    "network": "ネットワークエラー。接続を確認するか、しばらくしてから再試行してください。",
+    "membership": "Destiny メンバーシップを解決できませんでした。アカウントに Destiny 2 キャラクターがあることを確認してください。"
+  },
+  "applyTagsFailed": "タグの適用に失敗しました",
+  "partialApply": "{{total}} 件中 {{ok}} 件のタグを適用しました。{{failed}} 件が失敗: 再試行するかキューから削除してください。"
+}

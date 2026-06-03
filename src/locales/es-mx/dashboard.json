@@ -1,0 +1,133 @@
+{
+  "title": "Bóveda de {{class}}",
+  "summary": "{{tieredCount}} armadura de {{class}} con nivel · {{dupeScopeCount}} {{minTierLabel}} en alcance de duplicados · {{buckets}} grupos de duplicados · ~{{review}} decisiones",
+  "customDupeRules": "· reglas de duplicados personalizadas",
+  "tieredAccount": "· {{count}} armadura con nivel (cuenta)",
+  "customRulesBanner": "{{class}} usa reglas de duplicados personalizadas",
+  "nextSteps": "Próximos pasos",
+  "browseAllArmor": "Explorar toda la armadura",
+  "redundantRolls": "Tiradas redundantes ({{count}})",
+  "refreshVault": "Actualizar bóveda",
+  "armorView": "Vista de armadura",
+  "archetypeView": "Vista de arquetipos",
+  "heatmapSlot": "Espacio del mapa de calor",
+  "allSlots": "Todos los espacios",
+  "insights": {
+    "continueSetup": {
+      "title": "Continuar configuración",
+      "detail": "Termina la calibración para que las sugerencias de la bóveda coincidan con tus prioridades",
+      "cta": "Continuar"
+    },
+    "continueCalibration": {
+      "title": "Continuar calibración",
+      "detail": "Retoma donde dejaste la calibración de preferencias",
+      "cta": "Continuar"
+    },
+    "calibratePreferences": {
+      "title": "Calibrar preferencias",
+      "detail": "Define prioridades de estadísticas, arquetipos y sets para esta clase",
+      "cta": "Calibrar"
+    },
+    "completeCalibration": {
+      "title": "Completar calibración",
+      "detail": "Baja confianza · unas decisiones más afinan sugerencias de duplicados y combos",
+      "cta": "Calibrar"
+    },
+    "improveCalibration": {
+      "title": "Mejorar calibración",
+      "detail": "Confianza media · más decisiones mejoran el ranking y las pistas de cobertura",
+      "cta": "Calibrar"
+    },
+    "recalibrateStale": {
+      "title": "Recalibrar preferencias",
+      "detail": "Tu última calibración fue hace tiempo · las tiradas de la bóveda pueden haber cambiado",
+      "cta": "Recalibrar"
+    },
+    "recalibrateDefault": {
+      "title": "Recalibrar preferencias",
+      "detail": "Actualiza los pesos de estadísticas, arquetipos y sets de esta clase cuando quieras",
+      "cta": "Recalibrar"
+    },
+    "setupAutoFilters": {
+      "title": "Configurar filtros automáticos",
+      "detail": "Encola etiquetas junk al cargar la bóveda para tiradas que nunca conservarías",
+      "cta": "Configurar filtros"
+    },
+    "setupCombos": {
+      "title": "Configurar combos",
+      "detail": "Elige 2–4 estadísticas prioritarias por combo · {{countLabel}}",
+      "cta": "Configurar combos"
+    },
+    "addAnotherCombo": {
+      "title": "Añadir otro combo",
+      "detail": "{{countLabel}} combos · añade 1 más",
+      "cta": "Añadir combos"
+    },
+    "addMoreCombos": {
+      "title": "Añadir más combos",
+      "detail": "{{countLabel}} · añade {{remaining}} combos más",
+      "cta": "Añadir combos"
+    },
+    "fixCoverage": {
+      "title": "Corregir cobertura de {{label}}",
+      "cta": "Abrir Combos"
+    },
+    "browseUpgrades": {
+      "title": "Explorar mejoras para {{label}}",
+      "cta": "Explorar bóveda"
+    },
+    "compareLargest": {
+      "title": "Comparar {{label}}",
+      "detail": "{{count}} piezas en tu grupo de duplicados más grande",
+      "cta": "Comparar este grupo"
+    },
+    "redundantRolls": {
+      "title": "Revisar tiradas redundantes",
+      "detail_one": "{{count}} pieza estrictamente peor que otra tirada que conservas",
+      "detail_other": "{{count}} piezas estrictamente peores que otra tirada que conservas",
+      "cta": "Abrir lista"
+    },
+    "taggedKeep": {
+      "title": "Revisar duplicados etiquetados en DIM",
+      "detail_one": "{{count}} candidato a duplicado ya etiquetado keep o favorite en DIM",
+      "detail_other": "{{count}} candidatos a duplicado ya etiquetados keep o favorite en DIM",
+      "cta": "Explorar bóveda"
+    },
+    "heavyBuckets": {
+      "title": "Vaciar grupos de duplicados grandes",
+      "detail_one": "{{count}} grupo con 5+ objetos. Usa el mapa de calor para elegir uno.",
+      "detail_other": "{{count}} grupos con 5+ objetos. Usa el mapa de calor para elegir uno.",
+      "cta": "Comparar duplicados"
+    },
+    "fixCoverageNoVault": "Aún no hay piezas en la bóveda con tus estadísticas prioritarias",
+    "fixCoverageNeedSlot": "Falta un {{slot}} con tus prioridades",
+    "fixCoverageSlots": "{{filled}}/{{total}} espacios cubiertos en el loadout recomendado",
+    "browseNoArmor": "Aún no hay armadura en tu bóveda con estas estadísticas",
+    "browseGaps": "{{count}} tipo de tirada por mejorar",
+    "browseGaps_other": "{{count}} tipos de tirada por mejorar",
+    "browseCompare": "Compara armadura de la bóveda con tus combos"
+  },
+  "buildLink": {
+    "title": "Tus combos"
+  },
+  "coverage": {
+    "yourCombos": "Tus combos",
+    "setPriorities": "Define prioridades de estadísticas en un combo para ver objetivos de tirada",
+    "recommendedPieces": "Piezas recomendadas",
+    "rollTypesHunt": "Tipos de tirada por buscar",
+    "nothingMissing": "No falta nada obvio en tu matriz.",
+    "rollTypesMany": "Tipos de tirada que tienes en abundancia",
+    "noHeavyDuplicates": "No hay duplicados pesados en un solo tipo de tirada.",
+    "tagAll": "Etiquetar todo:",
+    "choose": "Choose",
+    "chooseSlotAria": "Choose {{slot}}",
+    "choosePieceAria": "Choose piece · {{count}} eligible",
+    "supportingPieces": "<1>{{count}}</1> pieces in your vault roll at least one priority stat.",
+    "filledProfiles": "<1>{{filled}}</1> of <2>{{total}}</2> roll types you could own (archetype + tertiary + slot) are in your vault.",
+    "redundantOverlap": "Empty slots remain despite redundant rolls. Prioritize fills over more dupes.",
+    "gapsIntro": "Empty combinations that would help this combo.",
+    "overlapsIntro": "Three or more pieces in the same combination.",
+    "piecesCount": "{{count}} pieces",
+    "orderLabel": "Order:"
+  }
+}

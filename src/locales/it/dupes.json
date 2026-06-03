@@ -1,0 +1,66 @@
+{
+  "grouping": {
+    "sameArmorSet": {
+      "label": "Richiedi lo stesso set di armatura",
+      "help": "Raggruppa o confronta solo pezzi dello stesso set. Disattivato: stesso slot + archetipo + terziaria su tutti i set."
+    },
+    "sameTuningStat": {
+      "label": "Richiedi la stessa statistica di tuning",
+      "help": "Separa per statistica di tuning (es. Armi vs Granata). Disattivato: statistiche di tuning miste in un unico gruppo."
+    }
+  },
+  "respectKeepFavorite": {
+    "label": "Rispetta keep e favorite DIM nella scelta dello scarto",
+    "help": "Se attivo, i pezzi con tag keep o favorite non vengono suggeriti come scarto nei flussi duplicati."
+  },
+  "excludeJunk": {
+    "label": "Escludi pezzi con tag junk dal conteggio duplicati"
+  },
+  "presets": {
+    "loose": {
+      "label": "Largo"
+    },
+    "standard": {
+      "label": "Standard"
+    },
+    "setAware": {
+      "label": "Per set"
+    },
+    "tuning": {
+      "label": "Tuning"
+    },
+    "strict": {
+      "label": "Stretto"
+    }
+  },
+  "impactCompact": {
+    "buckets": "gruppi duplicati ·",
+    "decisions": "decisioni ·",
+    "pieces": "{{count}} pezzi inclusi"
+  },
+  "matchStyle": {
+    "custom": "Personalizzato",
+    "usingPreset": "Uso di {{label}}",
+    "usingCustomRules": "Regole personalizzate",
+    "cardBody": {
+      "loose": "Confronta pezzi nello stesso slot senza richiedere lo stesso set di armatura o statistica di tuning.",
+      "standard": "Confronta per slot, archetipo e terziaria senza richiedere lo stesso set di armatura.",
+      "setAware": "Raggruppa i duplicati per set di armatura · adatto alla maggior parte delle cripte.",
+      "tuning": "Raggruppa i duplicati per statistica di tuning, anche tra set diversi.",
+      "strict": "Richiede lo stesso set di armatura e la stessa statistica di tuning per un duplicato."
+    },
+    "customMix": "Mix personalizzato: {{armorSet}}, {{tuningStat}}.",
+    "armorSetSame": "stesso set di armatura",
+    "armorSetAny": "qualsiasi set di armatura",
+    "tuningStatSame": "stessa statistica di tuning",
+    "tuningStatAny": "qualsiasi statistica di tuning",
+    "dimTagsRespect": "I tag DIM keep e favorite contano quando si suggerisce lo scarto.",
+    "dimTagsIgnore": "I tag keep e favorite non vengono usati quando si suggerisce lo scarto."
+  },
+  "suggestions": {
+    "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+    "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+    "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+    "standardDefault": "Standard preset for your vault size."
+  }
+}

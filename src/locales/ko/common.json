@@ -1,0 +1,67 @@
+{
+  "language": "언어",
+  "languageEn": "English",
+  "languageFr": "Français",
+  "languageEs": "Español",
+  "languageEsMx": "Español (México)",
+  "languageDe": "Deutsch",
+  "languageIt": "Italiano",
+  "languageJa": "日本語",
+  "languageKo": "한국어",
+  "languagePl": "Polski",
+  "languagePtBr": "Português (Brasil)",
+  "languageRu": "Русский",
+  "languageZhChs": "简体中文",
+  "languageZhCht": "繁體中文",
+  "continue": "계속",
+  "save": "저장",
+  "back": "뒤로",
+  "skip": "건너뛰기",
+  "signOut": "로그아웃",
+  "retry": "다시 시도",
+  "retrying": "다시 시도 중…",
+  "pleaseWait": "잠시만 기다려 주세요",
+  "copied": "복사됨!",
+  "none": "없음",
+  "configured": "설정됨",
+  "notConfigured": "설정되지 않음",
+  "developer": "개발자",
+  "openReviewPage": "검토 페이지 열기",
+  "clearPendingTags": "대기 중인 태그 지우기",
+  "exportPrefs": "설정보내기",
+  "importPrefs": "설정 가져오기",
+  "preferencesImported": "설정을 가져왔습니다.",
+  "invalidPrefsFile": "잘못된 설정 파일입니다.",
+  "topStats": "상위 스탯:",
+  "topArchetypes": "상위 아키타입:",
+  "recalibrateClass": "{{class}} 다시 보정",
+  "resetClassPrefs": "{{class}} 설정 초기화",
+  "resetAllClasses": "모든 클래스 초기화",
+  "confirm": {
+    "clearPendingTags": "대기 중인 태그 {{count}}개를 모두 지울까요? DIM에 적용되지 않습니다.",
+    "resetClassPrefs": "{{class}} 설정을 기본값으로 초기화할까요? 이 클래스의 스탯 가중치, 보정 선택, 학습 가중치가 지워집니다.",
+    "resetAllClassPrefs": "모든 클래스 설정을 기본값으로 초기화할까요? 헌터, 타이탄, 워록의 스탯 가중치, 보정 선택, 학습 가중치가 지워집니다. 중복 규칙 및 기타 설정은 유지됩니다."
+  },
+  "classPrefs": {
+    "heading": "{{class}} 설정",
+    "usingClass": "{{class}} 사용 중 (헤더에서 클래스 변경). 보정에서 가져온 클래스별 스탯·아키타입 가중치. 중복 규칙은 클래스별로 재정의하지 않으면 공유됩니다.",
+    "calibrations": "보정 {{count}}회 · 신뢰도 {{confidence}}"
+  },
+  "reviewTags": {
+    "heading": "태그 검토",
+    "queued_one": "DIM에 적용할 태그 {{count}}개 대기 중.",
+    "queued_other": "DIM에 적용할 태그 {{count}}개 대기 중.",
+    "none": "대기 중인 태그 없음."
+  },
+  "dev": {
+    "dimKeyHint": "로컬 DIM 키: origin {{origin}}으로 api.destinyitemmanager.com/new_app에 POST."
+  },
+  "dimCopy": {
+    "queryFor": "{{name}} DIM 쿼리 복사",
+    "queryCopied": "{{name}} DIM 쿼리가 클립보드에 복사되었습니다.",
+    "searchShown": "표시된 피스 DIM 검색 복사",
+    "searchShownCopied": "표시된 피스 DIM 검색이 클립보드에 복사되었습니다.",
+    "searchGroup": "이 그룹의 {{count}}개 피스 DIM 검색 복사",
+    "searchGroupCopied": "이 그룹의 {{count}}개 피스 DIM 검색이 클립보드에 복사되었습니다."
+  }
+}

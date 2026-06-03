@@ -1,4 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
+import { classLabel, archetypeLabel, slotLabel } from '@/i18n/gameCopy';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { BrowseCardActionGrid } from '@/components/duel/BrowseCardActionGrid';
 import {
@@ -13,7 +15,6 @@ import {
   copyDimQueriesGroupAnnouncement,
   copyDimQueriesGroupAriaLabel,
 } from '@/components/items/copyDimQuery';
-import { ARCHETYPE_LABELS, CLASS_LABELS, SLOT_LABELS } from '@/lib/constants';
 import type { ClassType, Stat } from '@/types';
 import type {
   DismantleDisplayGroup,
@@ -48,7 +49,7 @@ export interface RedundantRollsBrowseProps {
 function rollMetaLine(item: ArmorPiece): string {
   const set = item.armorSet?.name;
   const parts = [
-    ARCHETYPE_LABELS[item.archetype],
+    archetypeLabel(item.archetype),
     item.tier != null ? `T${item.tier}` : null,
     set ?? null,
   ].filter(Boolean);
@@ -254,6 +255,7 @@ function RedundantDupeGroup({
   onToggleFavorite: (piece: ArmorPiece) => void;
   onToggleJunk: (piece: ArmorPiece) => void;
 }) {
+  const { t } = useTranslation('browse');
   const pieceCount = group.members.length;
   const match = useMemo(() => analyzeRedundantGroupMatch(group), [group]);
   const groupInstanceIds = useMemo(
@@ -273,12 +275,12 @@ function RedundantDupeGroup({
           aria-expanded={!collapsed}
         >
           <span className="text-sm font-medium text-white">
-            {SLOT_LABELS[group.slot]}
+            {slotLabel(group.slot)}
           </span>
           <span className="text-white/30" aria-hidden>
             ·
           </span>
-          <span className="text-sm text-white/75">Pick one to keep</span>
+          <span className="text-sm text-white/75">{t('redundant.pickOne')}</span>
           <span className="text-white/30" aria-hidden>
             ·
           </span>
@@ -341,6 +343,7 @@ export function RedundantRollsBrowse({
   filteredCount,
   filtersActive,
 }: RedundantRollsBrowseProps) {
+  const { t } = useTranslation('browse');
   const browseAllParams = setBrowseRedundantInParams(searchParams, false);
   const browseAllTo = `/browse/${classType}${browseAllParams.toString() ? `?${browseAllParams}` : ''}`;
 
@@ -361,7 +364,7 @@ export function RedundantRollsBrowse({
       <div className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">
-            Redundant rolls · {CLASS_LABELS[classType]}
+            Redundant rolls · {classLabel(classType)}
           </h1>
           <p className="text-muted text-sm mt-2 max-w-xl leading-relaxed">
             {filteredCount} redundant piece{totalCandidateCount === 1 ? '' : 's'} across{' '}
@@ -410,7 +413,7 @@ export function RedundantRollsBrowse({
         <div className="text-center py-16 px-4 border border-border rounded-xl bg-surface-2">
           {totalCandidateCount === 0 ? (
             <>
-              <p className="text-white font-medium mb-2">No redundant rolls</p>
+              <p className="text-white font-medium mb-2">{t('redundant.noRedundant')}</p>
               <p className="text-muted text-sm max-w-md mx-auto">
                 Nothing in this class is strictly worse or a tuning duplicate under your dupe
                 rules. Adjust rules in settings if you expected candidates.
@@ -418,11 +421,11 @@ export function RedundantRollsBrowse({
             </>
           ) : (
             <>
-              <p className="text-white font-medium mb-2">No matches</p>
+              <p className="text-white font-medium mb-2">{t('redundant.noMatches')}</p>
               <p className="text-muted text-sm">
                 {filtersActive
-                  ? 'No redundant rolls match the current filters.'
-                  : 'No redundant rolls to show.'}
+                  ? t('redundant.noMatchFilters')
+                  : t('redundant.noneToShow')}
               </p>
             </>
           )}

@@ -1,3 +1,5 @@
+import { getAppLocale } from '@/i18n';
+import type { AppLocale } from '@/i18n/manifestLocales';
 import { STAT_MANIFEST_HASH, STATS } from '@/lib/constants';
 import { setManifestStatIcons } from '@/lib/items/icons';
 import { setManifestArmorSetIcons } from '@/lib/items/setIcons';
@@ -7,6 +9,7 @@ import { readCachedManifest, writeManifestCache } from './manifestCache';
 import { LOG_PREFIX } from '@/lib/storage/keys';
 
 const MANIFEST_MEMORY_KEY = '__dac_manifest__';
+const MANIFEST_MEMORY_LOCALE_KEY = '__dac_manifest_locale__';
 
 export interface ManifestStatDef {
   hash: number;
@@ -88,14 +91,16 @@ export function extractStatIconPaths(
   return paths;
 }
 
-/** English per-table JSON paths from a Bungie manifest info response. */
+/** Per-locale table JSON paths from a Bungie manifest info response (falls back to English). */
 export function getManifestComponentPaths(
   info: ManifestInfo,
+  locale: AppLocale = 'en',
 ): Record<string, string> {
-  const paths = info.jsonWorldComponentContentPaths?.en;
+  const byLocale = info.jsonWorldComponentContentPaths;
+  const paths = byLocale?.[locale] ?? byLocale?.en;
   if (!paths || typeof paths !== 'object') {
     throw new Error(
-      'Manifest download failed: English component paths not found in Bungie response. Retry in a moment.',
+      `Manifest download failed: component paths not found for locale "${locale}". Retry in a moment.`,
     );
   }
   return paths;
@@ -106,6 +111,7 @@ let memoryCache: ManifestTables | null = (globalThis as Record<string, unknown>)
 ] as ManifestTables | null;
 
 let manifestLoadPromise: Promise<ManifestTables> | null = null;
+let manifestLoadLocale: AppLocale | null = null;
 let backgroundRefreshPromise: Promise<void> | null = null;
 
 /** Resolve a Bungie manifest table path to a fetchable URL (throws if missing/invalid). */
@@ -134,9 +140,10 @@ async function fetchTable(
   return res.json();
 }
 
-function storeMemoryCache(tables: ManifestTables): void {
+function storeMemoryCache(tables: ManifestTables, locale: AppLocale): void {
   memoryCache = tables;
   (globalThis as Record<string, unknown>)[MANIFEST_MEMORY_KEY] = memoryCache;
+  (globalThis as Record<string, unknown>)[MANIFEST_MEMORY_LOCALE_KEY] = locale;
   if (tables.stats) {
     setManifestStatIcons(extractStatIconPaths(tables.stats));
   }
@@ -147,9 +154,10 @@ function storeMemoryCache(tables: ManifestTables): void {
 
 async function downloadManifestTables(
   info: ManifestInfo,
+  locale: AppLocale,
   onProgress?: (msg: string) => void,
 ): Promise<ManifestTables> {
-  const paths = getManifestComponentPaths(info);
+  const paths = getManifestComponentPaths(info, locale);
   const total = MANIFEST_TABLES.length;
   let completed = 0;
 
@@ -187,15 +195,19 @@ async function downloadManifestTables(
   };
 }
 
-async function refreshManifestInBackground(info: ManifestInfo, staleVersion: string): Promise<void> {
+async function refreshManifestInBackground(
+  info: ManifestInfo,
+  staleVersion: string,
+  locale: AppLocale,
+): Promise<void> {
   if (info.version === staleVersion) return;
   if (backgroundRefreshPromise) return backgroundRefreshPromise;
 
   backgroundRefreshPromise = (async () => {
     try {
-      const tables = await downloadManifestTables(info);
-      storeMemoryCache(tables);
-      await writeManifestCache(info.version, tables);
+      const tables = await downloadManifestTables(info, locale);
+      storeMemoryCache(tables, locale);
+      await writeManifestCache(info.version, tables, locale);
     } catch (err) {
       if (import.meta.env.DEV) {
         console.warn(`${LOG_PREFIX} background manifest refresh failed`, err);
@@ -208,13 +220,47 @@ async function refreshManifestInBackground(info: ManifestInfo, staleVersion: str
   return backgroundRefreshPromise;
 }
 
+function memoryCacheMatchesLocale(locale: AppLocale): boolean {
+  const cachedLocale = (globalThis as Record<string, unknown>)[
+    MANIFEST_MEMORY_LOCALE_KEY
+  ] as AppLocale | undefined;
+  return Boolean(memoryCache && cachedLocale === locale);
+}
+
+export function clearManifestMemoryCache(): void {
+  memoryCache = null;
+  delete (globalThis as Record<string, unknown>)[MANIFEST_MEMORY_KEY];
+  delete (globalThis as Record<string, unknown>)[MANIFEST_MEMORY_LOCALE_KEY];
+}
+
+export function getLoadedManifestLocale(): AppLocale | null {
+  if (!memoryCache) return null;
+  const cachedLocale = (globalThis as Record<string, unknown>)[
+    MANIFEST_MEMORY_LOCALE_KEY
+  ] as AppLocale | undefined;
+  return cachedLocale ?? null;
+}
+
+/** Drop in-memory manifest and load tables for the given locale (IDB cache per locale). */
+export async function reloadManifestForLocale(
+  locale: AppLocale,
+  onProgress?: (msg: string) => void,
+): Promise<ManifestTables> {
+  if (memoryCacheMatchesLocale(locale)) return memoryCache!;
+  clearManifestMemoryCache();
+  manifestLoadPromise = null;
+  manifestLoadLocale = null;
+  return loadManifestTables(onProgress, locale);
+}
+
 async function loadManifestTablesInner(
+  locale: AppLocale,
   onProgress?: (msg: string) => void,
 ): Promise<ManifestTables> {
   onProgress?.('Checking manifest version…');
 
   const [cached, info] = await Promise.all([
-    readCachedManifest(),
+    readCachedManifest(locale),
     bungieFetch<ManifestInfo>('/Platform/Destiny2/Manifest/'),
   ]);
 
@@ -222,35 +268,43 @@ async function loadManifestTablesInner(
 
   if (cached?.version === version) {
     onProgress?.('Loaded manifest from local cache…');
-    storeMemoryCache(cached.tables);
+    storeMemoryCache(cached.tables, locale);
     return cached.tables;
   }
 
   if (cached?.tables) {
     onProgress?.('Using cached manifest (checking for updates)…');
-    storeMemoryCache(cached.tables);
-    void refreshManifestInBackground(info, cached.version);
+    storeMemoryCache(cached.tables, locale);
+    void refreshManifestInBackground(info, cached.version, locale);
     return cached.tables;
   }
 
-  const tables = await downloadManifestTables(info, onProgress);
-  storeMemoryCache(tables);
+  const tables = await downloadManifestTables(info, locale, onProgress);
+  storeMemoryCache(tables, locale);
   onProgress?.('Caching manifest locally…');
-  await writeManifestCache(version, tables);
+  await writeManifestCache(version, tables, locale);
   return tables;
 }
 
 export async function loadManifestTables(
   onProgress?: (msg: string) => void,
+  locale: AppLocale = getAppLocale(),
 ): Promise<ManifestTables> {
-  if (memoryCache) {
+  if (memoryCacheMatchesLocale(locale)) {
     onProgress?.('Using cached manifest…');
-    return memoryCache;
+    return memoryCache!;
   }
-  if (manifestLoadPromise) return manifestLoadPromise;
+  if (memoryCache) clearManifestMemoryCache();
+  if (manifestLoadPromise && manifestLoadLocale === locale) return manifestLoadPromise;
+  if (manifestLoadPromise) {
+    await manifestLoadPromise.catch(() => undefined);
+    clearManifestMemoryCache();
+  }
 
-  manifestLoadPromise = loadManifestTablesInner(onProgress).finally(() => {
+  manifestLoadLocale = locale;
+  manifestLoadPromise = loadManifestTablesInner(locale, onProgress).finally(() => {
     manifestLoadPromise = null;
+    manifestLoadLocale = null;
   });
   return manifestLoadPromise;
 }

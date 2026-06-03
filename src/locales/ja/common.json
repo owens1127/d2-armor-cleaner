@@ -1,0 +1,67 @@
+{
+  "language": "言語",
+  "languageEn": "English",
+  "languageFr": "Français",
+  "languageEs": "Español",
+  "languageEsMx": "Español (México)",
+  "languageDe": "Deutsch",
+  "languageIt": "Italiano",
+  "languageJa": "日本語",
+  "languageKo": "한국어",
+  "languagePl": "Polski",
+  "languagePtBr": "Português (Brasil)",
+  "languageRu": "Русский",
+  "languageZhChs": "简体中文",
+  "languageZhCht": "繁體中文",
+  "continue": "続ける",
+  "save": "保存",
+  "back": "戻る",
+  "skip": "スキップ",
+  "signOut": "サインアウト",
+  "retry": "再試行",
+  "retrying": "再試行中…",
+  "pleaseWait": "お待ちください",
+  "copied": "コピーしました！",
+  "none": "なし",
+  "configured": "設定済み",
+  "notConfigured": "未設定",
+  "developer": "開発者",
+  "openReviewPage": "レビューページを開く",
+  "clearPendingTags": "保留中のタグをクリア",
+  "exportPrefs": "設定をエクスポート",
+  "importPrefs": "設定をインポート",
+  "preferencesImported": "設定をインポートしました。",
+  "invalidPrefsFile": "無効な設定ファイルです。",
+  "topStats": "優先ステータス:",
+  "topArchetypes": "優先アーキタイプ:",
+  "recalibrateClass": "{{class}} を再較正",
+  "resetClassPrefs": "{{class}} の設定をリセット",
+  "resetAllClasses": "すべてのクラスをリセット",
+  "confirm": {
+    "clearPendingTags": "保留中のタグ {{count}} 件をすべてクリアしますか？DIM には適用されません。",
+    "resetClassPrefs": "{{class}} の設定をデフォルトに戻しますか？このクラスのステータス重み、較正の選択、学習済みの重みがクリアされます。",
+    "resetAllClassPrefs": "すべてのクラスの設定をデフォルトに戻しますか？ハンター、タイタン、ウォーロックのステータス重み、較正の選択、学習済みの重みがクリアされます。重複ルールなどのその他の設定は保持されます。"
+  },
+  "classPrefs": {
+    "heading": "{{class}} の設定",
+    "usingClass": "{{class}} を使用中（ヘッダーでクラスを変更）。較正によるクラス別のステータスとアーキタイプの重み。重複ルールはクラスごとに上書きしない限り共有されます。",
+    "calibrations": "較正 {{count}} 回 · 信頼度 {{confidence}}"
+  },
+  "reviewTags": {
+    "heading": "レビュータグ",
+    "queued_one": "DIM に適用するタグが {{count}} 件キューに入っています。",
+    "queued_other": "DIM に適用するタグが {{count}} 件キューに入っています。",
+    "none": "保留中のタグはありません。"
+  },
+  "dev": {
+    "dimKeyHint": "ローカル DIM キー: origin {{origin}} で api.destinyitemmanager.com/new_app に POST します。"
+  },
+  "dimCopy": {
+    "queryFor": "{{name}} DIM 쿼리 복사",
+    "queryCopied": "{{name}} DIM 쿼리가 클립보드에 복사되었습니다.",
+    "searchShown": "표시된 피스 DIM 검색 복사",
+    "searchShownCopied": "표시된 피스 DIM 검색이 클립보드에 복사되었습니다.",
+    "searchGroup": "이 그룹의 {{count}}개 피스 DIM 검색 복사",
+    "searchGroupCopied": "이 그룹의 {{count}}개 피스 DIM 검색이 클립보드에 복사되었습니다."
+  }
+}

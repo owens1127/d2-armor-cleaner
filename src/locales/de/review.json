@@ -1,0 +1,39 @@
+{
+  "title": "Tags prüfen",
+  "summary": "{{total}} in Warteschlange · {{keep}} keep · {{junk}} junk. Übernehmen schreibt wartende Tags; Zeilen zeigen bestehende DIM-Tags, wenn abweichend.",
+  "applied": "Tags in DIM Sync übernommen.",
+  "openJunkInDim": "Junk in DIM öffnen",
+  "partialApplied": "Teilweise übernommen: {{count}} Tags erfolgreich. Fehlgeschlagene bleiben in der Warteschlange.",
+  "retryFailed": "{{count}} fehlgeschlagene erneut versuchen",
+  "empty": "Keine ausstehenden Tags.",
+  "compareDupes": "Duplikate vergleichen",
+  "table": {
+    "item": "Gegenstand",
+    "copyDimSr": "DIM-Abfrage kopieren",
+    "archetype": "Archetyp",
+    "tertiary": "Tertiär",
+    "tuning": "Tuning",
+    "class": "Klasse",
+    "combo": "Combo",
+    "appliesToDim": "Gilt für DIM",
+    "none": "Keine"
+  },
+  "copy": {
+    "ids": "id:-Abfrage kopieren",
+    "junk": "tag:junk-Suche kopieren",
+    "junkIds": "Nur Junk-IDs kopieren",
+    "copied": "Kopiert!",
+    "announcement": "{{label}} in die Zwischenablage kopiert."
+  },
+  "removeFromQueue": "Aus Warteschlange entfernen",
+  "applyTags": "{{count}} Tags in DIM übernehmen",
+  "applying": "Wird übernommen…",
+  "clearPending": "Ausstehende Tags löschen",
+  "clearSession": "Sitzung löschen",
+  "backToDashboard": "Zum Dashboard",
+  "confirm": {
+    "clearPending": "Alle {{count}} ausstehenden Tags löschen? Sie werden nicht in DIM übernommen. Vergleichs-Sitzungsfortschritt bleibt erhalten.",
+    "clearSession": "Gesamte Vergleichs-Sitzung löschen? Ausstehende Tags und laufender Vergleichsstatus werden zurückgesetzt."
+  },
+  "alreadyInDim": "Bereits in DIM: {{summary}}"
+}

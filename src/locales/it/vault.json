@@ -1,0 +1,14 @@
+{
+  "loading": "Caricamento cripta…",
+  "refreshing": "Aggiornamento…",
+  "refreshingStatus": "Aggiornamento… {{status}}",
+  "loadVault": "Carica cripta",
+  "noDataYet": "Nessun dato della cripta ancora.",
+  "noDataBrowseHint": "Carica prima la cripta dalla dashboard.",
+  "noDataBuildHint": "Nessun dato della cripta ancora. Carica la cripta dalla dashboard.",
+  "retryVaultLoad": "Riprova caricamento cripta",
+  "signOutInSettings": "Esci dalle Impostazioni",
+  "dismiss": "Chiudi",
+  "tieredArmorTitle": "Armature con tier assegnato in gioco (Tier 1-5). Equipaggiamento legacy e pezzi mai tierati sono esclusi dall'import. L'ambito duplicati usa il tier minimo nelle impostazioni.",
+  "dupeRulesImpact": "Carica la cripta per vedere l'impatto."
+}

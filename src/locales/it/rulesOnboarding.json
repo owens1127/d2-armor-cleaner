@@ -1,0 +1,32 @@
+{
+  "title": "Come devono corrispondere i duplicati?",
+  "intro": "Raggruppiamo roll di armatura simili così puoi scegliere un keeper e taggare il resto in DIM. Puoi cambiarlo in qualsiasi momento nelle Impostazioni.",
+  "restoringSession": "Ripristino sessione Bungie…",
+  "redirectingLogin": "Reindirizzamento al login…",
+  "loadingVault": "Caricamento cripta…",
+  "retryVaultLoad": "Riprova caricamento cripta",
+  "refreshing": "Aggiornamento…",
+  "noTieredArmor": "Nessuna armatura con tier nell'ambito al tier minimo impostato",
+  "tieredPiecesImported": "({{count}} pezzi con tier importati)",
+  "tieredArmorFootnote": "Sono inclusi solo equipaggiamenti con tier in gioco (T1–T5). Abbassa il tier minimo nelle Impostazioni se necessario.",
+  "recommendedPresetSr": "Preset consigliato",
+  "useRecommended": "Usa consigliato",
+  "customizeRules": "Personalizza regole",
+  "hideCustomization": "Nascondi personalizzazione",
+  "customizeIntro": "Restringi o allarga cosa conta come duplicato. I preset nelle Impostazioni impostano tutto con un clic.",
+  "matchStyleLabel": "Stile di corrispondenza:",
+  "previewByClass": "Anteprima per classe",
+  "suggestions": "Suggerimenti",
+  "usePreset": "Usa {{label}}",
+  "impact": {
+    "none": "Nessun gruppo di duplicati trovato per {{class}} al tier attuale.",
+    "summary": "Circa {{buckets}} {{groupWord}} di duplicati · circa {{review}} {{rollWord}} da confrontare ({{class}})",
+    "group_one": "gruppo",
+    "group_other": "gruppi",
+    "roll_one": "roll",
+    "roll_other": "roll"
+  },
+  "aria": {
+    "dupeRules": "Regole duplicati"
+  }
+}

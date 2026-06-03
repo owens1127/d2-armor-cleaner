@@ -1,0 +1,131 @@
+{
+  "title": "Compare {{class}} duplicates",
+  "subtitle": {
+    "wrapUp": "Review this group, then continue",
+    "bucketMeta": "{{slot}} · {{archetype}} · {{tertiary}} · {{count}} items",
+    "bucketProgress": "{{meta}} · {{progress}}",
+    "noDupes": "No duplicate armor to compare for this class",
+    "chooseGroup": "Choose a duplicate group to start",
+    "startingNext": "Starting next duplicate group…"
+  },
+  "resetBucket": "Reset bucket",
+  "preparing": "Preparing comparisons…",
+  "queueEmpty": {
+    "title": "Queue empty",
+    "summary": "{{keep}} keep · {{junk}} junk queued.",
+    "reviewTags": "Review tags",
+    "restartQueue": "Restart queue",
+    "clearSession": "Clear {{class}} session"
+  },
+  "noDuplicates": {
+    "title": "No duplicates to compare",
+    "body": "No duplicate buckets match your rules for {{class}}. Try loosening dupe rules in Settings or load a fresh vault snapshot."
+  },
+  "noGroupsInQueue": "No duplicate groups in queue. Loosen dupe rules in Settings or restart the queue.",
+  "skipGroup": "Skip group (S)",
+  "restoringSession": "Restoring session…",
+  "confirm": {
+    "switchBucket": "Switch bucket? In-progress picks and junk tags for the current bucket will be cleared.",
+    "resetBucket": "Reset this bucket? All in-progress picks, junk tags, and compare progress will be cleared. The bucket stays in your queue.",
+    "clearClassSession": "Clear all {{class}} compare progress and queued tags for this class? This cannot be undone."
+  },
+  "chooser": {
+    "title": "Choose a duplicate group",
+    "kicker": "Compare duplicates",
+    "intro": "Pick which {{class}} armor group to compare first. You can switch groups later from the header.",
+    "listAria": "{{class}} duplicate groups"
+  },
+  "wrapUp": {
+    "title": "Review this duplicate group",
+    "kicker": "Bucket complete",
+    "allPairsDecided": "All duel pairs decided",
+    "chooseNext": "Choose a group to compare next",
+    "nextGroupsAria": "Next duplicate groups",
+    "continueNext": "Continue to next group",
+    "applyTagsContinue": "Apply tags & continue",
+    "chooseDifferent": "Choose a different group",
+    "backToSummary": "Back to summary",
+    "whatsNext": "What's next",
+    "tagsFootnote": "Tags queue when you continue. Nothing is applied until you review.",
+    "stats": {
+      "keeps": "Keeps",
+      "junkQueued": "Junk queued",
+      "preferEliminated": "Prefer eliminated",
+      "pairsDecided": "Pairs decided",
+      "inGroup": "In this group"
+    },
+    "breakdown": {
+      "keepBoth": "Keep both: {{count}}",
+      "keepSide": "Keep side: {{count}}",
+      "junkedInDuels": "Junked in duels: {{count}}",
+      "preferInPlay": "Prefer still in play: {{count}}"
+    },
+    "piece_one": "{{count}} piece",
+    "piece_other": "{{count}} pieces",
+    "sessionLast": "Last group in your queue",
+    "sessionLeft_one": "{{count}} group left after this",
+    "sessionLeft_other": "{{count}} groups left after this"
+  },
+  "bucket": {
+    "label": "Bucket",
+    "select": "Select bucket",
+    "dupeBucketsAria": "Duplicate buckets"
+  },
+  "keyboard": {
+    "aria": "Compare keyboard shortcuts",
+    "left": "Left",
+    "both": "Both",
+    "right": "Right",
+    "keep": "Keep",
+    "prefer": "Prefer",
+    "junk": "Junk"
+  },
+  "compare": {
+    "suggested": "Suggested",
+    "sameRoll": "Same roll",
+    "compareSides": "Compare sides",
+    "suggestedPick": "Suggested pick: ",
+    "vs": "vs",
+    "fitTitle": "How well this piece fits your saved preferences",
+    "powerTitle": "Power level",
+    "identicalRolls": "Identical rolls. Keep one, junk one, keep both, or pass.",
+    "suppressedSuggestion": "Both strong · last of tier. Prefer, pass, keep, or junk one or both.",
+    "buildOptimalPrefix": "Combo optimal for ",
+    "orPassKeepJunk": "· or pass / keep / junk",
+    "evenMatch": "Even match. Prefer, pass, keep, or junk one or both.",
+    "eliminated": "Eliminated from bracket",
+    "actionKeep": "Keep",
+    "pass": "Pass",
+    "preferred": "Preferred",
+    "tuningLabel": "Tuning: {{stat}}",
+    "setFootnote": "Set: {{name}}",
+    "loss_one": "1 loss",
+    "loss_other": "{{count}} losses",
+    "lossRemaining_one": "{{count}} more prefer loss before junk at bucket end",
+    "lossRemaining_other": "{{count}} more prefer losses before junk at bucket end",
+    "keyboardHints": "Hover buttons for outcomes · ↑ keep both · Space pass · ↓ junk both · Ctrl+←/→ junk sides",
+    "aria": {
+      "keepLeft": "Keep left. {{outcome}}",
+      "keepRight": "Keep right. {{outcome}}",
+      "keepBoth": "Keep both. {{outcome}}",
+      "preferLeft": "Prefer left. {{outcome}}",
+      "preferRight": "Prefer right. {{outcome}}",
+      "passPair": "Pass pair. {{outcome}}",
+      "junkLeft": "Junk left. {{outcome}}",
+      "junkRight": "Junk right. {{outcome}}",
+      "junkBoth": "Junk both. {{outcome}}"
+    },
+    "outcomes": {
+      "prefer": "Prefer this side. The loser needs {{threshold}} prefer losses before junk at bucket end.",
+      "keepSide": "Keep this when bucket finishes · other stays in bracket",
+      "keepBoth": "Both kept when bucket finishes",
+      "junkOne": "Junk this now · other stays in bracket (no winner)",
+      "junkBoth": "Both junked now",
+      "pass": "Skip this pair. Neither is tagged; both are re-queued."
+    }
+  },
+  "progress": {
+    "noGroups": "No duplicate groups",
+    "lastInQueue": "Last group in your queue"
+  }
+}

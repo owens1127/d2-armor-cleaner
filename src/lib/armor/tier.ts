@@ -1,3 +1,4 @@
+import { slotLabel } from '@/i18n/gameCopy';
 import {
   ALTAR_TUNING_MOD_PLUG_SET_HASH,
   ARCHETYPE_STATS,
@@ -6,7 +7,7 @@ import {
 } from '@/lib/constants';
 import type { ManifestItemDef } from '@/lib/bungie/manifest';
 import { validateTierIntrinsicStats } from '@/lib/armor/intrinsicStats';
-import type { Archetype, ArmorPiece, ArmorSlot, Stat } from '@/types';
+import type { Archetype, ArmorPiece, Stat } from '@/types';
 
 /** Minimum archetype+tertiary focus sum for genuine T5 (Disaster Corps–style specialist chest). */
 export const T5_MIN_FOCUS_STAT_SUM = 45;
@@ -125,11 +126,10 @@ export function formatArmorTierBadge(tier: number | null | undefined): string | 
 
 export function buildArmorSubtitle(
   piece: Pick<ArmorPiece, 'tier' | 'armorSlot' | 'armorSet'>,
-  slotLabels: Record<ArmorSlot, string>,
 ): string {
   const parts = [
     formatArmorTierSubtitle(piece.tier),
-    slotLabels[piece.armorSlot],
+    slotLabel(piece.armorSlot),
     piece.armorSet?.name,
   ].filter(Boolean);
   return parts.join(' · ');

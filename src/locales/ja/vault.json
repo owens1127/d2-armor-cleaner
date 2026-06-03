@@ -1,0 +1,14 @@
+{
+  "loading": "保管庫を読み込み中…",
+  "refreshing": "更新中…",
+  "refreshingStatus": "更新中… {{status}}",
+  "loadVault": "保管庫を読み込む",
+  "noDataYet": "保管庫データはまだありません。",
+  "noDataBrowseHint": "まずダッシュボードから保管庫を読み込んでください。",
+  "noDataBuildHint": "保管庫データはまだありません。ダッシュボードから保管庫を読み込んでください。",
+  "retryVaultLoad": "保管庫の読み込みを再試行",
+  "signOutInSettings": "設定でサインアウト",
+  "dismiss": "閉じる",
+  "tieredArmorTitle": "ゲーム内でティア付けした防具（ティア 1–5）。レガシー装備と未ティアの装備はインポートから除外されます。重複の範囲は最小ティア設定を使用します。",
+  "dupeRulesImpact": "保管庫を読み込んで影響をプレビューします。"
+}

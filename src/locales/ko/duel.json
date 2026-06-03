@@ -1,0 +1,131 @@
+{
+  "title": "{{class}} 중복 비교",
+  "subtitle": {
+    "wrapUp": "이 그룹을 검토한 뒤 계속",
+    "bucketMeta": "{{slot}} · {{archetype}} · {{tertiary}} · {{count}}개",
+    "bucketProgress": "{{meta}} · {{progress}}",
+    "noDupes": "이 클래스에 비교할 중복 방어구 없음",
+    "chooseGroup": "시작할 중복 그룹 선택",
+    "startingNext": "다음 중복 그룹 시작 중…"
+  },
+  "resetBucket": "버킷 초기화",
+  "preparing": "비교 준비 중…",
+  "queueEmpty": {
+    "title": "대기열 비음",
+    "summary": "keep {{keep}} · junk {{junk}} 대기 중.",
+    "reviewTags": "태그 검토",
+    "restartQueue": "대기열 다시 시작",
+    "clearSession": "{{class}} 세션 지우기"
+  },
+  "noDuplicates": {
+    "title": "비교할 중복 없음",
+    "body": "{{class}}에 대한 규칙과 일치하는 중복 버킷이 없습니다. 설정에서 중복 규칙을 완화하거나 금고 스냅샷을 새로 불러오세요."
+  },
+  "noGroupsInQueue": "대기열에 중복 그룹이 없습니다. 설정에서 중복 규칙을 완화하거나 대기열을 다시 시작하세요.",
+  "skipGroup": "그룹 건너뛰기 (S)",
+  "restoringSession": "세션 복원 중…",
+  "confirm": {
+    "switchBucket": "버킷을 바꿀까요? 현재 버킷의 진행 중 선택과 정크 태그가 지워집니다.",
+    "resetBucket": "이 버킷을 초기화할까요? 진행 중 선택, 정크 태그, 비교 진행이 모두 지워집니다. 버킷은 대기열에 남습니다.",
+    "clearClassSession": "이 클래스의 모든 비교 진행 및 대기 태그를 지울까요? 되돌릴 수 없습니다."
+  },
+  "chooser": {
+    "title": "중복 그룹 선택",
+    "kicker": "중복 비교",
+    "intro": "먼저 비교할 {{class}} 방어구 그룹을 고르세요. 헤더에서 나중에 바꿀 수 있습니다.",
+    "listAria": "{{class}} duplicate groups"
+  },
+  "wrapUp": {
+    "title": "이 중복 그룹 검토",
+    "chooseNext": "다음에 비교할 그룹 선택",
+    "nextGroupsAria": "다음 중복 그룹",
+    "kicker": "버킷 완료",
+    "allPairsDecided": "모든 듀얼 쌍 결정됨",
+    "continueNext": "다음 그룹으로 계속",
+    "applyTagsContinue": "태그 적용 후 계속",
+    "chooseDifferent": "다른 그룹 선택",
+    "backToSummary": "요약으로 돌아가기",
+    "whatsNext": "다음 단계",
+    "tagsFootnote": "계속하면 태그가 대기열에 들어갑니다. 검토 전까지 적용되지 않습니다.",
+    "stats": {
+      "keeps": "Keep",
+      "junkQueued": "정크 대기",
+      "preferEliminated": "선호 탈락",
+      "pairsDecided": "결정한 쌍",
+      "inGroup": "이 그룹"
+    },
+    "breakdown": {
+      "keepBoth": "둘 다 keep: {{count}}",
+      "keepSide": "한쪽 keep: {{count}}",
+      "junkedInDuels": "듀얼에서 정크: {{count}}",
+      "preferInPlay": "선호 진행 중: {{count}}"
+    },
+    "piece_one": "{{count}}개",
+    "piece_other": "{{count}}개",
+    "sessionLast": "대기열의 마지막 그룹",
+    "sessionLeft_one": "이후 {{count}}개 그룹 남음",
+    "sessionLeft_other": "이후 {{count}}개 그룹 남음"
+  },
+  "bucket": {
+    "label": "버킷",
+    "select": "버킷 선택",
+    "dupeBucketsAria": "중복 버킷"
+  },
+  "keyboard": {
+    "aria": "비교 키보드 단축키",
+    "left": "왼쪽",
+    "both": "둘 다",
+    "right": "오른쪽",
+    "keep": "Keep",
+    "prefer": "선호",
+    "junk": "정크"
+  },
+  "compare": {
+    "suggested": "제안",
+    "sameRoll": "동일 롤",
+    "compareSides": "양쪽 비교",
+    "suggestedPick": "제안 선택: ",
+    "vs": "vs",
+    "fitTitle": "저장된 설정에 이 피스가 얼마나 잘 맞는지",
+    "powerTitle": "전력 레벨",
+    "identicalRolls": "동일 롤. 하나 keep, 하나 정크, 둘 다 keep, 또는 패스.",
+    "suppressedSuggestion": "둘 다 강함 · 티어 마지막. 선호, 패스, keep, 정크 중 선택.",
+    "buildOptimalPrefix": "콤보 최적: ",
+    "orPassKeepJunk": "· 또는 패스 / keep / 정크",
+    "evenMatch": "동률. 선호, 패스, keep, 정크 중 선택.",
+    "eliminated": "브래킷에서 탈락",
+    "actionKeep": "Keep",
+    "outcomes": {
+      "prefer": "이쪽 선호. 패자는 버킷 종료 시 정크 전에 선호 패배 {{threshold}}회 필요.",
+      "keepSide": "버킷 종료 시 keep · 다른 쪽은 브래킷에 남음",
+      "keepBoth": "버킷 종료 시 둘 다 keep",
+      "junkOne": "지금 정크 · 다른 쪽은 브래킷에 남음(승자 없음)",
+      "junkBoth": "지금 둘 다 정크",
+      "pass": "이 쌍 건너뜀. 태그 없음, 둘 다 다시 대기열."
+    },
+    "pass": "패스",
+    "preferred": "선호",
+    "tuningLabel": "튜닝: {{stat}}",
+    "setFootnote": "세트: {{name}}",
+    "loss_one": "1 패배",
+    "loss_other": "{{count}} 패배",
+    "lossRemaining_one": "버킷 종료 전 정크까지 {{count}}번 더 패배 필요",
+    "lossRemaining_other": "버킷 종료 전 정크까지 {{count}}번 더 패배 필요",
+    "keyboardHints": "버튼에 마우스를 올리면 결과 표시 · ↑ 둘 다 keep · Space 패스 · ↓ 둘 다 정크 · Ctrl+←/→ 측면 정크",
+    "aria": {
+      "keepLeft": "왼쪽 keep. {{outcome}}",
+      "keepRight": "오른쪽 keep. {{outcome}}",
+      "keepBoth": "둘 다 keep. {{outcome}}",
+      "preferLeft": "왼쪽 선호. {{outcome}}",
+      "preferRight": "오른쪽 선호. {{outcome}}",
+      "passPair": "패스. {{outcome}}",
+      "junkLeft": "왼쪽 정크. {{outcome}}",
+      "junkRight": "오른쪽 정크. {{outcome}}",
+      "junkBoth": "둘 다 정크. {{outcome}}"
+    }
+  },
+  "progress": {
+    "noGroups": "중복 그룹 없음",
+    "lastInQueue": "대기열의 마지막 그룹"
+  }
+}

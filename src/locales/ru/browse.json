@@ -1,0 +1,57 @@
+{
+  "title": "Обзор брони {{class}}",
+  "summary": "{{filtered}} из {{total}} предметов · {{sortLabel}}",
+  "redundantLink": "{{count}} избыточных роллов",
+  "loadVaultFirst": "Сначала загрузите хранилище с панели.",
+  "filters": {
+    "slot": "Слот",
+    "archetype": "Архетип",
+    "search": "Поиск",
+    "armorSet": "Сет брони",
+    "dimTag": "Метка DIM",
+    "sort": "Сортировка",
+    "combo": "Комбо",
+    "allSlots": "Все слоты",
+    "allArchetypes": "Все архетипы",
+    "allSets": "Все сеты",
+    "any": "Любой",
+    "anyCombo": "Любое комбо",
+    "armorNamePlaceholder": "Название брони…",
+    "statLowerOnly": "Только ниже по статам",
+    "dupesOnly": "Только дубликаты",
+    "strictlyLowerOnly": "Только строго ниже",
+    "redundantOnly": "Только избыточные роллы",
+    "supportsComboOnly": "Только под комбо"
+  },
+  "dimTags": {
+    "untagged": "Без метки",
+    "keep": "Keep",
+    "junk": "Junk",
+    "favorite": "Favorite",
+    "infuse": "Infuse",
+    "archive": "Archive"
+  },
+  "sort": {
+    "matchDesc": "Совпадение % (выс. → низ.)",
+    "matchAsc": "Совпадение % (низ. → выс.)",
+    "preference": "Предпочтение",
+    "buildFitDesc": "Под комбо (выс. → низ.)",
+    "matchDescHint": "по совпадению % (сначала наиболее подходящие)",
+    "matchAscHint": "по совпадению % (сначала наименее подходящие)",
+    "buildFitHint": "по соответствию комбо",
+    "preferenceHint": "по предпочтению"
+  },
+  "copyIds": "Скопировать {{count}} id: в запросе",
+  "copied": "Скопировано!",
+  "reviewTagsLink": "Проверить метки сравнения/триажа ({{count}})",
+  "redundant": {
+    "pickOne": "Выберите один для сохранения",
+    "noRedundant": "Нет избыточных роллов",
+    "noMatches": "Нет совпадений",
+    "noMatchFilters": "No redundant rolls match the current filters.",
+    "noneToShow": "No redundant rolls to show."
+  },
+  "noItemsMatch": "No items match these filters.",
+  "backToDashboard": "Back to dashboard",
+  "dupeBadge": "dupe"
+}

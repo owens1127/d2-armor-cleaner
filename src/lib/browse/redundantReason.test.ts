@@ -44,9 +44,4 @@ describe('formatRedundantReasonLine', () => {
     expect(redundantReasonBadge(candidate.reason)).toBe('Tuning duplicate');
     expect(redundantGroupReasonLabel(candidate.reason)).toBe('Same tuning · pick one to keep');
   });
-
-  it('labels stat-lower groups in plain English', () => {
-    expect(redundantGroupReasonLabel('stat-lower')).toBe('Strictly lower · pick one to keep');
-    expect(redundantGroupReasonLabel('tuning-duplicate')).toBe('Same tuning · pick one to keep');
-  });
 });

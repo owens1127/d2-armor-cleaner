@@ -1,0 +1,131 @@
+{
+  "title": "對比 {{class}} 重複",
+  "subtitle": {
+    "wrapUp": "審核此群組後繼續",
+    "bucketMeta": "{{slot}} · {{archetype}} · {{tertiary}} · {{count}} 件",
+    "bucketProgress": "{{meta}} · {{progress}}",
+    "noDupes": "此職業沒有可對比的重複護甲",
+    "chooseGroup": "選擇一個重複群組開始",
+    "startingNext": "正在開始下一個重複群組…"
+  },
+  "resetBucket": "重設桶",
+  "preparing": "正在準備對比…",
+  "queueEmpty": {
+    "title": "佇列為空",
+    "summary": "{{keep}} 保留 · {{junk}} 垃圾已排隊。",
+    "reviewTags": "審核標籤",
+    "restartQueue": "重新開始佇列",
+    "clearSession": "清除 {{class}} 工作階段"
+  },
+  "noDuplicates": {
+    "title": "沒有可對比的重複",
+    "body": "沒有符合 {{class}} 規則的重複桶。請在設定中放寬重複規則，或載入新的倉庫快照。"
+  },
+  "noGroupsInQueue": "佇列中沒有重複群組。請在設定中放寬重複規則或重新開始佇列。",
+  "skipGroup": "跳過群組 (S)",
+  "restoringSession": "正在恢復工作階段…",
+  "confirm": {
+    "switchBucket": "切換桶？目前桶進行中的選擇與垃圾標籤將被清除。",
+    "resetBucket": "重設此桶？所有進行中的選擇、垃圾標籤與對比進度將被清除。桶仍留在佇列中。",
+    "clearClassSession": "이 클래스의 모든 비교 진행 및 대기 태그를 지울까요? 되돌릴 수 없습니다."
+  },
+  "chooser": {
+    "title": "選擇重複群組",
+    "kicker": "중복 비교",
+    "intro": "먼저 비교할 {{class}} 방어구 그룹을 고르세요. 헤더에서 나중에 바꿀 수 있습니다.",
+    "listAria": "{{class}} duplicate groups"
+  },
+  "wrapUp": {
+    "title": "審核此重複群組",
+    "chooseNext": "選擇下一個要對比的群組",
+    "nextGroupsAria": "下一個重複群組",
+    "kicker": "桶已完成",
+    "allPairsDecided": "모든 듀얼 쌍 결정됨",
+    "continueNext": "다음 그룹으로 계속",
+    "applyTagsContinue": "태그 적용 후 계속",
+    "chooseDifferent": "다른 그룹 선택",
+    "backToSummary": "요약으로 돌아가기",
+    "whatsNext": "接下來",
+    "tagsFootnote": "계속하면 태그가 대기열에 들어갑니다. 검토 전까지 적용되지 않습니다.",
+    "stats": {
+      "keeps": "Keep",
+      "junkQueued": "정크 대기",
+      "preferEliminated": "선호 탈락",
+      "pairsDecided": "결정한 쌍",
+      "inGroup": "이 그룹"
+    },
+    "breakdown": {
+      "keepBoth": "둘 다 keep: {{count}}",
+      "keepSide": "한쪽 keep: {{count}}",
+      "junkedInDuels": "듀얼에서 정크: {{count}}",
+      "preferInPlay": "선호 진행 중: {{count}}"
+    },
+    "piece_one": "{{count}}개",
+    "piece_other": "{{count}}개",
+    "sessionLast": "대기열의 마지막 그룹",
+    "sessionLeft_one": "이후 {{count}}개 그룹 남음",
+    "sessionLeft_other": "이후 {{count}}개 그룹 남음"
+  },
+  "bucket": {
+    "label": "桶",
+    "select": "選擇桶",
+    "dupeBucketsAria": "重複桶"
+  },
+  "keyboard": {
+    "aria": "對比鍵盤快捷鍵",
+    "left": "左",
+    "both": "双",
+    "right": "右",
+    "keep": "保留",
+    "prefer": "偏好",
+    "junk": "垃圾"
+  },
+  "compare": {
+    "suggested": "建議",
+    "sameRoll": "相同 roll",
+    "compareSides": "對比兩側",
+    "suggestedPick": "建議選擇：",
+    "vs": "vs",
+    "fitTitle": "此裝備與你儲存偏好的契合程度",
+    "powerTitle": "光等",
+    "identicalRolls": "동일 롤. 하나 keep, 하나 정크, 둘 다 keep, 또는 패스.",
+    "suppressedSuggestion": "둘 다 강함 · 티어 마지막. 선호, 패스, keep, 정크 중 선택.",
+    "buildOptimalPrefix": "콤보 최적: ",
+    "orPassKeepJunk": "· 또는 패스 / keep / 정크",
+    "evenMatch": "동률. 선호, 패스, keep, 정크 중 선택.",
+    "eliminated": "브래킷에서 탈락",
+    "actionKeep": "Keep",
+    "outcomes": {
+      "prefer": "이쪽 선호. 패자는 버킷 종료 시 정크 전에 선호 패배 {{threshold}}회 필요.",
+      "keepSide": "버킷 종료 시 keep · 다른 쪽은 브래킷에 남음",
+      "keepBoth": "버킷 종료 시 둘 다 keep",
+      "junkOne": "지금 정크 · 다른 쪽은 브래킷에 남음(승자 없음)",
+      "junkBoth": "지금 둘 다 정크",
+      "pass": "이 쌍 건너뜀. 태그 없음, 둘 다 다시 대기열."
+    },
+    "pass": "跳过",
+    "preferred": "Preferred",
+    "tuningLabel": "Tuning: {{stat}}",
+    "setFootnote": "Set: {{name}}",
+    "loss_one": "1 loss",
+    "loss_other": "{{count}} losses",
+    "lossRemaining_one": "{{count}} more prefer loss before junk at bucket end",
+    "lossRemaining_other": "{{count}} more prefer losses before junk at bucket end",
+    "keyboardHints": "Hover buttons for outcomes · ↑ keep both · Space pass · ↓ junk both · Ctrl+←/→ junk sides",
+    "aria": {
+      "keepLeft": "Keep left. {{outcome}}",
+      "keepRight": "Keep right. {{outcome}}",
+      "keepBoth": "Keep both. {{outcome}}",
+      "preferLeft": "Prefer left. {{outcome}}",
+      "preferRight": "Prefer right. {{outcome}}",
+      "passPair": "Pass pair. {{outcome}}",
+      "junkLeft": "Junk left. {{outcome}}",
+      "junkRight": "Junk right. {{outcome}}",
+      "junkBoth": "Junk both. {{outcome}}"
+    }
+  },
+  "progress": {
+    "noGroups": "沒有重複群組",
+    "lastInQueue": "佇列中的最後一群組"
+  }
+}

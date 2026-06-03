@@ -1,0 +1,14 @@
+{
+  "loading": "Carregando cofre…",
+  "refreshing": "Atualizando…",
+  "refreshingStatus": "Atualizando… {{status}}",
+  "loadVault": "Carregar cofre",
+  "noDataYet": "Ainda sem dados do cofre.",
+  "noDataBrowseHint": "Carregue o cofre no painel primeiro.",
+  "noDataBuildHint": "Ainda sem dados do cofre. Carregue o cofre no painel.",
+  "retryVaultLoad": "Tentar carregar cofre novamente",
+  "signOutInSettings": "Sair em Configurações",
+  "dismiss": "Dispensar",
+  "tieredArmorTitle": "Armaduras com tier no jogo (Tier 1–5). Equipamento legado e peças sem tier ficam de fora da importação. O escopo de duplicatas usa sua configuração de tier mínimo.",
+  "dupeRulesImpact": "Carregue o cofre para pré-visualizar o impacto."
+}

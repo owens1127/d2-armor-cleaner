@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { isBungieConfigured, startBungieLogin } from '@/lib/bungie/auth';
 import { bungieSignInUnavailableMessage } from '@/lib/env';
 
@@ -11,6 +12,7 @@ export function SignInWithBungieButton({
   className = 'ui-btn-primary px-5 py-2.5 text-sm font-medium',
   showUnavailableNote = false,
 }: SignInWithBungieButtonProps) {
+  const { t } = useTranslation('home');
   const bungieReady = isBungieConfigured();
 
   return (
@@ -24,7 +26,7 @@ export function SignInWithBungieButton({
           showUnavailableNote && !bungieReady ? 'bungie-sign-in-unavailable' : undefined
         }
       >
-        Sign in with Bungie
+        {t('signInWithBungie')}
       </button>
       {showUnavailableNote && !bungieReady && (
         <p

@@ -1,0 +1,32 @@
+{
+  "title": "重複應如何符合？",
+  "intro": "我們將相似的護甲 roll 分組，便於你選一個保留並在 DIM 中標記其餘。可隨時在設定中更改。",
+  "restoringSession": "正在恢復 Bungie 工作階段…",
+  "redirectingLogin": "正在跳轉到登入…",
+  "loadingVault": "正在載入倉庫…",
+  "retryVaultLoad": "重試載入倉庫",
+  "refreshing": "正在重新整理…",
+  "noTieredArmor": "在你設定的最低階下，範圍內無升階護甲",
+  "tieredPiecesImported": "（已匯入 {{count}} 件升階護甲）",
+  "tieredArmorFootnote": "僅包含遊戲內升階裝備（T1–T5）。如需可在設定中降低最低階。",
+  "recommendedPresetSr": "推薦預設",
+  "useRecommended": "使用推薦",
+  "customizeRules": "自訂規則",
+  "hideCustomization": "隱藏自訂",
+  "customizeIntro": "收緊或放寬何謂重複。設定中的預設可一鍵設定。",
+  "matchStyleLabel": "符合方式：",
+  "previewByClass": "按職業預覽",
+  "suggestions": "建議",
+  "usePreset": "使用 {{label}}",
+  "impact": {
+    "none": "在目前階下，{{class}} 未找到重複群組。",
+    "summary": "約 {{buckets}} 個重複{{groupWord}} · 約 {{review}} 個{{rollWord}}待對比（{{class}}）",
+    "group_one": "群組",
+    "group_other": "群組",
+    "roll_one": "roll",
+    "roll_other": "roll"
+  },
+  "aria": {
+    "dupeRules": "重複規則"
+  }
+}

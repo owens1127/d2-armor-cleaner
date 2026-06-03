@@ -1,5 +1,5 @@
-import { CLASS_LABELS } from '@/lib/constants';
 import { CLASS_GLYPH_PATHS } from '@/lib/items/class-glyphs';
+import { classLabel } from '@/i18n/gameCopy';
 import type { ClassType } from '@/types';
 
 interface ClassIconProps {
@@ -36,7 +36,7 @@ export function ClassIcon({ classType, size = 'md', className = '' }: ClassIconP
     <span
       className={`inline-flex shrink-0 items-center justify-center text-white/75 ${className}`}
       role="img"
-      aria-label={CLASS_LABELS[classType]}
+      aria-label={classLabel(classType)}
     >
       <ClassGlyph classType={classType} size={px} />
     </span>

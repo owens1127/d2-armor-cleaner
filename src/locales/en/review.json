@@ -1,0 +1,39 @@
+{
+  "title": "Review tags",
+  "summary": "{{total}} queued · {{keep}} keep · {{junk}} junk. Apply writes queued tags; rows note existing DIM tags when different.",
+  "applied": "Tags applied to DIM Sync.",
+  "openJunkInDim": "Open junk in DIM",
+  "partialApplied": "Partially applied: {{count}} tags succeeded. Failed items remain in the queue.",
+  "retryFailed": "Retry {{count}} failed",
+  "empty": "No pending tags.",
+  "compareDupes": "Compare duplicates",
+  "table": {
+    "item": "Item",
+    "copyDimSr": "Copy DIM query",
+    "archetype": "Archetype",
+    "tertiary": "Tertiary",
+    "tuning": "Tuning",
+    "class": "Class",
+    "combo": "Combo",
+    "appliesToDim": "Applies to DIM",
+    "none": "None"
+  },
+  "copy": {
+    "ids": "Copy id: query",
+    "junk": "Copy tag:junk search",
+    "junkIds": "Copy junk ids only",
+    "copied": "Copied!",
+    "announcement": "{{label}} copied to clipboard."
+  },
+  "removeFromQueue": "Remove from queue",
+  "applyTags": "Apply {{count}} tags to DIM",
+  "applying": "Applying…",
+  "clearPending": "Clear pending tags",
+  "clearSession": "Clear session",
+  "backToDashboard": "Back to dashboard",
+  "confirm": {
+    "clearPending": "Clear all {{count}} pending tags? They will not be applied to DIM. Compare session progress is kept.",
+    "clearSession": "Clear the entire compare session? Pending tags and in-progress compare state will be reset."
+  },
+  "alreadyInDim": "Already in DIM: {{summary}}"
+}

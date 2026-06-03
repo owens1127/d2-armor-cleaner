@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DimIcon } from '@/components/items/DimIcon';
 import {
   copyDimQueriesAnnouncement,
@@ -34,6 +35,7 @@ export function CopyDimQueryButton({
   className = '',
   compact = false,
 }: CopyDimQueryButtonProps) {
+  const { t } = useTranslation('common');
   const [copied, setCopied] = useState(false);
   const resetTimerRef = useRef<number | null>(null);
   const label = copyDimQueryAriaLabel(itemName);
@@ -70,7 +72,7 @@ export function CopyDimQueryButton({
         title={label}
       >
         {copied ? (
-          <span className="text-[10px] font-medium leading-none text-white/90">Copied</span>
+          <span className="text-[10px] font-medium leading-none text-white/90">{t('copied')}</span>
         ) : (
           <DimIcon
             size={DIM_COPY_GLYPH_PX}
@@ -105,6 +107,7 @@ export function CopyDimQueriesButton({
   ariaLabel,
   announcement,
 }: CopyDimQueriesButtonProps) {
+  const { t } = useTranslation('common');
   const [copied, setCopied] = useState(false);
   const resetTimerRef = useRef<number | null>(null);
   const pieceCount = instanceIds.length;
@@ -148,7 +151,7 @@ export function CopyDimQueriesButton({
         title={label}
       >
         {copied ? (
-          <span className="text-[10px] font-medium leading-none text-white/90">Copied</span>
+          <span className="text-[10px] font-medium leading-none text-white/90">{t('copied')}</span>
         ) : (
           <DimIcon
             size={DIM_COPY_GLYPH_PX}

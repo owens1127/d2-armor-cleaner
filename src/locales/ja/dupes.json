@@ -1,0 +1,66 @@
+{
+  "grouping": {
+    "sameArmorSet": {
+      "label": "同じ防具セットを要求",
+      "help": "同じセットの装備のみをグループ化または比較。オフ: すべてのセットで同じスロット + アーキタイプ + 第3ステータス。"
+    },
+    "sameTuningStat": {
+      "label": "同じチューニングステータスを要求",
+      "help": "チューニングステータスで分割（例: 武器 vs グレネード）。オフ: 1 バケットに混在するチューニングステータス。"
+    }
+  },
+  "respectKeepFavorite": {
+    "label": "ジャンク選定時に DIM のキープとお気に入りを尊重",
+    "help": "オン時、キープおよびお気に入りタグの装備は重複フローでジャンクとして提案されません。"
+  },
+  "excludeJunk": {
+    "label": "ジャンクタグ付き装備を重複カウントから除外"
+  },
+  "presets": {
+    "loose": {
+      "label": "ゆるい"
+    },
+    "standard": {
+      "label": "標準"
+    },
+    "setAware": {
+      "label": "セット重視"
+    },
+    "tuning": {
+      "label": "チューニング"
+    },
+    "strict": {
+      "label": "厳格"
+    }
+  },
+  "impactCompact": {
+    "buckets": "重複バケット ·",
+    "decisions": "判断 ·",
+    "pieces": "{{count}} 件を含む"
+  },
+  "matchStyle": {
+    "custom": "カスタム",
+    "usingPreset": "{{label}} を使用中",
+    "usingCustomRules": "カスタムルールを使用中",
+    "cardBody": {
+      "loose": "同じ防具セットやチューニングステータスを要求せず、同じスロットの装備を比較します。",
+      "standard": "同じ防具セットを要求せず、スロット、アーキタイプ、第3ステータスで比較します。",
+      "setAware": "防具セットで重複をグループ化 · 多くの保管庫に適しています。",
+      "tuning": "異なる防具セットでもチューニングステータスで重複をグループ化します。",
+      "strict": "重複一致には同じ防具セットとチューニングステータスが必要です。"
+    },
+    "customMix": "カスタム組み合わせ: {{armorSet}}、{{tuningStat}}。",
+    "armorSetSame": "同じ防具セット",
+    "armorSetAny": "任意の防具セット",
+    "tuningStatSame": "同じチューニングステータス",
+    "tuningStatAny": "任意のチューニングステータス",
+    "dimTagsRespect": "ジャンク提案時に DIM のキープとお気に入りタグを考慮します。",
+    "dimTagsIgnore": "ジャンク提案時にキープとお気に入りタグは使用しません。"
+  },
+  "suggestions": {
+    "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+    "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+    "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+    "standardDefault": "Standard preset for your vault size."
+  }
+}

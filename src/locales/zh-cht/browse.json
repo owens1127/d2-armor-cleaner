@@ -1,0 +1,57 @@
+{
+  "title": "瀏覽 {{class}} 護甲",
+  "summary": "{{filtered}} / {{total}} 件 · {{sortLabel}}",
+  "redundantLink": "{{count}} 個冗餘 roll",
+  "loadVaultFirst": "請先從儀表板載入倉庫。",
+  "filters": {
+    "slot": "部位",
+    "archetype": "原型",
+    "search": "搜尋",
+    "armorSet": "護甲套裝",
+    "dimTag": "DIM 標籤",
+    "sort": "排序",
+    "combo": "組合",
+    "allSlots": "全部部位",
+    "allArchetypes": "全部原型",
+    "allSets": "全部套裝",
+    "any": "任意",
+    "anyCombo": "任意組合",
+    "armorNamePlaceholder": "護甲名稱…",
+    "statLowerOnly": "僅屬性更低",
+    "dupesOnly": "僅重複",
+    "strictlyLowerOnly": "僅嚴格更低",
+    "redundantOnly": "僅冗餘 roll",
+    "supportsComboOnly": "僅支援組合"
+  },
+  "dimTags": {
+    "untagged": "未標記",
+    "keep": "保留",
+    "junk": "垃圾",
+    "favorite": "收藏",
+    "infuse": "灌注",
+    "archive": "歸檔"
+  },
+  "sort": {
+    "matchDesc": "匹配 %（高 → 低）",
+    "matchAsc": "匹配 %（低 → 高）",
+    "preference": "偏好",
+    "buildFitDesc": "組合契合（高 → 低）",
+    "matchDescHint": "按匹配 % 排序（最契合優先）",
+    "matchAscHint": "按匹配 % 排序（最不契合優先）",
+    "buildFitHint": "按組合契合排序",
+    "preferenceHint": "按偏好排序"
+  },
+  "copyIds": "複製 {{count}} 個 id: 查詢",
+  "copied": "已複製！",
+  "reviewTagsLink": "審核對比/分揀標籤（{{count}}）",
+  "redundant": {
+    "pickOne": "選一個保留",
+    "noRedundant": "無冗餘 roll",
+    "noMatches": "無符合",
+    "noMatchFilters": "No redundant rolls match the current filters.",
+    "noneToShow": "No redundant rolls to show."
+  },
+  "noItemsMatch": "No items match these filters.",
+  "backToDashboard": "Back to dashboard",
+  "dupeBadge": "dupe"
+}

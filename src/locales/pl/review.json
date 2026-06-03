@@ -1,0 +1,39 @@
+{
+  "title": "Przegląd tagów",
+  "summary": "{{total}} w kolejce · {{keep}} keep · {{junk}} junk. Zastosowanie zapisuje tagi w kolejce; wiersze pokazują istniejące tagi DIM, gdy się różnią.",
+  "applied": "Tagi zastosowane w DIM Sync.",
+  "openJunkInDim": "Otwórz junk w DIM",
+  "partialApplied": "Częściowo zastosowano: {{count}} tagów powiodło się. Nieudane pozostały w kolejce.",
+  "retryFailed": "Ponów {{count}} nieudanych",
+  "empty": "Brak oczekujących tagów.",
+  "compareDupes": "Porównaj duplikaty",
+  "table": {
+    "item": "Przedmiot",
+    "copyDimSr": "Kopiuj zapytanie DIM",
+    "archetype": "Archetyp",
+    "tertiary": "Trzeciorzędna",
+    "tuning": "Strojenie",
+    "class": "Klasa",
+    "combo": "Kombinacja",
+    "appliesToDim": "Dotyczy DIM",
+    "none": "Brak"
+  },
+  "copy": {
+    "ids": "Kopiuj zapytanie id:",
+    "junk": "Kopiuj wyszukiwanie tag:junk",
+    "junkIds": "Kopiuj tylko id junk",
+    "copied": "Skopiowano!",
+    "announcement": "{{label}} skopiowano do schowka."
+  },
+  "removeFromQueue": "Usuń z kolejki",
+  "applyTags": "Zastosuj {{count}} tagów w DIM",
+  "applying": "Stosowanie…",
+  "clearPending": "Wyczyść oczekujące tagi",
+  "clearSession": "Wyczyść sesję",
+  "backToDashboard": "Wróć do panelu",
+  "confirm": {
+    "clearPending": "Wyczyścić wszystkie {{count}} oczekujących tagów? Nie zostaną zastosowane w DIM. Postęp sesji porównań zostaje zachowany.",
+    "clearSession": "Wyczyścić całą sesję porównań? Oczekujące tagi i stan porównań w toku zostaną zresetowane."
+  },
+  "alreadyInDim": "Już w DIM: {{summary}}"
+}

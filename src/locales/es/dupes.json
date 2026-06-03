@@ -1,0 +1,66 @@
+{
+  "grouping": {
+    "sameArmorSet": {
+      "label": "Exigir el mismo conjunto de armadura",
+      "help": "Solo agrupa o compara piezas del mismo conjunto. Desactivado: mismo hueco + arquetipo + terciaria en todos los conjuntos."
+    },
+    "sameTuningStat": {
+      "label": "Exigir la misma estadística de afinación",
+      "help": "Separa por estadística de afinación (p. ej. armas frente a granada). Desactivado: estadísticas de afinación mezcladas en un mismo grupo."
+    }
+  },
+  "respectKeepFavorite": {
+    "label": "Respetar conservar y favorito de DIM al elegir basura",
+    "help": "Activado: las piezas etiquetadas como conservar o favorito no se sugieren como basura en flujos de duplicados."
+  },
+  "excludeJunk": {
+    "label": "Excluir piezas etiquetadas como basura de los recuentos de duplicados"
+  },
+  "presets": {
+    "loose": {
+      "label": "Flexible"
+    },
+    "standard": {
+      "label": "Estándar"
+    },
+    "setAware": {
+      "label": "Consciente del conjunto"
+    },
+    "tuning": {
+      "label": "Afinación"
+    },
+    "strict": {
+      "label": "Estricto"
+    }
+  },
+  "impactCompact": {
+    "buckets": "grupos de duplicados ·",
+    "decisions": "decisiones ·",
+    "pieces": "{{count}} piezas incluidas"
+  },
+  "matchStyle": {
+    "custom": "Personalizado",
+    "usingPreset": "Usando {{label}}",
+    "usingCustomRules": "Usando reglas personalizadas",
+    "cardBody": {
+      "loose": "Compara piezas del mismo hueco sin exigir el mismo conjunto de armadura ni estadística de afinación.",
+      "standard": "Compara por hueco, arquetipo y terciaria sin exigir el mismo conjunto de armadura.",
+      "setAware": "Agrupa duplicados por conjunto de armadura · funciona bien en la mayoría de cámaras.",
+      "tuning": "Agrupa duplicados por estadística de afinación, incluso entre conjuntos distintos.",
+      "strict": "Exige el mismo conjunto de armadura y estadística de afinación para considerar un duplicado."
+    },
+    "customMix": "Mezcla personalizada: {{armorSet}}, {{tuningStat}}.",
+    "armorSetSame": "mismo conjunto de armadura",
+    "armorSetAny": "cualquier conjunto de armadura",
+    "tuningStatSame": "misma estadística de afinación",
+    "tuningStatAny": "cualquier estadística de afinación",
+    "dimTagsRespect": "Las etiquetas conservar y favorito de DIM cuentan al sugerir basura.",
+    "dimTagsIgnore": "Las etiquetas conservar y favorito no se usan al sugerir basura."
+  },
+  "suggestions": {
+    "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+    "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+    "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+    "standardDefault": "Standard preset for your vault size."
+  }
+}

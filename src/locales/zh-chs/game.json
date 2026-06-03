@@ -1,0 +1,96 @@
+{
+  "achievability": {
+    "ready": "就绪",
+    "almost": "接近",
+    "needBetterRolls": "需要更好 roll",
+    "covered": "已覆盖",
+    "weakTuning": "调优偏弱",
+    "gap": "缺口",
+    "idealTuning": "理想调优",
+    "tuned": "已调优",
+    "archetypeOnly": "仅原型",
+    "noFit": "不匹配"
+  },
+  "armorDiff": {
+    "sameStatSplit": "相同属性分配",
+    "sameStatsTuning": "相同属性与调优",
+    "sameRoll": "相同 roll",
+    "decideSetOrTuning": "按套装或调优决定",
+    "decideTuning": "按调优决定",
+    "decideSet": "按套装决定",
+    "sameExceptPower": "除光等/位置外完全相同",
+    "identicalRoll": "完全相同的 roll。任选其一即可。"
+  },
+  "fit": {
+    "poorMatch": "匹配差",
+    "closeCall": "难分高下"
+  },
+  "scoring": {
+    "calibrateForAccuracy": "校准偏好以提高准确度"
+  },
+  "heatmap": {
+    "mixedTuning": "桶内混合调优属性",
+    "dupeBucket": "重复桶"
+  },
+  "minTier": {
+    "tier5Only": "仅 T5 阶"
+  },
+  "diff": {
+    "tuning": "Tuning",
+    "set": "Set",
+    "power": "Power",
+    "masterwork": "Masterwork",
+    "noSet": "无套装",
+    "yes": "Yes",
+    "no": "No",
+    "tuningVs": "Tuning: {{a}} vs {{b}}",
+    "setFootnote": "套装：{{name}}"
+  },
+  "dominator": {
+    "differentStatSplit": "스탯 분배 다름",
+    "sameAfterTuning": "튜닝 후 동일",
+    "beatsPiece": "이 피스보다 우수",
+    "statComparison": "스탯 비교",
+    "tuningCoverage": "튜닝 커버리지",
+    "aheadOn": "앞섬",
+    "everyTuningLayout": "모든 튜닝 배치"
+  },
+  "classes": {
+    "titan": "泰坦",
+    "hunter": "猎人",
+    "warlock": "术士"
+  },
+  "stats": {
+    "weapons": "武器",
+    "grenade": "手雷",
+    "super": "超级技能",
+    "melee": "近战",
+    "health": "生命值",
+    "class": "职业"
+  },
+  "archetypes": {
+    "gunner": "Gunner",
+    "grenadier": "Grenadier",
+    "paragon": "Paragon",
+    "brawler": "Brawler",
+    "bulwark": "Bulwark",
+    "specialist": "Specialist"
+  },
+  "slots": {
+    "helmet": "Helmet",
+    "arms": "Arms",
+    "chest": "Chest",
+    "legs": "Legs",
+    "classItem": "Class Item"
+  },
+  "roll": {
+    "tertiary": "{{stat}} tertiary",
+    "tuning": "{{stat}} tuning",
+    "tuningLabel": "Tuning: {{stat}}",
+    "preferred": "Preferred",
+    "none": "none"
+  },
+  "labels": {
+    "separator": " · "
+  }
+}

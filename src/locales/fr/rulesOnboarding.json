@@ -1,0 +1,32 @@
+{
+  "title": "Comment les doublons doivent-ils correspondre ?",
+  "intro": "Nous regroupons les rolls d’armure similaires pour que vous choisissiez un gardien et étiquetiez le reste dans DIM. Modifiable à tout moment dans Paramètres.",
+  "restoringSession": "Restauration de la session Bungie…",
+  "redirectingLogin": "Redirection vers la connexion…",
+  "loadingVault": "Chargement du coffre…",
+  "retryVaultLoad": "Réessayer le chargement du coffre",
+  "refreshing": "Actualisation…",
+  "noTieredArmor": "Aucune armure classée dans la portée à votre niveau minimum",
+  "tieredPiecesImported": "({{count}} pièces classées importées)",
+  "tieredArmorFootnote": "Seul l’équipement classé en jeu (N1–N5) est inclus. Baissez le niveau minimum dans Paramètres si besoin.",
+  "recommendedPresetSr": "Préréglage recommandé",
+  "useRecommended": "Utiliser le recommandé",
+  "customizeRules": "Personnaliser les règles",
+  "hideCustomization": "Masquer la personnalisation",
+  "customizeIntro": "Resserrez ou assouplissez ce qui compte comme doublon. Les préréglages dans Paramètres les définissent en un clic.",
+  "matchStyleLabel": "Style de correspondance :",
+  "previewByClass": "Aperçu par classe",
+  "suggestions": "Suggestions",
+  "usePreset": "Utiliser {{label}}",
+  "impact": {
+    "none": "Aucun groupe de doublons trouvé pour {{class}} à votre niveau actuel.",
+    "summary": "Environ {{buckets}} {{groupWord}} de doublons · environ {{review}} {{rollWord}} à comparer ({{class}})",
+    "group_one": "groupe",
+    "group_other": "groupes",
+    "roll_one": "roll",
+    "roll_other": "rolls"
+  },
+  "aria": {
+    "dupeRules": "Règles de doublons"
+  }
+}

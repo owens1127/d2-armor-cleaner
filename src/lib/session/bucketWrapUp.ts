@@ -98,9 +98,4 @@ export function wrapUpGroupsRemainingAfterCurrent(queueLengthIncludingCurrent: n
   return Math.max(0, queueLengthIncludingCurrent - 1);
 }
 
-export function formatWrapUpSessionContext(groupsRemainingAfterCurrent: number): string {
-  if (groupsRemainingAfterCurrent === 0) return 'Last group in your queue';
-  return groupsRemainingAfterCurrent === 1
-    ? '1 group left after this'
-    : `${groupsRemainingAfterCurrent} groups left after this`;
-}
+export { formatWrapUpSessionContext } from '@/i18n/duelCopy';

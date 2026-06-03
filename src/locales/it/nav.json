@@ -1,0 +1,19 @@
+{
+  "dashboard": "Dashboard",
+  "calibrate": "Calibra",
+  "browse": "Sfoglia",
+  "combos": "Combo",
+  "compare": "Confronta",
+  "review": "Revisione",
+  "autoFilters": "Filtri automatici",
+  "settings": "Impostazioni",
+  "mobile": {
+    "dashboard": "Home",
+    "calibrate": "Cal",
+    "autoFilters": "Filtri",
+    "settings": "Imp"
+  },
+  "aria": {
+    "mobile": "Navigazione mobile"
+  }
+}

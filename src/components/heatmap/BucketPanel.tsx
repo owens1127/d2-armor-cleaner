@@ -1,11 +1,7 @@
 import { useMemo } from 'react';
+import { statLabel, archetypeLabel, slotLabel } from '@/i18n/gameCopy';
 import { useVaultInteractionHold } from '@/hooks/useVaultRefreshGuard';
 import type { ArmorPiece, ClassPreferenceProfile, DupeBucket } from '@/types';
-import {
-  ARCHETYPE_LABELS,
-  SLOT_LABELS,
-  STAT_LABELS,
-} from '@/lib/constants';
 import { ArmorCard } from '@/components/duel/ArmorCard';
 import { dimInstanceIdsQuery } from '@/lib/dim/query';
 import { getClassPrefs } from '@/lib/prefs/profile';
@@ -181,10 +177,10 @@ export function BucketPanel({ bucket, onClose, onClean }: BucketPanelProps) {
         <div className="p-4 border-b border-border flex justify-between items-start gap-2">
           <div>
             <h2 id="bucket-panel-title" className="font-semibold">
-              {SLOT_LABELS[bucket.key.armorSlot]} · {ARCHETYPE_LABELS[bucket.key.archetype]}
+              {slotLabel(bucket.key.armorSlot)} · {archetypeLabel(bucket.key.archetype)}
             </h2>
             <p className="text-sm text-muted">
-              + {STAT_LABELS[bucket.key.tertiaryStat]} · {active.length} items
+              + {statLabel(bucket.key.tertiaryStat)} · {active.length} items
               {bucket.hasDupes && (
                 <span className="text-white/70 ml-2">dupe bucket</span>
               )}

@@ -1,0 +1,32 @@
+{
+  "title": "중복은 어떻게 일치해야 할까요?",
+  "intro": "비슷한 방어구 롤을 묶어 남길 피스를 고르고 나머지는 DIM에 태그합니다. 설정에서 언제든 변경할 수 있습니다.",
+  "restoringSession": "Bungie 세션 복원 중…",
+  "redirectingLogin": "로그인으로 이동 중…",
+  "loadingVault": "금고 불러오는 중…",
+  "retryVaultLoad": "금고 불러오기 다시 시도",
+  "refreshing": "새로고침 중…",
+  "noTieredArmor": "최소 티어 범위에 티어 방어구 없음",
+  "tieredPiecesImported": "(티어 피스 {{count}}개 가져옴)",
+  "tieredArmorFootnote": "게임 내 티어 장비(T1–T5)만 포함됩니다. 필요하면 설정에서 최소 티어를 낮추세요.",
+  "recommendedPresetSr": "권장 프리셋",
+  "useRecommended": "권장 사용",
+  "customizeRules": "규칙 사용자 지정",
+  "hideCustomization": "사용자 지정 숨기기",
+  "customizeIntro": "중복으로 인정할 범위를 조절합니다. 설정의 프리셋으로 한 번에 설정할 수 있습니다.",
+  "matchStyleLabel": "일치 스타일:",
+  "previewByClass": "클래스별 미리보기",
+  "suggestions": "제안",
+  "usePreset": "{{label}} 사용",
+  "impact": {
+    "none": "현재 티어에서 {{class}}에 대한 중복 그룹이 없습니다.",
+    "summary": "중복 {{groupWord}} 약 {{buckets}}개 · 비교할 {{rollWord}} 약 {{review}}개 ({{class}})",
+    "group_one": "그룹",
+    "group_other": "그룹",
+    "roll_one": "롤",
+    "roll_other": "롤"
+  },
+  "aria": {
+    "dupeRules": "중복 규칙"
+  }
+}

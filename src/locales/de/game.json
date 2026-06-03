@@ -1,0 +1,96 @@
+{
+  "achievability": {
+    "ready": "Bereit",
+    "almost": "Fast",
+    "needBetterRolls": "Bessere Rolls nötig",
+    "covered": "Abgedeckt",
+    "weakTuning": "Schwache Abstimmung",
+    "gap": "Lücke",
+    "idealTuning": "Ideale Abstimmung",
+    "tuned": "Abgestimmt",
+    "archetypeOnly": "Nur Archetyp",
+    "noFit": "Keine Passung"
+  },
+  "armorDiff": {
+    "sameStatSplit": "Gleiche Wertverteilung",
+    "sameStatsTuning": "Gleiche Werte & Abstimmung",
+    "sameRoll": "Gleicher Roll",
+    "decideSetOrTuning": "Nach Set oder Abstimmung entscheiden",
+    "decideTuning": "Nach Abstimmung entscheiden",
+    "decideSet": "Nach Set entscheiden",
+    "sameExceptPower": "Gleich bis auf Power/Standort",
+    "identicalRoll": "Identischer Roll. Wähle eines."
+  },
+  "fit": {
+    "poorMatch": "Schlechte Passung",
+    "closeCall": "Knappes Ergebnis"
+  },
+  "scoring": {
+    "calibrateForAccuracy": "Einstellungen kalibrieren für bessere Genauigkeit"
+  },
+  "heatmap": {
+    "mixedTuning": "Gemischte Abstimmungswerte im Bucket",
+    "dupeBucket": "Duplikat-Bucket"
+  },
+  "minTier": {
+    "tier5Only": "Nur Stufe 5"
+  },
+  "diff": {
+    "tuning": "Abstimmung",
+    "set": "Set",
+    "power": "Power",
+    "masterwork": "Meisterwerk",
+    "noSet": "Kein Set",
+    "yes": "Ja",
+    "no": "Nein",
+    "tuningVs": "Abstimmung: {{a}} vs {{b}}",
+    "setFootnote": "Set: {{name}}"
+  },
+  "dominator": {
+    "differentStatSplit": "Andere Wertverteilung",
+    "sameAfterTuning": "Nach Tuning gleich",
+    "beatsPiece": "Schlägt dieses Teil",
+    "statComparison": "Wertvergleich",
+    "tuningCoverage": "Tuning-Abdeckung",
+    "aheadOn": "Vorn bei",
+    "everyTuningLayout": "jedes Tuning-Layout"
+  },
+  "classes": {
+    "titan": "Titan",
+    "hunter": "Jäger",
+    "warlock": "Warlock"
+  },
+  "stats": {
+    "weapons": "Waffen",
+    "grenade": "Granate",
+    "super": "Super",
+    "melee": "Nahkampf",
+    "health": "Gesundheit",
+    "class": "Klasse"
+  },
+  "archetypes": {
+    "gunner": "Schütze",
+    "grenadier": "Grenadier",
+    "paragon": "Vorbild",
+    "brawler": "Schläger",
+    "bulwark": "Bollwerk",
+    "specialist": "Spezialist"
+  },
+  "slots": {
+    "helmet": "Helm",
+    "arms": "Arme",
+    "chest": "Brust",
+    "legs": "Beine",
+    "classItem": "Klassengegenstand"
+  },
+  "roll": {
+    "tertiary": "{{stat}} Tertiär",
+    "tuning": "{{stat}} Abstimmung",
+    "tuningLabel": "Abstimmung: {{stat}}",
+    "preferred": "Bevorzugt",
+    "none": "keine"
+  },
+  "labels": {
+    "separator": " · "
+  }
+}

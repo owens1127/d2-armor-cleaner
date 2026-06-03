@@ -1,0 +1,67 @@
+{
+  "language": "Язык",
+  "languageEn": "English",
+  "languageFr": "Français",
+  "languageEs": "Español",
+  "languageEsMx": "Español (México)",
+  "languageDe": "Deutsch",
+  "languageIt": "Italiano",
+  "languageJa": "日本語",
+  "languageKo": "한국어",
+  "languagePl": "Polski",
+  "languagePtBr": "Português (Brasil)",
+  "languageRu": "Русский",
+  "languageZhChs": "简体中文",
+  "languageZhCht": "繁體中文",
+  "continue": "Продолжить",
+  "save": "Сохранить",
+  "back": "Назад",
+  "skip": "Пропустить",
+  "signOut": "Выйти",
+  "retry": "Повторить",
+  "retrying": "Повтор…",
+  "pleaseWait": "Подождите",
+  "copied": "Скопировано!",
+  "none": "Нет",
+  "configured": "настроено",
+  "notConfigured": "не настроено",
+  "developer": "Разработчик",
+  "openReviewPage": "Открыть страницу проверки",
+  "clearPendingTags": "Очистить ожидающие метки",
+  "exportPrefs": "Экспорт настроек",
+  "importPrefs": "Импорт настроек",
+  "preferencesImported": "Настройки импортированы.",
+  "invalidPrefsFile": "Неверный файл настроек.",
+  "topStats": "Лучшие статы:",
+  "topArchetypes": "Лучшие архетипы:",
+  "recalibrateClass": "Перекалибровать {{class}}",
+  "resetClassPrefs": "Сбросить настройки {{class}}",
+  "resetAllClasses": "Сбросить все классы",
+  "confirm": {
+    "clearPendingTags": "Очистить все {{count}} ожидающих меток? Они не будут применены в DIM.",
+    "resetClassPrefs": "Сбросить настройки {{class}} по умолчанию? Веса статов, выбор калибровки и обученные веса для этого класса будут удалены.",
+    "resetAllClassPrefs": "Сбросить настройки всех классов по умолчанию? Веса статов, выбор калибровки и обученные веса будут удалены для Hunter, Titan и Warlock. Правила дубликатов и другие настройки сохранятся."
+  },
+  "classPrefs": {
+    "heading": "Настройки {{class}}",
+    "usingClass": "Используется {{class}} (смените класс в шапке). Веса статов и архетипов по классам из калибровки. Правила дубликатов общие, если не переопределены для класса.",
+    "calibrations": "{{count}} калибровок · уверенность {{confidence}}"
+  },
+  "reviewTags": {
+    "heading": "Проверка меток",
+    "queued_one": "{{count}} метка в очереди на применение в DIM.",
+    "queued_other": "{{count}} меток в очереди на применение в DIM.",
+    "none": "Нет ожидающих меток."
+  },
+  "dev": {
+    "dimKeyHint": "Локальный ключ DIM: POST на api.destinyitemmanager.com/new_app с origin {{origin}}."
+  },
+  "dimCopy": {
+    "queryFor": "DIM-Abfrage für {{name}} kopieren",
+    "queryCopied": "DIM-Abfrage für {{name}} in die Zwischenablage kopiert.",
+    "searchShown": "DIM-Suche für angezeigte Teile kopieren",
+    "searchShownCopied": "DIM-Suche für angezeigte Teile kopiert.",
+    "searchGroup": "DIM-Suche für alle {{count}} Teile in dieser Gruppe kopieren",
+    "searchGroupCopied": "DIM-Suche für alle {{count}} Teile in dieser Gruppe kopiert."
+  }
+}

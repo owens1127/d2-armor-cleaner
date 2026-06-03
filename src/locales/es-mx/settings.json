@@ -1,0 +1,67 @@
+{
+  "title": "Configuración",
+  "account": {
+    "heading": "Cuenta",
+    "signedInAs": "Sesión iniciada como <1>{{name}}</1>",
+    "parsedCount": "{{count}} piezas de armadura con nivel analizadas (bóveda, todos los personajes, administrador de correos)",
+    "signOutNote": "Cerrar sesión borra los tokens de Bungie y DIM de esta sesión del navegador (solo almacenamiento de sesión). Las preferencias permanecen en almacenamiento local.",
+    "signOutButton": "Cerrar sesión y borrar tokens"
+  },
+  "dupeRules": {
+    "heading": "Reglas de duplicados",
+    "intro": "Reglas compartidas para el mapa de calor, comparar, explorar y listas de tiradas redundantes.",
+    "scopeHeading": "Alcance: qué piezas cuentan",
+    "minTierLabel": "Nivel mínimo del equipo",
+    "minTierHelp": "La importación de la bóveda sigue cargando niveles 1 a 5. Solo las piezas en o por encima de este nivel entran en grupos de duplicados y revisiones de tiradas redundantes.",
+    "groupingHeading": "Agrupación: qué cuenta como \"duplicado\"",
+    "groupingIntro": "Las piezas siempre coinciden en clase, espacio, arquetipo y estadística terciaria. Estas opciones añaden divisiones más estrictas y también aplican a comparaciones de tiradas redundantes.",
+    "dimTagsHeading": "Etiquetas DIM al contar duplicados",
+    "dimTagsIntro": "Las piezas etiquetadas siguen visibles pero pueden excluirse del tamaño de grupos de duplicados y de los conteos de revisión.",
+    "liveImpact": "Impacto en vivo (reglas globales, bóveda de Hunter)"
+  },
+  "classDupeRules": {
+    "heading": "Reglas de duplicados de {{class}}",
+    "usingClass": "Usando {{class}} (cambia la clase en el encabezado). Las clases comparten reglas globales por defecto. Aplica un preset a una clase sin cambiar las demás.",
+    "customRules": "{{class}} usa reglas personalizadas ·",
+    "resetToGlobal": "restablecer a global"
+  },
+  "dupePresets": {
+    "heading": "Presets de duplicados"
+  },
+  "dashboardLink": "Panel",
+  "language": {
+    "heading": "Idioma",
+    "useBrowser": "Usar idioma del navegador",
+    "useBrowserHelp": "Activado: la app sigue el idioma del navegador. Desactivado: usa el idioma que elijas abajo."
+  },
+  "developer": {
+    "heading": "Desarrollador",
+    "bungie": "Bungie: {{status}}",
+    "dimSync": "DIM Sync: {{status}}"
+  },
+  "reviewTags": {
+    "heading": "Revisar etiquetas"
+  },
+  "classPrefs": {
+    "heading": "Preferencias de {{class}}",
+    "usingClass": "Usando {{class}} (cambia la clase en el encabezado). Pesos de estadísticas y arquetipos por clase según la calibración. Las reglas de duplicados se comparten salvo que se anulen por clase.",
+    "calibrations": "{{count}} calibraciones · confianza {{confidence}}",
+    "topStats": "Estadísticas principales:",
+    "topArchetypes": "Arquetipos principales:",
+    "recalibrate": "Recalibrar {{class}}",
+    "exportPrefs": "Exportar preferencias",
+    "importPrefs": "Importar preferencias",
+    "resetClass": "Restablecer preferencias de {{class}}",
+    "resetAll": "Restablecer todas las clases",
+    "imported": "Preferencias importadas.",
+    "invalidFile": "Archivo de preferencias no válido.",
+    "openReview": "Abrir página de revisión",
+    "clearPending": "Borrar etiquetas pendientes",
+    "queued_one": "{{count}} etiqueta en cola para aplicar en DIM.",
+    "queued_other": "{{count}} etiquetas en cola para aplicar en DIM.",
+    "nonePending": "No hay etiquetas pendientes.",
+    "confirmClearPending": "¿Borrar las {{count}} etiquetas pendientes? No se aplicarán en DIM.",
+    "confirmResetClass": "¿Restablecer las preferencias de {{class}} a los valores predeterminados? Se borrarán los pesos de estadísticas, las opciones de calibración y los pesos aprendidos de esta clase.",
+    "confirmResetAll": "¿Restablecer las preferencias de todas las clases a los valores predeterminados? Se borrarán los pesos de estadísticas, las opciones de calibración y los pesos aprendidos de Hunter, Titan y Warlock. Se conservan las reglas de duplicados y demás ajustes."
+  }
+}

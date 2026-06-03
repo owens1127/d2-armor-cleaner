@@ -1,0 +1,131 @@
+{
+  "title": "Confronta duplicati {{class}}",
+  "subtitle": {
+    "wrapUp": "Rivedi questo gruppo, poi continua",
+    "bucketMeta": "{{slot}} · {{archetype}} · {{tertiary}} · {{count}} oggetti",
+    "bucketProgress": "{{meta}} · {{progress}}",
+    "noDupes": "Nessuna armatura duplicata da confrontare per questa classe",
+    "chooseGroup": "Scegli un gruppo di duplicati per iniziare",
+    "startingNext": "Avvio prossimo gruppo di duplicati…"
+  },
+  "resetBucket": "Reimposta gruppo",
+  "preparing": "Preparazione confronti…",
+  "queueEmpty": {
+    "title": "Coda vuota",
+    "summary": "{{keep}} keep · {{junk}} junk in coda.",
+    "reviewTags": "Revisione tag",
+    "restartQueue": "Riavvia coda",
+    "clearSession": "Cancella sessione {{class}}"
+  },
+  "noDuplicates": {
+    "title": "Nessun duplicato da confrontare",
+    "body": "Nessun gruppo duplicati corrisponde alle tue regole per {{class}}. Prova ad allentare le regole duplicati nelle Impostazioni o carica un nuovo snapshot della cripta."
+  },
+  "noGroupsInQueue": "Nessun gruppo di duplicati in coda. Allenta le regole duplicati nelle Impostazioni o riavvia la coda.",
+  "skipGroup": "Salta gruppo (S)",
+  "restoringSession": "Ripristino sessione…",
+  "confirm": {
+    "switchBucket": "Cambiare gruppo? Le scelte in corso e i tag junk per il gruppo attuale verranno cancellati.",
+    "resetBucket": "Reimpostare questo gruppo? Tutte le scelte in corso, i tag junk e il progresso di confronto verranno cancellati. Il gruppo resta in coda.",
+    "clearClassSession": "Effacer toute la progression de comparaison {{class}} et les tags en file ? Irréversible."
+  },
+  "chooser": {
+    "title": "Scegli un gruppo di duplicati",
+    "kicker": "Comparer les doublons",
+    "intro": "Choisissez d'abord un groupe {{class}}. Changez plus tard dans l'en-tête.",
+    "listAria": "{{class}} duplicate groups"
+  },
+  "wrapUp": {
+    "title": "Rivedi questo gruppo di duplicati",
+    "chooseNext": "Scegli un gruppo da confrontare dopo",
+    "nextGroupsAria": "Prossimi gruppi di duplicati",
+    "kicker": "Bucket terminé",
+    "allPairsDecided": "Toutes les paires de duel décidées",
+    "continueNext": "Continuer vers le groupe suivant",
+    "applyTagsContinue": "Appliquer les tags et continuer",
+    "chooseDifferent": "Choisir un autre groupe",
+    "backToSummary": "Retour au résumé",
+    "whatsNext": "Suite",
+    "tagsFootnote": "Les tags sont mis en file en continuant. Rien n'est appliqué avant la révision.",
+    "stats": {
+      "keeps": "Keeps",
+      "junkQueued": "Junk en file",
+      "preferEliminated": "Prefer éliminés",
+      "pairsDecided": "Paires décidées",
+      "inGroup": "Dans ce groupe"
+    },
+    "breakdown": {
+      "keepBoth": "Garder les deux : {{count}}",
+      "keepSide": "Garder un côté : {{count}}",
+      "junkedInDuels": "Junk en duels : {{count}}",
+      "preferInPlay": "Prefer encore actifs : {{count}}"
+    },
+    "piece_one": "{{count}} pièce",
+    "piece_other": "{{count}} pièces",
+    "sessionLast": "Dernier groupe de la file",
+    "sessionLeft_one": "{{count}} groupe restant après",
+    "sessionLeft_other": "{{count}} groupes restants après"
+  },
+  "bucket": {
+    "label": "Gruppo",
+    "select": "Seleziona gruppo",
+    "dupeBucketsAria": "Gruppi duplicati"
+  },
+  "keyboard": {
+    "aria": "Scorciatoie tastiera confronto",
+    "left": "Links",
+    "both": "Beide",
+    "right": "Rechts",
+    "keep": "Keep",
+    "prefer": "Prefer",
+    "junk": "Junk"
+  },
+  "compare": {
+    "suggested": "Suggerito",
+    "sameRoll": "Stesso roll",
+    "compareSides": "Confronta lati",
+    "suggestedPick": "Scelta suggerita: ",
+    "vs": "vs",
+    "fitTitle": "Quanto bene questo pezzo si adatta alle preferenze salvate",
+    "powerTitle": "Livello di potenza",
+    "identicalRolls": "Rolls identiques. Gardez, junk, les deux ou passez.",
+    "suppressedSuggestion": "Les deux forts · dernier du palier. Prefer, passez, keep ou junk.",
+    "buildOptimalPrefix": "Combo optimal pour ",
+    "orPassKeepJunk": "· ou passez / keep / junk",
+    "evenMatch": "Égalité. Prefer, passez, keep ou junk.",
+    "eliminated": "Éliminé du bracket",
+    "actionKeep": "Keep",
+    "outcomes": {
+      "prefer": "Préférer ce côté. Le perdant a besoin de {{threshold}} défaites prefer avant junk.",
+      "keepSide": "Keep à la fin du bucket · l'autre reste au bracket",
+      "keepBoth": "Les deux gardés à la fin",
+      "junkOne": "Junk maintenant · l'autre reste (pas de gagnant)",
+      "junkBoth": "Les deux junk maintenant",
+      "pass": "Passer la paire. Aucun tag, les deux remis en file."
+    },
+    "pass": "Pass",
+    "preferred": "Bevorzugt",
+    "tuningLabel": "Abstimmung: {{stat}}",
+    "setFootnote": "Set: {{name}}",
+    "loss_one": "1 Niederlage",
+    "loss_other": "{{count}} Niederlagen",
+    "lossRemaining_one": "{{count}} weitere Prefer-Niederlage bis Schrott am Bucket-Ende",
+    "lossRemaining_other": "{{count}} weitere Prefer-Niederlagen bis Schrott am Bucket-Ende",
+    "keyboardHints": "Buttons für Ergebnisse · ↑ beide behalten · Leertaste Pass · ↓ beide Schrott · Strg+←/→ Seiten-Schrott",
+    "aria": {
+      "keepLeft": "Links behalten. {{outcome}}",
+      "keepRight": "Rechts behalten. {{outcome}}",
+      "keepBoth": "Beide behalten. {{outcome}}",
+      "preferLeft": "Links bevorzugen. {{outcome}}",
+      "preferRight": "Rechts bevorzugen. {{outcome}}",
+      "passPair": "Paar passen. {{outcome}}",
+      "junkLeft": "Links Schrott. {{outcome}}",
+      "junkRight": "Rechts Schrott. {{outcome}}",
+      "junkBoth": "Beide Schrott. {{outcome}}"
+    }
+  },
+  "progress": {
+    "noGroups": "Nessun gruppo di duplicati",
+    "lastInQueue": "Ultimo gruppo in coda"
+  }
+}

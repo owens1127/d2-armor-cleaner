@@ -1,0 +1,57 @@
+{
+  "title": "{{class}}-Rüstung durchsuchen",
+  "summary": "{{filtered}} von {{total}} Teilen · {{sortLabel}}",
+  "redundantLink": "{{count}} überflüssige Rolls",
+  "loadVaultFirst": "Lade zuerst deinen Tresor vom Dashboard.",
+  "filters": {
+    "slot": "Slot",
+    "archetype": "Archetyp",
+    "search": "Suche",
+    "armorSet": "Rüstungsset",
+    "dimTag": "DIM-Tag",
+    "sort": "Sortierung",
+    "combo": "Combo",
+    "allSlots": "Alle Slots",
+    "allArchetypes": "Alle Archetypen",
+    "allSets": "Alle Sets",
+    "any": "Beliebig",
+    "anyCombo": "Beliebiges Combo",
+    "armorNamePlaceholder": "Rüstungsname…",
+    "statLowerOnly": "Nur niedrigere Werte",
+    "dupesOnly": "Nur Duplikate",
+    "strictlyLowerOnly": "Nur strikt niedriger",
+    "redundantOnly": "Nur überflüssige Rolls",
+    "supportsComboOnly": "Nur Combo-Unterstützung"
+  },
+  "dimTags": {
+    "untagged": "Ohne Tag",
+    "keep": "Keep",
+    "junk": "Junk",
+    "favorite": "Favorite",
+    "infuse": "Infuse",
+    "archive": "Archive"
+  },
+  "sort": {
+    "matchDesc": "Match % (hoch → niedrig)",
+    "matchAsc": "Match % (niedrig → hoch)",
+    "preference": "Präferenz",
+    "buildFitDesc": "Combo-Passung (hoch → niedrig)",
+    "matchDescHint": "sortiert nach Match % (am kompatibelsten zuerst)",
+    "matchAscHint": "sortiert nach Match % (am wenigsten kompatibel zuerst)",
+    "buildFitHint": "sortiert nach Combo-Passung",
+    "preferenceHint": "sortiert nach Präferenz"
+  },
+  "copyIds": "{{count}} id:-Abfrage kopieren",
+  "copied": "Kopiert!",
+  "reviewTagsLink": "Vergleichs-/Triage-Tags prüfen ({{count}})",
+  "redundant": {
+    "pickOne": "Eines zum Behalten wählen",
+    "noRedundant": "Keine überflüssigen Rolls",
+    "noMatches": "Keine Treffer",
+    "noMatchFilters": "No redundant rolls match the current filters.",
+    "noneToShow": "No redundant rolls to show."
+  },
+  "noItemsMatch": "No items match these filters.",
+  "backToDashboard": "Back to dashboard",
+  "dupeBadge": "dupe"
+}

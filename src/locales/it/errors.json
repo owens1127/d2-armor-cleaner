@@ -1,0 +1,44 @@
+{
+  "boundary": {
+    "title": "Qualcosa è andato storto",
+    "body": "{{appName}} ha riscontrato un errore imprevisto. Le preferenze e i tag in coda in local storage di solito non sono interessati.",
+    "reload": "Ricarica app",
+    "goHome": "Vai alla home"
+  },
+  "oauth": {
+    "completingLogin": "Completamento accesso Bungie…",
+    "exchangingCode": "Scambio codice di autorizzazione…",
+    "loadingVault": "Caricamento della cripta…",
+    "firstLoadNote": "Il primo caricamento scarica il manifest di gioco e può richiedere un minuto.",
+    "bungieDenied": "Bungie ha rifiutato l'accesso: {{error}}",
+    "noAuthCode": "Nessun codice di autorizzazione restituito: prova ad accedere di nuovo.",
+    "stateMismatch": "Stato OAuth non corrispondente: spesso causato da una scheda obsoleta o session storage bloccato. Torna al login e riprova.",
+    "loginFailed": "Accesso non riuscito",
+    "backToLogin": "Torna al login",
+    "suffix": "Prova ad accedere di nuovo. Se il problema persiste, contatta l'amministratore del sito.",
+    "devChecklistIntro": "Checklist app Bungie (sviluppo locale):",
+    "devRedirect": "URL di reindirizzamento: {{uri}}",
+    "devOrigin": "Origin: {{origin}}",
+    "devClientId": "Client ID corrisponde alla tua applicazione Bungie ({{clientId}})",
+    "devApiKey": "La chiave API proviene dalla stessa applicazione Bungie",
+    "devRestart": "Riavvia il server di sviluppo dopo aver cambiato le credenziali"
+  },
+  "env": {
+    "bungieSignInUnavailableDev": "L'accesso non è abilitato in questa build.",
+    "bungieSignInUnavailable": "L'accesso non è disponibile su questo deployment.",
+    "bungieCredentialsMissingDev": "L'accesso Bungie non è abilitato in questo ambiente.",
+    "bungieCredentialsMissing": "L'accesso non è disponibile su questo deployment. Contatta l'amministratore del sito.",
+    "bungieSecretMissingDev": "L'accesso Bungie non è completamente abilitato in questo ambiente.",
+    "dimSyncUnavailableDev": "La sincronizzazione DIM non è abilitata in questo ambiente.",
+    "dimSyncUnavailable": "L'applicazione dei tag in DIM non è disponibile su questo deployment. Contatta l'amministratore del sito."
+  },
+  "vault": {
+    "sessionExpired": "La sessione Bungie potrebbe essere scaduta. Esci e accedi di nuovo.",
+    "forbidden": "Bungie ha rifiutato la richiesta. Prova ad accedere di nuovo o contatta l'amministratore del sito se continua.",
+    "manifest": "Download del manifest non riuscito. Controlla la connessione e riprova: il primo caricamento può richiedere un minuto.",
+    "network": "Errore di rete. Controlla la connessione o riprova tra poco.",
+    "membership": "Impossibile risolvere l'appartenenza Destiny. Assicurati che l'account abbia personaggi Destiny 2."
+  },
+  "applyTagsFailed": "Applicazione tag non riuscita",
+  "partialApply": "Applicati {{ok}} tag su {{total}}. {{failed}} non riusciti: riprova o rimuovi dalla coda."
+}

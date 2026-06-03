@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { BuildOptimalContext } from '@/components/items/buildOptimalContext';
 import { ReviewComboSignal } from '@/components/items/ReviewComboSignal';
@@ -10,7 +10,8 @@ import { resolveDimToken } from '@/lib/dim/resolveToken';
 import { dimIdQuery, dimJunkSearchQuery } from '@/lib/session/persist';
 import { buildReviewComboSignalMap } from '@/lib/review/comboSignal';
 import { normalizePendingTags, resolveTagRollProfile } from '@/lib/session/reviewTags';
-import { COPY_BUTTON_LABELS, copyButtonAnnouncement, type CopyButtonKey } from '@/pages/reviewCopyFeedback';
+import { useTranslation } from 'react-i18next';
+import { copyButtonAnnouncement, copyButtonLabel, type CopyButtonKey } from '@/pages/reviewCopyFeedback';
 import { useVaultFocusRefresh } from '@/lib/vault/useVaultFocusRefresh';
 import { useAuthStore, useSessionStore, useVaultStore } from '@/stores';
 import type { BungieMembership } from '@/types';
@@ -19,16 +20,15 @@ export function ReviewPage() {
   const { membership } = useAuthStore();
   useVaultFocusRefresh({ refreshOnMount: true });
 
-  if (!membership) return <Navigate to="/" replace />;
-
   return (
     <Layout>
-      <ReviewPageContent membership={membership} />
+      <ReviewPageContent membership={membership!} />
     </Layout>
   );
 }
 
 function ReviewPageContent({ membership }: { membership: BungieMembership }) {
+  const { t } = useTranslation(['review', 'common', 'errors']);
   const allItems = useVaultStore((s) => s.allItems);
   const {
     pendingTags,
@@ -100,11 +100,15 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
         setPartialApplied(okIds.size);
         setFailedIds(failIds);
         setError(
-          `Applied ${okIds.size} of ${tags.length} tags. ${failIds.length} failed: retry or remove from queue.`,
+          t('errors:partialApply', {
+            ok: okIds.size,
+            total: tags.length,
+            failed: failIds.length,
+          }),
         );
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to apply tags');
+      setError(e instanceof Error ? e.message : t('errors:applyTagsFailed'));
     } finally {
       setLoading(false);
     }
@@ -125,7 +129,7 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
   function confirmClearPendingTags() {
     if (
       !confirm(
-        `Clear all ${reviewTags.length} pending tags? They will not be applied to DIM. Compare session progress is kept.`,
+        t('confirm.clearPending', { count: reviewTags.length }),
       )
     ) {
       return;
@@ -143,30 +147,29 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-2">Review tags</h1>
+      <h1 className="text-2xl font-bold mb-2">{t('title')}</h1>
       <p className="text-muted mb-2">
-        {reviewTags.length} queued · {keep.length} keep · {junk.length} junk. Apply writes queued
-        tags; rows note existing DIM tags when different.
+        {t('summary', { total: reviewTags.length, keep: keep.length, junk: junk.length })}
       </p>
       <div className="mb-8" />
 
       {applied && (
         <div className="mb-6 p-4 rounded-lg border border-border bg-surface-3 text-white">
-          Tags applied to DIM Sync.
+          {t('applied')}
           <a
             href="https://app.destinyitemmanager.com/?tag:junk"
             target="_blank"
             rel="noreferrer"
             className="block mt-2 underline text-sm"
           >
-            Open junk in DIM
+            {t('openJunkInDim')}
           </a>
         </div>
       )}
 
       {partialApplied !== null && !applied && (
         <div className="mb-6 p-4 rounded-lg border border-border bg-surface-3 text-muted text-sm">
-          Partially applied: {partialApplied} tags succeeded. Failed items remain in the queue.
+          {t('partialApplied', { count: partialApplied })}
         </div>
       )}
 
@@ -180,7 +183,7 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
               onClick={() => applyTags(new Set(failedIds))}
               className="block mt-2 underline hover:no-underline"
             >
-              Retry {failedIds.length} failed
+              {t('retryFailed', { count: failedIds.length })}
             </button>
           )}
         </div>
@@ -188,9 +191,9 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
 
       {reviewTags.length === 0 && !applied && (
         <p className="text-muted mb-4">
-          No pending tags.{' '}
+          {t('empty')}{' '}
           <Link to={`/duel/${reviewClass}`} className="text-white hover:underline">
-            Compare duplicates
+            {t('compareDupes')}
           </Link>
         </p>
       )}
@@ -205,32 +208,32 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
               type="button"
               onClick={() => copyText('ids', dimIdQuery(reviewTags))}
               className="relative text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5"
-              aria-label={COPY_BUTTON_LABELS.ids}
+              aria-label={copyButtonLabel('ids')}
             >
               <span aria-hidden className="invisible">
-                {COPY_BUTTON_LABELS.ids}
+                {copyButtonLabel('ids')}
               </span>
               <span
                 aria-hidden
                 className="absolute inset-0 flex items-center justify-center transition-opacity"
               >
-                {copied === 'ids' ? 'Copied!' : COPY_BUTTON_LABELS.ids}
+                {copied === 'ids' ? t('copy.copied') : copyButtonLabel('ids')}
               </span>
             </button>
             <button
               type="button"
               onClick={() => copyText('junk', dimJunkSearchQuery())}
               className="relative text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5"
-              aria-label={COPY_BUTTON_LABELS.junk}
+              aria-label={copyButtonLabel('junk')}
             >
               <span aria-hidden className="invisible">
-                {COPY_BUTTON_LABELS.junk}
+                {copyButtonLabel('junk')}
               </span>
               <span
                 aria-hidden
                 className="absolute inset-0 flex items-center justify-center transition-opacity"
               >
-                {copied === 'junk' ? 'Copied!' : COPY_BUTTON_LABELS.junk}
+                {copied === 'junk' ? t('copy.copied') : copyButtonLabel('junk')}
               </span>
             </button>
             {junk.length > 0 && (
@@ -238,16 +241,16 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
                 type="button"
                 onClick={() => copyText('junk-ids', dimIdQuery(junk))}
                 className="relative text-xs px-3 py-1.5 rounded-lg border border-border hover:bg-white/5"
-                aria-label={COPY_BUTTON_LABELS['junk-ids']}
+                aria-label={copyButtonLabel('junk-ids')}
               >
                 <span aria-hidden className="invisible">
-                  {COPY_BUTTON_LABELS['junk-ids']}
+                  {copyButtonLabel('junk-ids')}
                 </span>
                 <span
                   aria-hidden
                   className="absolute inset-0 flex items-center justify-center transition-opacity"
                 >
-                  {copied === 'junk-ids' ? 'Copied!' : COPY_BUTTON_LABELS['junk-ids']}
+                  {copied === 'junk-ids' ? t('copy.copied') : copyButtonLabel('junk-ids')}
                 </span>
               </button>
             )}
@@ -257,82 +260,82 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
             <table className="w-full table-fixed text-sm">
               <thead className="bg-surface-2 text-muted text-left">
                 <tr>
-                  <th className="px-3 py-2 w-[28%] min-w-[5.5rem] sm:min-w-[8rem]">Item</th>
+                  <th className="px-3 py-2 w-[28%] min-w-[5.5rem] sm:min-w-[8rem]">{t('table.item')}</th>
                   <th className="px-3 py-2 w-10">
-                    <span className="sr-only">Copy DIM query</span>
+                    <span className="sr-only">{t('table.copyDimSr')}</span>
                   </th>
-                  <th className="px-3 py-2">Archetype</th>
-                  <th className="px-3 py-2">Tertiary</th>
-                  <th className="px-3 py-2">Tuning</th>
-                  <th className="px-3 py-2">Class</th>
-                  <th className="px-3 py-2">Combo</th>
-                  <th className="px-3 py-2">Applies to DIM</th>
+                  <th className="px-3 py-2">{t('table.archetype')}</th>
+                  <th className="px-3 py-2">{t('table.tertiary')}</th>
+                  <th className="px-3 py-2">{t('table.tuning')}</th>
+                  <th className="px-3 py-2">{t('table.class')}</th>
+                  <th className="px-3 py-2">{t('table.combo')}</th>
+                  <th className="px-3 py-2">{t('table.appliesToDim')}</th>
                   <th className="px-3 py-2 w-16" />
                 </tr>
               </thead>
               <tbody>
-                {reviewTags.map((t) => {
-                  const roll = resolveTagRollProfile(t, itemsById);
-                  const comboSignal = comboSignalById.get(t.instanceId);
+                {reviewTags.map((row) => {
+                  const roll = resolveTagRollProfile(row, itemsById);
+                  const comboSignal = comboSignalById.get(row.instanceId);
                   return (
                     <tr
-                      key={t.instanceId}
-                      className={`border-t border-border ${failedIds.includes(t.instanceId) ? 'bg-danger/5' : ''}`}
+                      key={row.instanceId}
+                      className={`border-t border-border ${failedIds.includes(row.instanceId) ? 'bg-danger/5' : ''}`}
                     >
                       <td className="px-3 py-2 max-w-0">
-                        <span className="block truncate" title={t.itemName}>
-                          {t.itemName}
+                        <span className="block truncate" title={row.itemName}>
+                          {row.itemName}
                         </span>
                       </td>
                       <td className="px-3 py-2 w-10">
                         <CopyDimQueryButton
-                          instanceId={t.instanceId}
-                          itemName={t.itemName}
+                          instanceId={row.instanceId}
+                          itemName={row.itemName}
                           compact
                         />
                       </td>
                       <td className="px-3 py-2 text-xs text-muted whitespace-nowrap">
-                        {roll?.archetype ?? 'None'}
+                        {roll?.archetype ?? t('table.none')}
                       </td>
                       <td className="px-3 py-2 text-xs text-muted whitespace-nowrap">
-                        {roll?.tertiary ?? 'None'}
+                        {roll?.tertiary ?? t('table.none')}
                       </td>
                       <td className="px-3 py-2 text-xs text-muted whitespace-nowrap">
-                        {roll?.tuning ?? 'None'}
+                        {roll?.tuning ?? t('table.none')}
                       </td>
-                      <td className="px-3 py-2 capitalize">{t.classType}</td>
+                      <td className="px-3 py-2 capitalize">{row.classType}</td>
                       <td className="px-3 py-2 text-xs">
                         {comboSignal ? (
                           <ReviewComboSignal
                             count={comboSignal.count}
                             title={comboSignal.title}
                             variant={comboSignal.variant}
-                            testId={`review-combo-${t.instanceId}`}
+                            testId={`review-combo-${row.instanceId}`}
                           />
                         ) : (
-                          <span data-testid={`review-combo-${t.instanceId}`} className="text-muted">
+                          <span data-testid={`review-combo-${row.instanceId}`} className="text-muted">
                             ·                           </span>
                         )}
                       </td>
                       <td className="px-3 py-2">
-                        {t.tag ? (
+                        {row.tag ? (
                           <ReviewTagCell
-                            pendingTag={t.tag}
-                            dimTag={itemsById.get(t.instanceId)?.dimTag}
-                            dimFavorite={itemsById.get(t.instanceId)?.dimFavorite}
-                            failed={failedIds.includes(t.instanceId)}
+                            pendingTag={row.tag}
+                            dimTag={itemsById.get(row.instanceId)?.dimTag}
+                            dimFavorite={itemsById.get(row.instanceId)?.dimFavorite}
+                            failed={failedIds.includes(row.instanceId)}
                           />
                         ) : (
-                          'None'
+                          t('table.none')
                         )}
                       </td>
                       <td className="px-3 py-2">
                         <button
                           type="button"
-                          onClick={() => removePendingTag(t.instanceId)}
+                          onClick={() => removePendingTag(row.instanceId)}
                           className="ui-icon-btn--compact text-lg leading-none text-muted hover:text-danger hover:bg-danger/10 border border-transparent hover:border-danger/25"
-                          title="Remove from queue"
-                          aria-label="Remove from queue"
+                          title={t('removeFromQueue')}
+                          aria-label={t('removeFromQueue')}
                         >
                           ×
                         </button>
@@ -350,36 +353,32 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
               onClick={() => applyTags()}
               className="px-5 py-2.5 rounded-lg bg-accent text-surface font-semibold disabled:opacity-50"
             >
-              {loading ? 'Applying…' : `Apply ${reviewTags.length} tags to DIM`}
+              {loading ? t('applying') : t('applyTags', { count: reviewTags.length })}
             </button>
             <button
               type="button"
               onClick={confirmClearPendingTags}
               className="px-4 py-2.5 rounded-lg border border-border text-sm text-danger/80 hover:text-danger hover:border-danger/35"
             >
-              Clear pending tags
+              {t('clearPending')}
             </button>
             <button
               type="button"
               onClick={() => {
-                if (
-                  confirm(
-                    'Clear the entire compare session? Pending tags and in-progress compare state will be reset.',
-                  )
-                ) {
+                if (confirm(t('confirm.clearSession'))) {
                   clearSession();
                 }
               }}
               className="px-4 py-2.5 rounded-lg border border-border text-sm text-muted hover:text-white"
             >
-              Clear session
+              {t('clearSession')}
             </button>
           </div>
         </>
       )}
 
       <Link to={`/dashboard/${reviewClass}`} className="inline-block mt-8 text-sm text-muted hover:text-white">
-        Back to dashboard
+        {t('backToDashboard')}
       </Link>
     </>
   );

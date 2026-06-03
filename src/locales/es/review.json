@@ -1,0 +1,39 @@
+{
+  "title": "Revisar etiquetas",
+  "summary": "{{total}} en cola · {{keep}} conservar · {{junk}} basura. Aplicar escribe las etiquetas en cola; las filas indican etiquetas DIM existentes cuando difieren.",
+  "applied": "Etiquetas aplicadas en DIM Sync.",
+  "openJunkInDim": "Abrir basura en DIM",
+  "partialApplied": "Aplicación parcial: {{count}} etiquetas correctas. Los fallidos permanecen en la cola.",
+  "retryFailed": "Reintentar {{count}} fallidos",
+  "empty": "No hay etiquetas pendientes.",
+  "compareDupes": "Comparar duplicados",
+  "table": {
+    "item": "Objeto",
+    "copyDimSr": "Copiar consulta DIM",
+    "archetype": "Arquetipo",
+    "tertiary": "Terciaria",
+    "tuning": "Afinación",
+    "class": "Clase",
+    "combo": "Combo",
+    "appliesToDim": "Se aplica en DIM",
+    "none": "Ninguno"
+  },
+  "copy": {
+    "ids": "Copiar consulta id:",
+    "junk": "Copiar búsqueda tag:junk",
+    "junkIds": "Copiar solo ids de basura",
+    "copied": "¡Copiado!",
+    "announcement": "{{label}} copiado al portapapeles."
+  },
+  "removeFromQueue": "Quitar de la cola",
+  "applyTags": "Aplicar {{count}} etiquetas en DIM",
+  "applying": "Aplicando…",
+  "clearPending": "Borrar etiquetas pendientes",
+  "clearSession": "Borrar sesión",
+  "backToDashboard": "Volver al panel",
+  "confirm": {
+    "clearPending": "¿Borrar las {{count}} etiquetas pendientes? No se aplicarán en DIM. Se conserva el progreso de la sesión de comparación.",
+    "clearSession": "¿Borrar toda la sesión de comparación? Se restablecerán las etiquetas pendientes y el estado de comparación en curso."
+  },
+  "alreadyInDim": "Ya en DIM: {{summary}}"
+}

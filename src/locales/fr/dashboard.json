@@ -1,0 +1,133 @@
+{
+  "title": "Coffre {{class}}",
+  "summary": "{{tieredCount}} armures {{class}} classées · {{dupeScopeCount}} {{minTierLabel}} dans la portée des doublons · {{buckets}} groupes de doublons · ~{{review}} décisions",
+  "customDupeRules": "· règles de doublons personnalisées",
+  "tieredAccount": "· {{count}} armures classées (compte)",
+  "customRulesBanner": "{{class}} utilise des règles de doublons personnalisées",
+  "nextSteps": "Prochaines étapes",
+  "browseAllArmor": "Parcourir toute l’armure",
+  "redundantRolls": "Rolls redondants ({{count}})",
+  "refreshVault": "Actualiser le coffre",
+  "armorView": "Vue armure",
+  "archetypeView": "Vue archétype",
+  "heatmapSlot": "Emplacement heatmap",
+  "allSlots": "Tous les emplacements",
+  "insights": {
+    "continueSetup": {
+      "title": "Poursuivre la configuration",
+      "detail": "Terminez la calibration pour que les suggestions du coffre correspondent à vos priorités",
+      "cta": "Continuer"
+    },
+    "continueCalibration": {
+      "title": "Poursuivre la calibration",
+      "detail": "Reprenez là où vous vous êtes arrêté dans la calibration des préférences",
+      "cta": "Continuer"
+    },
+    "calibratePreferences": {
+      "title": "Calibrer les préférences",
+      "detail": "Définissez les priorités de stats, d’archétypes et de sets pour cette classe",
+      "cta": "Calibrer"
+    },
+    "completeCalibration": {
+      "title": "Terminer la calibration",
+      "detail": "Faible confiance · quelques choix de plus affinent les suggestions de doublons et de combos",
+      "cta": "Calibrer"
+    },
+    "improveCalibration": {
+      "title": "Améliorer la calibration",
+      "detail": "Confiance moyenne · plus de choix améliorent le classement et les indications de couverture",
+      "cta": "Calibrer"
+    },
+    "recalibrateStale": {
+      "title": "Recalibrer les préférences",
+      "detail": "Votre dernière calibration date · les rolls du coffre ont peut-être changé",
+      "cta": "Recalibrer"
+    },
+    "recalibrateDefault": {
+      "title": "Recalibrer les préférences",
+      "detail": "Mettez à jour les pondérations de stats, d’archétypes et de sets pour cette classe à tout moment",
+      "cta": "Recalibrer"
+    },
+    "setupAutoFilters": {
+      "title": "Configurer les filtres auto",
+      "detail": "Mettez en file des étiquettes junk au chargement du coffre pour les rolls que vous ne gardez jamais",
+      "cta": "Configurer les filtres"
+    },
+    "setupCombos": {
+      "title": "Configurer les combos",
+      "detail": "Choisissez 2 à 4 stats prioritaires par combo · {{countLabel}}",
+      "cta": "Configurer les combos"
+    },
+    "addAnotherCombo": {
+      "title": "Ajouter un autre combo",
+      "detail": "{{countLabel}} combos · ajoutez-en 1 de plus",
+      "cta": "Ajouter des combos"
+    },
+    "addMoreCombos": {
+      "title": "Ajouter plus de combos",
+      "detail": "{{countLabel}} · ajoutez {{remaining}} combos de plus",
+      "cta": "Ajouter des combos"
+    },
+    "fixCoverage": {
+      "title": "Corriger la couverture {{label}}",
+      "cta": "Ouvrir Combos"
+    },
+    "browseUpgrades": {
+      "title": "Parcourir les améliorations pour {{label}}",
+      "cta": "Parcourir le coffre"
+    },
+    "compareLargest": {
+      "title": "Comparer {{label}}",
+      "detail": "{{count}} pièces dans votre plus grand groupe de doublons",
+      "cta": "Comparer ce groupe"
+    },
+    "redundantRolls": {
+      "title": "Réviser les rolls redondants",
+      "detail_one": "{{count}} pièce strictement inférieure à un autre roll que vous gardez",
+      "detail_other": "{{count}} pièces strictement inférieures à un autre roll que vous gardez",
+      "cta": "Ouvrir la liste"
+    },
+    "taggedKeep": {
+      "title": "Réviser les doublons étiquetés DIM",
+      "detail_one": "{{count}} candidat doublon déjà étiqueté keep ou favorite dans DIM",
+      "detail_other": "{{count}} candidats doublons déjà étiquetés keep ou favorite dans DIM",
+      "cta": "Parcourir le coffre"
+    },
+    "heavyBuckets": {
+      "title": "Vider les gros groupes de doublons",
+      "detail_one": "{{count}} groupe avec 5+ objets. Utilisez la heatmap pour en choisir un.",
+      "detail_other": "{{count}} groupes avec 5+ objets. Utilisez la heatmap pour en choisir un.",
+      "cta": "Comparer les doublons"
+    },
+    "fixCoverageNoVault": "Aucune pièce du coffre ne roll encore vos stats prioritaires",
+    "fixCoverageNeedSlot": "Il faut un {{slot}} qui roll vos priorités",
+    "fixCoverageSlots": "{{filled}}/{{total}} emplacements remplis dans le loadout recommandé",
+    "browseNoArmor": "Aucune armure de votre coffre ne roll encore ces stats",
+    "browseGaps": "{{count}} type de roll à chercher pour un meilleur fit",
+    "browseGaps_other": "{{count}} types de roll à chercher pour un meilleur fit",
+    "browseCompare": "Comparer l’armure du coffre à vos combos"
+  },
+  "buildLink": {
+    "title": "Vos combos"
+  },
+  "coverage": {
+    "yourCombos": "Vos combos",
+    "setPriorities": "Définissez les priorités de stats sur un combo pour voir les cibles de roll",
+    "recommendedPieces": "Pièces recommandées",
+    "rollTypesHunt": "Types de roll à chercher",
+    "nothingMissing": "Rien d’évident ne manque à votre matrice.",
+    "rollTypesMany": "Types de roll dont vous en avez beaucoup",
+    "noHeavyDuplicates": "Pas de gros doublons dans un seul type de roll.",
+    "tagAll": "Tout étiqueter :",
+    "choose": "Choose",
+    "chooseSlotAria": "Choose {{slot}}",
+    "choosePieceAria": "Choose piece · {{count}} eligible",
+    "supportingPieces": "<1>{{count}}</1> pieces in your vault roll at least one priority stat.",
+    "filledProfiles": "<1>{{filled}}</1> of <2>{{total}}</2> roll types you could own (archetype + tertiary + slot) are in your vault.",
+    "redundantOverlap": "Empty slots remain despite redundant rolls. Prioritize fills over more dupes.",
+    "gapsIntro": "Empty combinations that would help this combo.",
+    "overlapsIntro": "Three or more pieces in the same combination.",
+    "piecesCount": "{{count}} pieces",
+    "orderLabel": "Order:"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "title": "Explorar armadura de {{class}}",
+  "summary": "{{filtered}} de {{total}} piezas · {{sortLabel}}",
+  "redundantLink": "{{count}} tiradas redundantes",
+  "loadVaultFirst": "Carga primero la cámara desde el panel.",
+  "filters": {
+    "slot": "Hueco",
+    "archetype": "Arquetipo",
+    "search": "Buscar",
+    "armorSet": "Conjunto de armadura",
+    "dimTag": "Etiqueta DIM",
+    "sort": "Ordenar",
+    "combo": "Combo",
+    "allSlots": "Todos los huecos",
+    "allArchetypes": "Todos los arquetipos",
+    "allSets": "Todos los conjuntos",
+    "any": "Cualquiera",
+    "anyCombo": "Cualquier combo",
+    "armorNamePlaceholder": "Nombre de armadura…",
+    "statLowerOnly": "Solo estadísticas inferiores",
+    "dupesOnly": "Solo duplicados",
+    "strictlyLowerOnly": "Solo estrictamente inferiores",
+    "redundantOnly": "Solo tiradas redundantes",
+    "supportsComboOnly": "Solo compatible con combo"
+  },
+  "dimTags": {
+    "untagged": "Sin etiqueta",
+    "keep": "Conservar",
+    "junk": "Basura",
+    "favorite": "Favorito",
+    "infuse": "Infundir",
+    "archive": "Archivo"
+  },
+  "sort": {
+    "matchDesc": "% de coincidencia (alto → bajo)",
+    "matchAsc": "% de coincidencia (bajo → alto)",
+    "preference": "Preferencia",
+    "buildFitDesc": "Encaje con combo (alto → bajo)",
+    "matchDescHint": "ordenado por % de coincidencia (más compatible primero)",
+    "matchAscHint": "ordenado por % de coincidencia (menos compatible primero)",
+    "buildFitHint": "ordenado por encaje con combo",
+    "preferenceHint": "ordenado por preferencia"
+  },
+  "copyIds": "Copiar consulta id: de {{count}}",
+  "copied": "¡Copiado!",
+  "reviewTagsLink": "Revisar etiquetas de comparar/triage ({{count}})",
+  "redundant": {
+    "pickOne": "Elige una para conservar",
+    "noRedundant": "No hay tiradas redundantes",
+    "noMatches": "Sin coincidencias",
+    "noMatchFilters": "No redundant rolls match the current filters.",
+    "noneToShow": "No redundant rolls to show."
+  },
+  "noItemsMatch": "No items match these filters.",
+  "backToDashboard": "Back to dashboard",
+  "dupeBadge": "dupe"
+}

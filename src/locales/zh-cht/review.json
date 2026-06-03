@@ -1,0 +1,39 @@
+{
+  "title": "審核標籤",
+  "summary": "已排隊 {{total}} · {{keep}} 保留 · {{junk}} 垃圾。套用會寫入已排隊標籤；若與現有 DIM 標籤不同，列內會註明。",
+  "applied": "標籤已套用到 DIM Sync。",
+  "openJunkInDim": "在 DIM 中開啟垃圾",
+  "partialApplied": "部分套用：{{count}} 個標籤成功。失敗項仍留在佇列中。",
+  "retryFailed": "重試 {{count}} 個失敗項",
+  "empty": "無待處理標籤。",
+  "compareDupes": "對比重複",
+  "table": {
+    "item": "物品",
+    "copyDimSr": "複製 DIM 查詢",
+    "archetype": "原型",
+    "tertiary": "第三屬性",
+    "tuning": "調校",
+    "class": "職業",
+    "combo": "組合",
+    "appliesToDim": "套用到 DIM",
+    "none": "無"
+  },
+  "copy": {
+    "ids": "複製 id: 查詢",
+    "junk": "複製 tag:junk 搜尋",
+    "junkIds": "僅複製垃圾 id",
+    "copied": "已複製！",
+    "announcement": "{{label}} 已複製到剪貼簿。"
+  },
+  "removeFromQueue": "從佇列移除",
+  "applyTags": "將 {{count}} 個標籤套用到 DIM",
+  "applying": "正在套用…",
+  "clearPending": "清除待處理標籤",
+  "clearSession": "清除工作階段",
+  "backToDashboard": "返回儀表板",
+  "confirm": {
+    "clearPending": "清除全部 {{count}} 個待處理標籤？它們不會套用到 DIM。對比工作階段進度會保留。",
+    "clearSession": "清除整個對比工作階段？待處理標籤與進行中的對比狀態將被重設。"
+  },
+  "alreadyInDim": "DIM 中已有：{{summary}}"
+}

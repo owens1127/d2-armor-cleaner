@@ -8,6 +8,29 @@ Global conventions for AI agents working in this repo.
 - Prefer short sentences, commas, hyphens, or middle dots (`·`) for labels and list-like phrases.
 - Keep UI and doc text concise and plain.
 
+## Internationalization (i18n)
+
+- Stack: **i18next** + **react-i18next** + **i18next-browser-languagedetector** (see `src/i18n/`).
+- Default locale: `en`. Locale files live under `src/locales/<locale>/` as JSON namespaces (`common`, `nav`, `dupes`, etc.).
+- **Supported UI locales** match Bungie Destiny 2 manifest locales (`MANIFEST_LOCALES` in `src/i18n/manifestLocales.ts`, from `GET /Platform/Destiny2/Manifest/` → `jsonWorldComponentContentPaths` keys): `de`, `en`, `es`, `es-mx`, `fr`, `it`, `ja`, `ko`, `pl`, `pt-br`, `ru`, `zh-chs`, `zh-cht`.
+- Browser / BCP-47 tags are normalized to those codes (e.g. `zh-CN` → `zh-chs`, `pt-BR` → `pt-br`). `manifestLocaleToI18nTag()` documents the i18next tag mapping where it differs.
+- **Do not add hardcoded user-facing strings** in components or pages. Use `useTranslation('namespace')` and `t('key')`, or `<Trans>` for inline markup.
+- Shared dupe-rule copy: keys in `src/locales/en/dupes.json`; helpers in `src/i18n/dupesCopy.ts` and `src/lib/dupes/ruleUi.ts` (re-exports). Preset labels use `dupes:presets.<id>.label`.
+- Tests: Vitest loads English via `src/i18n/vitest.setup.ts`. Prefer `data-testid` over matching translated text in tests.
+- Language switcher: `LanguageSwitcher` (Settings). **Use browser language** toggle (default on) in `d2ac.locale.useBrowser`. Manual choice in `d2ac.locale` when the toggle is off. Untranslated locales fall back to `en` for all namespaces; each locale needs at least `common.json` with native language names (`language*` keys).
+
+### Adding a new language
+
+1. If Bungie adds a manifest locale, add it to `MANIFEST_LOCALES` and `src/i18n/localeLabels.ts`, then add `src/locales/<code>/common.json` (native names for every `language*` key).
+2. Copy `src/locales/en/` namespaces and translate, or keep stub bundles (common only) until translated.
+3. Register imports in `src/i18n/resources.ts` (`resources` entry; `SUPPORTED_LOCALES` follows `MANIFEST_LOCALES`).
+
+### Phase 2 follow-up (not required for every change)
+
+- Migrate remaining pages and components to namespaces.
+- Destiny game terms and Bungie API display names may stay English.
+- Pluralization and ICU rules for non-English locales where needed.
+
 ## Code changes
 
 - Match existing naming, imports, and patterns. Minimize scope.
@@ -17,8 +40,10 @@ Global conventions for AI agents working in this repo.
 ## Tests
 
 - Prefer integration/flow tests over trivial unit tests.
-- Assert behavior and outcomes, not implementation strings.
-- See `.cursor/rules/testing.mdc` for details.
+- Assert behavior and outcomes, not implementation strings or locale JSON mirrors.
+- i18n: `localeCompleteness.test.ts` for keys; runtime checks with `i18n.changeLanguage` for wired copy (see `src/i18n/locale.test.ts`).
+- Avoid shallow tests: constant tables, preset field mirrors, CSS string literals, English label asserts when keys live in `src/locales/`.
+- Audit notes: `src/test/TEST_AUDIT.md`. See `.cursor/rules/testing.mdc` for details.
 
 ## Mobile layout
 

@@ -1,6 +1,6 @@
 import type { DimItemTagState } from '@/lib/dim/parseTags';
 import type { ArmorPiece, Stat, Archetype } from '@/types';
-import type { ManifestTables } from '@/lib/bungie/manifest';
+import type { ManifestItemDef, ManifestTables } from '@/lib/bungie/manifest';
 import type { ProfileItemComponents, RawInventoryItem } from '@/lib/bungie/profile';
 import {
   intrinsicStatsFromDisplayed,
@@ -66,6 +66,33 @@ export const PARSE_SKIP_LABELS: Record<keyof ParseSkipReasons, string> = {
 
 export function formatParseSkipReason(key: keyof ParseSkipReasons): string {
   return PARSE_SKIP_LABELS[key];
+}
+
+/** Armor set display from manifest item + set tables (locale-specific names). */
+export function resolveArmorSetFromManifest(
+  itemDef: ManifestItemDef,
+  manifest: ManifestTables,
+): ArmorPiece['armorSet'] | undefined {
+  const setHash = itemDef.equippingBlock?.equipableItemSetHash;
+  if (!setHash) return undefined;
+  const setDef = manifest.itemSets[String(setHash)];
+  if (!setDef) return undefined;
+  return {
+    hash: setHash,
+    name: setDef.displayProperties.name,
+    perks: setDef.setPerks.map((p, index) => {
+      const perk = manifest.sandboxPerks[String(p.sandboxPerkHash)];
+      const required = p.requiredSetCount;
+      const pieces =
+        required === 2 || required === 4 ? required : (((index + 1) * 2) as 2 | 4);
+      return {
+        name: perk?.displayProperties.name ?? 'Set perk',
+        description: perk?.displayProperties.description ?? '',
+        icon: perk?.displayProperties.icon,
+        pieces,
+      };
+    }),
+  };
 }
 
 export interface ParseDiagnostics {
@@ -548,29 +575,7 @@ export function parseArmorFromProfile(
 
     const tuningStat = tuningFromReusablePlugs(reusablePlugs?.plugs);
 
-    let armorSet: ArmorPiece['armorSet'];
-    const setHash = itemDef.equippingBlock?.equipableItemSetHash;
-    if (setHash) {
-      const setDef = manifest.itemSets[String(setHash)];
-      if (setDef) {
-        armorSet = {
-          hash: setHash,
-          name: setDef.displayProperties.name,
-          perks: setDef.setPerks.map((p, index) => {
-            const perk = manifest.sandboxPerks[String(p.sandboxPerkHash)];
-            const required = p.requiredSetCount;
-            const pieces =
-              required === 2 || required === 4 ? required : (((index + 1) * 2) as 2 | 4);
-            return {
-              name: perk?.displayProperties.name ?? 'Set perk',
-              description: perk?.displayProperties.description ?? '',
-              icon: perk?.displayProperties.icon,
-              pieces,
-            };
-          }),
-        };
-      }
-    }
+    const armorSet = resolveArmorSetFromManifest(itemDef, manifest);
 
     result.push({
       instanceId: item.itemInstanceId,

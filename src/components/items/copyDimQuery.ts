@@ -1,11 +1,12 @@
+import { i18n } from '@/i18n';
 import { dimInstanceIdQuery, dimInstanceIdsQuery } from '@/lib/dim/query';
 
 export function copyDimQueryAriaLabel(itemName: string): string {
-  return `Copy DIM query for ${itemName}`;
+  return i18n.t('common:dimCopy.queryFor', { name: itemName });
 }
 
 export function copyDimQueryAnnouncement(itemName: string): string {
-  return `${copyDimQueryAriaLabel(itemName)} copied to clipboard.`;
+  return i18n.t('common:dimCopy.queryCopied', { name: itemName });
 }
 
 export async function copyDimQueryForInstance(
@@ -18,19 +19,19 @@ export async function copyDimQueryForInstance(
 }
 
 export function copyDimQueriesAriaLabel(_pieceCount: number): string {
-  return 'Copy DIM search for shown pieces';
+  return i18n.t('common:dimCopy.searchShown');
 }
 
 export function copyDimQueriesGroupAriaLabel(pieceCount: number): string {
-  return `Copy DIM search for all ${pieceCount} piece${pieceCount === 1 ? '' : 's'} in this group`;
+  return i18n.t('common:dimCopy.searchGroup', { count: pieceCount });
 }
 
-export function copyDimQueriesAnnouncement(pieceCount: number): string {
-  return `${copyDimQueriesAriaLabel(pieceCount)} copied to clipboard.`;
+export function copyDimQueriesAnnouncement(_pieceCount: number): string {
+  return i18n.t('common:dimCopy.searchShownCopied');
 }
 
 export function copyDimQueriesGroupAnnouncement(pieceCount: number): string {
-  return `${copyDimQueriesGroupAriaLabel(pieceCount)} copied to clipboard.`;
+  return i18n.t('common:dimCopy.searchGroupCopied', { count: pieceCount });
 }
 
 export async function copyDimQueriesForInstances(

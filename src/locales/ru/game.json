@@ -1,0 +1,96 @@
+{
+  "achievability": {
+    "ready": "Готово",
+    "almost": "Почти",
+    "needBetterRolls": "Нужны лучшие роллы",
+    "covered": "Покрыто",
+    "weakTuning": "Слабый тюнинг",
+    "gap": "Пробел",
+    "idealTuning": "Идеальный тюнинг",
+    "tuned": "Настроено",
+    "archetypeOnly": "Только архетип",
+    "noFit": "Не подходит"
+  },
+  "armorDiff": {
+    "sameStatSplit": "Тот же расклад статов",
+    "sameStatsTuning": "Те же статы и тюнинг",
+    "sameRoll": "Тот же ролл",
+    "decideSetOrTuning": "Решить по сету или тюнингу",
+    "decideTuning": "Решить по тюнингу",
+    "decideSet": "Решить по сету",
+    "sameExceptPower": "Всё то же, кроме силы/расположения",
+    "identicalRoll": "Идентичный ролл. Выберите любой."
+  },
+  "fit": {
+    "poorMatch": "Слабое совпадение",
+    "closeCall": "На грани"
+  },
+  "scoring": {
+    "calibrateForAccuracy": "Откалибруйте предпочтения для большей точности"
+  },
+  "heatmap": {
+    "mixedTuning": "Разные статы тюнинга в корзине",
+    "dupeBucket": "корзина дубликатов"
+  },
+  "minTier": {
+    "tier5Only": "Только Tier 5"
+  },
+  "diff": {
+    "tuning": "Tuning",
+    "set": "Set",
+    "power": "Power",
+    "masterwork": "Masterwork",
+    "noSet": "Без сета",
+    "yes": "Yes",
+    "no": "No",
+    "tuningVs": "Tuning: {{a}} vs {{b}}",
+    "setFootnote": "Сет: {{name}}"
+  },
+  "dominator": {
+    "differentStatSplit": "Andere Wertverteilung",
+    "sameAfterTuning": "Nach Tuning gleich",
+    "beatsPiece": "Schlägt dieses Teil",
+    "statComparison": "Wertvergleich",
+    "tuningCoverage": "Tuning-Abdeckung",
+    "aheadOn": "Vorn bei",
+    "everyTuningLayout": "jedes Tuning-Layout"
+  },
+  "classes": {
+    "titan": "Титан",
+    "hunter": "Охотник",
+    "warlock": "Варлок"
+  },
+  "stats": {
+    "weapons": "Оружие",
+    "grenade": "Граната",
+    "super": "Супер",
+    "melee": "Ближний бой",
+    "health": "Здоровье",
+    "class": "Класс"
+  },
+  "archetypes": {
+    "gunner": "Gunner",
+    "grenadier": "Grenadier",
+    "paragon": "Paragon",
+    "brawler": "Brawler",
+    "bulwark": "Bulwark",
+    "specialist": "Specialist"
+  },
+  "slots": {
+    "helmet": "Helmet",
+    "arms": "Arms",
+    "chest": "Chest",
+    "legs": "Legs",
+    "classItem": "Class Item"
+  },
+  "roll": {
+    "tertiary": "{{stat}} tertiary",
+    "tuning": "{{stat}} tuning",
+    "tuningLabel": "Tuning: {{stat}}",
+    "preferred": "Preferred",
+    "none": "none"
+  },
+  "labels": {
+    "separator": " · "
+  }
+}

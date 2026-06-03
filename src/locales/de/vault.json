@@ -1,0 +1,14 @@
+{
+  "loading": "Tresor wird geladen…",
+  "refreshing": "Aktualisiere…",
+  "refreshingStatus": "Aktualisiere… {{status}}",
+  "loadVault": "Tresor laden",
+  "noDataYet": "Noch keine Tresor-Daten.",
+  "noDataBrowseHint": "Lade zuerst deinen Tresor vom Dashboard.",
+  "noDataBuildHint": "Noch keine Tresor-Daten. Lade deinen Tresor vom Dashboard.",
+  "retryVaultLoad": "Tresor-Laden erneut versuchen",
+  "signOutInSettings": "Unter Einstellungen abmelden",
+  "dismiss": "Schließen",
+  "tieredArmorTitle": "Im Spiel gestufte Rüstung (Stufe 1–5). Legacy-Rüstung und nie gestufte Stücke sind vom Import ausgeschlossen. Der Duplikat-Umfang nutzt deine Mindeststufen-Einstellung.",
+  "dupeRulesImpact": "Tresor laden, um Auswirkung zu sehen."
+}

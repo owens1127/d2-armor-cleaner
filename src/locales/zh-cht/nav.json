@@ -1,0 +1,19 @@
+{
+  "dashboard": "儀表板",
+  "calibrate": "校準",
+  "browse": "瀏覽",
+  "combos": "組合",
+  "compare": "對比",
+  "review": "審核",
+  "autoFilters": "自動篩選",
+  "settings": "設定",
+  "mobile": {
+    "dashboard": "儀表",
+    "calibrate": "校準",
+    "autoFilters": "篩選",
+    "settings": "設定"
+  },
+  "aria": {
+    "mobile": "行動版導覽"
+  }
+}

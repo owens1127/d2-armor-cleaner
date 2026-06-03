@@ -1,0 +1,66 @@
+{
+  "grouping": {
+    "sameArmorSet": {
+      "label": "Exiger le même set d’armure",
+      "help": "Ne regrouper ou comparer que les pièces du même set. Désactivé : même emplacement + archétype + tertiaire sur tous les sets."
+    },
+    "sameTuningStat": {
+      "label": "Exiger la même stat d’ajustement",
+      "help": "Séparer par stat d’ajustement (ex. Armes vs Grenade). Désactivé : stats d’ajustement mélangées dans un même groupe."
+    }
+  },
+  "respectKeepFavorite": {
+    "label": "Respecter les étiquettes DIM keep et favorite pour le rebut",
+    "help": "Activé : les pièces étiquetées keep ou favorite ne sont pas suggérées comme rebut dans les flux de doublons."
+  },
+  "excludeJunk": {
+    "label": "Exclure les pièces étiquetées junk des comptages de doublons"
+  },
+  "presets": {
+    "loose": {
+      "label": "Souple"
+    },
+    "standard": {
+      "label": "Standard"
+    },
+    "setAware": {
+      "label": "Par set"
+    },
+    "tuning": {
+      "label": "Ajustement"
+    },
+    "strict": {
+      "label": "Strict"
+    }
+  },
+  "impactCompact": {
+    "buckets": "groupes de doublons ·",
+    "decisions": "décisions ·",
+    "pieces": "{{count}} pièces incluses"
+  },
+  "matchStyle": {
+    "custom": "Personnalisé",
+    "usingPreset": "Utilisation de {{label}}",
+    "usingCustomRules": "Utilisation de règles personnalisées",
+    "cardBody": {
+      "loose": "Comparer les pièces du même emplacement sans exiger le même set ou la même stat d’ajustement.",
+      "standard": "Comparer par emplacement, archétype et tertiaire sans exiger le même set.",
+      "setAware": "Regroupe les doublons par set d’armure · convient à la plupart des coffres.",
+      "tuning": "Regroupe les doublons par stat d’ajustement, même entre sets différents.",
+      "strict": "Exige le même set et la même stat d’ajustement pour une correspondance de doublon."
+    },
+    "customMix": "Mix personnalisé : {{armorSet}}, {{tuningStat}}.",
+    "armorSetSame": "même set d’armure",
+    "armorSetAny": "n’importe quel set",
+    "tuningStatSame": "même stat d’ajustement",
+    "tuningStatAny": "n’importe quelle stat d’ajustement",
+    "dimTagsRespect": "Les étiquettes DIM keep et favorite comptent pour suggérer le rebut.",
+    "dimTagsIgnore": "Les étiquettes keep et favorite ne sont pas utilisées pour suggérer le rebut."
+  },
+  "suggestions": {
+    "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+    "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+    "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+    "standardDefault": "Standard preset for your vault size."
+  }
+}

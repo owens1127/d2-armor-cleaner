@@ -1,0 +1,66 @@
+{
+  "grouping": {
+    "sameArmorSet": {
+      "label": "동일 방어구 세트 필요",
+      "help": "같은 세트의 피스만 묶거나 비교합니다. 끔: 동일 슬롯·아키타입·3차 스탯(모든 세트)."
+    },
+    "sameTuningStat": {
+      "label": "동일 튜닝 스탯 필요",
+      "help": "튜닝 스탯으로 분리(예: 무기 vs 수류탄). 끔: 한 버킷에 혼합 튜닝 스탯."
+    }
+  },
+  "respectKeepFavorite": {
+    "label": "정크 선택 시 DIM keep·favorite 존중",
+    "help": "켜면 keep·favorite 태그 피스는 중복 흐름에서 정크로 제안되지 않습니다."
+  },
+  "excludeJunk": {
+    "label": "중복 집계에서 junk 태그 피스 제외"
+  },
+  "presets": {
+    "loose": {
+      "label": "느슨함"
+    },
+    "standard": {
+      "label": "표준"
+    },
+    "setAware": {
+      "label": "세트 인식"
+    },
+    "tuning": {
+      "label": "튜닝"
+    },
+    "strict": {
+      "label": "엄격"
+    }
+  },
+  "impactCompact": {
+    "buckets": "중복 버킷 ·",
+    "decisions": "결정 ·",
+    "pieces": "{{count}}개 피스 포함"
+  },
+  "matchStyle": {
+    "custom": "사용자 지정",
+    "usingPreset": "{{label}} 사용",
+    "usingCustomRules": "사용자 지정 규칙 사용",
+    "cardBody": {
+      "loose": "동일 방어구 세트나 튜닝 스탯 없이 같은 슬롯의 피스를 비교합니다.",
+      "standard": "동일 방어구 세트 없이 슬롯·아키타입·3차 스탯으로 비교합니다.",
+      "setAware": "방어구 세트별로 중복을 묶음 · 대부분의 금고에 적합합니다.",
+      "tuning": "서로 다른 방어구 세트에서도 튜닝 스탯별로 중복을 묶습니다.",
+      "strict": "중복 일치에 동일 방어구 세트와 튜닝 스탯이 필요합니다."
+    },
+    "customMix": "사용자 지정 조합: {{armorSet}}, {{tuningStat}}.",
+    "armorSetSame": "동일 방어구 세트",
+    "armorSetAny": "모든 방어구 세트",
+    "tuningStatSame": "동일 튜닝 스탯",
+    "tuningStatAny": "모든 튜닝 스탯",
+    "dimTagsRespect": "정크 제안 시 DIM keep·favorite 태그를 반영합니다.",
+    "dimTagsIgnore": "정크 제안 시 keep·favorite 태그를 사용하지 않습니다."
+  },
+  "suggestions": {
+    "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+    "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+    "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+    "standardDefault": "Standard preset for your vault size."
+  }
+}

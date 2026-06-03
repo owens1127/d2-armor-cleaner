@@ -1,38 +1,28 @@
 import { useState } from 'react';
+import { classLabel, archetypeLabel, slotLabel } from '@/i18n/gameCopy';
+import { CLASSES, ARCHETYPES, ARMOR_SLOTS, formatDupeMinTierLabel } from '@/lib/constants';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Layout } from '@/components/Layout';
 import { Heatmap, type HeatmapViewMode } from '@/components/heatmap/Heatmap';
 import { BucketPanel } from '@/components/heatmap/BucketPanel';
 import { DupeRulesImpact } from '@/components/DupeRulesImpact';
 import { BuildPageLinkCard } from '@/components/dashboard/BuildPageLinkCard';
 import { VaultInsights } from '@/components/dashboard/VaultInsights';
-import {
-  CLASS_LABELS,
-  CLASSES,
-  ARCHETYPE_LABELS,
-  ARCHETYPES,
-  ARMOR_SLOTS,
-  SLOT_LABELS,
-  formatDupeMinTierLabel,
-} from '@/lib/constants';
 import { formatParseSkipReason, type ParseSkipReasons } from '@/lib/armor/parse';
 import { countDismantleCandidates } from '@/lib/dupes/dismantle';
 import { countDashboardItems } from '@/lib/dashboard/items';
 import { getClassPrefs } from '@/lib/prefs/profile';
 import { browseRedundantPath } from '@/lib/nav';
 import { redundantPeerScopeFromDupeRules } from '@/lib/scoring/peerScope';
-import {
-  getOnboardingResumePath,
-  needsOnboardingRedirect,
-} from '@/lib/onboarding/storage';
 import { useVaultFocusRefresh } from '@/lib/vault/useVaultFocusRefresh';
-import { useAuthStore, usePrefsStore, useSessionStore, useVaultStore, vaultSummary } from '@/stores';
+import { usePrefsStore, useSessionStore, useVaultStore, vaultSummary } from '@/stores';
 import type { Archetype, ArmorSlot, ClassType, DupeBucket } from '@/types';
 
 export function DashboardPage() {
+  const { t } = useTranslation(['dashboard', 'vault', 'common']);
   const { class: classParam } = useParams<{ class: string }>();
   const navigate = useNavigate();
-  const { membership } = useAuthStore();
   const {
     allItems,
     classStates,
@@ -62,17 +52,13 @@ export function DashboardPage() {
   const state = validClass ? classStates[classType] : undefined;
 
   if (!validClass) return <Navigate to="/dashboard/hunter" replace />;
-  if (!membership) return <Navigate to="/" replace />;
-  if (needsOnboardingRedirect()) {
-    return <Navigate to={getOnboardingResumePath(false)} replace />;
-  }
 
   if (vaultLoading && !state) {
     return (
       <Layout>
         <div className="py-20 text-center">
-          <p className="text-lg mb-2">Loading vault…</p>
-          <p className="text-sm text-muted">{vaultStatus ?? 'Please wait'}</p>
+          <p className="text-lg mb-2">{t('vault:loading')}</p>
+          <p className="text-sm text-muted">{vaultStatus ?? t('common:pleaseWait')}</p>
         </div>
       </Layout>
     );
@@ -81,13 +67,13 @@ export function DashboardPage() {
   if (!state) {
     return (
       <Layout>
-        <p className="text-muted mb-4">No vault data yet.</p>
+        <p className="text-muted mb-4">{t('vault:noDataYet')}</p>
         <button
           type="button"
           onClick={() => loadLiveVault()}
           className="px-4 py-2 rounded-lg bg-accent text-surface font-medium"
         >
-          Load vault
+          {t('vault:loadVault')}
         </button>
       </Layout>
     );
@@ -118,27 +104,30 @@ export function DashboardPage() {
       >
         {vaultRefreshing && (
           <div className="text-sm text-muted border border-border rounded-lg px-3 py-2 bg-surface-2">
-            Refreshing… {vaultStatus}
+            {t('vault:refreshingStatus', { status: vaultStatus })}
           </div>
         )}
       </div>
 
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">{CLASS_LABELS[classType]} vault</h1>
+        <h1 className="text-2xl font-bold">
+          {t('dashboard:title', { class: classLabel(classType) })}
+        </h1>
         <p className="text-muted text-sm mt-1">
-          {classTieredCount} tiered {CLASS_LABELS[classType]} armor · {classDupeScopeCount}{' '}
-          {formatDupeMinTierLabel(globalDupeRules.minTier)} in dupe scope · {summary.dupes} dupe
-          buckets · ~{summary.review}{' '}
-          decisions
+          {t('dashboard:summary', {
+            tieredCount: classTieredCount,
+            class: classLabel(classType),
+            dupeScopeCount: classDupeScopeCount,
+            minTierLabel: formatDupeMinTierLabel(globalDupeRules.minTier),
+            buckets: summary.dupes,
+            review: summary.review,
+          })}
           {hasCustomRules && (
-            <span className="ml-2 text-muted">· custom dupe rules</span>
+            <span className="ml-2 text-muted">{t('dashboard:customDupeRules')}</span>
           )}
           {lastParsedCount !== null && (
-            <span
-              className="ml-2 text-muted"
-              title="Armor you tiered in-game (Tier 1-5). Legacy gear and never-tiered pieces are excluded from import. Dupe scope uses your minimum tier setting."
-            >
-              · {accountParsedCount} tiered armor (account)
+            <span className="ml-2 text-muted" title={t('vault:tieredArmorTitle')}>
+              {t('dashboard:tieredAccount', { count: accountParsedCount })}
             </span>
           )}
         </p>
@@ -176,7 +165,9 @@ export function DashboardPage() {
 
       {hasCustomRules && (
         <div className="mb-4 p-3 border border-border rounded-lg bg-surface-2 text-sm">
-          <p className="text-xs text-muted mb-1 capitalize">{classType} uses custom dupe rules</p>
+          <p className="text-xs text-muted mb-1 capitalize">
+            {t('dashboard:customRulesBanner', { class: classType })}
+          </p>
           <DupeRulesImpact rules={classRules} classType={classType} />
         </div>
       )}
@@ -191,7 +182,7 @@ export function DashboardPage() {
 
       <div className="flex flex-wrap gap-x-4 gap-y-2 mb-8 text-sm text-muted">
         <Link to={`/browse/${classType}`} className="hover:text-white">
-          Browse all armor
+          {t('dashboard:browseAllArmor')}
         </Link>
         {redundantRollCount > 0 && (
           <Link
@@ -199,7 +190,7 @@ export function DashboardPage() {
             className="touch-manipulation hover:text-danger text-danger/80"
             onClick={() => setSelectedBucket(null)}
           >
-            Redundant rolls ({redundantRollCount})
+            {t('dashboard:redundantRolls', { count: redundantRollCount })}
           </Link>
         )}
         <button
@@ -208,7 +199,7 @@ export function DashboardPage() {
           onClick={() => loadLiveVault({ force: true, background: Boolean(state) })}
           className="hover:text-white disabled:opacity-50"
         >
-          {vaultLoading || vaultRefreshing ? 'Refreshing…' : 'Refresh vault'}
+          {vaultLoading || vaultRefreshing ? t('vault:refreshing') : t('dashboard:refreshVault')}
         </button>
       </div>
 
@@ -219,14 +210,14 @@ export function DashboardPage() {
             onClick={() => setHeatmapView('armor')}
             className={`px-3 py-1.5 ${heatmapView === 'armor' ? 'bg-white/10' : 'text-muted hover:text-white'}`}
           >
-            Armor view
+            {t('dashboard:armorView')}
           </button>
           <button
             type="button"
             onClick={() => setHeatmapView('archetype')}
             className={`px-3 py-1.5 ${heatmapView === 'archetype' ? 'bg-white/10' : 'text-muted hover:text-white'}`}
           >
-            Archetype view
+            {t('dashboard:archetypeView')}
           </button>
         </div>
         {heatmapView === 'archetype' && (
@@ -240,13 +231,13 @@ export function DashboardPage() {
                   focusArchetype === a ? 'bg-white/10 text-white' : 'text-muted hover:text-white'
                 }`}
               >
-                {ARCHETYPE_LABELS[a]}
+                {archetypeLabel(a)}
               </button>
             ))}
           </div>
         )}
         <label className="text-sm text-muted flex items-center gap-2">
-          Heatmap slot
+          {t('dashboard:heatmapSlot')}
           <select
             value={slotFilter}
             onChange={(e) =>
@@ -254,10 +245,10 @@ export function DashboardPage() {
             }
             className="bg-surface-2 border border-border rounded-md px-2 py-1 text-sm text-white"
           >
-            <option value="all">All slots</option>
+            <option value="all">{t('dashboard:allSlots')}</option>
             {ARMOR_SLOTS.map((s) => (
               <option key={s} value={s}>
-                {SLOT_LABELS[s]}
+                {slotLabel(s)}
               </option>
             ))}
           </select>

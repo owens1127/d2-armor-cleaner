@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { HeaderClassPicker } from '@/components/HeaderClassPicker';
 import { MobileNav } from '@/components/MobileNav';
 import { SignInWithBungieButton } from '@/components/SignInWithBungieButton';
@@ -14,8 +15,10 @@ import {
   navClassFromPath,
   navClassFromSearch,
   signedOutNavLinks,
+  type AppNavItem,
 } from '@/lib/nav';
 import { useVaultRefreshGuard } from '@/hooks/useVaultRefreshGuard';
+import { APP_TITLE, APP_TITLE_SHORT } from '@/lib/site';
 import { useAuthStore, useSessionStore } from '@/stores';
 
 function NavLinks({
@@ -23,23 +26,25 @@ function NavLinks({
   pathname,
   pendingCount,
 }: {
-  links: ReturnType<typeof buildAuthenticatedNavLinks>;
+  links: AppNavItem[];
   pathname: string;
   pendingCount: number;
 }) {
+  const { t } = useTranslation('nav');
+
   return (
     <>
-      {links.map(({ to, label, match }) => (
+      {links.map(({ to, labelKey, match }) => (
         <Link
-          key={label}
+          key={labelKey}
           to={to}
           className={`ui-nav-link px-3.5 py-2.5 rounded-md relative transition-colors ${
-            isNavLinkActive(pathname, { label, match, to })
+            isNavLinkActive(pathname, { match })
               ? 'text-white bg-white/10'
               : 'text-muted hover:text-white'
           }`}
         >
-          {label}
+          {t(labelKey)}
           {match === '/review' && pendingCount > 0 && (
             <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] flex items-center justify-center rounded-full bg-white text-surface text-[10px] font-bold px-1">
               {pendingCount}
@@ -78,8 +83,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
               to={membership ? authenticatedLandingPath(activeNavClass) : '/'}
               className="ui-heading font-semibold text-white tracking-tight text-sm sm:text-base shrink-0"
             >
-              <span className="sm:hidden">D2 Cleaner</span>
-              <span className="hidden sm:inline">D2 Armor Cleaner</span>
+              <span className="sm:hidden">{APP_TITLE_SHORT}</span>
+              <span className="hidden sm:inline">{APP_TITLE}</span>
             </Link>
             {membership && (
               <HeaderClassPicker

@@ -108,7 +108,8 @@ export interface DupeRuleSuggestion {
   rule: keyof DupeRuleConfig | 'preset';
   presetId?: string;
   recommended: boolean;
-  reason: string;
+  reasonKey: string;
+  reasonParams?: Record<string, string | number>;
   impact: { buckets: number; itemsToReview: number };
 }
 

@@ -1,0 +1,44 @@
+{
+  "boundary": {
+    "title": "Something went wrong",
+    "body": "{{appName}} hit an unexpected error. Your preferences and queued tags in local storage are usually unaffected.",
+    "reload": "Reload app",
+    "goHome": "Go home"
+  },
+  "oauth": {
+    "completingLogin": "Completing Bungie login…",
+    "exchangingCode": "Exchanging authorization code…",
+    "loadingVault": "Loading your vault…",
+    "firstLoadNote": "First load downloads the game manifest and may take a minute.",
+    "bungieDenied": "Bungie denied login: {{error}}",
+    "noAuthCode": "No authorization code returned: try signing in again.",
+    "stateMismatch": "OAuth state mismatch: often caused by a stale tab or blocked session storage. Return to login and try again.",
+    "loginFailed": "Login failed",
+    "backToLogin": "Back to login",
+    "suffix": "Try signing in again. If the problem persists, contact the site administrator.",
+    "devChecklistIntro": "Bungie app checklist (local dev):",
+    "devRedirect": "Redirect URL: {{uri}}",
+    "devOrigin": "Origin: {{origin}}",
+    "devClientId": "Client ID matches your Bungie application ({{clientId}})",
+    "devApiKey": "API key is from the same Bungie application",
+    "devRestart": "Restart the dev server after changing credentials"
+  },
+  "env": {
+    "bungieSignInUnavailableDev": "Sign-in is not enabled in this build.",
+    "bungieSignInUnavailable": "Sign-in is not available on this deployment.",
+    "bungieCredentialsMissingDev": "Bungie sign-in is not enabled in this environment.",
+    "bungieCredentialsMissing": "Sign-in is not available on this deployment. Contact the site administrator.",
+    "bungieSecretMissingDev": "Bungie sign-in is not fully enabled in this environment.",
+    "dimSyncUnavailableDev": "DIM sync is not enabled in this environment.",
+    "dimSyncUnavailable": "Applying tags to DIM is not available on this deployment. Contact the site administrator."
+  },
+  "vault": {
+    "sessionExpired": "Your Bungie session may have expired. Sign out and sign in again.",
+    "forbidden": "Bungie rejected the request. Try signing in again, or contact the site administrator if this continues.",
+    "manifest": "Manifest download failed. Check your connection and retry: the first load can take a minute.",
+    "network": "Network error. Check your connection or try again in a moment.",
+    "membership": "Could not resolve your Destiny membership. Make sure the account has Destiny 2 characters."
+  },
+  "applyTagsFailed": "Failed to apply tags",
+  "partialApply": "Applied {{ok}} of {{total}} tags. {{failed}} failed: retry or remove from queue."
+}

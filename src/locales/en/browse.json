@@ -1,0 +1,57 @@
+{
+  "title": "Browse {{class}} armor",
+  "summary": "{{filtered}} of {{total}} pieces · {{sortLabel}}",
+  "redundantLink": "{{count}} redundant rolls",
+  "loadVaultFirst": "Load your vault from the dashboard first.",
+  "filters": {
+    "slot": "Slot",
+    "archetype": "Archetype",
+    "search": "Search",
+    "armorSet": "Armor set",
+    "dimTag": "DIM tag",
+    "sort": "Sort",
+    "combo": "Combo",
+    "allSlots": "All slots",
+    "allArchetypes": "All archetypes",
+    "allSets": "All sets",
+    "any": "Any",
+    "anyCombo": "Any combo",
+    "armorNamePlaceholder": "Armor name…",
+    "statLowerOnly": "Stat-lower only",
+    "dupesOnly": "Dupes only",
+    "strictlyLowerOnly": "Strictly lower only",
+    "redundantOnly": "Redundant rolls only",
+    "supportsComboOnly": "Supports combo only"
+  },
+  "dimTags": {
+    "untagged": "Untagged",
+    "keep": "Keep",
+    "junk": "Junk",
+    "favorite": "Favorite",
+    "infuse": "Infuse",
+    "archive": "Archive"
+  },
+  "sort": {
+    "matchDesc": "Match % (high → low)",
+    "matchAsc": "Match % (low → high)",
+    "preference": "Preference",
+    "buildFitDesc": "Combo fit (high → low)",
+    "matchDescHint": "sorted by match % (most compatible first)",
+    "matchAscHint": "sorted by match % (least compatible first)",
+    "buildFitHint": "sorted by combo fit",
+    "preferenceHint": "sorted by preference"
+  },
+  "copyIds": "Copy {{count}} id: query",
+  "copied": "Copied!",
+  "reviewTagsLink": "Review compare/triage tags ({{count}})",
+  "redundant": {
+    "pickOne": "Pick one to keep",
+    "noRedundant": "No redundant rolls",
+    "noMatches": "No matches",
+    "noMatchFilters": "No redundant rolls match the current filters.",
+    "noneToShow": "No redundant rolls to show."
+  },
+  "noItemsMatch": "No items match these filters.",
+  "backToDashboard": "Back to dashboard",
+  "dupeBadge": "dupe"
+}

@@ -1,0 +1,66 @@
+{
+  "grouping": {
+    "sameArmorSet": {
+      "label": "Gleiches Rüstungsset erforderlich",
+      "help": "Nur Teile aus demselben Set gruppieren oder vergleichen. Aus: gleicher Slot + Archetyp + Tertiär über alle Sets."
+    },
+    "sameTuningStat": {
+      "label": "Gleichen Abstimmungswert erforderlich",
+      "help": "Nach Abstimmungswert trennen (z. B. Waffen vs. Granate). Aus: gemischte Abstimmungswerte in einem Bucket."
+    }
+  },
+  "respectKeepFavorite": {
+    "label": "DIM Keep und Favorite beim Müll-Vorschlag beachten",
+    "help": "Wenn aktiv, werden Keep- und Favorite-getaggte Teile in Duplikat-Flows nicht als Müll vorgeschlagen."
+  },
+  "excludeJunk": {
+    "label": "Junk-getaggte Teile von Duplikat-Zählungen ausschließen"
+  },
+  "presets": {
+    "loose": {
+      "label": "Locker"
+    },
+    "standard": {
+      "label": "Standard"
+    },
+    "setAware": {
+      "label": "Set-bewusst"
+    },
+    "tuning": {
+      "label": "Abstimmung"
+    },
+    "strict": {
+      "label": "Streng"
+    }
+  },
+  "impactCompact": {
+    "buckets": "Duplikat-Buckets ·",
+    "decisions": "Entscheidungen ·",
+    "pieces": "{{count}} Teile einbezogen"
+  },
+  "matchStyle": {
+    "custom": "Benutzerdefiniert",
+    "usingPreset": "Verwendet {{label}}",
+    "usingCustomRules": "Verwendet benutzerdefinierte Regeln",
+    "cardBody": {
+      "loose": "Teile im gleichen Slot vergleichen, ohne gleiches Rüstungsset oder Abstimmungswert.",
+      "standard": "Nach Slot, Archetyp und Tertiär vergleichen, ohne gleiches Rüstungsset.",
+      "setAware": "Gruppiert Duplikate nach Rüstungsset · funktioniert für die meisten Tresore.",
+      "tuning": "Gruppiert Duplikate nach Abstimmungswert, auch über verschiedene Rüstungssets.",
+      "strict": "Erfordert gleiches Rüstungsset und Abstimmungswert für ein Duplikat-Match."
+    },
+    "customMix": "Benutzerdefinierte Mischung: {{armorSet}}, {{tuningStat}}.",
+    "armorSetSame": "gleiches Rüstungsset",
+    "armorSetAny": "beliebiges Rüstungsset",
+    "tuningStatSame": "gleicher Abstimmungswert",
+    "tuningStatAny": "beliebiger Abstimmungswert",
+    "dimTagsRespect": "DIM Keep- und Favorite-Tags zählen beim Müll-Vorschlag.",
+    "dimTagsIgnore": "Keep- und Favorite-Tags werden beim Müll-Vorschlag nicht berücksichtigt."
+  },
+  "suggestions": {
+    "setAwareHeavy": "{{totalT5}} Tier 5 pieces and {{heavyBuckets}} buckets with 5+ items. Use same armor set to avoid false dupes.",
+    "looseSmallVault": "Small vault: loose rules will surface more duplicate buckets.",
+    "ignoreTaggedKeep": "{{count}} dupe candidates already tagged keep or favorite in DIM.",
+    "standardDefault": "Standard preset for your vault size."
+  }
+}

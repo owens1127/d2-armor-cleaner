@@ -1,0 +1,39 @@
+{
+  "title": "审核标签",
+  "summary": "已排队 {{total}} · {{keep}} 保留 · {{junk}} 垃圾。应用会写入已排队标签；若与现有 DIM 标签不同，行内会注明。",
+  "applied": "标签已应用到 DIM Sync。",
+  "openJunkInDim": "在 DIM 中打开垃圾",
+  "partialApplied": "部分应用：{{count}} 个标签成功。失败项仍留在队列中。",
+  "retryFailed": "重试 {{count}} 个失败项",
+  "empty": "无待处理标签。",
+  "compareDupes": "对比重复",
+  "table": {
+    "item": "物品",
+    "copyDimSr": "复制 DIM 查询",
+    "archetype": "原型",
+    "tertiary": "第三属性",
+    "tuning": "调优",
+    "class": "职业",
+    "combo": "组合",
+    "appliesToDim": "应用到 DIM",
+    "none": "无"
+  },
+  "copy": {
+    "ids": "复制 id: 查询",
+    "junk": "复制 tag:junk 搜索",
+    "junkIds": "仅复制垃圾 id",
+    "copied": "已复制！",
+    "announcement": "{{label}} 已复制到剪贴板。"
+  },
+  "removeFromQueue": "从队列移除",
+  "applyTags": "将 {{count}} 个标签应用到 DIM",
+  "applying": "正在应用…",
+  "clearPending": "清除待处理标签",
+  "clearSession": "清除会话",
+  "backToDashboard": "返回仪表板",
+  "confirm": {
+    "clearPending": "清除全部 {{count}} 个待处理标签？它们不会应用到 DIM。对比会话进度会保留。",
+    "clearSession": "清除整个对比会话？待处理标签与进行中的对比状态将被重置。"
+  },
+  "alreadyInDim": "DIM 中已有：{{summary}}"
+}

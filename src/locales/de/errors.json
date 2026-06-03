@@ -1,0 +1,44 @@
+{
+  "boundary": {
+    "title": "Etwas ist schiefgelaufen",
+    "body": "{{appName}} ist auf einen unerwarteten Fehler gestoßen. Deine Einstellungen und warteschlangigen Tags im lokalen Speicher sind meist unberührt.",
+    "reload": "App neu laden",
+    "goHome": "Zur Startseite"
+  },
+  "oauth": {
+    "completingLogin": "Bungie-Anmeldung wird abgeschlossen…",
+    "exchangingCode": "Autorisierungscode wird ausgetauscht…",
+    "loadingVault": "Dein Tresor wird geladen…",
+    "firstLoadNote": "Beim ersten Laden wird das Spiel-Manifest heruntergeladen; das kann eine Minute dauern.",
+    "bungieDenied": "Bungie hat die Anmeldung abgelehnt: {{error}}",
+    "noAuthCode": "Kein Autorisierungscode zurückgegeben: versuche erneut anzumelden.",
+    "stateMismatch": "OAuth-Status stimmt nicht überein: oft durch einen veralteten Tab oder blockierten Session-Speicher. Zur Anmeldung zurück und erneut versuchen.",
+    "loginFailed": "Anmeldung fehlgeschlagen",
+    "backToLogin": "Zur Anmeldung",
+    "suffix": "Versuche erneut anzumelden. Wenn das Problem bleibt, wende dich an den Seitenbetreiber.",
+    "devChecklistIntro": "Bungie-App-Checkliste (lokale Entwicklung):",
+    "devRedirect": "Weiterleitungs-URL: {{uri}}",
+    "devOrigin": "Origin: {{origin}}",
+    "devClientId": "Client-ID passt zu deiner Bungie-Anwendung ({{clientId}})",
+    "devApiKey": "API-Schlüssel stammt aus derselben Bungie-Anwendung",
+    "devRestart": "Dev-Server nach Änderung der Zugangsdaten neu starten"
+  },
+  "env": {
+    "bungieSignInUnavailableDev": "Anmeldung ist in diesem Build nicht aktiviert.",
+    "bungieSignInUnavailable": "Anmeldung ist in dieser Bereitstellung nicht verfügbar.",
+    "bungieCredentialsMissingDev": "Bungie-Anmeldung ist in dieser Umgebung nicht aktiviert.",
+    "bungieCredentialsMissing": "Anmeldung ist in dieser Bereitstellung nicht verfügbar. Wende dich an den Seitenbetreiber.",
+    "bungieSecretMissingDev": "Bungie-Anmeldung ist in dieser Umgebung nicht vollständig aktiviert.",
+    "dimSyncUnavailableDev": "DIM-Sync ist in dieser Umgebung nicht aktiviert.",
+    "dimSyncUnavailable": "Tags in DIM zu übernehmen ist in dieser Bereitstellung nicht verfügbar. Wende dich an den Seitenbetreiber."
+  },
+  "vault": {
+    "sessionExpired": "Deine Bungie-Sitzung ist möglicherweise abgelaufen. Melde dich ab und erneut an.",
+    "forbidden": "Bungie hat die Anfrage abgelehnt. Melde dich erneut an, oder wende dich an den Seitenbetreiber, wenn das anhält.",
+    "manifest": "Manifest-Download fehlgeschlagen. Verbindung prüfen und erneut versuchen – das erste Laden kann eine Minute dauern.",
+    "network": "Netzwerkfehler. Verbindung prüfen oder gleich erneut versuchen.",
+    "membership": "Destiny-Mitgliedschaft konnte nicht aufgelöst werden. Stelle sicher, dass das Konto Destiny-2-Charaktere hat."
+  },
+  "applyTagsFailed": "Tags konnten nicht übernommen werden",
+  "partialApply": "{{ok}} von {{total}} Tags übernommen. {{failed}} fehlgeschlagen: erneut versuchen oder aus der Warteschlange entfernen."
+}

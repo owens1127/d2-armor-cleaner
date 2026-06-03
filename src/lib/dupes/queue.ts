@@ -1,5 +1,6 @@
+import { ARCHETYPES, ARMOR_SLOTS, STATS } from '@/lib/constants';
 import { duelExcludedIds } from '@/lib/dupes/duel';
-import { ARCHETYPES, ARCHETYPE_LABELS, ARMOR_SLOTS, SLOT_LABELS, STAT_LABELS, STATS } from '@/lib/constants';
+import { statLabel, archetypeLabel, slotLabel } from '@/i18n/gameCopy';
 import type { ArmorPiece, Archetype, ArmorSlot, ClassType, DupeBucket, DupeBucketKey, PendingTag, Stat } from '@/types';
 
 function slotOrder(slot: ArmorSlot): number {
@@ -60,18 +61,18 @@ export function bucketKeyString(b: DupeBucket['key']): string {
 
 /** Human-readable bucket identity: slot · archetype · tertiary stat. */
 export function formatDupeBucketLabel(key: DupeBucket['key']): string {
-  return `${SLOT_LABELS[key.armorSlot]} · ${ARCHETYPE_LABELS[key.archetype]} · ${STAT_LABELS[key.tertiaryStat]}`;
+  return `${slotLabel(key.armorSlot)} · ${archetypeLabel(key.archetype)} · ${statLabel(key.tertiaryStat)}`;
 }
 
 /** Compact primary line for bucket pickers: archetype · tertiary stat. */
 export function dupeBucketPrimaryLine(key: DupeBucket['key']): string {
-  return `${ARCHETYPE_LABELS[key.archetype]} · ${STAT_LABELS[key.tertiaryStat]}`;
+  return `${archetypeLabel(key.archetype)} · ${statLabel(key.tertiaryStat)}`;
 }
 
 /** Secondary line for bucket pickers: slot · item count. */
 export function dupeBucketSecondaryLine(key: DupeBucket['key'], itemCount: number): string {
   const itemLabel = itemCount === 1 ? '1 item' : `${itemCount} items`;
-  return `${SLOT_LABELS[key.armorSlot]} · ${itemLabel}`;
+  return `${slotLabel(key.armorSlot)} · ${itemLabel}`;
 }
 
 export function findBucketByKey(

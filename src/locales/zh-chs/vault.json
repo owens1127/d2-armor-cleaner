@@ -1,0 +1,14 @@
+{
+  "loading": "正在加载仓库…",
+  "refreshing": "正在刷新…",
+  "refreshingStatus": "正在刷新… {{status}}",
+  "loadVault": "加载仓库",
+  "noDataYet": "尚无仓库数据。",
+  "noDataBrowseHint": "请先从仪表板加载仓库。",
+  "noDataBuildHint": "尚无仓库数据。请从仪表板加载仓库。",
+  "retryVaultLoad": "重试加载仓库",
+  "signOutInSettings": "在设置中退出登录",
+  "dismiss": "关闭",
+  "tieredArmorTitle": "你在游戏中升阶的护甲（T1–T5）。旧版与从未升阶的装备不会导入。重复范围使用你的最低阶设置。",
+  "dupeRulesImpact": "加载仓库以预览影响。"
+}

@@ -1,0 +1,67 @@
+{
+  "language": "Lingua",
+  "languageEn": "English",
+  "languageFr": "Français",
+  "languageEs": "Español",
+  "languageEsMx": "Español (México)",
+  "languageDe": "Deutsch",
+  "languageIt": "Italiano",
+  "languageJa": "日本語",
+  "languageKo": "한국어",
+  "languagePl": "Polski",
+  "languagePtBr": "Português (Brasil)",
+  "languageRu": "Русский",
+  "languageZhChs": "简体中文",
+  "languageZhCht": "繁體中文",
+  "continue": "Continua",
+  "save": "Salva",
+  "back": "Indietro",
+  "skip": "Salta",
+  "signOut": "Esci",
+  "retry": "Riprova",
+  "retrying": "Nuovo tentativo…",
+  "pleaseWait": "Attendere",
+  "copied": "Copiato!",
+  "none": "Nessuno",
+  "configured": "configurato",
+  "notConfigured": "non configurato",
+  "developer": "Sviluppatore",
+  "openReviewPage": "Apri pagina revisione",
+  "clearPendingTags": "Cancella tag in sospeso",
+  "exportPrefs": "Esporta preferenze",
+  "importPrefs": "Importa preferenze",
+  "preferencesImported": "Preferenze importate.",
+  "invalidPrefsFile": "File preferenze non valido.",
+  "topStats": "Statistiche principali:",
+  "topArchetypes": "Archetipi principali:",
+  "recalibrateClass": "Ricalibra {{class}}",
+  "resetClassPrefs": "Reimposta preferenze {{class}}",
+  "resetAllClasses": "Reimposta tutte le classi",
+  "confirm": {
+    "clearPendingTags": "Cancellare tutti i {{count}} tag in sospeso? Non verranno applicati in DIM.",
+    "resetClassPrefs": "Reimpostare le preferenze di {{class}} ai valori predefiniti? Pesi delle statistiche, scelte di calibrazione e pesi appresi per questa classe verranno cancellati.",
+    "resetAllClassPrefs": "Reimpostare le preferenze di tutte le classi ai valori predefiniti? Pesi delle statistiche, scelte di calibrazione e pesi appresi verranno cancellati per Hunter, Titan e Warlock. Le regole sui duplicati e le altre impostazioni restano invariate."
+  },
+  "classPrefs": {
+    "heading": "Preferenze {{class}}",
+    "usingClass": "In uso: {{class}} (cambia classe nell'intestazione). Pesi di statistiche e archetipi per classe dalla calibrazione. Le regole sui duplicati sono condivise salvo override per classe.",
+    "calibrations": "{{count}} calibrazioni · affidabilità {{confidence}}"
+  },
+  "reviewTags": {
+    "heading": "Revisione tag",
+    "queued_one": "{{count}} tag in coda per l'applicazione in DIM.",
+    "queued_other": "{{count}} tag in coda per l'applicazione in DIM.",
+    "none": "Nessun tag in sospeso."
+  },
+  "dev": {
+    "dimKeyHint": "Chiave DIM locale: POST su api.destinyitemmanager.com/new_app con origin {{origin}}."
+  },
+  "dimCopy": {
+    "queryFor": "Copier la requête DIM pour {{name}}",
+    "queryCopied": "Requête DIM pour {{name}} copiée.",
+    "searchShown": "Copier la recherche DIM des pièces affichées",
+    "searchShownCopied": "Recherche DIM des pièces affichées copiée.",
+    "searchGroup": "Copier la recherche DIM des {{count}} pièces du groupe",
+    "searchGroupCopied": "Recherche DIM des {{count}} pièces du groupe copiée."
+  }
+}

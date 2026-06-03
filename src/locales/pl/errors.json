@@ -1,0 +1,44 @@
+{
+  "boundary": {
+    "title": "Coś poszło nie tak",
+    "body": "{{appName}} napotkał nieoczekiwany błąd. Twoje preferencje i tagi w kolejce w pamięci lokalnej zwykle pozostają nienaruszone.",
+    "reload": "Przeładuj aplikację",
+    "goHome": "Strona główna"
+  },
+  "oauth": {
+    "completingLogin": "Kończenie logowania Bungie…",
+    "exchangingCode": "Wymiana kodu autoryzacji…",
+    "loadingVault": "Ładowanie skarbca…",
+    "firstLoadNote": "Pierwsze ładowanie pobiera manifest gry i może potrwać minutę.",
+    "bungieDenied": "Bungie odrzuciło logowanie: {{error}}",
+    "noAuthCode": "Nie zwrócono kodu autoryzacji: spróbuj zalogować się ponownie.",
+    "stateMismatch": "Niezgodność stanu OAuth: często przez nieaktualną kartę lub zablokowaną pamięć sesji. Wróć do logowania i spróbuj ponownie.",
+    "loginFailed": "Logowanie nie powiodło się",
+    "backToLogin": "Wróć do logowania",
+    "suffix": "Spróbuj zalogować się ponownie. Jeśli problem się utrzymuje, skontaktuj się z administratorem strony.",
+    "devChecklistIntro": "Lista kontrolna aplikacji Bungie (dev lokalny):",
+    "devRedirect": "URL przekierowania: {{uri}}",
+    "devOrigin": "Origin: {{origin}}",
+    "devClientId": "Client ID zgodny z aplikacją Bungie ({{clientId}})",
+    "devApiKey": "Klucz API z tej samej aplikacji Bungie",
+    "devRestart": "Uruchom ponownie serwer dev po zmianie danych logowania"
+  },
+  "env": {
+    "bungieSignInUnavailableDev": "Logowanie nie jest włączone w tej wersji.",
+    "bungieSignInUnavailable": "Logowanie nie jest dostępne w tym wdrożeniu.",
+    "bungieCredentialsMissingDev": "Logowanie Bungie nie jest włączone w tym środowisku.",
+    "bungieCredentialsMissing": "Logowanie nie jest dostępne w tym wdrożeniu. Skontaktuj się z administratorem strony.",
+    "bungieSecretMissingDev": "Logowanie Bungie nie jest w pełni włączone w tym środowisku.",
+    "dimSyncUnavailableDev": "Synchronizacja DIM nie jest włączona w tym środowisku.",
+    "dimSyncUnavailable": "Stosowanie tagów w DIM nie jest dostępne w tym wdrożeniu. Skontaktuj się z administratorem strony."
+  },
+  "vault": {
+    "sessionExpired": "Sesja Bungie mogła wygasnąć. Wyloguj się i zaloguj ponownie.",
+    "forbidden": "Bungie odrzuciło żądanie. Spróbuj zalogować się ponownie lub skontaktuj się z administratorem, jeśli to się powtarza.",
+    "manifest": "Pobieranie manifestu nie powiodło się. Sprawdź połączenie i spróbuj ponownie: pierwsze ładowanie może potrwać minutę.",
+    "network": "Błąd sieci. Sprawdź połączenie lub spróbuj za chwilę.",
+    "membership": "Nie udało się ustalić członkostwa Destiny. Upewnij się, że konto ma postacie Destiny 2."
+  },
+  "applyTagsFailed": "Nie udało się zastosować tagów",
+  "partialApply": "Zastosowano {{ok}} z {{total}} tagów. {{failed}} nie powiodło się: spróbuj ponownie lub usuń z kolejki."
+}

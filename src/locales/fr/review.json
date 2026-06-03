@@ -1,0 +1,39 @@
+{
+  "title": "Révision des étiquettes",
+  "summary": "{{total}} en file · {{keep}} keep · {{junk}} junk. Appliquer écrit les étiquettes en file ; les lignes indiquent les étiquettes DIM existantes si différentes.",
+  "applied": "Étiquettes appliquées à DIM Sync.",
+  "openJunkInDim": "Ouvrir le junk dans DIM",
+  "partialApplied": "Application partielle : {{count}} étiquettes réussies. Les éléments en échec restent en file.",
+  "retryFailed": "Réessayer {{count}} en échec",
+  "empty": "Aucune étiquette en attente.",
+  "compareDupes": "Comparer les doublons",
+  "table": {
+    "item": "Objet",
+    "copyDimSr": "Copier la requête DIM",
+    "archetype": "Archétype",
+    "tertiary": "Tertiaire",
+    "tuning": "Ajustement",
+    "class": "Classe",
+    "combo": "Combo",
+    "appliesToDim": "S’applique à DIM",
+    "none": "Aucun"
+  },
+  "copy": {
+    "ids": "Copier requête id:",
+    "junk": "Copier recherche tag:junk",
+    "junkIds": "Copier uniquement les id junk",
+    "copied": "Copié !",
+    "announcement": "{{label}} copié dans le presse-papiers."
+  },
+  "removeFromQueue": "Retirer de la file",
+  "applyTags": "Appliquer {{count}} étiquettes à DIM",
+  "applying": "Application…",
+  "clearPending": "Effacer les étiquettes en attente",
+  "clearSession": "Effacer la session",
+  "backToDashboard": "Retour au tableau de bord",
+  "confirm": {
+    "clearPending": "Effacer les {{count}} étiquettes en attente ? Elles ne seront pas appliquées dans DIM. La progression de la session de comparaison est conservée.",
+    "clearSession": "Effacer toute la session de comparaison ? Les étiquettes en attente et l’état de comparaison en cours seront réinitialisés."
+  },
+  "alreadyInDim": "Déjà dans DIM : {{summary}}"
+}
