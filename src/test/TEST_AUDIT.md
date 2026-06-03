@@ -2,7 +2,7 @@
 
 Baseline: **49** files, **309** tests (`npm test`). After audit: **49** files, **302** tests (all pass). Playwright e2e: `e2e/home-smoke.spec.ts`, `e2e/vault-smoke.spec.ts` (live Bungie; out of Vitest scope).
 
-`localeCompleteness.test.ts` (untracked WIP) failed until missing keys were filled from `en` via `node scripts/fill-missing-locale-keys.mjs` (English placeholders for translators).
+`localeCompleteness.test.ts` (untracked WIP) failed until missing keys were filled from `en` via `node scripts/sync-locale-keys.mjs` (English placeholders for translators).
 
 ## High-value (keep)
 
