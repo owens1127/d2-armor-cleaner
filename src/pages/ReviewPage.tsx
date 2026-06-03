@@ -257,7 +257,7 @@ function ReviewPageContent({ membership }: { membership: BungieMembership }) {
             <table className="w-full table-fixed text-sm">
               <thead className="bg-surface-2 text-muted text-left">
                 <tr>
-                  <th className="px-3 py-2 w-[28%] min-w-[8rem]">Item</th>
+                  <th className="px-3 py-2 w-[28%] min-w-[5.5rem] sm:min-w-[8rem]">Item</th>
                   <th className="px-3 py-2 w-10">
                     <span className="sr-only">Copy DIM query</span>
                   </th>

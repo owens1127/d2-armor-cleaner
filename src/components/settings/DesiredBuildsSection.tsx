@@ -111,7 +111,7 @@ function ComboReadOnlyView({ build, vaultItems, onEdit, onRemove }: ComboReadOnl
   return (
     <>
       <div className="flex flex-wrap items-start gap-2">
-        <h3 className="flex-1 min-w-[120px] text-sm font-medium text-white">{build.name}</h3>
+        <h3 className="flex-1 min-w-0 text-sm font-medium text-white">{build.name}</h3>
         <button
           type="button"
           onClick={onEdit}
@@ -131,7 +131,7 @@ function ComboReadOnlyView({ build, vaultItems, onEdit, onRemove }: ComboReadOnl
       <div className="space-y-1.5">
         {build.statTargets.map((target, idx) => (
           <div key={`${build.id}-ro-${idx}`} className="flex flex-wrap items-center gap-2">
-            <span className="text-xs text-muted min-w-[108px]">
+            <span className="text-xs text-muted min-w-0 sm:min-w-[6.75rem] shrink-0">
               {PRIORITY_LABELS[idx] ?? `Priority ${idx + 1}`}
             </span>
             <StatIcon stat={target.stat} size="sm" variant="glyph" />
@@ -218,7 +218,7 @@ function ComboEditView({
           value={build.name}
           onChange={(e) => onNameChange(e.target.value)}
           className={[
-            'flex-1 min-w-[120px] bg-surface border rounded-md px-2 py-1 text-sm text-white',
+            'flex-1 min-w-0 w-full bg-surface border rounded-md px-2 py-1 text-sm text-white',
             dirty ? 'border-amber-400/35' : 'border-border',
           ].join(' ')}
           aria-label="Combo name"
@@ -253,7 +253,7 @@ function ComboEditView({
       <div className="space-y-2">
         {build.statTargets.map((target, idx) => (
           <div key={`${build.id}-${idx}`} className="flex flex-wrap items-end gap-2">
-            <label className="flex flex-col gap-1 text-xs text-muted min-w-[108px]">
+            <label className="flex flex-col gap-1 text-xs text-muted w-full min-w-0 sm:min-w-[6.75rem]">
               {PRIORITY_LABELS[idx] ?? `Priority ${idx + 1}`}
               <select
                 value={target.stat}

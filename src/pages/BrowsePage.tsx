@@ -404,8 +404,8 @@ export function BrowsePage() {
   }
 
   const redundantFilterBar = (
-    <div className="flex flex-wrap gap-3 mb-6 p-4 border border-border rounded-xl bg-surface-2">
-      <label className="flex flex-col gap-1 text-xs text-muted">
+    <div className="flex flex-wrap gap-3 mb-6 p-4 border border-border rounded-xl bg-surface-2 min-w-0">
+      <label className="flex flex-col gap-1 text-xs text-muted min-w-[5.5rem] flex-1">
         Slot
         <select
           value={slot}
@@ -435,7 +435,7 @@ export function BrowsePage() {
           ))}
         </select>
       </label>
-      <label className="flex flex-col gap-1 text-xs text-muted flex-1 min-w-[160px]">
+      <label className="flex flex-col gap-1 text-xs text-muted w-full min-w-0 sm:flex-1 sm:min-w-[10rem]">
         Search
         <input
           type="search"
@@ -445,7 +445,7 @@ export function BrowsePage() {
           className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
         />
       </label>
-      <label className="flex flex-col gap-1 text-xs text-muted min-w-[140px]">
+      <label className="flex flex-col gap-1 text-xs text-muted w-full min-w-0 sm:min-w-[8.75rem]">
         Armor set
         <select
           value={setFilter === 'all' ? 'all' : String(setFilter)}
@@ -491,7 +491,7 @@ export function BrowsePage() {
   );
 
   const fullBrowseFilterBar = (
-    <div className="flex flex-wrap gap-3 mb-6 p-4 border border-border rounded-xl bg-surface-2">
+    <div className="flex flex-wrap gap-3 mb-6 p-4 border border-border rounded-xl bg-surface-2 min-w-0">
         <label className="flex flex-col gap-1 text-xs text-muted">
           Sort
           <select
@@ -507,7 +507,7 @@ export function BrowsePage() {
             )}
           </select>
         </label>
-        <label className="flex flex-col gap-1 text-xs text-muted min-w-[140px]">
+        <label className="flex flex-col gap-1 text-xs text-muted w-full min-w-0 sm:min-w-[8.75rem]">
           Combo
           <select
             value={buildFilter}
@@ -558,7 +558,7 @@ export function BrowsePage() {
             ))}
           </select>
         </label>
-        <label className="flex flex-col gap-1 text-xs text-muted flex-1 min-w-[160px]">
+        <label className="flex flex-col gap-1 text-xs text-muted w-full min-w-0 sm:flex-1 sm:min-w-[10rem]">
           Search
           <input
             type="search"
@@ -568,7 +568,7 @@ export function BrowsePage() {
             className="bg-surface border border-border rounded-md px-2 py-1.5 text-sm text-white"
           />
         </label>
-        <label className="flex flex-col gap-1 text-xs text-muted min-w-[140px]">
+        <label className="flex flex-col gap-1 text-xs text-muted w-full min-w-0 sm:min-w-[8.75rem]">
           Armor set
           <select
             value={setFilter === 'all' ? 'all' : String(setFilter)}
@@ -714,7 +714,7 @@ export function BrowsePage() {
             </div>
           )}
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 armor-card-grid">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 armor-card-grid min-w-0">
             {filtered.map((item) => {
               const breakdown = scoreItem(item, classPrefs, classItems);
               const label = wantScoreLabel(item, classItems);

@@ -1469,7 +1469,7 @@ export function BuildCoveragePanel({
 
   if (!hasSavedBuilds) {
     return (
-      <section className="mb-10 rounded-2xl bg-surface/60 px-5 py-4 ring-1 ring-white/8">
+      <section className="mb-10 min-w-0 rounded-2xl bg-surface/60 px-4 py-4 sm:px-5 ring-1 ring-white/8">
         <h2 className="text-base font-semibold tracking-tight text-white">Your combos</h2>
         <div className="mt-4 rounded-xl bg-black/15 px-4 py-4 ring-1 ring-white/10">
           <p className="max-w-lg text-sm text-muted">
@@ -1481,7 +1481,7 @@ export function BuildCoveragePanel({
   }
 
   return (
-    <section className="mb-10 rounded-2xl bg-surface/60 px-5 py-4 ring-1 ring-white/8">
+    <section className="mb-10 min-w-0 rounded-2xl bg-surface/60 px-4 py-4 sm:px-5 ring-1 ring-white/8">
       <div className="mb-4 flex flex-wrap items-start justify-between gap-3 border-b border-white/10 pb-3">
         <div>
           <h2 className="text-base font-semibold tracking-tight text-white">Your combos</h2>

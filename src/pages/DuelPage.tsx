@@ -934,7 +934,7 @@ export function DuelPage() {
         <div className="clean-page__chrome">
           <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
             <div>
-              <h1 className="ui-heading text-3xl font-semibold tracking-tight">
+              <h1 className="ui-heading text-2xl sm:text-3xl font-semibold tracking-tight">
                 Compare {CLASS_LABELS[classType]} duplicates
               </h1>
               {showingBucketWrapUp ? (
@@ -957,7 +957,7 @@ export function DuelPage() {
             </div>
 
             {queueBuckets.length > 0 && !showingBucketWrapUp && !needsBucketChoice && (
-              <div className="flex flex-wrap items-end gap-2 shrink-0">
+              <div className="flex flex-wrap items-end gap-2 w-full min-w-0 sm:w-auto sm:shrink-0">
                 <BucketSwitcher
                   buckets={queueBuckets}
                   currentKey={currentBucketKey}

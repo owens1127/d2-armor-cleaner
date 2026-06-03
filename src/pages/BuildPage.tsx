@@ -53,7 +53,7 @@ export function BuildPage() {
   return (
     <Layout>
       <div className="mb-8 space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight text-white">
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
           {CLASS_LABELS[classType]} combos
         </h1>
         <p className="max-w-2xl text-sm text-muted/90">

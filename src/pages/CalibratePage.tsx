@@ -702,7 +702,7 @@ export function CalibratePage() {
       </div>
 
       {step === 'class' && (
-        <div className="max-w-lg">
+        <div className="w-full max-w-lg min-w-0">
           <CalibrateStepHeader
             step="class"
             calibrateClass={calibrateClass}
@@ -727,7 +727,7 @@ export function CalibratePage() {
       )}
 
       {step === 'stats' && (
-        <div className="max-w-md">
+        <div className="w-full max-w-md min-w-0">
           <CalibrateStepHeader
             step="stats"
             calibrateClass={calibrateClass}
@@ -758,7 +758,7 @@ export function CalibratePage() {
       )}
 
       {step === 'archetype' && (
-        <div className="max-w-lg">
+        <div className="w-full max-w-lg min-w-0">
           <CalibrateStepHeader
             step="archetype"
             calibrateClass={calibrateClass}
@@ -789,7 +789,7 @@ export function CalibratePage() {
       )}
 
       {step === 'tertiary' && tertiaryStats.length >= 2 && (
-        <div className="max-w-lg calibrate-pick--enter">
+        <div className="w-full max-w-lg min-w-0 calibrate-pick--enter">
           <CalibrateStepHeader
             step="tertiary"
             calibrateClass={calibrateClass}
@@ -837,7 +837,7 @@ export function CalibratePage() {
       )}
 
       {step === 'tuning' && tuningStats.length >= 2 && (
-        <div className="max-w-lg calibrate-pick--enter">
+        <div className="w-full max-w-lg min-w-0 calibrate-pick--enter">
           <CalibrateStepHeader
             step="tuning"
             calibrateClass={calibrateClass}
@@ -883,7 +883,7 @@ export function CalibratePage() {
       )}
 
       {step === 'sets' && setPieces.length >= 2 && (
-        <div className="w-full max-w-2xl">
+        <div className="w-full max-w-2xl min-w-0">
           <CalibrateStepHeader
             step="sets"
             calibrateClass={calibrateClass}
@@ -940,7 +940,7 @@ export function CalibratePage() {
       )}
 
       {step === 'sets' && setPieces.length < 2 && (
-        <div className="max-w-md">
+        <div className="w-full max-w-md min-w-0">
           <p className="text-neutral-400 mb-4">No armor sets to compare.</p>
           <OnboardingStepActions onBack={goBack}>
             <button
@@ -1097,7 +1097,7 @@ function RankedReorderList<T extends string | number>({
   }
 
   return (
-    <ul className="space-y-2">
+    <ul className="space-y-2 w-full min-w-0">
       {items.map((item, i) => {
         const label = getLabel(item);
         const key = getKey(item);

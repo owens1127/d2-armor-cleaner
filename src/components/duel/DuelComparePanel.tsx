@@ -137,7 +137,7 @@ function DuelActionGroup({
       <p className="m-0 mb-1 text-center text-[10px] font-semibold uppercase tracking-wider text-muted/75">
         {label}
       </p>
-      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">{children}</div>
+      <div className="grid grid-cols-3 gap-1 sm:gap-2 min-w-0">{children}</div>
     </div>
   );
 }

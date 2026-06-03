@@ -166,7 +166,7 @@ function ArmorViewGrid({
   onCellClick?: (bucket: DupeBucket) => void;
 }) {
   return (
-    <div className="grid grid-cols-3 lg:grid-cols-6 gap-2 min-w-0 w-full">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 min-w-0 w-full">
       {ARCHETYPES.map((archetype) => (
         <div key={archetype} className="flex flex-col gap-1 min-w-0">
           <div className="text-center mb-1 px-0.5">

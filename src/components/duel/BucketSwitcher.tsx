@@ -66,7 +66,7 @@ export function BucketSwitcher({
   const triggerDisabled = disabled || sorted.length <= 1;
 
   return (
-    <div ref={rootRef} className="relative flex flex-col gap-1 text-xs min-w-[240px] max-w-[360px]">
+    <div ref={rootRef} className="relative flex flex-col gap-1 text-xs w-full min-w-0 max-w-full sm:min-w-[240px] sm:max-w-[360px]">
       <span className="font-medium uppercase tracking-wide text-[0.65rem] text-muted">Bucket</span>
       <button
         type="button"

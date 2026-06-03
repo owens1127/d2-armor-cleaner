@@ -19,11 +19,34 @@
   --spacing-icon-sm: 1rem;
   --spacing-icon-md: 1.125rem;
   /* Combo loadout grid - fixed action rail + column floor */
-  --loadout-action-rail: calc(4 * var(--spacing-touch-sm) + 5.5rem + 0.5rem);
+  --loadout-choose-col: 5.5rem;
+  --loadout-action-rail: calc(4 * var(--spacing-touch-sm) + var(--loadout-choose-col) + 0.5rem);
   /** Picker rows: DIM + 3 tags only (no Choose slot). */
   --loadout-picker-action-rail: calc(4 * var(--spacing-touch-sm) + 0.5rem);
   --loadout-left-cluster: 3.75rem;
   --loadout-column-min: 30rem;
+}
+
+@media (max-width: 639px) {
+  :root {
+    --loadout-column-min: min(100%, 22rem);
+    --loadout-left-cluster: 3.25rem;
+    --loadout-choose-col: 3.75rem;
+    --loadout-action-rail: calc(4 * var(--spacing-touch-sm) + var(--loadout-choose-col) + 0.375rem);
+  }
+
+  header .ui-icon-btn {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .duel-compare__actions button {
+    min-height: 2.75rem;
+  }
+
+  .clean-page__stage {
+    padding-bottom: 0.75rem;
+  }
 }
 
 html,

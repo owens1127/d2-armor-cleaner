@@ -92,7 +92,7 @@ export function rollPatternActionRailStyle(): CSSProperties {
     width: 'var(--loadout-action-rail)',
     minWidth: 'var(--loadout-action-rail)',
     maxWidth: 'var(--loadout-action-rail)',
-    gridTemplateColumns: 'repeat(4, var(--spacing-touch-sm)) 5.5rem',
+    gridTemplateColumns: 'repeat(4, var(--spacing-touch-sm)) var(--loadout-choose-col)',
   };
 }
 

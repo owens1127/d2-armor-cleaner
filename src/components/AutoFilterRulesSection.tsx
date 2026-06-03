@@ -438,7 +438,7 @@ export function AutoFilterRulesSection() {
 
       <div className="border border-border rounded-lg p-4 bg-surface-2 space-y-3">
         <p className="text-xs font-semibold uppercase text-muted">Add rule</p>
-        <div className="grid grid-cols-2 gap-3 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
           <label className="flex flex-col gap-1">
             <span className="text-muted text-xs">Class</span>
             <select

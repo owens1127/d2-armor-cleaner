@@ -69,16 +69,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
     ? buildAuthenticatedNavLinks(activeNavClass)
     : signedOutNavLinks();
   return (
-    <div className="min-h-full flex flex-col">
+    <div className="min-h-full flex flex-col overflow-x-hidden">
       <VaultStatusBanner />
       <header className="border-b border-border/80 bg-surface-2/90 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <Link
               to={membership ? authenticatedLandingPath(activeNavClass) : '/'}
-              className="ui-heading font-semibold text-white tracking-tight text-base shrink-0"
+              className="ui-heading font-semibold text-white tracking-tight text-sm sm:text-base shrink-0"
             >
-              D2 Armor Cleaner
+              <span className="sm:hidden">D2 Cleaner</span>
+              <span className="hidden sm:inline">D2 Armor Cleaner</span>
             </Link>
             {membership && (
               <HeaderClassPicker
@@ -106,7 +107,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </div>
         <div className="ui-divider max-w-7xl mx-auto" />
       </header>
-      <main className="flex flex-1 flex-col min-h-0 max-w-7xl w-full mx-auto px-4 py-6 pb-6">
+      <main className="flex flex-1 flex-col min-h-0 max-w-7xl w-full mx-auto px-4 py-6 pb-20 md:pb-6 min-w-0">
         <BuildOptimalProvider>
           <PendingTagsProvider>{children}</PendingTagsProvider>
         </BuildOptimalProvider>
