@@ -14,16 +14,16 @@
     "tertiaryStatLabel": "Stat tertiaire",
     "tuningStatLabel": "Stat d’ajustement",
     "slotLabel": "Emplacement",
-    "armorSetLabel": "Set d'armure",
+    "armorSetLabel": "Set d’armure",
     "any": "Tous",
     "addValue": "Ajouter une valeur…",
     "pickValue": "Choisir une valeur…",
     "matchMode": "Mode de correspondance",
-    "matchModeDisabled": "Mode (choisir une valeur d'abord)",
+    "matchModeDisabled": "Mode (choisir une valeur d’abord)",
     "operators": {
       "is": "Est",
-      "isNot": "N'est pas",
-      "anyOf": "L'un de",
+      "isNot": "N’est pas",
+      "anyOf": "L’un de",
       "noneOf": "Aucun de"
     },
     "livePreview_one": "Aperçu : {{count}} pièce serait en file au prochain chargement (hors garder, favoris et rebut déjà).",
@@ -38,7 +38,7 @@
       "tertiary": "{{stat}} tertiaire",
       "tuning": "{{stat}} ajustement",
       "setFallback": "set {{hash}}",
-      "anyOf": "l'un de {{labels}}",
+      "anyOf": "l’un de {{labels}}",
       "noneOf": "aucun de {{labels}}",
       "not": "PAS {{label}}"
     }
@@ -55,16 +55,16 @@
       "armorSet": "Set d’armure",
       "dimTag": "Étiquette DIM",
       "sort": "Tri",
-      "combo": "Combo",
+      "combo": "Combinaison",
       "allSlots": "Tous les emplacements",
       "allArchetypes": "Tous les archétypes",
       "allSets": "Tous les sets",
       "any": "Tous",
-      "anyCombo": "N’importe quel combo",
+      "anyCombo": "Toute combinaison",
       "armorNamePlaceholder": "Nom de l’armure…",
       "statLowerOnly": "Stats inférieures uniquement",
       "dupesOnly": "Doublons uniquement",
-      "strictlyLowerOnly": "Strictement inférieur uniquement",
+      "strictlyLowerOnly": "Strictement inférieurs uniquement",
       "redundantOnly": "Rolls redondants uniquement",
       "supportsComboOnly": "Compatible combo uniquement"
     },
@@ -86,7 +86,7 @@
       "buildFitHint": "trié par adéquation combo",
       "preferenceHint": "trié par préférence"
     },
-    "copyIds": "Copier requête {{count}} id:",
+    "copyIds": "Copier la requête {{count}} id:",
     "copied": "Copié !",
     "reviewTagsLink": "Réviser les étiquettes de comparaison/triage ({{count}})",
     "redundant": {
@@ -103,7 +103,7 @@
   "build": {
     "title": "Combos {{class}}",
     "intro": "Meilleures pièces du coffre pour chaque cible de roll de votre combo.",
-    "combosHeading": "Combos",
+    "combosHeading": "Combinaisons",
     "setBonuses": "Bonus de set",
     "setBonusesOptional": "Bonus de set (facultatif)",
     "includeInCoverage": "Inclure dans la couverture",
@@ -111,9 +111,9 @@
     "maxCombos": "Maximum {{max}} combos par classe.",
     "orderLabel": "Ordre :",
     "noneOption": "Aucun",
-    "twoTwoMix": " · mix 2+2",
+    "twoTwoMix": " · mélange 2+2",
     "editor": {
-      "intro": "Choisissez 2 à 4 stats dans l'ordre et des bonus de set optionnels. Nous recommandons la meilleure pièce par emplacement.",
+      "intro": "Choisissez 2 à 4 stats dans l’ordre et des bonus de set optionnels (ex. Ferropotent 2pc + Smoke Jumper 2pc). Nous recommandons la meilleure pièce par emplacement pour l’alignement des stats et des sets.",
       "unsavedHint": "Modifications non enregistrées · enregistrez ou annulez.",
       "editingHint": "Édition du combo · enregistrez ou annulez à la fin.",
       "allSavedHint": "Tous les combos enregistrés · Modifier sur une carte.",
@@ -133,14 +133,14 @@
       "priority4": "4e priorité",
       "priorityN": "Priorité {{n}}",
       "setBonus2pc": "Bonus 2 pièces",
-      "setBonus4pcSame": "Même set (4pc)",
-      "setBonus4pcMix": "Second set (mix 2pc) ou 4pc",
-      "setBonusHint": "Un set pour 2pc, puis le même pour 4pc ou un second pour mix 2+2.",
+      "setBonus4pcSame": "Même set (4 pièces)",
+      "setBonus4pcMix": "Deuxième set (mélange 2 pièces) ou 4 pièces",
+      "setBonusHint": "Un set pour 2 pièces, puis le même pour 4 pièces ou un second set pour un mélange 2+2.",
       "loadVaultForSets": "Chargez le coffre pour choisir des sets.",
       "firstSet2pc": "Premier set (2pc)",
-      "twoPcOnly": "2pc seulement",
+      "twoPcOnly": "2pc seulement (premier set)",
       "set4pcSuffix": "{{name}} (4 pièces)",
-      "set2pcMixSuffix": "{{name}} (mix 2pc)",
+      "set2pcMixSuffix": "{{name}} (mélange 2 pièces)",
       "targetLabel": "Cible :",
       "addStatCount": "+ stat ({{current}}/{{max}})",
       "addCombo": "Ajouter un combo",
@@ -149,8 +149,8 @@
     },
     "coverage": {
       "heading": "Vos combos",
-      "intro": "Meilleure pièce par emplacement pour chaque roll optimal",
-      "empty": "Pas encore de combo. Ajoutez 2–4 priorités de stats ci-dessous.",
+      "intro": "Meilleure pièce par emplacement pour chaque profil de roll optimal (archétype + tertiaire + ajustement)",
+      "empty": "Aucun combo pour l’instant. Ajoutez 2–4 priorités de stats dans la section Combos ci-dessous.",
       "editCombos": "Modifier les combos",
       "setPrioritiesHint": "Définissez des priorités pour voir les rolls cibles",
       "recommendedHeading": "Pièces recommandées",
@@ -181,30 +181,30 @@
       "eligible_one": "{{count}} pièce éligible",
       "eligible_other": "{{count}} pièces éligibles",
       "anyArchetype": "Tout archétype",
-      "tier": "Palier {{tier}}",
-      "comboFallback": "Combo",
+      "tier": "Niveau {{tier}}",
+      "comboFallback": "Combinaison",
       "rollRoleCombined": "tertiaire + ajustement",
       "rollRoleTertiary": "tertiaire",
       "rollRoleTuning": "ajustement",
       "notComboPriority": "{{stat}} · pas priorité combo",
-      "archetypeBonus": "{{stat}} de l'archétype (+{{bonus}})",
-      "rollCombinedTitle": "{{stat}} tertiaire+tuning (+{{tertiaryBonus}} +{{tuningBonus}})",
+      "archetypeBonus": "{{stat}} de l’archétype (+{{bonus}})",
+      "rollCombinedTitle": "{{stat}} tertiaire + ajustement (+{{tertiaryBonus}} +{{tuningBonus}})",
       "rollTertiaryTitle": "{{stat}} tertiaire (+{{bonus}})",
       "rollTuningTitle": "{{stat}} ajustement (+{{bonus}})",
       "detailsSupporting": "{{count}} pièces roulent au moins une priorité.",
       "detailsProfiles": "{{filled}} sur {{possible}} types de roll possibles dans le coffre.",
-      "detailsRedundantOverlap": "Emplacements vides malgré les doublons · remplissez d'abord.",
+      "detailsRedundantOverlap": "Emplacements vides malgré les doublons · remplissez-les d’abord.",
       "gapsHeading": "Rolls à chercher",
       "gapsIntro": "Combinaisons vides utiles pour ce combo.",
-      "gapsEmpty": "Rien d'évident ne manque.",
-      "overlapsHeading": "Rolls en surplus",
+      "gapsEmpty": "Rien d’évident ne manque dans votre matrice.",
+      "overlapsHeading": "Types de roll dont vous en avez beaucoup",
       "overlapsIntro": "Trois pièces ou plus dans la même combinaison.",
       "overlapsEmpty": "Pas de lourds doublons sur un roll.",
       "overlapCount_one": "{{count}} pièce",
       "overlapCount_other": "{{count}} pièces",
-      "gapAllPriorities": "toutes les priorités",
-      "gapMultiplePriorities": "plusieurs priorités",
-      "gapOnePriority": "une priorité",
+      "gapAllPriorities": "correspond à toutes les priorités",
+      "gapMultiplePriorities": "correspond à plusieurs priorités",
+      "gapOnePriority": "correspond à une priorité",
       "chooseEligibleTitle": "{{count}} pièces éligibles dans le coffre"
     }
   },
@@ -308,11 +308,11 @@
     },
     "dimCopy": {
       "queryFor": "Copier la requête DIM pour {{name}}",
-      "queryCopied": "Requête DIM pour {{name}} copiée.",
+      "queryCopied": "Requête DIM pour {{name}} copiée dans le presse-papiers.",
       "searchShown": "Copier la recherche DIM des pièces affichées",
-      "searchShownCopied": "Recherche DIM des pièces affichées copiée.",
+      "searchShownCopied": "Recherche DIM des pièces affichées copiée dans le presse-papiers.",
       "searchGroup": "Copier la recherche DIM des {{count}} pièces du groupe",
-      "searchGroupCopied": "Recherche DIM des {{count}} pièces du groupe copiée."
+      "searchGroupCopied": "Recherche DIM des {{count}} pièces du groupe copiée dans le presse-papiers."
     }
   },
   "dashboard": {
@@ -327,7 +327,7 @@
     "refreshVault": "Actualiser le coffre",
     "armorView": "Vue armure",
     "archetypeView": "Vue archétype",
-    "heatmapSlot": "Emplacement heatmap",
+    "heatmapSlot": "Emplacement (carte thermique)",
     "allSlots": "Tous les emplacements",
     "insights": {
       "continueSetup": {
@@ -412,16 +412,16 @@
       },
       "heavyBuckets": {
         "title": "Vider les gros groupes de doublons",
-        "detail_one": "{{count}} groupe avec 5+ objets. Utilisez la heatmap pour en choisir un.",
-        "detail_other": "{{count}} groupes avec 5+ objets. Utilisez la heatmap pour en choisir un.",
+        "detail_one": "{{count}} groupe avec 5+ objets. Utilisez la carte thermique pour en choisir un.",
+        "detail_other": "{{count}} groupes avec 5+ objets. Utilisez la carte thermique pour en choisir un.",
         "cta": "Comparer les doublons"
       },
-      "fixCoverageNoVault": "Aucune pièce du coffre ne roll encore vos stats prioritaires",
-      "fixCoverageNeedSlot": "Il faut un {{slot}} qui roll vos priorités",
-      "fixCoverageSlots": "{{filled}}/{{total}} emplacements remplis dans le loadout recommandé",
-      "browseNoArmor": "Aucune armure de votre coffre ne roll encore ces stats",
-      "browseGaps": "{{count}} type de roll à chercher pour un meilleur fit",
-      "browseGaps_other": "{{count}} types de roll à chercher pour un meilleur fit",
+      "fixCoverageNoVault": "Aucune pièce du coffre ne correspond encore à vos stats prioritaires",
+      "fixCoverageNeedSlot": "Il faut un {{slot}} qui correspond à vos priorités de roll",
+      "fixCoverageSlots": "{{filled}}/{{total}} emplacements remplis dans l’équipement recommandé",
+      "browseNoArmor": "Aucune armure de votre coffre ne correspond encore à ces stats",
+      "browseGaps": "{{count}} type de roll à chercher pour une meilleure adéquation",
+      "browseGaps_other": "{{count}} types de roll à chercher pour une meilleure adéquation",
       "browseCompare": "Comparer l’armure du coffre à vos combos"
     },
     "buildLink": {
@@ -482,7 +482,7 @@
     "chooser": {
       "title": "Choisir un groupe de doublons",
       "kicker": "Comparer les doublons",
-      "intro": "Choisissez d'abord un groupe {{class}}. Changez plus tard dans l'en-tête.",
+      "intro": "Choisissez d’abord un groupe {{class}}. Vous pourrez en changer plus tard dans l’en-tête.",
       "listAria": "Groupes de doublons {{class}}"
     },
     "wrapUp": {
@@ -500,7 +500,7 @@
       "stats": {
         "keeps": "Garder",
         "junkQueued": "Rebut en file",
-        "preferEliminated": "Préférer éliminés",
+        "preferEliminated": "Éliminés par préférence",
         "pairsDecided": "Paires décidées",
         "inGroup": "Dans ce groupe"
       },
@@ -508,7 +508,7 @@
         "keepBoth": "Garder les deux : {{count}}",
         "keepSide": "Garder un côté : {{count}}",
         "junkedInDuels": "Rebut en duels : {{count}}",
-        "preferInPlay": "Préférer encore actifs : {{count}}"
+        "preferInPlay": "Préférences encore actives : {{count}}"
       },
       "piece_one": "{{count}} pièce",
       "piece_other": "{{count}} pièces",
@@ -528,27 +528,26 @@
       "right": "Droite",
       "keep": "Garder",
       "prefer": "Préférer",
-      "junk": "Rebut",
-      "pass": "Passer"
+      "junk": "Rebut"
     },
     "compare": {
       "suggested": "Suggéré",
       "sameRoll": "Même roll",
       "compareSides": "Comparer les côtés",
       "suggestedPick": "Choix suggéré : ",
-      "vs": "vs",
+      "vs": "contre",
       "fitTitle": "À quel point cette pièce correspond à vos préférences enregistrées",
       "powerTitle": "Niveau de puissance",
       "identicalRolls": "Rolls identiques. Garder, rebut, les deux ou passer.",
-      "suppressedSuggestion": "Les deux forts · dernier du palier. Préférer, passer, garder ou rebut.",
+      "suppressedSuggestion": "Les deux forts · dernier du tableau. Préférer, passer, garder ou rebut.",
       "buildOptimalPrefix": "Combo optimal pour ",
       "orPassKeepJunk": "· ou passer / garder / rebut",
       "evenMatch": "Égalité. Préférer, passer, garder ou rebut.",
-      "eliminated": "Éliminé du palier",
+      "eliminated": "Éliminé du tableau",
       "actionKeep": "Garder",
       "outcomes": {
-        "prefer": "Préférer ce côté. Le perdant a besoin de {{threshold}} défaites préférer avant rebut en fin de groupe.",
-        "keepSide": "Garder à la fin du groupe · l’autre reste au palier",
+        "prefer": "Préférer ce côté. Le perdant a besoin de {{threshold}} défaites « préférer » avant rebut en fin de groupe.",
+        "keepSide": "Garder à la fin du groupe · l’autre reste dans le tableau",
         "keepBoth": "Les deux gardés à la fin",
         "junkOne": "Rebut maintenant · l’autre reste (pas de gagnant)",
         "junkBoth": "Les deux en rebut maintenant",
@@ -557,11 +556,11 @@
       "pass": "Passer",
       "preferred": "Préféré",
       "tuningLabel": "Ajustement : {{stat}}",
-      "setFootnote": "Set : {{name}}",
+      "setFootnote": "Ensemble : {{name}}",
       "loss_one": "1 défaite",
       "loss_other": "{{count}} défaites",
-      "lossRemaining_one": "{{count}} défaite préférer de plus avant rebut en fin de groupe",
-      "lossRemaining_other": "{{count}} défaites préférer de plus avant rebut en fin de groupe",
+      "lossRemaining_one": "{{count}} défaite « préférer » de plus avant rebut en fin de groupe",
+      "lossRemaining_other": "{{count}} défaites « préférer » de plus avant rebut en fin de groupe",
       "keyboardHints": "Survolez les boutons pour les résultats · ↑ garder les deux · Espace passer · ↓ rebut les deux · Ctrl+←/→ rebut par côté",
       "aria": {
         "keepLeft": "Garder à gauche. {{outcome}}",
@@ -612,7 +611,7 @@
         "label": "Ajustement"
       },
       "strict": {
-        "label": "Strict"
+        "label": "Stricte"
       }
     },
     "impactCompact": {
@@ -739,14 +738,14 @@
     },
     "diff": {
       "tuning": "Ajustement",
-      "set": "Set",
+      "set": "Ensemble",
       "power": "Puissance",
       "masterwork": "Maîtrise",
       "noSet": "Pas de set",
       "yes": "Oui",
       "no": "Non",
-      "tuningVs": "Réglage : {{a}} vs {{b}}",
-      "setFootnote": "Set : {{name}}"
+      "tuningVs": "Ajustement : {{a}} vs {{b}}",
+      "setFootnote": "Ensemble : {{name}}"
     },
     "dominator": {
       "differentStatSplit": "Répartition de stats différente",
@@ -771,12 +770,12 @@
       "class": "Classe"
     },
     "archetypes": {
-      "gunner": "Gunner",
+      "gunner": "Artilleur",
       "grenadier": "Grenadier",
-      "paragon": "Paragon",
-      "brawler": "Brawler",
-      "bulwark": "Bulwark",
-      "specialist": "Specialist"
+      "paragon": "Parangon",
+      "brawler": "Bagarreur",
+      "bulwark": "Rempart",
+      "specialist": "Spécialiste"
     },
     "slots": {
       "helmet": "Casque",
@@ -814,7 +813,7 @@
     "dashboard": "Tableau de bord",
     "calibrate": "Calibrer",
     "browse": "Parcourir",
-    "combos": "Combos",
+    "combos": "Combinaisons",
     "compare": "Comparer",
     "review": "Révision",
     "autoFilters": "Filtres auto",
@@ -837,7 +836,7 @@
     "piece_one": "pièce",
     "piece_other": "pièces",
     "t5Block": " (<1>{{count}}</1> au niveau 5)",
-    "noTieredFound": "Aucune armure classée trouvée<1>{{parsedHint}}</1>. Importe uniquement les armures classées en jeu (N1–N5) ; l’équipement hérité et non classé est ignoré.",
+    "noTieredFound": "Aucune armure classée trouvée<1>{{parsedHint}}</1>. Seules les armures classées en jeu (N1–N5) sont importées ; l’équipement hérité et non classé est ignoré.",
     "parsedHint": " ({{count}} objets analysés depuis le coffre)",
     "keepGoalHeading": "Combien voulez-vous en garder ?",
     "keepGoalIntro": "Définit l’agressivité des suggestions de réduction des doublons de niveau 5 pendant le nettoyage.",
@@ -852,7 +851,7 @@
       },
       "balanced": {
         "label": "Équilibré",
-        "blurb": "Éliminer les doublons évidents, garder de la variété pour les builds"
+        "blurb": "Éliminer les doublons évidents, garder de la variété pour les équipements"
       },
       "options": {
         "label": "Garder des options",
@@ -882,12 +881,12 @@
       "tertiary": "Tertiaire",
       "tuning": "Ajustement",
       "class": "Classe",
-      "combo": "Combo",
+      "combo": "Combinaison",
       "appliesToDim": "S’applique à DIM",
       "none": "Aucun"
     },
     "copy": {
-      "ids": "Copier requête id:",
+      "ids": "Copier la requête id:",
       "junk": "Copier recherche tag:junk",
       "junkIds": "Copier uniquement les id rebut",
       "copied": "Copié !",
@@ -923,7 +922,7 @@
     "customizeIntro": "Resserrez ou assouplissez ce qui compte comme doublon. Les préréglages dans Paramètres les définissent en un clic.",
     "matchStyleLabel": "Style de correspondance :",
     "previewByClass": "Aperçu par classe",
-    "suggestions": "Suggestions",
+    "suggestions": "Recommandations",
     "usePreset": "Utiliser {{label}}",
     "impact": {
       "none": "Aucun groupe de doublons trouvé pour {{class}} à votre niveau actuel.",
@@ -948,7 +947,7 @@
     },
     "dupeRules": {
       "heading": "Règles de doublons",
-      "intro": "Règles partagées pour la heatmap, la comparaison, le parcours et les listes de rolls redondants.",
+      "intro": "Règles partagées pour la carte thermique, la comparaison, le parcours et les listes de rolls redondants.",
       "scopeHeading": "Portée : quelles pièces comptent",
       "minTierLabel": "Niveau d’équipement minimum",
       "minTierHelp": "L’import du coffre charge toujours les niveaux 1 à 5. Seules les pièces à ce niveau ou au-dessus entrent dans les groupes de doublons et les vérifications de rolls redondants.",

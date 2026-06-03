@@ -1,19 +1,19 @@
 {
   "autoFilters": {
     "title": "Filtry automatyczne",
-    "intro": "Automatycznie kolejkuj tagi junk przy ładowaniu lub odświeżeniu skarbca. Tagi keep i favorite nigdy nie są ustawiane automatycznie.",
+    "intro": "Automatycznie kolejkuj tagi śmieci przy ładowaniu lub odświeżeniu skarbca. Tagi zachowaj i ulubione nigdy nie są ustawiane automatycznie.",
     "noRules": "Brak reguł.",
     "addRule": "Dodaj regułę",
     "classLabel": "Klasa",
-    "operatorsIntro": "Każdy filtr może być <1>Jest</1>, <2>Nie jest</2>, <3>Dowolny z</3> lub <4>Żaden z</4> (np. junk Łowcy, którego archetyp nie jest Gunner).",
+    "operatorsIntro": "Każdy filtr może być <1>Jest</1>, <2>Nie jest</2>, <3>Dowolny z</3> lub <4>Żaden z</4> (np. junk dla Łowcy, gdy archetyp nie jest Strzelcem).",
     "rulesHeading": "Reguły",
-    "rulesBody": "Pasujące elementy trafiają do kolejki jako junk w Przeglądzie (jak ręczne tagowanie junk). Keep nigdy nie są tagowane automatycznie: keep/favorite w DIM, oczekujący keep lub elementy zachowane w kubełku pojedynku.",
+    "rulesBody": "Pasujące elementy trafiają do kolejki jako śmieci w Przeglądzie (jak ręczne tagowanie śmieci). Tagi zachowaj nigdy nie są ustawiane automatycznie: zachowaj/ulubione w DIM, oczekujący zachowaj lub elementy zachowane w grupie pojedynku.",
     "deleteRule": "Usuń",
     "allClasses": "Wszystkie klasy",
     "archetypeLabel": "Archetyp",
     "tertiaryStatLabel": "Statystyka trzeciorzędna",
     "tuningStatLabel": "Statystyka strojenia",
-    "slotLabel": "Slot",
+    "slotLabel": "Gniazdo",
     "armorSetLabel": "Zestaw pancerza",
     "any": "Dowolny",
     "addValue": "Dodaj wartość…",
@@ -49,14 +49,14 @@
     "redundantLink": "{{count}} nadmiarowych ról",
     "loadVaultFirst": "Najpierw załaduj skarbiec z panelu.",
     "filters": {
-      "slot": "Slot",
+      "slot": "Gniazdo",
       "archetype": "Archetyp",
       "search": "Szukaj",
       "armorSet": "Zestaw pancerza",
       "dimTag": "Tag DIM",
       "sort": "Sortuj",
       "combo": "Kombinacja",
-      "allSlots": "Wszystkie sloty",
+      "allSlots": "Wszystkie gniazda",
       "allArchetypes": "Wszystkie archetypy",
       "allSets": "Wszystkie zestawy",
       "any": "Dowolny",
@@ -70,11 +70,11 @@
     },
     "dimTags": {
       "untagged": "Bez tagu",
-      "keep": "Keep",
-      "junk": "Junk",
-      "favorite": "Favorite",
-      "infuse": "Infuse",
-      "archive": "Archive"
+      "keep": "Zachowaj",
+      "junk": "Śmieci",
+      "favorite": "Ulubione",
+      "infuse": "Wzmocnij",
+      "archive": "Archiwum"
     },
     "sort": {
       "matchDesc": "Dopasowanie % (wys. → nisk.)",
@@ -86,9 +86,9 @@
       "buildFitHint": "sortowane według dopasowania kombinacji",
       "preferenceHint": "sortowane według preferencji"
     },
-    "copyIds": "Kopiuj zapytanie {{count}} id:",
+    "copyIds": "Kopiuj zapytanie id: ({{count}})",
     "copied": "Skopiowano!",
-    "reviewTagsLink": "Przejrzyj tagi porównania/triage ({{count}})",
+    "reviewTagsLink": "Przejrzyj tagi porównań i triażu ({{count}})",
     "redundant": {
       "pickOne": "Wybierz jeden do zachowania",
       "noRedundant": "Brak nadmiarowych ról",
@@ -98,7 +98,7 @@
     },
     "noItemsMatch": "Żaden element nie pasuje do tych filtrów.",
     "backToDashboard": "Wróć do panelu",
-    "dupeBadge": "duplikat"
+    "dupeBadge": "Duplikat"
   },
   "build": {
     "title": "Kombinacje {{class}}",
@@ -111,9 +111,9 @@
     "maxCombos": "Maksymalnie {{max}} kombinacji na klasę.",
     "orderLabel": "Kolejność:",
     "noneOption": "Brak",
-    "twoTwoMix": " · mix 2+2",
+    "twoTwoMix": " · miks 2+2",
     "editor": {
-      "intro": "Wybierz 2–4 statystyki w kolejności i opcjonalne bonusy zestawu (np. Ferropotent 2pc + Smoke Jumper 2pc). Polecamy najlepszy element na slot pod kątem statystyk i zestawów.",
+      "intro": "Wybierz 2–4 statystyki w kolejności i opcjonalne bonusy zestawu (np. Ferropotent 2pc + Smoke Jumper 2pc). Polecamy najlepszy element w gnieździe pod kątem statystyk i zestawów.",
       "unsavedHint": "Niezapisane zmiany · zapisz lub anuluj, aby wrócić do widoku tylko do odczytu.",
       "editingHint": "Edycja kombinacji · zapisz lub anuluj po zakończeniu.",
       "allSavedHint": "Wszystkie kombinacje zapisane · kliknij Edytuj na karcie, aby zmienić ustawienia.",
@@ -139,7 +139,7 @@
       "loadVaultForSets": "Załaduj skarbiec, aby wybrać zestawy z ekwipunku.",
       "firstSet2pc": "Pierwszy zestaw (2pc)",
       "twoPcOnly": "Tylko 2pc (pierwszy zestaw)",
-      "set4pcSuffix": "{{name}} (4pc)",
+      "set4pcSuffix": "{{name}} (4 szt.)",
       "set2pcMixSuffix": "{{name}} (mix 2pc)",
       "targetLabel": "Cel:",
       "addStatCount": "+ Dodaj statystykę ({{current}}/{{max}})",
@@ -149,7 +149,7 @@
     },
     "coverage": {
       "heading": "Twoje kombinacje",
-      "intro": "Najlepszy element na slot dla każdego optymalnego wzorca roli (archetyp + trzeciorzędna + strojenie)",
+      "intro": "Najlepszy element w gnieździe dla każdego optymalnego wzorca roli (archetyp + trzeciorzędna + strojenie)",
       "empty": "Brak kombinacji. Dodaj 2–4 priorytety statystyk w sekcji Kombinacje poniżej.",
       "editCombos": "Edytuj kombinacje",
       "setPrioritiesHint": "Ustaw priorytety statystyk w kombinacji, aby zobaczyć cele ról",
@@ -163,18 +163,18 @@
       "hideRollDetails": "Ukryj szczegóły typów ról",
       "tagAll": "Otaguj wszystkie:",
       "bulkNoTaggable": "Brak elementów do otagowania",
-      "bulkClearKeep": "Usuń keep u wszystkich",
-      "bulkMarkKeep": "Oznacz wszystkie jako keep",
+      "bulkClearKeep": "Usuń zachowaj u wszystkich",
+      "bulkMarkKeep": "Oznacz wszystkie jako zachowaj",
       "bulkAllFavorited": "Wszystkie w ulubionych",
-      "bulkMarkFavorite": "Oznacz wszystkie jako favorite",
-      "bulkClearJunk": "Usuń junk u wszystkich",
-      "bulkMarkJunk": "Oznacz wszystkie jako junk",
-      "tagKeep": "Otaguj keep w DIM",
-      "tagKeepRemove": "Usuń tag keep w DIM",
-      "tagFavorite": "Otaguj favorite w DIM",
-      "tagFavoriteAlready": "Już favorite w DIM",
-      "tagJunk": "Otaguj junk w DIM",
-      "tagJunkRemove": "Usuń tag junk w DIM",
+      "bulkMarkFavorite": "Oznacz wszystkie jako ulubione",
+      "bulkClearJunk": "Usuń śmieci u wszystkich",
+      "bulkMarkJunk": "Oznacz wszystkie jako śmieci",
+      "tagKeep": "Otaguj zachowaj w DIM",
+      "tagKeepRemove": "Usuń tag zachowaj w DIM",
+      "tagFavorite": "Otaguj ulubione w DIM",
+      "tagFavoriteAlready": "Już ulubione w DIM",
+      "tagJunk": "Otaguj śmieci w DIM",
+      "tagJunkRemove": "Usuń tag śmieci w DIM",
       "choose": "Wybierz",
       "chooseSlot": "Wybierz {{slot}}",
       "choosePiece": "Wybierz element · {{count}} kwalifikujących się",
@@ -188,12 +188,12 @@
       "rollRoleTuning": "strojenie",
       "notComboPriority": "{{stat}} · nie priorytet kombinacji",
       "archetypeBonus": "{{stat}} z archetypu (+{{bonus}})",
-      "rollCombinedTitle": "{{stat}} trzeciorzędna+strojenie (+{{tertiaryBonus}} +{{tuningBonus}})",
+      "rollCombinedTitle": "{{stat}} trzeciorzędna + strojenie (+{{tertiaryBonus}} +{{tuningBonus}})",
       "rollTertiaryTitle": "{{stat}} trzeciorzędna (+{{bonus}})",
       "rollTuningTitle": "{{stat}} strojenie (+{{bonus}})",
       "detailsSupporting": "{{count}} elementów w skarbcu ma co najmniej jedną statystykę priorytetową.",
-      "detailsProfiles": "{{filled}} z {{possible}} typów ról, które możesz mieć (archetyp + trzeciorzędna + slot), jest w skarbcu.",
-      "detailsRedundantOverlap": "Puste sloty mimo nadmiarowych ról. Priorytetem jest wypełnienie, nie więcej duplikatów.",
+      "detailsProfiles": "{{filled}} z {{possible}} typów ról, które możesz mieć (archetyp + trzeciorzędna + gniazdo), jest w skarbcu.",
+      "detailsRedundantOverlap": "Puste gniazda mimo nadmiarowych ról. Priorytetem jest wypełnienie, nie więcej duplikatów.",
       "gapsHeading": "Typy ról do polowania",
       "gapsIntro": "Puste kombinacje, które pomogłyby tej kombinacji.",
       "gapsEmpty": "Nic oczywistego nie brakuje w macierzy.",
@@ -223,7 +223,7 @@
     "stepHeader": "Krok {{current}} z {{total}} · {{step}}",
     "classTitle": "Którą klasę kalibrujesz?",
     "archetypeTitle": "Uporządkuj archetypy według preferencji",
-    "archetypeInstruction": "Najbardziej preferowany na górze. Przeciągaj wiersze lub używaj strzałek. Wszystkie sześć archetypów jest na liście; posiadanie w skarbcu nie ogranicza listy.",
+    "archetypeInstruction": "Najbardziej preferowany na górze. Przeciągaj wiersze lub używaj strzałek. Na liście są wszystkie sześć archetypów; to, co masz w skarbcu, nie ogranicza listy.",
     "tertiaryTitle": "Uporządkuj statystyki trzeciorzędne",
     "tuningTitle": "Uporządkuj statystyki strojenia",
     "setsTitle": "Uporządkuj zestawy pancerza według preferencji",
@@ -290,11 +290,11 @@
     "confirm": {
       "clearPendingTags": "Wyczyścić wszystkie {{count}} oczekujących tagów? Nie zostaną zastosowane w DIM.",
       "resetClassPrefs": "Zresetować preferencje {{class}} do domyślnych? Wagi statystyk, wybory kalibracji i wagi nauczone dla tej klasy zostaną usunięte.",
-      "resetAllClassPrefs": "Zresetować preferencje wszystkich klas do domyślnych? Wagi statystyk, wybory kalibracji i wagi nauczone zostaną usunięte dla Huntera, Titana i Warlocka. Reguły duplikatów i inne ustawienia pozostają."
+      "resetAllClassPrefs": "Zresetować preferencje wszystkich klas do domyślnych? Wagi statystyk, wybory kalibracji i wagi nauczone zostaną usunięte dla Łowcy, Tytana i Czarnoksiężnika. Reguły duplikatów i inne ustawienia pozostają."
     },
     "classPrefs": {
       "heading": "Preferencje {{class}}",
-      "usingClass": "Używana klasa: {{class}} (zmień klasę w nagłówku). Wagi statystyk i archetypów per klasa z kalibracji. Reguły duplikatów są współdzielone, chyba że nadpisane dla klasy.",
+      "usingClass": "Używana klasa: {{class}} (zmień klasę w nagłówku). Wagi statystyk i archetypów dla każdej klasy z kalibracji. Reguły duplikatów są współdzielone, chyba że nadpisane dla klasy.",
       "calibrations": "{{count}} kalibracji · pewność {{confidence}}"
     },
     "reviewTags": {
@@ -310,14 +310,14 @@
       "queryFor": "Kopiuj zapytanie DIM dla {{name}}",
       "queryCopied": "Zapytanie DIM dla {{name}} skopiowane do schowka.",
       "searchShown": "Kopiuj wyszukiwanie DIM dla wyświetlonych elementów",
-      "searchShownCopied": "Wyszukiwanie DIM dla wyświetlonych elementów skopiowane.",
+      "searchShownCopied": "Wyszukiwanie DIM dla wyświetlonych elementów skopiowane do schowka.",
       "searchGroup": "Kopiuj wyszukiwanie DIM dla wszystkich {{count}} elementów w tej grupie",
-      "searchGroupCopied": "Wyszukiwanie DIM dla wszystkich {{count}} elementów w tej grupie skopiowane."
+      "searchGroupCopied": "Wyszukiwanie DIM dla wszystkich {{count}} elementów w tej grupie skopiowane do schowka."
     }
   },
   "dashboard": {
     "title": "Skarbiec {{class}}",
-    "summary": "{{tieredCount}} poziomowego pancerza {{class}} · {{dupeScopeCount}} {{minTierLabel}} w zakresie duplikatów · {{buckets}} kubełków duplikatów · ~{{review}} decyzji",
+    "summary": "{{tieredCount}} poziomowego pancerza {{class}} · {{dupeScopeCount}} {{minTierLabel}} w zakresie duplikatów · {{buckets}} grup duplikatów · ~{{review}} decyzji",
     "customDupeRules": "· własne reguły duplikatów",
     "tieredAccount": "· {{count}} poziomowego pancerza (konto)",
     "customRulesBanner": "{{class}} używa własnych reguł duplikatów",
@@ -327,8 +327,8 @@
     "refreshVault": "Odśwież skarbiec",
     "armorView": "Widok pancerza",
     "archetypeView": "Widok archetypów",
-    "heatmapSlot": "Slot mapy cieplnej",
-    "allSlots": "Wszystkie sloty",
+    "heatmapSlot": "Gniazdo mapy cieplnej",
+    "allSlots": "Wszystkie gniazda",
     "insights": {
       "continueSetup": {
         "title": "Kontynuuj konfigurację",
@@ -395,7 +395,7 @@
       },
       "compareLargest": {
         "title": "Porównaj {{label}}",
-        "detail": "{{count}} elementów w największym kubełku duplikatów",
+        "detail": "{{count}} elementów w największej grupie duplikatów",
         "cta": "Porównaj tę grupę"
       },
       "redundantRolls": {
@@ -411,14 +411,14 @@
         "cta": "Przeglądaj skarbiec"
       },
       "heavyBuckets": {
-        "title": "Wyczyść ciężkie kubełki duplikatów",
-        "detail_one": "{{count}} kubełek z 5+ elementami. Użyj mapy cieplnej, aby wybrać jeden.",
-        "detail_other": "{{count}} kubełków z 5+ elementami. Użyj mapy cieplnej, aby wybrać jeden.",
+        "title": "Wyczyść ciężkie grupy duplikatów",
+        "detail_one": "{{count}} grupa z 5+ elementami. Użyj mapy cieplnej, aby wybrać jeden.",
+        "detail_other": "{{count}} grup z 5+ elementami. Użyj mapy cieplnej, aby wybrać jeden.",
         "cta": "Porównaj duplikaty"
       },
       "fixCoverageNoVault": "Żaden element w skarbcu nie ma jeszcze Twoich priorytetowych statystyk",
       "fixCoverageNeedSlot": "Potrzebny {{slot}} z Twoimi priorytetami",
-      "fixCoverageSlots": "{{filled}}/{{total}} slotów wypełnionych w zalecanym wyposażeniu",
+      "fixCoverageSlots": "{{filled}}/{{total}} gniazd wypełnionych w zalecanym wyposażeniu",
       "browseNoArmor": "Żaden pancerz w skarbcu nie ma jeszcze tych statystyk",
       "browseGaps": "{{count}} typ roli do polowania na lepsze dopasowanie",
       "browseGaps_other": "{{count}} typów ról do polowania na lepsze dopasowanie",
@@ -440,8 +440,8 @@
       "chooseSlotAria": "Wybierz {{slot}}",
       "choosePieceAria": "Wybierz element · {{count}} kwalifikujących się",
       "supportingPieces": "<1>{{count}}</1> elementów w skarbcu ma co najmniej jedną statystykę priorytetową.",
-      "filledProfiles": "<1>{{filled}}</1> z <2>{{total}}</2> typów ról, które możesz mieć (archetyp + trzeciorzędna + slot), jest w skarbcu.",
-      "redundantOverlap": "Puste sloty mimo nadmiarowych ról. Priorytetem jest wypełnienie, nie więcej duplikatów.",
+      "filledProfiles": "<1>{{filled}}</1> z <2>{{total}}</2> typów ról, które możesz mieć (archetyp + trzeciorzędna + gniazdo), jest w skarbcu.",
+      "redundantOverlap": "Puste gniazda mimo nadmiarowych ról. Priorytetem jest wypełnienie, nie więcej duplikatów.",
       "gapsIntro": "Puste kombinacje, które pomogłyby tej kombinacji.",
       "overlapsIntro": "Trzy lub więcej elementów w tej samej kombinacji.",
       "piecesCount": "{{count}} elementów",
@@ -458,25 +458,25 @@
       "chooseGroup": "Wybierz grupę duplikatów, aby zacząć",
       "startingNext": "Rozpoczynanie następnej grupy duplikatów…"
     },
-    "resetBucket": "Resetuj kubełek",
+    "resetBucket": "Resetuj grupę",
     "preparing": "Przygotowywanie porównań…",
     "queueEmpty": {
       "title": "Kolejka pusta",
-      "summary": "{{keep}} keep · {{junk}} junk w kolejce.",
+      "summary": "{{keep}} zachowaj · {{junk}} śmieci w kolejce.",
       "reviewTags": "Przejrzyj tagi",
       "restartQueue": "Uruchom kolejkę ponownie",
       "clearSession": "Wyczyść sesję {{class}}"
     },
     "noDuplicates": {
       "title": "Brak duplikatów do porównania",
-      "body": "Żaden kubełek duplikatów nie pasuje do reguł dla {{class}}. Spróbuj poluzować reguły w Ustawieniach lub załaduj świeży snapshot skarbca."
+      "body": "Żadna grupa duplikatów nie pasuje do reguł dla {{class}}. Spróbuj poluzować reguły w Ustawieniach lub załaduj świeży zrzut skarbca."
     },
     "noGroupsInQueue": "Brak grup duplikatów w kolejce. Poluzuj reguły w Ustawieniach lub uruchom kolejkę ponownie.",
     "skipGroup": "Pomiń grupę (S)",
     "restoringSession": "Przywracanie sesji…",
     "confirm": {
-      "switchBucket": "Przełączyć kubełek? Wybory w toku i tagi junk dla bieżącego kubełka zostaną wyczyszczone.",
-      "resetBucket": "Zresetować ten kubełek? Wszystkie wybory w toku, tagi junk i postęp porównań zostaną wyczyszczone. Kubełek pozostaje w kolejce.",
+      "switchBucket": "Przełączyć grupę? Wybory w toku i tagi junk dla bieżącej grupy zostaną wyczyszczone.",
+      "resetBucket": "Zresetować tę grupę? Wszystkie wybory w toku, tagi junk i postęp porównań zostaną wyczyszczone. Grupa pozostaje w kolejce.",
       "clearClassSession": "Wyczyścić cały postęp porównań {{class}} i tagi w kolejce? Tej operacji nie można cofnąć."
     },
     "chooser": {
@@ -489,7 +489,7 @@
       "title": "Przejrzyj tę grupę duplikatów",
       "chooseNext": "Wybierz grupę do następnego porównania",
       "nextGroupsAria": "Następne grupy duplikatów",
-      "kicker": "Kubełek ukończony",
+      "kicker": "Grupa ukończona",
       "allPairsDecided": "Wszystkie pary pojedynków rozstrzygnięte",
       "continueNext": "Przejdź do następnej grupy",
       "applyTagsContinue": "Zastosuj tagi i kontynuuj",
@@ -498,17 +498,17 @@
       "whatsNext": "Co dalej",
       "tagsFootnote": "Tagi trafiają do kolejki po kontynuacji. Nic nie jest stosowane, dopóki nie przejdziesz przeglądu.",
       "stats": {
-        "keeps": "Keep",
-        "junkQueued": "Junk w kolejce",
-        "preferEliminated": "Prefer wyeliminowane",
+        "keeps": "Zachowaj",
+        "junkQueued": "Śmieci w kolejce",
+        "preferEliminated": "Wyeliminowane przez prefer",
         "pairsDecided": "Pary rozstrzygnięte",
         "inGroup": "W tej grupie"
       },
       "breakdown": {
         "keepBoth": "Zachowaj oba: {{count}}",
         "keepSide": "Zachowaj stronę: {{count}}",
-        "junkedInDuels": "Junk w pojedynkach: {{count}}",
-        "preferInPlay": "Prefer nadal aktywne: {{count}}"
+        "junkedInDuels": "Śmieci w pojedynkach: {{count}}",
+        "preferInPlay": "Preferencje nadal aktywne: {{count}}"
       },
       "piece_one": "{{count}} element",
       "piece_other": "{{count}} elementów",
@@ -517,40 +517,40 @@
       "sessionLeft_other": "{{count}} grup pozostaje potem"
     },
     "bucket": {
-      "label": "Kubełek",
-      "select": "Wybierz kubełek",
-      "dupeBucketsAria": "Kubełki duplikatów"
+      "label": "Grupa",
+      "select": "Wybierz grupę",
+      "dupeBucketsAria": "Grupy duplikatów"
     },
     "keyboard": {
       "aria": "Skróty klawiszowe porównań",
       "left": "Lewo",
       "both": "Oba",
       "right": "Prawo",
-      "keep": "Keep",
+      "keep": "Zachowaj",
       "prefer": "Preferuj",
-      "junk": "Junk"
+      "junk": "Śmieci"
     },
     "compare": {
       "suggested": "Sugerowane",
       "sameRoll": "Ta sama rola",
       "compareSides": "Porównaj strony",
       "suggestedPick": "Sugerowany wybór: ",
-      "vs": "vs",
+      "vs": "kontra",
       "fitTitle": "Jak dobrze ten element pasuje do zapisanych preferencji",
       "powerTitle": "Poziom mocy",
-      "identicalRolls": "Identyczne role. Zachowaj jeden, junk jeden, zachowaj oba lub pomiń parę.",
-      "suppressedSuggestion": "Oba mocne · ostatni z poziomu. Prefer, pomiń, keep lub junk jeden lub oba.",
+      "identicalRolls": "Identyczne role. Zachowaj jeden, oznacz jeden jako junk, zachowaj oba lub pomiń parę.",
+      "suppressedSuggestion": "Oba mocne · ostatni w drabince. Preferuj, pomiń, keep lub junk — jeden lub oba.",
       "buildOptimalPrefix": "Optymalne dla kombinacji ",
-      "orPassKeepJunk": "· lub pomiń / keep / junk",
-      "evenMatch": "Remis. Prefer, pomiń, keep lub junk jeden lub oba.",
+      "orPassKeepJunk": "· lub pomiń / zachowaj / śmieci",
+      "evenMatch": "Remis. Preferuj, pomiń, zachowaj lub śmieci — jeden lub oba.",
       "eliminated": "Wyeliminowany z drabinki",
-      "actionKeep": "Keep",
+      "actionKeep": "Zachowaj",
       "outcomes": {
-        "prefer": "Preferuj tę stronę. Przegrany potrzebuje {{threshold}} porażek prefer, zanim junk na końcu kubełka.",
-        "keepSide": "Keep po zakończeniu kubełka · druga strona zostaje w drabince",
-        "keepBoth": "Oba zachowane po zakończeniu kubełka",
-        "junkOne": "Junk teraz · druga zostaje w drabince (bez zwycięzcy)",
-        "junkBoth": "Oba junk teraz",
+        "prefer": "Preferuj tę stronę. Przegrany potrzebuje {{threshold}} porażek «prefer», zanim junk na końcu grupy.",
+        "keepSide": "Zachowaj po zakończeniu grupy · druga strona zostaje w drabince",
+        "keepBoth": "Oba zachowane po zakończeniu grupy",
+        "junkOne": "Śmieci teraz · druga zostaje w drabince (bez zwycięzcy)",
+        "junkBoth": "Oba jako śmieci teraz",
         "pass": "Pomiń tę parę. Bez tagów; oba wracają do kolejki."
       },
       "pass": "Pomiń",
@@ -559,8 +559,8 @@
       "setFootnote": "Zestaw: {{name}}",
       "loss_one": "1 porażka",
       "loss_other": "{{count}} porażek",
-      "lossRemaining_one": "{{count}} kolejna porażka prefer do junk na końcu kubełka",
-      "lossRemaining_other": "{{count}} kolejnych porażek prefer do junk na końcu kubełka",
+      "lossRemaining_one": "{{count}} kolejna porażka «prefer» do junk na końcu grupy",
+      "lossRemaining_other": "{{count}} kolejnych porażek «prefer» do junk na końcu grupy",
       "keyboardHints": "Najedź na przyciski, aby zobaczyć wyniki · ↑ zachowaj oba · Spacja pomiń · ↓ junk oba · Ctrl+←/→ junk stron",
       "aria": {
         "keepLeft": "Zachowaj lewo. {{outcome}}",
@@ -569,9 +569,9 @@
         "preferLeft": "Preferuj lewo. {{outcome}}",
         "preferRight": "Preferuj prawo. {{outcome}}",
         "passPair": "Pomiń parę. {{outcome}}",
-        "junkLeft": "Junk lewo. {{outcome}}",
-        "junkRight": "Junk prawo. {{outcome}}",
-        "junkBoth": "Junk oba. {{outcome}}"
+        "junkLeft": "Śmieci lewo. {{outcome}}",
+        "junkRight": "Śmieci prawo. {{outcome}}",
+        "junkBoth": "Śmieci oba. {{outcome}}"
       }
     },
     "progress": {
@@ -583,19 +583,19 @@
     "grouping": {
       "sameArmorSet": {
         "label": "Wymagaj tego samego zestawu pancerza",
-        "help": "Grupuj lub porównuj tylko elementy z tego samego zestawu. Wył.: ten sam slot + archetyp + statystyka trzeciorzędna we wszystkich zestawach."
+        "help": "Grupuj lub porównuj tylko elementy z tego samego zestawu. Wył.: to samo gniazdo + archetyp + statystyka trzeciorzędna we wszystkich zestawach."
       },
       "sameTuningStat": {
         "label": "Wymagaj tej samej statystyki strojenia",
-        "help": "Dziel według statystyki strojenia (np. Broń vs Granat). Wył.: mieszane statystyki strojenia w jednym kubełku."
+        "help": "Dziel według statystyki strojenia (np. Broń vs Granat). Wył.: mieszane statystyki strojenia w jednej grupie."
       }
     },
     "respectKeepFavorite": {
-      "label": "Uwzględniaj tagi DIM keep i favorite przy wyborze junk",
-      "help": "Gdy włączone, elementy z tagiem keep lub favorite nie są sugerowane jako junk w przepływach duplikatów."
+      "label": "Uwzględniaj tagi DIM zachowaj i ulubione przy wyborze śmieci",
+      "help": "Gdy włączone, elementy z tagiem zachowaj lub ulubione nie są sugerowane jako śmieci w przepływach duplikatów."
     },
     "excludeJunk": {
-      "label": "Wyklucz elementy z tagiem junk z liczenia duplikatów"
+      "label": "Wyklucz elementy z tagiem śmieci z liczenia duplikatów"
     },
     "presets": {
       "loose": {
@@ -615,7 +615,7 @@
       }
     },
     "impactCompact": {
-      "buckets": "kubełki duplikatów ·",
+      "buckets": "grupy duplikatów ·",
       "decisions": "decyzje ·",
       "pieces": "{{count}} uwzględnionych elementów"
     },
@@ -624,8 +624,8 @@
       "usingPreset": "Używa {{label}}",
       "usingCustomRules": "Używa własnych reguł",
       "cardBody": {
-        "loose": "Porównuj elementy w tym samym slocie bez wymagania tego samego zestawu lub statystyki strojenia.",
-        "standard": "Porównuj według slotu, archetypu i statystyki trzeciorzędnej bez wymagania tego samego zestawu.",
+        "loose": "Porównuj elementy w tym samym gnieździe bez wymagania tego samego zestawu lub statystyki strojenia.",
+        "standard": "Porównuj według gniazda, archetypu i statystyki trzeciorzędnej bez wymagania tego samego zestawu.",
         "setAware": "Grupuje duplikaty według zestawu pancerza · dobrze działa dla większości skarbców.",
         "tuning": "Grupuje duplikaty według statystyki strojenia, nawet między różnymi zestawami.",
         "strict": "Wymaga tego samego zestawu i statystyki strojenia, aby uznać duplikat."
@@ -635,13 +635,13 @@
       "armorSetAny": "dowolny zestaw pancerza",
       "tuningStatSame": "ta sama statystyka strojenia",
       "tuningStatAny": "dowolna statystyka strojenia",
-      "dimTagsRespect": "Tagi DIM keep i favorite są uwzględniane przy sugerowaniu junk.",
-      "dimTagsIgnore": "Tagi keep i favorite nie są używane przy sugerowaniu junk."
+      "dimTagsRespect": "Tagi DIM zachowaj i ulubione są uwzględniane przy sugerowaniu śmieci.",
+      "dimTagsIgnore": "Tagi zachowaj i ulubione nie są używane przy sugerowaniu śmieci."
     },
     "suggestions": {
-      "setAwareHeavy": "{{totalT5}} elementów poziomu 5 i {{heavyBuckets}} kubełków z 5+ elementami. Użyj tego samego zestawu pancerza, aby uniknąć fałszywych duplikatów.",
-      "looseSmallVault": "Mały skarbiec: luźne reguły wydobędą więcej kubełków duplikatów.",
-      "ignoreTaggedKeep": "{{count}} kandydatów na duplikat już otagowanych keep lub favorite w DIM.",
+      "setAwareHeavy": "{{totalT5}} elementów poziomu 5 i {{heavyBuckets}} grup z 5+ elementami. Użyj tego samego zestawu pancerza, aby uniknąć fałszywych duplikatów.",
+      "looseSmallVault": "Mały skarbiec: luźne reguły wydobędą więcej grup duplikatów.",
+      "ignoreTaggedKeep": "{{count}} kandydatów na duplikat już otagowanych zachowaj lub ulubione w DIM.",
       "standardDefault": "Standardowy preset dla rozmiaru Twojego skarbca."
     }
   },
@@ -665,7 +665,7 @@
       "suffix": "Spróbuj zalogować się ponownie. Jeśli problem się utrzymuje, skontaktuj się z administratorem strony.",
       "devChecklistIntro": "Lista kontrolna aplikacji Bungie (dev lokalny):",
       "devRedirect": "URL przekierowania: {{uri}}",
-      "devOrigin": "Origin: {{origin}}",
+      "devOrigin": "Źródło: {{origin}}",
       "devClientId": "Client ID zgodny z aplikacją Bungie ({{clientId}})",
       "devApiKey": "Klucz API z tej samej aplikacji Bungie",
       "devRestart": "Uruchom ponownie serwer dev po zmianie danych logowania"
@@ -719,7 +719,7 @@
       "decideSetOrTuning": "Decyduj według zestawu lub strojenia",
       "decideTuning": "Decyduj według strojenia",
       "decideSet": "Decyduj według zestawu",
-      "sameExceptPower": "To samo poza mocą/lokalizacją",
+      "sameExceptPower": "To samo poza mocą i gniazdem",
       "identicalRoll": "Identyczna rola. Wybierz dowolny."
     },
     "fit": {
@@ -730,8 +730,8 @@
       "calibrateForAccuracy": "Skalibruj preferencje dla lepszej dokładności"
     },
     "heatmap": {
-      "mixedTuning": "Mieszane statystyki strojenia w kubełku",
-      "dupeBucket": "kubełek duplikatów"
+      "mixedTuning": "Mieszane statystyki strojenia w grupie",
+      "dupeBucket": "grupa duplikatów"
     },
     "minTier": {
       "tier5Only": "Tylko poziom 5"
@@ -770,12 +770,12 @@
       "class": "Klasa"
     },
     "archetypes": {
-      "gunner": "Gunner",
+      "gunner": "Strzelec",
       "grenadier": "Grenadier",
       "paragon": "Paragon",
-      "brawler": "Brawler",
-      "bulwark": "Bulwark",
-      "specialist": "Specialist"
+      "brawler": "Zapaśnik",
+      "bulwark": "Bastion",
+      "specialist": "Specjalista"
     },
     "slots": {
       "helmet": "Hełm",
@@ -836,22 +836,22 @@
     "piece_one": "element",
     "piece_other": "elementów",
     "t5Block": " (<1>{{count}}</1> na poziomie 5)",
-    "noTieredFound": "Nie znaleziono poziomowego pancerza<1>{{parsedHint}}</1>. Importuje tylko pancerz poziomowy (T1–T5); starszy i niepoziomowy sprzęt jest pomijany.",
+    "noTieredFound": "Nie znaleziono poziomowego pancerza<1>{{parsedHint}}</1>. Aplikacja importuje tylko pancerz poziomowy (T1–T5); starszy i niepoziomowy sprzęt jest pomijany.",
     "parsedHint": " (przetworzono {{count}} przedmiotów ze skarbca)",
     "keepGoalHeading": "Ile chcesz zachować?",
     "keepGoalIntro": "Określa, jak agresywnie sugerujemy redukcję zduplikowanego pancerza poziomu 5 podczas czyszczenia.",
     "keepGoalSummary": "Cel zachowania: około {{total}} poziomu 5 łącznie (około {{perClass}} na klasę).",
     "keepGoalExcess": " Masz około <1>{{excess}}</1> ponad ten cel.",
-    "keepGoalAtTarget": " Jesteś na poziomie celu lub poniżej.",
+    "keepGoalAtTarget": " Jesteś na celu lub poniżej.",
     "signOutBack": "Wyloguj",
     "keepOptions": {
       "lean": {
         "label": "Oszczędnie",
-        "blurb": "Agresywna redukcja · wyczyść większość kubełków duplikatów"
+        "blurb": "Agresywna redukcja · wyczyść większość grup duplikatów"
       },
       "balanced": {
         "label": "Zbalansowanie",
-        "blurb": "Usuń oczywiste duplikaty, zachowaj różnorodność buildów"
+        "blurb": "Usuń oczywiste duplikaty, zachowaj różnorodność układów"
       },
       "options": {
         "label": "Zachowaj opcje",
@@ -867,9 +867,9 @@
   },
   "review": {
     "title": "Przegląd tagów",
-    "summary": "{{total}} w kolejce · {{keep}} keep · {{junk}} junk. Zastosowanie zapisuje tagi w kolejce; wiersze pokazują istniejące tagi DIM, gdy się różnią.",
+    "summary": "{{total}} w kolejce · {{keep}} zachowaj · {{junk}} śmieci. Zastosowanie zapisuje tagi w kolejce; wiersze pokazują istniejące tagi DIM, gdy się różnią.",
     "applied": "Tagi zastosowane w DIM Sync.",
-    "openJunkInDim": "Otwórz junk w DIM",
+    "openJunkInDim": "Otwórz śmieci w DIM",
     "partialApplied": "Częściowo zastosowano: {{count}} tagów powiodło się. Nieudane pozostały w kolejce.",
     "retryFailed": "Ponów {{count}} nieudanych",
     "empty": "Brak oczekujących tagów.",
@@ -950,12 +950,12 @@
       "intro": "Współdzielone reguły dla mapy cieplnej, porównań, przeglądu i list nadmiarowych ról.",
       "scopeHeading": "Zakres: które elementy się liczą",
       "minTierLabel": "Minimalny poziom sprzętu",
-      "minTierHelp": "Import skarbca nadal ładuje poziomy 1–5. Tylko elementy na tym poziomie lub wyżej trafiają do kubełków duplikatów i sprawdzeń nadmiarowych ról.",
+      "minTierHelp": "Import skarbca nadal ładuje poziomy 1–5. Tylko elementy na tym poziomie lub wyżej trafiają do grup duplikatów i sprawdzeń nadmiarowych ról.",
       "groupingHeading": "Grupowanie: co liczy się jako „duplikat”",
-      "groupingIntro": "Elementy zawsze pasują według klasy, slotu, archetypu i statystyki trzeciorzędnej. Te opcje dodają ostrzejsze podziały i dotyczą też porównań nadmiarowych ról.",
+      "groupingIntro": "Elementy zawsze pasują według klasy, gniazda, archetypu i statystyki trzeciorzędnej. Te opcje dodają ostrzejsze podziały i dotyczą też porównań nadmiarowych ról.",
       "dimTagsHeading": "Tagi DIM przy liczeniu duplikatów",
-      "dimTagsIntro": "Otagowane elementy pozostają widoczne, ale mogą być pominięte w rozmiarach kubełków i liczbach przeglądu.",
-      "liveImpact": "Wpływ na żywo (reguły globalne, skarbiec Huntera)"
+      "dimTagsIntro": "Otagowane elementy pozostają widoczne, ale mogą być pominięte w rozmiarach grup i liczbach przeglądu.",
+      "liveImpact": "Wpływ na żywo (reguły globalne, skarbiec Łowcy)"
     },
     "classDupeRules": {
       "heading": "Reguły duplikatów {{class}}",
@@ -988,7 +988,7 @@
     },
     "classPrefs": {
       "heading": "Preferencje {{class}}",
-      "usingClass": "Używana klasa: {{class}} (zmień klasę w nagłówku). Wagi statystyk i archetypów per klasa z kalibracji. Reguły duplikatów są współdzielone, chyba że nadpisane dla klasy.",
+      "usingClass": "Używana klasa: {{class}} (zmień klasę w nagłówku). Wagi statystyk i archetypów dla każdej klasy z kalibracji. Reguły duplikatów są współdzielone, chyba że nadpisane dla klasy.",
       "calibrations": "{{count}} kalibracji · pewność {{confidence}}",
       "topStats": "Najważniejsze statystyki:",
       "topArchetypes": "Najważniejsze archetypy:",
@@ -1006,14 +1006,14 @@
       "nonePending": "Brak oczekujących tagów.",
       "confirmClearPending": "Wyczyścić wszystkie {{count}} oczekujących tagów? Nie zostaną zastosowane w DIM.",
       "confirmResetClass": "Zresetować preferencje {{class}} do domyślnych? Wagi statystyk, wybory kalibracji i wagi nauczone dla tej klasy zostaną usunięte.",
-      "confirmResetAll": "Zresetować preferencje wszystkich klas do domyślnych? Wagi statystyk, wybory kalibracji i wagi nauczone zostaną usunięte dla Huntera, Titana i Warlocka. Reguły duplikatów i inne ustawienia pozostają."
+      "confirmResetAll": "Zresetować preferencje wszystkich klas do domyślnych? Wagi statystyk, wybory kalibracji i wagi nauczone zostaną usunięte dla Łowcy, Tytana i Czarnoksiężnika. Reguły duplikatów i inne ustawienia pozostają."
     },
     "clearLocalData": {
       "heading": "Dane lokalne",
-      "description": "Naprawia zacięte nazwy lokalizacji, zły cache skarbca lub zły stan onboardingu. Wylogowuje i czyści IndexedDB (skarbiec i manifest per język), tokeny sesji, sesje porównań i oczekujące tagi. Flaga migracji dac-storage-migrated-v1 jest czyszczona tylko przy pełnym resecie.",
+      "description": "Naprawia zacięte nazwy lokalizacji, zły cache skarbca lub zły stan wprowadzenia. Wylogowuje i czyści IndexedDB (skarbiec i manifest na język), tokeny sesji, sesje porównań i oczekujące tagi. Flaga migracji dac-storage-migrated-v1 jest czyszczona tylko przy pełnym resecie.",
       "button": "Wyczyść dane lokalne",
       "confirm": "Wyczyścić lokalne dane aplikacji i wylogować?\n\nUsuwa cache skarbca, cache manifestu, tokeny Bungie/DIM, sesje porównań i oczekujące tagi z tej przeglądarki.",
-      "confirmResetPrefs": "Zresetować też preferencje kalibracji, reguły duplikatów, onboarding i flagę migracji?\n\nOK = pełny reset. Anuluj zachowuje prefs, reguły, onboarding i wybór języka.",
+      "confirmResetPrefs": "Zresetować też preferencje kalibracji, reguły duplikatów, wprowadzenie i flagę migracji?\n\nOK = pełny reset. Anuluj zachowuje preferencje, reguły, wprowadzenie i wybór języka.",
       "clearing": "Czyszczenie…"
     }
   },

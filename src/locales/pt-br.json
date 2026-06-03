@@ -1,19 +1,19 @@
 {
   "autoFilters": {
     "title": "Filtros automáticos",
-    "intro": "Enfileira tags de lixo automaticamente quando o cofre carrega ou atualiza. Keep e favorite do DIM nunca são marcados automaticamente.",
+    "intro": "Enfileira tags de lixo automaticamente quando o cofre carrega ou atualiza. Manter e favorito do DIM nunca são marcados automaticamente.",
     "noRules": "Nenhuma regra ainda.",
     "addRule": "Adicionar regra",
     "classLabel": "Classe",
-    "operatorsIntro": "Cada filtro pode ser <1>É</1>, <2>Não é</2>, <3>Qualquer de</3> ou <4>Nenhum de</4> (ex.: peças lixo de Caçador cujo arquétipo não é Bulwark nem Paragon).",
+    "operatorsIntro": "Cada filtro pode ser <1>É</1>, <2>Não é</2>, <3>Qualquer de</3> ou <4>Nenhum de</4> (ex.: peças lixo de Caçador cujo arquétipo não é Baluarte nem Paragon).",
     "rulesHeading": "Regras",
-    "rulesBody": "Peças correspondentes entram na fila como lixo em Revisão (igual ao lixo manual). Keeps nunca são marcados automaticamente: keep/favorite do DIM, keep pendente ou peças que você manteve em um grupo de duelo.",
+    "rulesBody": "Peças correspondentes entram na fila como lixo em Revisão (igual ao lixo manual). Peças mantidas nunca são marcadas automaticamente: manter/favorito do DIM, manter pendente ou peças que você manteve em um grupo de duelo.",
     "deleteRule": "Excluir",
     "allClasses": "Todas as classes",
     "archetypeLabel": "Arquétipo",
     "tertiaryStatLabel": "Atributo terciário",
     "tuningStatLabel": "Atributo de afinação",
-    "slotLabel": "Slot",
+    "slotLabel": "Espaço",
     "armorSetLabel": "Conjunto de armadura",
     "any": "Qualquer",
     "addValue": "Adicionar valor…",
@@ -26,9 +26,9 @@
       "anyOf": "Qualquer de",
       "noneOf": "Nenhum de"
     },
-    "livePreview_one": "Prévia ao vivo: {{count}} peça entraria na fila no próximo carregamento do cofre (exceto keeps, favorites e já marcadas como lixo).",
-    "livePreview_other": "Prévia ao vivo: {{count}} peças entrariam na fila no próximo carregamento do cofre (exceto keeps, favorites e já marcadas como lixo).",
-    "setFallback": "Set {{hash}}",
+    "livePreview_one": "Prévia ao vivo: {{count}} peça entraria na fila no próximo carregamento do cofre (exceto mantidos, favoritos e já marcadas como lixo).",
+    "livePreview_other": "Prévia ao vivo: {{count}} peças entrariam na fila no próximo carregamento do cofre (exceto mantidos, favoritos e já marcadas como lixo).",
+    "setFallback": "Conjunto {{hash}}",
     "addRuleHeading": "Adicionar regra",
     "enableRule": "Ativar regra: {{label}}",
     "disableRule": "Desativar regra: {{label}}",
@@ -37,7 +37,7 @@
       "allClasses": "Todas as classes",
       "tertiary": "{{stat}} terciário",
       "tuning": "{{stat}} afinação",
-      "setFallback": "set {{hash}}",
+      "setFallback": "conjunto {{hash}}",
       "anyOf": "qualquer de {{labels}}",
       "noneOf": "nenhum de {{labels}}",
       "not": "NÃO {{label}}"
@@ -49,18 +49,18 @@
     "redundantLink": "{{count}} rolagens redundantes",
     "loadVaultFirst": "Carregue o cofre no painel primeiro.",
     "filters": {
-      "slot": "Slot",
+      "slot": "Espaço",
       "archetype": "Arquétipo",
       "search": "Buscar",
       "armorSet": "Conjunto",
       "dimTag": "Tag DIM",
       "sort": "Ordenar",
-      "combo": "Combo",
-      "allSlots": "Todos os slots",
+      "combo": "Combinação",
+      "allSlots": "Todos os espaços",
       "allArchetypes": "Todos os arquétipos",
       "allSets": "Todos os conjuntos",
       "any": "Qualquer",
-      "anyCombo": "Qualquer combo",
+      "anyCombo": "Qualquer combinação",
       "armorNamePlaceholder": "Nome da armadura…",
       "statLowerOnly": "Só atributo inferior",
       "dupesOnly": "Só duplicatas",
@@ -70,11 +70,11 @@
     },
     "dimTags": {
       "untagged": "Sem tag",
-      "keep": "Keep",
-      "junk": "Junk",
-      "favorite": "Favorite",
-      "infuse": "Infuse",
-      "archive": "Archive"
+      "keep": "Manter",
+      "junk": "Lixo",
+      "favorite": "Favorito",
+      "infuse": "Infundir",
+      "archive": "Arquivo"
     },
     "sort": {
       "matchDesc": "Compatibilidade % (alta → baixa)",
@@ -98,12 +98,12 @@
     },
     "noItemsMatch": "Nenhum item corresponde a estes filtros.",
     "backToDashboard": "Voltar ao painel",
-    "dupeBadge": "dupe"
+    "dupeBadge": "duplicado"
   },
   "build": {
     "title": "Combos de {{class}}",
     "intro": "Melhores peças do cofre para cada alvo de rolagem no seu combo.",
-    "combosHeading": "Combos",
+    "combosHeading": "Combinações",
     "setBonuses": "Bônus de conjunto",
     "setBonusesOptional": "Bônus de conjunto (opcional)",
     "includeInCoverage": "Incluir na cobertura",
@@ -113,7 +113,7 @@
     "noneOption": "Nenhum",
     "twoTwoMix": "· mix 2+2",
     "editor": {
-      "intro": "Escolha de 2 a 4 atributos em ordem e bônus de conjunto opcionais (ex.: Ferropotent 2pc + Smoke Jumper 2pc). Recomendamos a melhor peça por slot para atributos e conjunto.",
+      "intro": "Escolha de 2 a 4 atributos em ordem e bônus de conjunto opcionais (ex.: Ferropotent 2 peças + Smoke Jumper 2 peças). Recomendamos a melhor peça por espaço para atributos e conjunto.",
       "unsavedHint": "Alterações não salvas · salve ou cancele para voltar à visualização somente leitura.",
       "editingHint": "Editando combo · salve ou cancele quando terminar.",
       "allSavedHint": "Todos os combos salvos · clique em Editar em um cartão para alterar as configurações.",
@@ -133,14 +133,14 @@
       "priority4": "4ª prioridade",
       "priorityN": "Prioridade {{n}}",
       "setBonus2pc": "Bônus de 2 peças",
-      "setBonus4pcSame": "Mesmo conjunto (4pc)",
-      "setBonus4pcMix": "Segundo conjunto (mix 2pc) ou 4pc",
-      "setBonusHint": "Escolha um conjunto para 2pc, depois o mesmo para 4pc ou um segundo conjunto para mix 2+2.",
+      "setBonus4pcSame": "Mesmo conjunto (4 peças)",
+      "setBonus4pcMix": "Segundo conjunto (mix 2 peças) ou 4 peças",
+      "setBonusHint": "Escolha um conjunto para 2 peças, depois o mesmo para 4 peças ou um segundo conjunto para mix 2+2.",
       "loadVaultForSets": "Carregue o cofre para escolher conjuntos de armadura do seu inventário.",
-      "firstSet2pc": "Primeiro conjunto (2pc)",
-      "twoPcOnly": "Só 2pc (primeiro conjunto)",
-      "set4pcSuffix": "{{name}} (4pc)",
-      "set2pcMixSuffix": "{{name}} (mix 2pc)",
+      "firstSet2pc": "Primeiro conjunto (2 peças)",
+      "twoPcOnly": "Só 2 peças (primeiro conjunto)",
+      "set4pcSuffix": "{{name}} (4 peças)",
+      "set2pcMixSuffix": "{{name}} (mix 2 peças)",
       "targetLabel": "Alvo:",
       "addStatCount": "+ Adicionar atributo ({{current}}/{{max}})",
       "addCombo": "Adicionar combo",
@@ -149,7 +149,7 @@
     },
     "coverage": {
       "heading": "Seus combos",
-      "intro": "Melhor peça por slot para cada padrão de rolagem ideal (arquétipo + terciário + afinação)",
+      "intro": "Melhor peça por espaço para cada padrão de rolagem ideal (arquétipo + terciário + afinação)",
       "empty": "Ainda sem combos. Adicione de 2 a 4 prioridades de atributos na seção Combos abaixo.",
       "editCombos": "Editar combos",
       "setPrioritiesHint": "Defina prioridades de atributos em um combo para ver alvos de rolagem",
@@ -163,18 +163,18 @@
       "hideRollDetails": "Ocultar detalhes do tipo de rolagem",
       "tagAll": "Marcar tudo:",
       "bulkNoTaggable": "Nenhuma peça para marcar",
-      "bulkClearKeep": "Limpar keep em tudo",
-      "bulkMarkKeep": "Marcar tudo como keep",
+      "bulkClearKeep": "Limpar manter em tudo",
+      "bulkMarkKeep": "Marcar tudo como manter",
       "bulkAllFavorited": "Tudo já favoritado",
-      "bulkMarkFavorite": "Marcar tudo como favorite",
-      "bulkClearJunk": "Limpar junk em tudo",
-      "bulkMarkJunk": "Marcar tudo como junk",
-      "tagKeep": "Marcar keep no DIM",
-      "tagKeepRemove": "Remover tag keep no DIM",
-      "tagFavorite": "Marcar favorite no DIM",
+      "bulkMarkFavorite": "Marcar tudo como favorito",
+      "bulkClearJunk": "Limpar lixo em tudo",
+      "bulkMarkJunk": "Marcar tudo como lixo",
+      "tagKeep": "Marcar manter no DIM",
+      "tagKeepRemove": "Remover tag manter no DIM",
+      "tagFavorite": "Marcar favorito no DIM",
       "tagFavoriteAlready": "Já favoritado no DIM",
-      "tagJunk": "Marcar junk no DIM",
-      "tagJunkRemove": "Remover tag junk no DIM",
+      "tagJunk": "Marcar lixo no DIM",
+      "tagJunkRemove": "Remover tag lixo no DIM",
       "choose": "Escolher",
       "chooseSlot": "Escolher {{slot}}",
       "choosePiece": "Escolher peça · {{count}} elegíveis",
@@ -182,7 +182,7 @@
       "eligible_other": "{{count}} peças elegíveis",
       "anyArchetype": "Qualquer arquétipo",
       "tier": "Tier {{tier}}",
-      "comboFallback": "Combo",
+      "comboFallback": "Combinação",
       "rollRoleCombined": "terciário + afinação",
       "rollRoleTertiary": "terciário",
       "rollRoleTuning": "afinação",
@@ -192,8 +192,8 @@
       "rollTertiaryTitle": "{{stat}} terciário (+{{bonus}})",
       "rollTuningTitle": "{{stat}} afinação (+{{bonus}})",
       "detailsSupporting": "{{count}} peças no cofre rolam pelo menos um atributo prioritário.",
-      "detailsProfiles": "{{filled}} de {{possible}} tipos de rolagem que você poderia ter (arquétipo + terciário + slot) estão no cofre.",
-      "detailsRedundantOverlap": "Slots vazios permanecem apesar de rolagens redundantes. Priorize preencher em vez de mais duplicatas.",
+      "detailsProfiles": "{{filled}} de {{possible}} tipos de rolagem que você poderia ter (arquétipo + terciário + espaço) estão no cofre.",
+      "detailsRedundantOverlap": "Espaços vazios permanecem apesar de rolagens redundantes. Priorize preencher em vez de mais duplicatas.",
       "gapsHeading": "Tipos de rolagem para buscar",
       "gapsIntro": "Combinações vazias que ajudariam este combo.",
       "gapsEmpty": "Nada óbvio faltando na sua matriz.",
@@ -327,8 +327,8 @@
     "refreshVault": "Atualizar cofre",
     "armorView": "Visão de armadura",
     "archetypeView": "Visão de arquétipo",
-    "heatmapSlot": "Slot do mapa de calor",
-    "allSlots": "Todos os slots",
+    "heatmapSlot": "Espaço do mapa de calor",
+    "allSlots": "Todos os espaços",
     "insights": {
       "continueSetup": {
         "title": "Continuar configuração",
@@ -367,7 +367,7 @@
       },
       "setupAutoFilters": {
         "title": "Configurar filtros automáticos",
-        "detail": "Enfileire tags junk ao carregar o cofre para rolagens que você nunca quer manter",
+        "detail": "Enfileire tags de lixo ao carregar o cofre para rolagens que você nunca quer manter",
         "cta": "Configurar filtros"
       },
       "setupCombos": {
@@ -406,8 +406,8 @@
       },
       "taggedKeep": {
         "title": "Revisar duplicatas marcadas no DIM",
-        "detail_one": "{{count}} candidata a duplicata já com tag keep ou favorite no DIM",
-        "detail_other": "{{count}} candidatas a duplicata já com tag keep ou favorite no DIM",
+        "detail_one": "{{count}} candidata a duplicata já com tag manter ou favorito no DIM",
+        "detail_other": "{{count}} candidatas a duplicata já com tag manter ou favorito no DIM",
         "cta": "Explorar cofre"
       },
       "heavyBuckets": {
@@ -418,7 +418,7 @@
       },
       "fixCoverageNoVault": "Nenhuma peça do cofre rola seus atributos prioritários ainda",
       "fixCoverageNeedSlot": "Precisa de um {{slot}} que role suas prioridades",
-      "fixCoverageSlots": "{{filled}}/{{total}} slots preenchidos no loadout recomendado",
+      "fixCoverageSlots": "{{filled}}/{{total}} espaços preenchidos no equipamento recomendado",
       "browseNoArmor": "Nenhuma armadura no cofre rola esses atributos ainda",
       "browseGaps": "{{count}} tipo de rolagem para buscar melhor encaixe",
       "browseGaps_other": "{{count}} tipos de rolagem para buscar melhor encaixe",
@@ -440,8 +440,8 @@
       "chooseSlotAria": "Escolher {{slot}}",
       "choosePieceAria": "Escolher peça · {{count}} elegíveis",
       "supportingPieces": "<1>{{count}}</1> peças no cofre rolam pelo menos um atributo prioritário.",
-      "filledProfiles": "<1>{{filled}}</1> de <2>{{total}}</2> tipos de rolagem que você poderia ter (arquétipo + terciário + slot) estão no cofre.",
-      "redundantOverlap": "Slots vazios permanecem apesar de rolagens redundantes. Priorize preencher em vez de mais duplicatas.",
+      "filledProfiles": "<1>{{filled}}</1> de <2>{{total}}</2> tipos de rolagem que você poderia ter (arquétipo + terciário + espaço) estão no cofre.",
+      "redundantOverlap": "Espaços vazios permanecem apesar de rolagens redundantes. Priorize preencher em vez de mais duplicatas.",
       "gapsIntro": "Combinações vazias que ajudariam este combo.",
       "overlapsIntro": "Três ou mais peças na mesma combinação.",
       "piecesCount": "{{count}} peças",
@@ -462,21 +462,21 @@
     "preparing": "Preparando comparações…",
     "queueEmpty": {
       "title": "Fila vazia",
-      "summary": "{{keep}} keep · {{junk}} junk na fila.",
+      "summary": "{{keep}} manter · {{junk}} lixo na fila.",
       "reviewTags": "Revisar tags",
       "restartQueue": "Reiniciar fila",
       "clearSession": "Limpar sessão de {{class}}"
     },
     "noDuplicates": {
       "title": "Nenhuma duplicata para comparar",
-      "body": "Nenhum grupo de duplicatas corresponde às suas regras para {{class}}. Afrouxe as regras em Configurações ou carregue um snapshot novo do cofre."
+      "body": "Nenhum grupo de duplicatas corresponde às suas regras para {{class}}. Afrouxe as regras em Configurações ou carregue um instantâneo novo do cofre."
     },
     "noGroupsInQueue": "Nenhum grupo de duplicatas na fila. Afrouxe as regras em Configurações ou reinicie a fila.",
     "skipGroup": "Pular grupo (S)",
     "restoringSession": "Restaurando sessão…",
     "confirm": {
-      "switchBucket": "Trocar de grupo? Escolhas em andamento e tags junk do grupo atual serão apagadas.",
-      "resetBucket": "Redefinir este grupo? Todas as escolhas em andamento, tags junk e progresso de comparação serão apagados. O grupo permanece na fila.",
+      "switchBucket": "Trocar de grupo? Escolhas em andamento e tags de lixo do grupo atual serão apagadas.",
+      "resetBucket": "Redefinir este grupo? Todas as escolhas em andamento, tags de lixo e progresso de comparação serão apagados. O grupo permanece na fila.",
       "clearClassSession": "Limpar todo o progresso de comparação de {{class}} e as tags na fila? Isso não pode ser desfeito."
     },
     "chooser": {
@@ -498,17 +498,17 @@
       "whatsNext": "Próximo passo",
       "tagsFootnote": "As tags entram na fila ao continuar. Nada é aplicado antes da revisão.",
       "stats": {
-        "keeps": "Keeps",
-        "junkQueued": "Junk na fila",
-        "preferEliminated": "Prefer eliminados",
+        "keeps": "Mantidos",
+        "junkQueued": "Lixo na fila",
+        "preferEliminated": "Preferidos eliminados",
         "pairsDecided": "Pares decididos",
         "inGroup": "Neste grupo"
       },
       "breakdown": {
         "keepBoth": "Manter ambos: {{count}}",
         "keepSide": "Manter um lado: {{count}}",
-        "junkedInDuels": "Junk em duelos: {{count}}",
-        "preferInPlay": "Prefer ainda ativos: {{count}}"
+        "junkedInDuels": "Lixo em duelos: {{count}}",
+        "preferInPlay": "Preferidos ainda ativos: {{count}}"
       },
       "piece_one": "{{count}} peça",
       "piece_other": "{{count}} peças",
@@ -528,40 +528,40 @@
       "right": "Direita",
       "keep": "Manter",
       "prefer": "Preferir",
-      "junk": "Junk"
+      "junk": "Lixo"
     },
     "compare": {
       "suggested": "Sugerido",
       "sameRoll": "Mesma rolagem",
       "compareSides": "Comparar lados",
       "suggestedPick": "Escolha sugerida: ",
-      "vs": "vs",
+      "vs": "x",
       "fitTitle": "Quão bem esta peça combina com suas preferências salvas",
       "powerTitle": "Nível de poder",
       "identicalRolls": "Rolagens idênticas. Mantenha uma, marque lixo em uma, mantenha ambas ou pule.",
-      "suppressedSuggestion": "Ambas fortes · última do tier. Prefer, pule, keep ou junk em uma ou ambas.",
+      "suppressedSuggestion": "Ambas fortes · última do tier. Preferir, pular, manter ou lixo em uma ou ambas.",
       "buildOptimalPrefix": "Combo ideal para ",
-      "orPassKeepJunk": "· ou pule / keep / junk",
-      "evenMatch": "Empate. Prefer, pule, keep ou junk em uma ou ambas.",
-      "eliminated": "Eliminado do bracket",
-      "actionKeep": "Keep",
+      "orPassKeepJunk": "· ou pular / manter / lixo",
+      "evenMatch": "Empate. Preferir, pular, manter ou lixo em uma ou ambas.",
+      "eliminated": "Eliminado da chave",
+      "actionKeep": "Manter",
       "outcomes": {
-        "prefer": "Preferir este lado. O perdedor precisa de {{threshold}} derrotas por prefer antes de junk ao fim do grupo.",
-        "keepSide": "Keep ao fim do grupo · o outro permanece no bracket",
+        "prefer": "Preferir este lado. O perdedor precisa de {{threshold}} derrotas por preferência antes de lixo ao fim do grupo.",
+        "keepSide": "Manter ao fim do grupo · o outro permanece na chave",
         "keepBoth": "Ambos mantidos ao fim",
-        "junkOne": "Junk agora · o outro permanece (sem vencedor)",
-        "junkBoth": "Ambos em junk agora",
+        "junkOne": "Lixo agora · o outro permanece na chave (sem vencedor)",
+        "junkBoth": "Ambos em lixo agora",
         "pass": "Pular este par. Nenhuma tag; ambos voltam à fila."
       },
       "pass": "Pular",
-      "preferred": "Preferred",
-      "tuningLabel": "Tuning: {{stat}}",
-      "setFootnote": "Set: {{name}}",
+      "preferred": "Preferido",
+      "tuningLabel": "Afinação: {{stat}}",
+      "setFootnote": "Conjunto: {{name}}",
       "loss_one": "1 derrota",
       "loss_other": "{{count}} derrotas",
-      "lossRemaining_one": "Mais {{count}} derrota por prefer antes de junk ao fim do grupo",
-      "lossRemaining_other": "Mais {{count}} derrotas por prefer antes de junk ao fim do grupo",
-      "keyboardHints": "Passe o mouse nos botões para ver resultados · ↑ manter ambos · Espaço pular · ↓ junk em ambos · Ctrl+←/→ junk nos lados",
+      "lossRemaining_one": "Mais {{count}} derrota por preferência antes de lixo ao fim do grupo",
+      "lossRemaining_other": "Mais {{count}} derrotas por preferência antes de lixo ao fim do grupo",
+      "keyboardHints": "Passe o mouse nos botões para ver resultados · ↑ manter ambos · Espaço pular · ↓ lixo em ambos · Ctrl+←/→ lixo nos lados",
       "aria": {
         "keepLeft": "Manter esquerda. {{outcome}}",
         "keepRight": "Manter direita. {{outcome}}",
@@ -569,9 +569,9 @@
         "preferLeft": "Preferir esquerda. {{outcome}}",
         "preferRight": "Preferir direita. {{outcome}}",
         "passPair": "Pular par. {{outcome}}",
-        "junkLeft": "Junk à esquerda. {{outcome}}",
-        "junkRight": "Junk à direita. {{outcome}}",
-        "junkBoth": "Junk em ambos. {{outcome}}"
+        "junkLeft": "Lixo à esquerda. {{outcome}}",
+        "junkRight": "Lixo à direita. {{outcome}}",
+        "junkBoth": "Lixo em ambos. {{outcome}}"
       }
     },
     "progress": {
@@ -583,7 +583,7 @@
     "grouping": {
       "sameArmorSet": {
         "label": "Exigir o mesmo conjunto de armadura",
-        "help": "Agrupa ou compara apenas peças do mesmo conjunto. Desligado: mesmo slot + arquétipo + terciário em todos os conjuntos."
+        "help": "Agrupa ou compara apenas peças do mesmo conjunto. Desligado: mesmo espaço + arquétipo + terciário em todos os conjuntos."
       },
       "sameTuningStat": {
         "label": "Exigir o mesmo atributo de afinação",
@@ -591,11 +591,11 @@
       }
     },
     "respectKeepFavorite": {
-      "label": "Respeitar keep e favorite do DIM ao sugerir lixo",
-      "help": "Quando ligado, peças com tag keep ou favorite não são sugeridas como lixo nos fluxos de duplicatas."
+      "label": "Respeitar manter e favorito do DIM ao sugerir lixo",
+      "help": "Quando ligado, peças com tag manter ou favorito não são sugeridas como lixo nos fluxos de duplicatas."
     },
     "excludeJunk": {
-      "label": "Excluir peças com tag junk das contagens de duplicatas"
+      "label": "Excluir peças com tag lixo das contagens de duplicatas"
     },
     "presets": {
       "loose": {
@@ -624,8 +624,8 @@
       "usingPreset": "Usando {{label}}",
       "usingCustomRules": "Usando regras personalizadas",
       "cardBody": {
-        "loose": "Compara peças no mesmo slot sem exigir o mesmo conjunto ou atributo de afinação.",
-        "standard": "Compara por slot, arquétipo e terciário sem exigir o mesmo conjunto.",
+        "loose": "Compara peças no mesmo espaço sem exigir o mesmo conjunto ou atributo de afinação.",
+        "standard": "Compara por espaço, arquétipo e terciário sem exigir o mesmo conjunto.",
         "setAware": "Agrupa duplicatas por conjunto de armadura · funciona bem na maioria dos cofres.",
         "tuning": "Agrupa duplicatas por atributo de afinação, mesmo em conjuntos diferentes.",
         "strict": "Exige o mesmo conjunto e o mesmo atributo de afinação para considerar duplicata."
@@ -635,13 +635,13 @@
       "armorSetAny": "qualquer conjunto",
       "tuningStatSame": "mesmo atributo de afinação",
       "tuningStatAny": "qualquer atributo de afinação",
-      "dimTagsRespect": "Tags keep e favorite do DIM contam ao sugerir lixo.",
-      "dimTagsIgnore": "Tags keep e favorite não são usadas ao sugerir lixo."
+      "dimTagsRespect": "Tags manter e favorito do DIM contam ao sugerir lixo.",
+      "dimTagsIgnore": "Tags manter e favorito do DIM não são usadas ao sugerir lixo."
     },
     "suggestions": {
       "setAwareHeavy": "{{totalT5}} peças Tier 5 e {{heavyBuckets}} grupos com 5+ itens. Use o mesmo conjunto de armadura para evitar falsas duplicatas.",
       "looseSmallVault": "Cofre pequeno: regras flexíveis vão mostrar mais grupos de duplicatas.",
-      "ignoreTaggedKeep": "{{count}} candidatas a duplicata já com tag keep ou favorite no DIM.",
+      "ignoreTaggedKeep": "{{count}} candidatas a duplicata já com tag manter ou favorito no DIM.",
       "standardDefault": "Preset padrão para o tamanho do seu cofre."
     }
   },
@@ -659,13 +659,13 @@
       "firstLoadNote": "O primeiro carregamento baixa o manifesto do jogo e pode levar um minuto.",
       "bungieDenied": "A Bungie negou o login: {{error}}",
       "noAuthCode": "Nenhum código de autorização retornado: tente entrar novamente.",
-      "stateMismatch": "Incompatibilidade de estado OAuth: costuma ser aba antiga ou session storage bloqueado. Volte ao login e tente de novo.",
+      "stateMismatch": "Incompatibilidade de estado OAuth: costuma ser aba antiga ou armazenamento de sessão bloqueado. Volte ao login e tente de novo.",
       "loginFailed": "Falha no login",
       "backToLogin": "Voltar ao login",
       "suffix": "Tente entrar novamente. Se o problema continuar, contate o administrador do site.",
       "devChecklistIntro": "Checklist do app Bungie (dev local):",
       "devRedirect": "URL de redirecionamento: {{uri}}",
-      "devOrigin": "Origin: {{origin}}",
+      "devOrigin": "Origem: {{origin}}",
       "devClientId": "Client ID corresponde ao seu aplicativo Bungie ({{clientId}})",
       "devApiKey": "A chave de API é do mesmo aplicativo Bungie",
       "devRestart": "Reinicie o servidor de dev após alterar credenciais"
@@ -745,7 +745,7 @@
       "yes": "Sim",
       "no": "Não",
       "tuningVs": "Afinação: {{a}} vs {{b}}",
-      "setFootnote": "Set: {{name}}"
+      "setFootnote": "Conjunto: {{name}}"
     },
     "dominator": {
       "differentStatSplit": "Distribuição de atributos diferente",
@@ -770,12 +770,12 @@
       "class": "Classe"
     },
     "archetypes": {
-      "gunner": "Gunner",
-      "grenadier": "Grenadier",
+      "gunner": "Artilheiro",
+      "grenadier": "Granadeiro",
       "paragon": "Paragon",
-      "brawler": "Brawler",
-      "bulwark": "Bulwark",
-      "specialist": "Specialist"
+      "brawler": "Brigão",
+      "bulwark": "Baluarte",
+      "specialist": "Especialista"
     },
     "slots": {
       "helmet": "Capacete",
@@ -813,7 +813,7 @@
     "dashboard": "Painel",
     "calibrate": "Calibrar",
     "browse": "Explorar",
-    "combos": "Combos",
+    "combos": "Combinações",
     "compare": "Comparar",
     "review": "Revisar",
     "autoFilters": "Filtros automáticos",
@@ -851,7 +851,7 @@
       },
       "balanced": {
         "label": "Equilibrado",
-        "blurb": "Remove duplicatas óbvias, mantém variedade para builds"
+        "blurb": "Remove duplicatas óbvias, mantém variedade para equipamentos"
       },
       "options": {
         "label": "Manter opções",
@@ -867,28 +867,28 @@
   },
   "review": {
     "title": "Revisar tags",
-    "summary": "{{total}} na fila · {{keep}} keep · {{junk}} junk. Aplicar grava as tags na fila; as linhas indicam tags DIM existentes quando diferentes.",
+    "summary": "{{total}} na fila · {{keep}} manter · {{junk}} lixo. Aplicar grava as tags na fila; as linhas indicam tags DIM existentes quando diferentes.",
     "applied": "Tags aplicadas no DIM Sync.",
-    "openJunkInDim": "Abrir junk no DIM",
+    "openJunkInDim": "Abrir lixo no DIM",
     "partialApplied": "Aplicado parcialmente: {{count}} tags com sucesso. Itens com falha permanecem na fila.",
     "retryFailed": "Tentar novamente {{count}} com falha",
     "empty": "Nenhuma tag pendente.",
     "compareDupes": "Comparar duplicatas",
     "table": {
-      "item": "Item",
+      "item": "Peça",
       "copyDimSr": "Copiar consulta DIM",
       "archetype": "Arquétipo",
       "tertiary": "Terciário",
       "tuning": "Afinação",
       "class": "Classe",
-      "combo": "Combo",
+      "combo": "Combinação",
       "appliesToDim": "Aplica no DIM",
       "none": "Nenhum"
     },
     "copy": {
       "ids": "Copiar consulta id:",
       "junk": "Copiar busca tag:junk",
-      "junkIds": "Copiar só ids junk",
+      "junkIds": "Copiar só ids de lixo",
       "copied": "Copiado!",
       "announcement": "{{label}} copiado para a área de transferência."
     },
@@ -941,8 +941,8 @@
     "account": {
       "heading": "Conta",
       "signedInAs": "Conectado como <1>{{name}}</1>",
-      "parsedCount": "{{count}} peças de armadura com tier analisadas (cofre, todos os personagens, mensageiro)",
-      "signOutNote": "Sair remove tokens da Bungie e do DIM desta sessão do navegador (apenas session storage). Preferências permanecem no armazenamento local.",
+      "parsedCount": "{{count}} peças de armadura com tier analisadas (cofre, todos os personagens, Mensageiro)",
+      "signOutNote": "Sair remove tokens da Bungie e do DIM desta sessão do navegador (apenas armazenamento de sessão). Preferências permanecem no armazenamento local.",
       "signOutButton": "Sair e limpar tokens"
     },
     "dupeRules": {
@@ -952,7 +952,7 @@
       "minTierLabel": "Tier mínimo do equipamento",
       "minTierHelp": "A importação do cofre ainda carrega tiers 1 a 5. Apenas peças neste tier ou acima entram em grupos de duplicatas e checagens de rolagens redundantes.",
       "groupingHeading": "Agrupamento: o que conta como \"duplicata\"",
-      "groupingIntro": "As peças sempre coincidem em classe, slot, arquétipo e atributo terciário. Estas opções adicionam divisões mais rígidas e também se aplicam a comparações de rolagens redundantes.",
+      "groupingIntro": "As peças sempre coincidem em classe, espaço, arquétipo e atributo terciário. Estas opções adicionam divisões mais rígidas e também se aplicam a comparações de rolagens redundantes.",
       "dimTagsHeading": "Tags DIM ao contar duplicatas",
       "dimTagsIntro": "Peças marcadas continuam visíveis, mas podem ficar de fora do tamanho dos grupos e das contagens de revisão.",
       "liveImpact": "Impacto ao vivo (regras globais, cofre do Caçador)"

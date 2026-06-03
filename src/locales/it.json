@@ -3,7 +3,7 @@
     "title": "Filtri automatici",
     "intro": "Metti in coda tag scarto automaticamente al caricamento o aggiornamento della cripta. I tag keep e favorite non vengono mai applicati automaticamente.",
     "rulesHeading": "Regole",
-    "rulesBody": "I pezzi corrispondenti vengono messi in coda come junk in Revisione (come lo junk manuale). I keep non vengono mai taggati automaticamente: keep/favorite DIM, keep in sospeso o pezzi tenuti in un bucket duello.",
+    "rulesBody": "I pezzi corrispondenti vengono messi in coda come junk in Revisione (come il junk manuale). I keep non vengono mai taggati automaticamente: tag keep/favorite DIM, keep in sospeso o pezzi conservati in un gruppo di duplicati in confronto.",
     "noRules": "Nessuna regola ancora.",
     "addRule": "Aggiungi regola",
     "addRuleHeading": "Aggiungi regola",
@@ -13,7 +13,7 @@
     "archetypeLabel": "Archetipo",
     "tertiaryStatLabel": "Stat terziaria",
     "tuningStatLabel": "Stat di tuning",
-    "slotLabel": "Slot",
+    "slotLabel": "Slot armatura",
     "armorSetLabel": "Set di armatura",
     "any": "Qualsiasi",
     "addValue": "Aggiungi valore…",
@@ -29,14 +29,14 @@
       "anyOf": "Qualsiasi tra",
       "noneOf": "Nessuno tra"
     },
-    "operatorsIntro": "Ogni filtro può essere <1>È</1>, <2>Non è</2>, <3>Qualsiasi tra</3> o <4>Nessuno tra</4> (es. pezzi Hunter junk il cui archetipo non è tra Bulwark, Paragon).",
+    "operatorsIntro": "Ogni filtro può essere <1>È</1>, <2>Non è</2>, <3>Qualsiasi tra</3> o <4>Nessuno tra</4> (es. pezzi junk del Cacciatore il cui archetipo non è tra Baluardo, Paragon).",
     "livePreview_one": "Anteprima live: {{count}} pezzo verrebbe messo in coda al prossimo caricamento cripta (esclusi keep, favorite e già junk).",
     "livePreview_other": "Anteprima live: {{count}} pezzi verrebbero messi in coda al prossimo caricamento cripta (esclusi keep, favorite e già junk).",
     "setFallback": "Set {{hash}}",
     "describe": {
       "allClasses": "Tutte le classi",
       "tertiary": "{{stat}} terziaria",
-      "tuning": "{{stat}} tuning",
+      "tuning": "{{stat}} di tuning",
       "setFallback": "set {{hash}}",
       "anyOf": "qualsiasi tra {{labels}}",
       "noneOf": "nessuno tra {{labels}}",
@@ -47,20 +47,20 @@
     "title": "Sfoglia armature {{class}}",
     "summary": "{{filtered}} di {{total}} pezzi · {{sortLabel}}",
     "redundantLink": "{{count}} roll ridondanti",
-    "loadVaultFirst": "Carica prima la cripta dalla dashboard.",
+    "loadVaultFirst": "Carica prima la cripta dalla Dashboard.",
     "filters": {
-      "slot": "Slot",
+      "slot": "Slot armatura",
       "archetype": "Archetipo",
       "search": "Cerca",
       "armorSet": "Set di armatura",
       "dimTag": "Tag DIM",
       "sort": "Ordina",
-      "combo": "Combo",
+      "combo": "Combinazione",
       "allSlots": "Tutti gli slot",
       "allArchetypes": "Tutti gli archetipi",
       "allSets": "Tutti i set",
       "any": "Qualsiasi",
-      "anyCombo": "Qualsiasi combo",
+      "anyCombo": "Qualsiasi combinazione",
       "armorNamePlaceholder": "Nome armatura…",
       "statLowerOnly": "Solo statistiche inferiori",
       "dupesOnly": "Solo duplicati",
@@ -70,11 +70,11 @@
     },
     "dimTags": {
       "untagged": "Senza tag",
-      "keep": "Conserva",
-      "junk": "Scarta",
-      "favorite": "Preferito",
-      "infuse": "Infondi",
-      "archive": "Archivia"
+      "keep": "Keep",
+      "junk": "Junk",
+      "favorite": "Favorite",
+      "infuse": "Infuse",
+      "archive": "Archive"
     },
     "sort": {
       "matchDesc": "Corrispondenza % (alta → bassa)",
@@ -97,13 +97,13 @@
       "noneToShow": "Nessun roll ridondante da mostrare."
     },
     "noItemsMatch": "Nessun oggetto corrisponde a questi filtri.",
-    "backToDashboard": "Torna alla dashboard",
+    "backToDashboard": "Torna alla Dashboard",
     "dupeBadge": "duplicato"
   },
   "build": {
     "title": "Combo {{class}}",
     "intro": "Migliori pezzi in cripta per ogni obiettivo di roll nella tua combo.",
-    "combosHeading": "Combo",
+    "combosHeading": "Combinazioni",
     "setBonuses": "Bonus set",
     "setBonusesOptional": "Bonus set (opzionale)",
     "includeInCoverage": "Includi nella copertura",
@@ -111,7 +111,7 @@
     "maxCombos": "Massimo {{max}} combo per classe.",
     "orderLabel": "Ordine:",
     "noneOption": "Nessuno",
-    "twoTwoMix": " · mix 2+2",
+    "twoTwoMix": " · misto 2+2",
     "editor": {
       "intro": "Scegli 2–4 statistiche in ordine e bonus set opzionali (es. Ferropotent 2pc + Smoke Jumper 2pc). Consigliamo il miglior pezzo per slot in base a statistiche e set.",
       "unsavedHint": "Modifiche non salvate · salva o annulla per tornare alla vista di sola lettura.",
@@ -134,13 +134,13 @@
       "priorityN": "Priorità {{n}}",
       "setBonus2pc": "Bonus 2 pezzi",
       "setBonus4pcSame": "Stesso set (4pc)",
-      "setBonus4pcMix": "Secondo set (mix 2pc) o 4pc",
-      "setBonusHint": "Scegli un set per 2pc, poi lo stesso set per 4pc o un secondo set per un mix 2+2.",
+      "setBonus4pcMix": "Secondo set (mix 2 pz.) o 4 pz.",
+      "setBonusHint": "Scegli un set per 2 pz., poi lo stesso set per 4 pz. o un secondo set per un misto 2+2.",
       "loadVaultForSets": "Carica la cripta per scegliere i set dal tuo inventario.",
       "firstSet2pc": "Primo set (2pc)",
       "twoPcOnly": "Solo 2pc (primo set)",
-      "set4pcSuffix": "{{name}} (4pc)",
-      "set2pcMixSuffix": "{{name}} (mix 2pc)",
+      "set4pcSuffix": "{{name}} (4 pz.)",
+      "set2pcMixSuffix": "{{name}} (mix 2 pz.)",
       "targetLabel": "Obiettivo:",
       "addStatCount": "+ Aggiungi stat ({{current}}/{{max}})",
       "addCombo": "Aggiungi combo",
@@ -169,12 +169,12 @@
       "bulkMarkFavorite": "Segna tutti come preferiti",
       "bulkClearJunk": "Rimuovi junk da tutti",
       "bulkMarkJunk": "Segna tutti come junk",
-      "tagKeep": "Tag keep in DIM",
-      "tagKeepRemove": "Rimuovi tag keep in DIM",
-      "tagFavorite": "Tag preferito in DIM",
-      "tagFavoriteAlready": "Già preferito in DIM",
-      "tagJunk": "Tag junk in DIM",
-      "tagJunkRemove": "Rimuovi tag junk in DIM",
+      "tagKeep": "Applica keep in DIM",
+      "tagKeepRemove": "Rimuovi keep da DIM",
+      "tagFavorite": "Applica favorite in DIM",
+      "tagFavoriteAlready": "Già favorite in DIM",
+      "tagJunk": "Applica junk in DIM",
+      "tagJunkRemove": "Rimuovi junk da DIM",
       "choose": "Scegli",
       "chooseSlot": "Scegli {{slot}}",
       "choosePiece": "Scegli pezzo · {{count}} idonei",
@@ -183,7 +183,7 @@
       "eligible_other": "{{count}} pezzi idonei",
       "anyArchetype": "Qualsiasi archetipo",
       "tier": "Tier {{tier}}",
-      "comboFallback": "Combo",
+      "comboFallback": "Combinazione",
       "rollRoleCombined": "terziaria + tuning",
       "rollRoleTertiary": "terziaria",
       "rollRoleTuning": "tuning",
@@ -191,7 +191,7 @@
       "archetypeBonus": "{{stat}} da archetipo (+{{bonus}})",
       "rollCombinedTitle": "{{stat}} terziaria + tuning (+{{tertiaryBonus}} +{{tuningBonus}})",
       "rollTertiaryTitle": "{{stat}} terziaria (+{{bonus}})",
-      "rollTuningTitle": "{{stat}} tuning (+{{bonus}})",
+      "rollTuningTitle": "{{stat}} di tuning (+{{bonus}})",
       "detailsSupporting": "{{count}} pezzi in cripta hanno almeno una stat prioritaria.",
       "detailsProfiles": "{{filled}} su {{possible}} tipi di roll che potresti avere (archetipo + terziaria + slot) sono in cripta.",
       "detailsRedundantOverlap": "Slot vuoti nonostante roll ridondanti. Priorità ai riempimenti, non ad altri duplicati.",
@@ -223,7 +223,7 @@
     "stepHeader": "Passo {{current}} di {{total}} · {{step}}",
     "classTitle": "Quale classe stai calibrando?",
     "archetypeTitle": "Ordina gli archetipi per preferenza",
-    "archetypeInstruction": "Il più preferito in alto. Trascina le righe o usa le frecce. Sono elencati tutti e sei gli archetipi; la proprietà in cripta non limita l'elenco.",
+    "archetypeInstruction": "Il più preferito in alto. Trascina le righe o usa le frecce. Sono elencati tutti e sei gli archetipi; averli in cripta non limita l'elenco.",
     "tertiaryTitle": "Ordina le statistiche terziarie",
     "tuningTitle": "Ordina le statistiche di tuning",
     "setsTitle": "Ordina i set di armatura per preferenza",
@@ -232,7 +232,7 @@
     "bonusUnavailable": "Dettagli bonus non disponibili",
     "noSetBonuses": "Nessun bonus set elencato",
     "continue": "Continua",
-    "goToDashboard": "Vai alla dashboard",
+    "goToDashboard": "Vai alla Dashboard",
     "noArmorSets": "Nessun set di armatura da confrontare.",
     "savedNextStep": "Salvato · Passo successivo",
     "skipTertiaryArchetype": "Salta terziaria {{archetype}}",
@@ -290,11 +290,11 @@
     "confirm": {
       "clearPendingTags": "Cancellare tutti i {{count}} tag in sospeso? Non verranno applicati in DIM.",
       "resetClassPrefs": "Reimpostare le preferenze di {{class}} ai valori predefiniti? Pesi delle statistiche, scelte di calibrazione e pesi appresi per questa classe verranno cancellati.",
-      "resetAllClassPrefs": "Reimpostare le preferenze di tutte le classi ai valori predefiniti? Pesi delle statistiche, scelte di calibrazione e pesi appresi verranno cancellati per Hunter, Titan e Warlock. Le regole sui duplicati e le altre impostazioni restano invariate."
+      "resetAllClassPrefs": "Reimpostare le preferenze di tutte le classi ai valori predefiniti? Pesi delle statistiche, scelte di calibrazione e pesi appresi verranno cancellati per Cacciatore, Titano e Stregone. Le regole sui duplicati e le altre impostazioni restano invariate."
     },
     "classPrefs": {
       "heading": "Preferenze {{class}}",
-      "usingClass": "In uso: {{class}} (cambia classe nell'intestazione). Pesi di statistiche e archetipi per classe dalla calibrazione. Le regole sui duplicati sono condivise salvo override per classe.",
+      "usingClass": "In uso: {{class}} (cambia classe nell'intestazione). Pesi di statistiche e archetipi per classe dalla calibrazione. Le regole sui duplicati sono condivise salvo personalizzazione per classe.",
       "calibrations": "{{count}} calibrazioni · affidabilità {{confidence}}"
     },
     "reviewTags": {
@@ -327,7 +327,7 @@
     "refreshVault": "Aggiorna cripta",
     "armorView": "Vista armature",
     "archetypeView": "Vista archetipi",
-    "heatmapSlot": "Slot heatmap",
+    "heatmapSlot": "Heatmap per slot",
     "allSlots": "Tutti gli slot",
     "insights": {
       "continueSetup": {
@@ -417,8 +417,8 @@
         "cta": "Confronta duplicati"
       },
       "fixCoverageNoVault": "Nessun pezzo in cripta ha ancora le tue statistiche prioritarie",
-      "fixCoverageNeedSlot": "Serve un {{slot}} che abbia i tuoi obiettivi di roll",
-      "fixCoverageSlots": "{{filled}}/{{total}} slot compilati nel loadout consigliato",
+      "fixCoverageNeedSlot": "Serve un {{slot}} che soddisfi i tuoi obiettivi di roll",
+      "fixCoverageSlots": "{{filled}}/{{total}} slot compilati nell'equipaggiamento consigliato",
       "browseNoArmor": "Nessuna armatura in cripta ha ancora queste statistiche",
       "browseGaps": "{{count}} tipo di roll da cercare per un adattamento migliore",
       "browseGaps_other": "{{count}} tipi di roll da cercare per un adattamento migliore",
@@ -462,7 +462,7 @@
     "preparing": "Preparazione confronti…",
     "queueEmpty": {
       "title": "Coda vuota",
-      "summary": "{{keep}} keep · {{junk}} junk in coda.",
+      "summary": "{{keep}} tieni · {{junk}} scarto in coda.",
       "reviewTags": "Revisione tag",
       "restartQueue": "Riavvia coda",
       "clearSession": "Cancella sessione {{class}}"
@@ -490,7 +490,7 @@
       "chooseNext": "Scegli un gruppo da confrontare dopo",
       "nextGroupsAria": "Prossimi gruppi di duplicati",
       "kicker": "Gruppo completato",
-      "allPairsDecided": "Tutte le coppie duello decise",
+      "allPairsDecided": "Tutte le coppie di confronto decise",
       "continueNext": "Continua al gruppo successivo",
       "applyTagsContinue": "Applica tag e continua",
       "chooseDifferent": "Scegli un altro gruppo",
@@ -500,15 +500,15 @@
       "stats": {
         "keeps": "Keep",
         "junkQueued": "Junk in coda",
-        "preferEliminated": "Prefer eliminati",
+        "preferEliminated": "Preferiti eliminati",
         "pairsDecided": "Coppie decise",
         "inGroup": "In questo gruppo"
       },
       "breakdown": {
         "keepBoth": "Tieni entrambi: {{count}}",
         "keepSide": "Tieni un lato: {{count}}",
-        "junkedInDuels": "Junk nei duelli: {{count}}",
-        "preferInPlay": "Prefer ancora attivi: {{count}}"
+        "junkedInDuels": "Junk nei confronti: {{count}}",
+        "preferInPlay": "Preferiti ancora attivi: {{count}}"
       },
       "piece_one": "{{count}} pezzo",
       "piece_other": "{{count}} pezzi",
@@ -527,7 +527,7 @@
       "both": "Entrambi",
       "right": "Destra",
       "keep": "Keep",
-      "prefer": "Prefer",
+      "prefer": "Preferisci",
       "junk": "Junk"
     },
     "compare": {
@@ -535,25 +535,25 @@
       "sameRoll": "Stesso roll",
       "compareSides": "Confronta lati",
       "suggestedPick": "Scelta suggerita: ",
-      "vs": "vs",
+      "vs": "contro",
       "fitTitle": "Quanto bene questo pezzo si adatta alle preferenze salvate",
       "powerTitle": "Livello di potenza",
       "identicalRolls": "Roll identici. Tieni, junk, entrambi o passa.",
-      "suppressedSuggestion": "Entrambi forti · ultimo del tier. Prefer, passa, keep o junk.",
+      "suppressedSuggestion": "Entrambi forti · ultimo del tier. Preferisci, passa, keep o junk.",
       "buildOptimalPrefix": "Combo ottimale per ",
       "orPassKeepJunk": "· oppure passa / keep / junk",
-      "evenMatch": "Pareggio. Prefer, passa, keep o junk.",
-      "eliminated": "Eliminato dal bracket",
-      "actionKeep": "Keep",
+      "evenMatch": "Pareggio. Preferisci, passa, keep o junk.",
+      "eliminated": "Eliminato dal tabellone",
+      "actionKeep": "Tieni",
       "outcomes": {
         "prefer": "Preferisci questo lato. Il perdente serve {{threshold}} sconfitte prefer prima del junk.",
-        "keepSide": "Keep a fine gruppo · l'altro resta nel bracket",
+        "keepSide": "Keep a fine gruppo · l'altro resta nel tabellone",
         "keepBoth": "Entrambi tenuti alla fine",
-        "junkOne": "Junk ora · l'altro resta (nessun vincitore)",
+        "junkOne": "Junk ora · l'altro resta nel tabellone (nessun vincitore)",
         "junkBoth": "Entrambi junk ora",
         "pass": "Passa la coppia. Nessun tag, entrambi rimessi in coda."
       },
-      "pass": "Pass",
+      "pass": "Passa",
       "preferred": "Preferito",
       "tuningLabel": "Tuning: {{stat}}",
       "setFootnote": "Set: {{name}}",
@@ -561,13 +561,13 @@
       "loss_other": "{{count}} sconfitte",
       "lossRemaining_one": "{{count}} altra sconfitta prefer prima dello scarto a fine gruppo",
       "lossRemaining_other": "{{count}} altre sconfitte prefer prima dello scarto a fine gruppo",
-      "keyboardHints": "Pulsanti per gli esiti · ↑ tieni entrambi · Barra spaziatrice Pass · ↓ junk entrambi · Ctrl+←/→ junk lato",
+      "keyboardHints": "Passa il cursore sui pulsanti per gli esiti · ↑ tieni entrambi · Barra spaziatrice Passa · ↓ junk entrambi · Ctrl+←/→ junk lato",
       "aria": {
         "keepLeft": "Tieni sinistra. {{outcome}}",
         "keepRight": "Tieni destra. {{outcome}}",
         "keepBoth": "Tieni entrambi. {{outcome}}",
-        "preferLeft": "Prefer sinistra. {{outcome}}",
-        "preferRight": "Prefer destra. {{outcome}}",
+        "preferLeft": "Preferisci sinistra. {{outcome}}",
+        "preferRight": "Preferisci destra. {{outcome}}",
         "passPair": "Passa coppia. {{outcome}}",
         "junkLeft": "Junk sinistra. {{outcome}}",
         "junkRight": "Junk destra. {{outcome}}",
@@ -621,7 +621,7 @@
     },
     "matchStyle": {
       "custom": "Personalizzato",
-      "usingPreset": "Uso di {{label}}",
+      "usingPreset": "In uso: {{label}}",
       "usingCustomRules": "Regole personalizzate",
       "cardBody": {
         "loose": "Confronta pezzi nello stesso slot senza richiedere lo stesso set di armatura o statistica di tuning.",
@@ -648,7 +648,7 @@
   "errors": {
     "boundary": {
       "title": "Qualcosa è andato storto",
-      "body": "{{appName}} ha riscontrato un errore imprevisto. Le preferenze e i tag in coda in local storage di solito non sono interessati.",
+      "body": "{{appName}} ha riscontrato un errore imprevisto. Le preferenze e i tag in coda nella memoria locale di solito non sono interessati.",
       "reload": "Ricarica app",
       "goHome": "Vai alla home"
     },
@@ -659,25 +659,25 @@
       "firstLoadNote": "Il primo caricamento scarica il manifest di gioco e può richiedere un minuto.",
       "bungieDenied": "Bungie ha rifiutato l'accesso: {{error}}",
       "noAuthCode": "Nessun codice di autorizzazione restituito: prova ad accedere di nuovo.",
-      "stateMismatch": "Stato OAuth non corrispondente: spesso causato da una scheda obsoleta o session storage bloccato. Torna al login e riprova.",
+      "stateMismatch": "Stato OAuth non corrispondente: spesso causato da una scheda obsoleta o memoria di sessione bloccata. Torna al login e riprova.",
       "loginFailed": "Accesso non riuscito",
       "backToLogin": "Torna al login",
       "suffix": "Prova ad accedere di nuovo. Se il problema persiste, contatta l'amministratore del sito.",
       "devChecklistIntro": "Checklist app Bungie (sviluppo locale):",
       "devRedirect": "URL di reindirizzamento: {{uri}}",
-      "devOrigin": "Origin: {{origin}}",
+      "devOrigin": "Origine: {{origin}}",
       "devClientId": "Client ID corrisponde alla tua applicazione Bungie ({{clientId}})",
       "devApiKey": "La chiave API proviene dalla stessa applicazione Bungie",
       "devRestart": "Riavvia il server di sviluppo dopo aver cambiato le credenziali"
     },
     "env": {
       "bungieSignInUnavailableDev": "L'accesso non è abilitato in questa build.",
-      "bungieSignInUnavailable": "L'accesso non è disponibile su questo deployment.",
+      "bungieSignInUnavailable": "L'accesso non è disponibile in questa distribuzione.",
       "bungieCredentialsMissingDev": "L'accesso Bungie non è abilitato in questo ambiente.",
-      "bungieCredentialsMissing": "L'accesso non è disponibile su questo deployment. Contatta l'amministratore del sito.",
+      "bungieCredentialsMissing": "L'accesso non è disponibile in questa distribuzione. Contatta l'amministratore del sito.",
       "bungieSecretMissingDev": "L'accesso Bungie non è completamente abilitato in questo ambiente.",
       "dimSyncUnavailableDev": "La sincronizzazione DIM non è abilitata in questo ambiente.",
-      "dimSyncUnavailable": "L'applicazione dei tag in DIM non è disponibile su questo deployment. Contatta l'amministratore del sito."
+      "dimSyncUnavailable": "L'applicazione dei tag in DIM non è disponibile in questa distribuzione. Contatta l'amministratore del sito."
     },
     "vault": {
       "sessionExpired": "La sessione Bungie potrebbe essere scaduta. Esci e accedi di nuovo.",
@@ -738,7 +738,7 @@
     },
     "diff": {
       "tuning": "Tuning",
-      "set": "Set",
+      "set": "Insieme",
       "power": "Potenza",
       "masterwork": "Maestria",
       "noSet": "Nessun set",
@@ -772,7 +772,7 @@
     "archetypes": {
       "gunner": "Artigliere",
       "grenadier": "Granatiere",
-      "paragon": "Paragon",
+      "paragon": "Esemplare",
       "brawler": "Combattente",
       "bulwark": "Baluardo",
       "specialist": "Specialista"
@@ -786,7 +786,7 @@
     },
     "roll": {
       "tertiary": "{{stat}} terziaria",
-      "tuning": "{{stat}} tuning",
+      "tuning": "{{stat}} di tuning",
       "tuningLabel": "Tuning: {{stat}}",
       "preferred": "Preferito",
       "none": "nessuna"
@@ -810,10 +810,10 @@
     }
   },
   "nav": {
-    "dashboard": "Pannello",
+    "dashboard": "Dashboard",
     "calibrate": "Calibra",
     "browse": "Sfoglia",
-    "combos": "Combo",
+    "combos": "Combinazioni",
     "compare": "Confronta",
     "review": "Revisione",
     "autoFilters": "Filtri automatici",
@@ -867,7 +867,7 @@
   },
   "review": {
     "title": "Revisione tag",
-    "summary": "{{total}} in coda · {{keep}} keep · {{junk}} junk. Applica scrive i tag in coda; le righe indicano i tag DIM esistenti se diversi.",
+    "summary": "{{total}} in coda · {{keep}} tieni · {{junk}} scarto. Applica scrive i tag in coda; le righe indicano i tag DIM esistenti se diversi.",
     "applied": "Tag applicati a DIM Sync.",
     "openJunkInDim": "Apri junk in DIM",
     "partialApplied": "Applicazione parziale: {{count}} tag riusciti. Gli elementi non riusciti restano in coda.",
@@ -881,7 +881,7 @@
       "tertiary": "Terziaria",
       "tuning": "Tuning",
       "class": "Classe",
-      "combo": "Combo",
+      "combo": "Combinazione",
       "appliesToDim": "Si applica a DIM",
       "none": "Nessuno"
     },
@@ -897,7 +897,7 @@
     "applying": "Applicazione…",
     "clearPending": "Cancella tag in sospeso",
     "clearSession": "Cancella sessione",
-    "backToDashboard": "Torna alla dashboard",
+    "backToDashboard": "Torna alla Dashboard",
     "confirm": {
       "clearPending": "Cancellare tutti i {{count}} tag in sospeso? Non verranno applicati in DIM. Il progresso della sessione di confronto resta.",
       "clearSession": "Cancellare l'intera sessione di confronto? I tag in sospeso e lo stato di confronto in corso verranno reimpostati."
@@ -929,8 +929,8 @@
       "summary": "Circa {{buckets}} {{groupWord}} di duplicati · circa {{review}} {{rollWord}} da confrontare ({{class}})",
       "group_one": "gruppo",
       "group_other": "gruppi",
-      "roll_one": "roll",
-      "roll_other": "roll"
+      "roll_one": "tiro",
+      "roll_other": "tiri"
     },
     "aria": {
       "dupeRules": "Regole duplicati"
@@ -942,7 +942,7 @@
       "heading": "Profilo",
       "signedInAs": "Accesso come <1>{{name}}</1>",
       "parsedCount": "{{count}} pezzi di armatura con tier analizzati (cripta, tutti i personaggi, posta)",
-      "signOutNote": "Uscire cancella i token Bungie e DIM da questa sessione del browser (solo session storage). Le preferenze restano in local storage.",
+      "signOutNote": "Uscire cancella i token Bungie e DIM da questa sessione del browser (solo memoria di sessione). Le preferenze restano nella memoria locale.",
       "signOutButton": "Esci e cancella token"
     },
     "dupeRules": {
@@ -955,7 +955,7 @@
       "groupingIntro": "I pezzi corrispondono sempre per classe, slot, archetipo e statistica terziaria. Queste opzioni aggiungono suddivisioni più strette e si applicano anche ai confronti roll ridondanti.",
       "dimTagsHeading": "Tag DIM nel conteggio duplicati",
       "dimTagsIntro": "I pezzi taggati restano visibili ma possono essere esclusi dalle dimensioni dei gruppi duplicati e dai conteggi di revisione.",
-      "liveImpact": "Impatto in tempo reale (regole globali, cripta Hunter)"
+      "liveImpact": "Impatto in tempo reale (regole globali, cripta Cacciatore)"
     },
     "classDupeRules": {
       "heading": "Regole duplicati {{class}}",
@@ -966,7 +966,7 @@
     "dupePresets": {
       "heading": "Preset duplicati"
     },
-    "dashboardLink": "Pannello",
+    "dashboardLink": "Dashboard",
     "language": {
       "heading": "Lingua",
       "useBrowser": "Usa lingua del browser",
@@ -988,7 +988,7 @@
     },
     "classPrefs": {
       "heading": "Preferenze {{class}}",
-      "usingClass": "In uso: {{class}} (cambia classe nell'intestazione). Pesi di statistiche e archetipi per classe dalla calibrazione. Le regole sui duplicati sono condivise salvo override per classe.",
+      "usingClass": "In uso: {{class}} (cambia classe nell'intestazione). Pesi di statistiche e archetipi per classe dalla calibrazione. Le regole sui duplicati sono condivise salvo personalizzazione per classe.",
       "calibrations": "{{count}} calibrazioni · affidabilità {{confidence}}",
       "topStats": "Statistiche principali:",
       "topArchetypes": "Archetipi principali:",
@@ -1006,7 +1006,7 @@
       "nonePending": "Nessun tag in sospeso.",
       "confirmClearPending": "Cancellare tutti i {{count}} tag in sospeso? Non verranno applicati in DIM.",
       "confirmResetClass": "Reimpostare le preferenze di {{class}} ai valori predefiniti? Pesi delle statistiche, scelte di calibrazione e pesi appresi per questa classe verranno cancellati.",
-      "confirmResetAll": "Reimpostare le preferenze di tutte le classi ai valori predefiniti? Pesi delle statistiche, scelte di calibrazione e pesi appresi verranno cancellati per Hunter, Titan e Warlock. Le regole sui duplicati e le altre impostazioni restano invariate."
+      "confirmResetAll": "Reimpostare le preferenze di tutte le classi ai valori predefiniti? Pesi delle statistiche, scelte di calibrazione e pesi appresi verranno cancellati per Cacciatore, Titano e Stregone. Le regole sui duplicati e le altre impostazioni restano invariate."
     },
     "clearLocalData": {
       "heading": "Dati locali",
@@ -1023,8 +1023,8 @@
     "refreshingStatus": "Aggiornamento… {{status}}",
     "loadVault": "Carica cripta",
     "noDataYet": "Nessun dato della cripta ancora.",
-    "noDataBrowseHint": "Carica prima la cripta dalla dashboard.",
-    "noDataBuildHint": "Nessun dato della cripta ancora. Carica la cripta dalla dashboard.",
+    "noDataBrowseHint": "Carica prima la cripta dalla Dashboard.",
+    "noDataBuildHint": "Nessun dato della cripta ancora. Carica la cripta dalla Dashboard.",
     "retryVaultLoad": "Riprova caricamento cripta",
     "signOutInSettings": "Esci dalle Impostazioni",
     "dismiss": "Chiudi",

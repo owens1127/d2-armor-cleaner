@@ -5,9 +5,9 @@
     "noRules": "尚无规则。",
     "addRule": "添加规则",
     "classLabel": "职业",
-    "operatorsIntro": "每个筛选可为 <1>是</1>、<2>不是</2>、<3>任一</3> 或 <4>皆非</4>（例如：原型不是 Gunner 的猎人垃圾护甲）。",
+    "operatorsIntro": "每个筛选可为 <1>是</1>、<2>不是</2>、<3>任一</3> 或 <4>皆非</4>（例如：原型不是枪手的猎人垃圾护甲）。",
     "rulesHeading": "规则",
-    "rulesBody": "匹配的装备会在审核中排队为垃圾（与手动垃圾相同）。保留项不会自动标记：DIM 保留/收藏、待处理保留，或决斗桶中保留的装备。",
+    "rulesBody": "匹配的装备会在审核中排队为垃圾（与手动垃圾相同）。保留项不会自动标记：DIM 保留/收藏、待处理保留，或对比桶中保留的装备。",
     "deleteRule": "删除",
     "allClasses": "全部职业",
     "archetypeLabel": "原型",
@@ -155,7 +155,7 @@
       "setPrioritiesHint": "在组合上设置属性优先级以查看 roll 目标",
       "recommendedHeading": "推荐装备",
       "recommendedHint": "下方网格用的 DIM 标签与搜索",
-      "browseVault": "浏览宝库",
+      "browseVault": "浏览仓库",
       "setTarget": "套装目标：",
       "vaultPiecesShort": "仓库装备不足",
       "conflictingSets": "这些套装目标需要超过五件护甲 · 请调整组合。",
@@ -257,7 +257,7 @@
     "languageDe": "Deutsch",
     "languageIt": "Italiano",
     "languageJa": "日本語",
-    "languageKo": "한국어",
+    "languageKo": "韩语",
     "languagePl": "Polski",
     "languagePtBr": "Português (Brasil)",
     "languageRu": "Русский",
@@ -490,7 +490,7 @@
       "chooseNext": "选择下一组进行对比",
       "nextGroupsAria": "下一重复组",
       "kicker": "桶已完成",
-      "allPairsDecided": "所有决斗对已决定",
+      "allPairsDecided": "所有对比对已决定",
       "continueNext": "继续下一组",
       "applyTagsContinue": "应用标签并继续",
       "chooseDifferent": "选择其他组",
@@ -501,13 +501,13 @@
         "keeps": "保留",
         "junkQueued": "已排队垃圾",
         "preferEliminated": "偏好已淘汰",
-        "pairsDecided": "已决定的对数",
+        "pairsDecided": "已决定的对比对数",
         "inGroup": "本组内"
       },
       "breakdown": {
         "keepBoth": "双方保留：{{count}}",
         "keepSide": "单侧保留：{{count}}",
-        "junkedInDuels": "决斗中标记垃圾：{{count}}",
+        "junkedInDuels": "对比中标记垃圾：{{count}}",
         "preferInPlay": "偏好仍在进行：{{count}}"
       },
       "piece_one": "{{count}} 件",
@@ -587,7 +587,7 @@
       },
       "sameTuningStat": {
         "label": "要求相同调优属性",
-        "help": "按调优属性拆分（例如武器 vs 手雷）。关闭时：同一桶内可混合调优属性。"
+        "help": "按调优属性拆分（例如武器对手雷）。关闭时：同一桶内可混合调优属性。"
       }
     },
     "respectKeepFavorite": {
@@ -659,13 +659,13 @@
       "firstLoadNote": "首次加载会下载游戏清单，可能需要一分钟。",
       "bungieDenied": "Bungie 拒绝登录：{{error}}",
       "noAuthCode": "未返回授权码：请重新登录。",
-      "stateMismatch": "OAuth 状态不匹配：通常由过期标签页或 session storage 被阻止引起。返回登录页重试。",
+      "stateMismatch": "OAuth 状态不匹配：通常由过期标签页或会话存储被阻止引起。返回登录页重试。",
       "loginFailed": "登录失败",
       "backToLogin": "返回登录",
       "suffix": "请重新登录。若问题持续，请联系站点管理员。",
       "devChecklistIntro": "Bungie 应用清单（本地开发）：",
       "devRedirect": "重定向 URL：{{uri}}",
-      "devOrigin": "Origin：{{origin}}",
+      "devOrigin": "来源：{{origin}}",
       "devClientId": "Client ID 与你的 Bungie 应用一致（{{clientId}}）",
       "devApiKey": "API 密钥来自同一 Bungie 应用",
       "devRestart": "更改凭据后请重启开发服务器"
@@ -744,7 +744,7 @@
       "noSet": "无套装",
       "yes": "是",
       "no": "否",
-      "tuningVs": "调优：{{a}} vs {{b}}",
+      "tuningVs": "调优：{{a}} 对 {{b}}",
       "setFootnote": "套装：{{name}}"
     },
     "dominator": {
@@ -929,8 +929,8 @@
       "summary": "约 {{buckets}} 个重复{{groupWord}} · 约 {{review}} 个{{rollWord}}待对比（{{class}}）",
       "group_one": "组",
       "group_other": "组",
-      "roll_one": "roll",
-      "roll_other": "roll"
+      "roll_one": "条",
+      "roll_other": "条"
     },
     "aria": {
       "dupeRules": "重复规则"

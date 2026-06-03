@@ -1,13 +1,13 @@
 {
   "autoFilters": {
     "title": "자동 필터",
-    "intro": "금고를 불러오거나 새로고침할 때 자동으로 정크 태그를 대기열에 넣습니다. 킵·즐겨찾기는 자동 태그되지 않습니다.",
+    "intro": "금고를 불러오거나 새로고침할 때 자동으로 정크 태그를 대기열에 넣습니다. 킵·즐겨찾기 태그는 자동으로 붙지 않습니다.",
     "noRules": "아직 규칙이 없습니다.",
     "addRule": "규칙 추가",
     "classLabel": "클래스",
-    "operatorsIntro": "각 필터는 <1>해당</1>, <2>해당 아님</2>, <3>다음 중 하나</3>, <4>다음 중 없음</4>일 수 있습니다(예: 아키타입이 Gunner가 아닌 사냥꾼 정크).",
+    "operatorsIntro": "각 필터는 <1>해당</1>, <2>해당 아님</2>, <3>다음 중 하나</3>, <4>다음 중 없음</4>일 수 있습니다(예: 아키타입이 벌워크·패러곤에 해당하지 않는 사냥꾼 정크 방어구).",
     "rulesHeading": "규칙",
-    "rulesBody": "일치하는 피스는 검토에서 정크로 대기열에 들어갑니다(수동 정크와 동일). 킵은 자동 태그되지 않습니다: DIM 킵/즐겨찾기, 대기 중 킵, 듀얼 버킷에서 킵한 피스.",
+    "rulesBody": "일치하는 피스는 검토에서 정크로 대기열에 들어갑니다(수동 정크와 동일). 킵 태그는 자동으로 붙지 않습니다: DIM 킵/즐겨찾기, 대기 중인 킵, 듀얼에서 킵한 피스.",
     "deleteRule": "삭제",
     "allClasses": "모든 클래스",
     "archetypeLabel": "아키타입",
@@ -26,8 +26,8 @@
       "anyOf": "다음 중 하나",
       "noneOf": "다음 중 없음"
     },
-    "livePreview_one": "실시간 미리보기: 다음 금고 불러오기 시 {{count}}개 피스가 대기열에 들어갑니다(킵, 즐겨찾기, 이미 정크 처리된 항목 제외).",
-    "livePreview_other": "실시간 미리보기: 다음 금고 불러오기 시 {{count}}개 피스가 대기열에 들어갑니다(킵, 즐겨찾기, 이미 정크 처리된 항목 제외).",
+    "livePreview_one": "실시간 미리보기: 다음 금고 불러오기 시 {{count}}개 피스가 대기열에 들어갑니다(킵한 피스, 즐겨찾기, 이미 정크 처리된 항목 제외).",
+    "livePreview_other": "실시간 미리보기: 다음 금고 불러오기 시 {{count}}개 피스가 대기열에 들어갑니다(킵한 피스, 즐겨찾기, 이미 정크 처리된 항목 제외).",
     "setFallback": "세트 {{hash}}",
     "addRuleHeading": "규칙 추가",
     "enableRule": "규칙 사용: {{label}}",
@@ -136,7 +136,7 @@
       "setBonus4pcSame": "동일 세트(4pc)",
       "setBonus4pcMix": "두 번째 세트(2pc 믹스) 또는 4pc",
       "setBonusHint": "2pc용 세트 하나를 고른 뒤, 4pc는 같은 세트 또는 2+2 믹스용 두 번째 세트를 고르세요.",
-      "loadVaultForSets": "인벤토리에서 방어구 세트를 고르려면 금고를 불러오세요.",
+      "loadVaultForSets": "방어구 세트를 고르려면 금고를 불러오세요.",
       "firstSet2pc": "첫 세트(2pc)",
       "twoPcOnly": "2pc만(첫 세트)",
       "set4pcSuffix": "{{name}} (4피스)",
@@ -278,7 +278,7 @@
     "developer": "개발자",
     "openReviewPage": "검토 페이지 열기",
     "clearPendingTags": "대기 중인 태그 지우기",
-    "exportPrefs": "설정보내기",
+    "exportPrefs": "설정 보내기",
     "importPrefs": "설정 가져오기",
     "preferencesImported": "설정을 가져왔습니다.",
     "invalidPrefsFile": "잘못된 설정 파일입니다.",
@@ -290,7 +290,7 @@
     "confirm": {
       "clearPendingTags": "대기 중인 태그 {{count}}개를 모두 지울까요? DIM에 적용되지 않습니다.",
       "resetClassPrefs": "{{class}} 설정을 기본값으로 초기화할까요? 이 클래스의 스탯 가중치, 보정 선택, 학습 가중치가 지워집니다.",
-      "resetAllClassPrefs": "모든 클래스 설정을 기본값으로 초기화할까요? 헌터, 타이탄, 워록의 스탯 가중치, 보정 선택, 학습 가중치가 지워집니다. 중복 규칙 및 기타 설정은 유지됩니다."
+      "resetAllClassPrefs": "모든 클래스 설정을 기본값으로 초기화할까요? 사냥꾼, 타이탄, 워록의 스탯 가중치, 보정 선택, 학습 가중치가 지워집니다. 중복 규칙 및 기타 설정은 유지됩니다."
     },
     "classPrefs": {
       "heading": "{{class}} 설정",
@@ -535,7 +535,7 @@
       "sameRoll": "동일 롤",
       "compareSides": "양쪽 비교",
       "suggestedPick": "제안 선택: ",
-      "vs": "vs",
+      "vs": "대",
       "fitTitle": "저장된 설정에 이 피스가 얼마나 잘 맞는지",
       "powerTitle": "전력 레벨",
       "identicalRolls": "동일 롤. 하나 킵, 하나 정크, 둘 다 킵, 또는 패스.",
@@ -993,7 +993,7 @@
       "topStats": "상위 스탯:",
       "topArchetypes": "상위 아키타입:",
       "recalibrate": "{{class}} 다시 보정",
-      "exportPrefs": "설정보내기",
+      "exportPrefs": "설정 보내기",
       "importPrefs": "설정 가져오기",
       "resetClass": "{{class}} 설정 초기화",
       "resetAll": "모든 클래스 초기화",
@@ -1006,7 +1006,7 @@
       "nonePending": "대기 중인 태그 없음.",
       "confirmClearPending": "대기 중인 태그 {{count}}개를 모두 지울까요? DIM에 적용되지 않습니다.",
       "confirmResetClass": "{{class}} 설정을 기본값으로 초기화할까요? 이 클래스의 스탯 가중치, 보정 선택, 학습 가중치가 지워집니다.",
-      "confirmResetAll": "모든 클래스 설정을 기본값으로 초기화할까요? 헌터, 타이탄, 워록의 스탯 가중치, 보정 선택, 학습 가중치가 지워집니다. 중복 규칙 및 기타 설정은 유지됩니다."
+      "confirmResetAll": "모든 클래스 설정을 기본값으로 초기화할까요? 사냥꾼, 타이탄, 워록의 스탯 가중치, 보정 선택, 학습 가중치가 지워집니다. 중복 규칙 및 기타 설정은 유지됩니다."
     },
     "clearLocalData": {
       "heading": "로컬 데이터",

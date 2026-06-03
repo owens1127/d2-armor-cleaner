@@ -5,7 +5,7 @@
     "noRules": "Aún no hay reglas.",
     "addRule": "Agregar regla",
     "classLabel": "Clase",
-    "operatorsIntro": "Cada filtro puede ser <1>Es</1>, <2>No es</2>, <3>Cualquiera de</3> o <4>Ninguno de</4> (p. ej. piezas basura de Cazador cuyo arquetipo no sea Gunner).",
+    "operatorsIntro": "Cada filtro puede ser <1>Es</1>, <2>No es</2>, <3>Cualquiera de</3> o <4>Ninguno de</4> (p. ej. piezas basura de Cazador cuyo arquetipo no sea Baluarte ni Paragón).",
     "rulesHeading": "Reglas",
     "rulesBody": "Las piezas coincidentes se ponen en cola como basura en Revisión (igual que basura manual). Las piezas marcadas como conservar nunca se etiquetan automáticamente: conservar o favorito en DIM, conservar pendiente o piezas guardadas en un grupo de duelo.",
     "deleteRule": "Eliminar",
@@ -28,7 +28,7 @@
     },
     "livePreview_one": "Vista previa en vivo: {{count}} pieza se encolaría en la próxima carga de la bóveda (sin conservar, favoritos ni basura ya marcada).",
     "livePreview_other": "Vista previa en vivo: {{count}} piezas se encolarían en la próxima carga de la bóveda (sin conservar, favoritos ni basura ya marcada).",
-    "setFallback": "Set {{hash}}",
+    "setFallback": "Conjunto {{hash}}",
     "addRuleHeading": "Agregar regla",
     "enableRule": "Activar regla: {{label}}",
     "disableRule": "Desactivar regla: {{label}}",
@@ -37,7 +37,7 @@
       "allClasses": "Todas las clases",
       "tertiary": "{{stat}} terciaria",
       "tuning": "{{stat}} afinación",
-      "setFallback": "set {{hash}}",
+      "setFallback": "conjunto {{hash}}",
       "anyOf": "cualquiera de {{labels}}",
       "noneOf": "ninguno de {{labels}}",
       "not": "NO {{label}}"
@@ -86,9 +86,9 @@
       "buildFitHint": "ordenado por ajuste al combo",
       "preferenceHint": "ordenado por preferencia"
     },
-    "copyIds": "Copiar consulta id: de {{count}}",
+    "copyIds": "Copiar consulta de {{count}} id:",
     "copied": "¡Copiado!",
-    "reviewTagsLink": "Revisar etiquetas de comparar/clasificación ({{count}})",
+    "reviewTagsLink": "Revisar etiquetas de comparar/triaje ({{count}})",
     "redundant": {
       "pickOne": "Elige una para conservar",
       "noRedundant": "No hay tiradas redundantes",
@@ -111,17 +111,17 @@
     "maxCombos": "Máximo {{max}} combos por clase.",
     "orderLabel": "Orden:",
     "noneOption": "Ninguno",
-    "twoTwoMix": " · mix 2+2",
+    "twoTwoMix": " · mezcla 2+2",
     "editor": {
-      "intro": "Elige 2–4 estadísticas en orden y bonificaciones de set opcionales. Recomendamos la mejor pieza por ranura.",
+      "intro": "Elige 2–4 estadísticas en orden y bonificaciones de set opcionales (p. ej. Ferropotent 2 pzas. + Smoke Jumper 2 pzas.). Recomendamos la mejor pieza por espacio para estadísticas y set.",
       "unsavedHint": "Cambios sin guardar · guarda o cancela para volver a la vista de solo lectura.",
       "editingHint": "Editando combo · guarda o cancela al terminar.",
       "allSavedHint": "Todos los combos guardados · haz clic en Editar en una tarjeta para cambiar la configuración.",
       "emptyList": "No hay combos guardados para esta clase. Agrega uno abajo para recomendaciones de tirada y orden en Explorar.",
       "unsaved": "Sin guardar",
       "saved": "Guardado",
-      "on": "Oui",
-      "off": "Non",
+      "on": "Sí",
+      "off": "No",
       "edit": "Editar",
       "remove": "Quitar",
       "save": "Guardar",
@@ -134,15 +134,15 @@
       "priorityN": "Prioridad {{n}}",
       "setBonus2pc": "Bonificación de 2 piezas",
       "setBonus4pcSame": "Mismo set (4pc)",
-      "setBonus4pcMix": "Second set (mix 2pc) ou 4pc",
+      "setBonus4pcMix": "Segundo set (mezcla 2 pzas.) o 4 pzas.",
       "setBonusHint": "Elige un set para 2pc, luego el mismo set para 4pc o un segundo set para un mix 2+2.",
       "loadVaultForSets": "Carga tu bóveda para elegir sets de armadura de tu inventario.",
-      "firstSet2pc": "Premier set (2pc)",
-      "twoPcOnly": "2pc seulement",
-      "set4pcSuffix": "{{name}} (4pc)",
-      "set2pcMixSuffix": "{{name}} (mix 2pc)",
-      "targetLabel": "Cible :",
-      "addStatCount": "+ stat ({{current}}/{{max}})",
+      "firstSet2pc": "Primer set (2 pzas.)",
+      "twoPcOnly": "Solo 2 pzas. (primer set)",
+      "set4pcSuffix": "{{name}} (4 pzas.)",
+      "set2pcMixSuffix": "{{name}} (mezcla 2 pzas.)",
+      "targetLabel": "Objetivo:",
+      "addStatCount": "+ Agregar estadística ({{current}}/{{max}})",
       "addCombo": "Agregar combo",
       "addAnotherCombo": "Agregar otro combo",
       "viewCoverageLink": "Ver cobertura de combos de {{class}}"
@@ -151,12 +151,12 @@
       "heading": "Tus combos",
       "intro": "Mejor pieza por espacio para cada patrón de tirada óptimo (arquetipo + terciaria + afinación)",
       "empty": "Aún no hay combos. Agrega 2–4 prioridades de estadísticas en la sección Combos abajo.",
-      "editCombos": "Modifier les combos",
+      "editCombos": "Editar combos",
       "setPrioritiesHint": "Define prioridades de estadísticas en un combo para ver objetivos de tirada",
       "recommendedHeading": "Piezas recomendadas",
-      "recommendedHint": "Tags DIM et recherche pour la grille",
+      "recommendedHint": "Etiquetas DIM y búsqueda para la cuadrícula inferior",
       "browseVault": "Explorar bóveda",
-      "setTarget": "Cible de set :",
+      "setTarget": "Objetivo de set:",
       "vaultPiecesShort": "no hay suficientes piezas en la bóveda",
       "conflictingSets": "Estos objetivos de set requieren más de cinco piezas de armadura · ajusta tu combo.",
       "showRollDetails": "Mostrar detalles de tipo de tirada",
@@ -165,13 +165,13 @@
       "bulkNoTaggable": "No hay piezas que se puedan etiquetar",
       "bulkClearKeep": "Quitar conservar en todas",
       "bulkMarkKeep": "Marcar todas como conservar",
-      "bulkAllFavorited": "Tout en favori",
+      "bulkAllFavorited": "Todas en favorito",
       "bulkMarkFavorite": "Marcar todas como favorito",
       "bulkClearJunk": "Quitar basura en todas",
       "bulkMarkJunk": "Marcar todas como basura",
       "tagKeep": "Etiqueta conservar en DIM",
       "tagKeepRemove": "Quitar etiqueta conservar en DIM",
-      "tagFavorite": "Favori dans DIM",
+      "tagFavorite": "Etiquetar favorito en DIM",
       "tagFavoriteAlready": "Ya es favorito en DIM",
       "tagJunk": "Etiqueta basura en DIM",
       "tagJunkRemove": "Quitar etiqueta basura en DIM",
@@ -181,7 +181,7 @@
       "eligible_one": "{{count}} pieza elegible",
       "eligible_other": "{{count}} piezas elegibles",
       "anyArchetype": "Cualquier arquetipo",
-      "tier": "Palier {{tier}}",
+      "tier": "Nivel {{tier}}",
       "comboFallback": "Combo",
       "rollRoleCombined": "terciaria + afinación",
       "rollRoleTertiary": "terciaria",
@@ -195,11 +195,11 @@
       "detailsProfiles": "{{filled}} de {{possible}} tipos de tirada que podrías tener (arquetipo + terciaria + espacio) están en tu bóveda.",
       "detailsRedundantOverlap": "Quedan espacios vacíos pese a tiradas redundantes. Prioriza llenar espacios antes que más duplicados.",
       "gapsHeading": "Tipos de tirada por buscar",
-      "gapsIntro": "Combinaciones vacías que ayudarían a este combo.",
+      "gapsIntro": "Patrones de tirada vacíos que ayudarían a este combo.",
       "gapsEmpty": "No falta nada obvio en tu matriz.",
-      "overlapsHeading": "Rolls en surplus",
-      "overlapsIntro": "Tres o más piezas en la misma combinación.",
-      "overlapsEmpty": "Pas de lourds doublons sur un roll.",
+      "overlapsHeading": "Tipos de tirada de los que tienes muchos",
+      "overlapsIntro": "Tres o más piezas del mismo tipo de tirada.",
+      "overlapsEmpty": "No hay duplicados pesados en un solo tipo de tirada.",
       "overlapCount_one": "{{count}} pieza",
       "overlapCount_other": "{{count}} piezas",
       "gapAllPriorities": "coincide con todas las prioridades",
@@ -290,7 +290,7 @@
     "confirm": {
       "clearPendingTags": "¿Borrar las {{count}} etiquetas pendientes? No se aplicarán en DIM.",
       "resetClassPrefs": "¿Restablecer las preferencias de {{class}} a los valores predeterminados? Se borrarán los pesos de estadísticas, las opciones de calibración y los pesos aprendidos de esta clase.",
-      "resetAllClassPrefs": "¿Restablecer las preferencias de todas las clases a los valores predeterminados? Se borrarán los pesos de estadísticas, las opciones de calibración y los pesos aprendidos de Hunter, Titan y Warlock. Se conservan las reglas de duplicados y demás ajustes."
+      "resetAllClassPrefs": "¿Restablecer las preferencias de todas las clases a los valores predeterminados? Se borrarán los pesos de estadísticas, las opciones de calibración y los pesos aprendidos de Cazador, Titán y Hechicero. Se conservan las reglas de duplicados y demás ajustes."
     },
     "classPrefs": {
       "heading": "Preferencias de {{class}}",
@@ -442,8 +442,8 @@
       "supportingPieces": "<1>{{count}}</1> piezas en tu bóveda tienen al menos una estadística prioritaria.",
       "filledProfiles": "<1>{{filled}}</1> de <2>{{total}}</2> tipos de tirada que podrías tener (arquetipo + terciaria + espacio) están en tu bóveda.",
       "redundantOverlap": "Quedan espacios vacíos pese a tiradas redundantes. Prioriza llenar espacios antes que más duplicados.",
-      "gapsIntro": "Combinaciones vacías que ayudarían a este combo.",
-      "overlapsIntro": "Tres o más piezas en la misma combinación.",
+      "gapsIntro": "Patrones de tirada vacíos que ayudarían a este combo.",
+      "overlapsIntro": "Tres o más piezas del mismo tipo de tirada.",
       "piecesCount": "{{count}} piezas",
       "orderLabel": "Orden:"
     }
@@ -469,7 +469,7 @@
     },
     "noDuplicates": {
       "title": "No hay duplicados para comparar",
-      "body": "Ningún grupo de duplicados coincide con tus reglas para {{class}}. Prueba relajar las reglas en Configuración o carga una instantánea nueva de la bóveda."
+      "body": "Ningún grupo de duplicados coincide con tus reglas para {{class}}. Prueba relajar las reglas en Configuración o carga una captura nueva de la bóveda."
     },
     "noGroupsInQueue": "No hay grupos de duplicados en la cola. Relaja las reglas en Configuración o reinicia la cola.",
     "skipGroup": "Omitir grupo (S)",
@@ -491,7 +491,7 @@
       "nextGroupsAria": "Siguientes grupos de duplicados",
       "kicker": "Grupo completado",
       "allPairsDecided": "Todos los pares de duelo decididos",
-      "continueNext": "Continuer vers le groupe suivant",
+      "continueNext": "Continuar al siguiente grupo",
       "applyTagsContinue": "Aplicar etiquetas y continuar",
       "chooseDifferent": "Elegir otro grupo",
       "backToSummary": "Volver al resumen",
@@ -502,7 +502,7 @@
         "junkQueued": "Basura en cola",
         "preferEliminated": "Preferir eliminados",
         "pairsDecided": "Pares decididos",
-        "inGroup": "Dans ce groupe"
+        "inGroup": "En este grupo"
       },
       "breakdown": {
         "keepBoth": "Conservar ambos: {{count}}",
@@ -535,7 +535,7 @@
       "sameRoll": "Misma tirada",
       "compareSides": "Comparar lados",
       "suggestedPick": "Elección sugerida: ",
-      "vs": "vs",
+      "vs": "frente a",
       "fitTitle": "Qué tan bien encaja esta pieza con tus preferencias guardadas",
       "powerTitle": "Nivel de poder",
       "identicalRolls": "Tiradas idénticas. Conserva una, marca basura una, conserva ambas o pasa.",
@@ -543,13 +543,13 @@
       "buildOptimalPrefix": "Combo óptimo para ",
       "orPassKeepJunk": "· o pasar / conservar / basura",
       "evenMatch": "Empate. Preferir, pasar, conservar o basura en una o ambas.",
-      "eliminated": "Eliminado del bracket",
+      "eliminated": "Eliminado del cuadro",
       "actionKeep": "Conservar",
       "outcomes": {
-        "prefer": "Preferir este lado. El perdedor necesita {{threshold}} derrotas prefer antes de basura al terminar el grupo.",
-        "keepSide": "Conservar al terminar el grupo · el otro sigue en el bracket",
+        "prefer": "Preferir este lado. El perdedor necesita {{threshold}} derrotas preferidas antes de basura al terminar el grupo.",
+        "keepSide": "Conservar al terminar el grupo · el otro sigue en el cuadro",
         "keepBoth": "Ambos conservados al terminar el grupo",
-        "junkOne": "Basura ahora · el otro sigue en el bracket (sin ganador)",
+        "junkOne": "Basura ahora · el otro sigue en el cuadro (sin ganador)",
         "junkBoth": "Ambos en basura ahora",
         "pass": "Omitir este par. No se etiqueta ninguno; ambos vuelven a la cola."
       },
@@ -559,8 +559,8 @@
       "setFootnote": "Set: {{name}}",
       "loss_one": "1 derrota",
       "loss_other": "{{count}} derrotas",
-      "lossRemaining_one": "{{count}} derrota prefer más antes de basura al terminar el grupo",
-      "lossRemaining_other": "{{count}} derrotas prefer más antes de basura al terminar el grupo",
+      "lossRemaining_one": "{{count}} derrota preferida más antes de basura al terminar el grupo",
+      "lossRemaining_other": "{{count}} derrotas preferidas más antes de basura al terminar el grupo",
       "keyboardHints": "Pasa el cursor sobre los botones para ver resultados · ↑ conservar ambos · Espacio pasar · ↓ basura ambos · Ctrl+←/→ basura por lado",
       "aria": {
         "keepLeft": "Conservar izquierda. {{outcome}}",
@@ -706,7 +706,7 @@
       "needBetterRolls": "Necesitas mejores tiradas",
       "covered": "Cubierto",
       "weakTuning": "Afinación débil",
-      "gap": "Hueco",
+      "gap": "Falta",
       "idealTuning": "Afinación ideal",
       "tuned": "Afinado",
       "archetypeOnly": "Solo arquetipo",
@@ -770,12 +770,12 @@
       "class": "Clase"
     },
     "archetypes": {
-      "gunner": "Gunner",
-      "grenadier": "Grenadier",
-      "paragon": "Paragon",
-      "brawler": "Brawler",
-      "bulwark": "Bulwark",
-      "specialist": "Specialist"
+      "gunner": "Artillero",
+      "grenadier": "Granadero",
+      "paragon": "Paragón",
+      "brawler": "Pendenciero",
+      "bulwark": "Baluarte",
+      "specialist": "Especialista"
     },
     "slots": {
       "helmet": "Casco",
@@ -822,7 +822,7 @@
       "dashboard": "Panel",
       "calibrate": "Calib.",
       "autoFilters": "Filtros",
-      "settings": "Ajustes"
+      "settings": "Conf."
     },
     "aria": {
       "mobile": "Navegación móvil"
@@ -955,7 +955,7 @@
       "groupingIntro": "Las piezas siempre coinciden en clase, espacio, arquetipo y estadística terciaria. Estas opciones añaden divisiones más estrictas y también aplican a comparaciones de tiradas redundantes.",
       "dimTagsHeading": "Etiquetas DIM al contar duplicados",
       "dimTagsIntro": "Las piezas etiquetadas siguen visibles pero pueden excluirse del tamaño de grupos de duplicados y de los conteos de revisión.",
-      "liveImpact": "Impacto en vivo (reglas globales, bóveda de Hunter)"
+      "liveImpact": "Impacto en vivo (reglas globales, bóveda del Cazador)"
     },
     "classDupeRules": {
       "heading": "Reglas de duplicados de {{class}}",
@@ -1006,7 +1006,7 @@
       "nonePending": "No hay etiquetas pendientes.",
       "confirmClearPending": "¿Borrar las {{count}} etiquetas pendientes? No se aplicarán en DIM.",
       "confirmResetClass": "¿Restablecer las preferencias de {{class}} a los valores predeterminados? Se borrarán los pesos de estadísticas, las opciones de calibración y los pesos aprendidos de esta clase.",
-      "confirmResetAll": "¿Restablecer las preferencias de todas las clases a los valores predeterminados? Se borrarán los pesos de estadísticas, las opciones de calibración y los pesos aprendidos de Hunter, Titan y Warlock. Se conservan las reglas de duplicados y demás ajustes."
+      "confirmResetAll": "¿Restablecer las preferencias de todas las clases a los valores predeterminados? Se borrarán los pesos de estadísticas, las opciones de calibración y los pesos aprendidos de Cazador, Titán y Hechicero. Se conservan las reglas de duplicados y demás ajustes."
     },
     "clearLocalData": {
       "heading": "Datos locales",
