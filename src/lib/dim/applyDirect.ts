@@ -9,7 +9,12 @@ export interface DimTagUpdate {
   tag: TagValue | null;
 }
 
-/** Apply tags to DIM Sync immediately and patch local vault state on success. */
+function dimOkInstanceIds(summary: DimApplySummary | null): Set<string> {
+  if (!summary) return new Set();
+  return new Set(summary.applied.filter((r) => r.ok).map((r) => r.instanceId));
+}
+
+/** Apply tags to DIM Sync when possible; persist locally when DIM is unavailable or fails. */
 export async function applyTagsDirect(updates: DimTagUpdate[]): Promise<DimApplySummary> {
   if (updates.length === 0) {
     return { applied: [], allOk: true };
@@ -18,16 +23,34 @@ export async function applyTagsDirect(updates: DimTagUpdate[]): Promise<DimApply
   const membership = useAuthStore.getState().membership;
   if (!membership) throw new Error('Sign in to apply tags to DIM');
 
-  const dimToken = await resolveDimToken(membership);
-  const summary = await applyDimTags(membership.destinyMembershipId, dimToken, updates);
-
-  const okById = new Map(
-    summary.applied.filter((r) => r.ok).map((r) => [r.instanceId, r.instanceId]),
-  );
-  const okUpdates = updates.filter((u) => okById.has(u.instanceId));
-  if (okUpdates.length > 0) {
-    useVaultStore.getState().patchItemDimTags(okUpdates);
+  let dimSummary: DimApplySummary | null = null;
+  try {
+    const dimToken = await resolveDimToken(membership);
+    dimSummary = await applyDimTags(membership.destinyMembershipId, dimToken, updates);
+  } catch {
+    dimSummary = null;
   }
 
-  return summary;
+  const dimOkIds = dimOkInstanceIds(dimSummary);
+  const dimOkUpdates = updates.filter((u) => dimOkIds.has(u.instanceId));
+  const localFallbackUpdates = updates.filter((u) => !dimOkIds.has(u.instanceId));
+
+  if (dimOkUpdates.length > 0) {
+    useVaultStore.getState().patchItemDimTags(dimOkUpdates);
+  }
+  if (localFallbackUpdates.length > 0) {
+    useVaultStore.getState().patchItemDimTags(localFallbackUpdates);
+  }
+
+  const applied = updates.map((u) => {
+    const dimResult = dimSummary?.applied.find((r) => r.instanceId === u.instanceId);
+    const dimOk = dimOkIds.has(u.instanceId);
+    return {
+      instanceId: u.instanceId,
+      ok: true,
+      error: dimOk ? undefined : dimResult?.error,
+    };
+  });
+
+  return { applied, allOk: applied.every((r) => r.ok) };
 }

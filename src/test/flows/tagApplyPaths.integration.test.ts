@@ -182,6 +182,51 @@ describe('tag apply paths: review queue vs direct DIM', () => {
     );
   });
 
+  it('applyTagDirect falls back to local tag when DIM token resolution fails', async () => {
+    const { resolveDimToken } = await import('@/lib/dim/resolveToken');
+    vi.mocked(resolveDimToken).mockRejectedValueOnce(new Error('DIM sync unavailable'));
+    const target = armorPiece({ instanceId: 'token-fail', name: 'Token Fail' });
+    seedVault([target]);
+
+    await useSessionStore.getState().applyTagDirect([target], 'keep');
+
+    expect(applyDimTagsMock).not.toHaveBeenCalled();
+    expect(useVaultStore.getState().allItems[0]?.dimTag).toBe('keep');
+    expect(loadLocalDimTagOverrides('destiny-1')['token-fail']).toEqual(
+      expect.objectContaining({ tag: 'keep' }),
+    );
+  });
+
+  it('applyTagDirect falls back to local tag when DIM API fails', async () => {
+    applyDimTagsMock.mockRejectedValueOnce(new Error('DIM API error: 500'));
+    const target = armorPiece({ instanceId: 'dim-fail', name: 'DIM Fail' });
+    seedVault([target]);
+
+    await useSessionStore.getState().applyTagDirect([target], 'keep');
+
+    expect(applyDimTagsMock).toHaveBeenCalled();
+    expect(useVaultStore.getState().allItems[0]?.dimTag).toBe('keep');
+    expect(loadLocalDimTagOverrides('destiny-1')['dim-fail']).toEqual(
+      expect.objectContaining({ tag: 'keep' }),
+    );
+  });
+
+  it('applyTagDirect falls back locally for DIM per-item failures', async () => {
+    applyDimTagsMock.mockResolvedValueOnce({
+      applied: [{ instanceId: 'partial-fail', ok: false, error: 'Rejected' }],
+      allOk: false,
+    });
+    const target = armorPiece({ instanceId: 'partial-fail', name: 'Partial' });
+    seedVault([target]);
+
+    await useSessionStore.getState().applyTagDirect([target], 'junk');
+
+    expect(useVaultStore.getState().allItems[0]?.dimTag).toBe('junk');
+    expect(loadLocalDimTagOverrides('destiny-1')['partial-fail']).toEqual(
+      expect.objectContaining({ tag: 'junk' }),
+    );
+  });
+
   it('applyTagDirect records local override so stale DIM reload keeps tag', async () => {
     const target = armorPiece({ instanceId: 'stale-dim', name: 'Stale DIM' });
     seedVault([target]);
