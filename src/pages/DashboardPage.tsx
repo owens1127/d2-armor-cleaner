@@ -92,6 +92,7 @@ export function DashboardPage() {
     redundantPeerScopeFromDupeRules(classRules),
     getClassPrefs(profile, classType),
     { bucketJunkedIds, bucketKeptBothIds, pendingTags },
+    classRules.minTier,
   );
   const hasCustomRules = Boolean(classRuleOverrides[classType]);
 

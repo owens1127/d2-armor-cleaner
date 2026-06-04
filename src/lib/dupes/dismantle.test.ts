@@ -1,9 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import {
   allDismantleCandidates,
+  countDismantleCandidates,
   findDismantleBySlot,
 } from './dismantle';
-import { buildDismantleDisplayGroups, buildRedundantBrowseGroups } from '@/lib/browse/redundantGroups';
+import {
+  buildDismantleDisplayGroups,
+  buildRedundantBrowseGroups,
+  countRedundantMembersInGroups,
+} from '@/lib/browse/redundantGroups';
 import { DEFAULT_REDUNDANT_PEER_SCOPE } from '@/lib/scoring/peerScope';
 import type { ArmorPiece } from '@/types';
 
@@ -79,6 +84,27 @@ describe('findDismantleBySlot', () => {
         'hunter',
       ),
     ).toHaveLength(0);
+  });
+});
+
+describe('countDismantleCandidates', () => {
+  it('matches redundant member count in browse groups', () => {
+    const keeper = piece('keep', { weapons: 35, grenade: 25, super: 23 });
+    const junkA = piece('junk-a', { weapons: 28, grenade: 25, super: 20 });
+    const junkB = piece('junk-b', { weapons: 30, grenade: 22, super: 20 });
+    const items = [keeper, junkA, junkB];
+    const candidates = allDismantleCandidates(items, 'hunter');
+    const groups = buildRedundantBrowseGroups(candidates, items);
+    expect(countDismantleCandidates(items, 'hunter')).toBe(
+      countRedundantMembersInGroups(groups),
+    );
+  });
+
+  it('excludes pieces below dupe minTier', () => {
+    const keeper = piece('keep', { weapons: 35, grenade: 25, super: 23 }, { tier: 5 });
+    const low = piece('low', { weapons: 28, grenade: 25, super: 20 }, { tier: 4 });
+    expect(countDismantleCandidates([keeper, low], 'hunter', DEFAULT_REDUNDANT_PEER_SCOPE, undefined, {}, 5)).toBe(0);
+    expect(allDismantleCandidates([keeper, low], 'hunter', DEFAULT_REDUNDANT_PEER_SCOPE, undefined, {}, 5)).toHaveLength(0);
   });
 });
 

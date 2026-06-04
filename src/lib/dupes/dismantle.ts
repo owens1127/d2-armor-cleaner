@@ -15,7 +15,10 @@ import {
 } from '@/lib/scoring/tuningEquivalence';
 import { DEFAULT_REDUNDANT_PEER_SCOPE } from '@/lib/scoring/peerScope';
 import { compareRedundantKeepPriority } from '@/lib/scoring/redundantKeepPriority';
-import { groupDismantleCandidatesForDisplay } from '@/lib/browse/redundantGroups';
+import {
+  buildRedundantBrowseGroups,
+  countRedundantMembersInGroups,
+} from '@/lib/browse/redundantGroups';
 
 export type DismantleReason = 'stat-lower' | 'tuning-duplicate';
 
@@ -50,9 +53,14 @@ export function dismantleExcludedIds(
 export function filterDismantleItems(
   items: ArmorPiece[],
   exclusions: DismantleExclusions = {},
+  minTier?: number,
 ): ArmorPiece[] {
   const excluded = dismantleExcludedIds(exclusions, items);
-  return items.filter((i) => !i.isIgnored && !excluded.has(i.instanceId));
+  return items.filter((i) => {
+    if (i.isIgnored || excluded.has(i.instanceId)) return false;
+    if (minTier != null && (i.tier ?? 0) < minTier) return false;
+    return true;
+  });
 }
 
 export interface DismantleCandidate {
@@ -109,8 +117,9 @@ function candidatesForSlot(
   scope: RedundantPeerScope = DEFAULT_REDUNDANT_PEER_SCOPE,
   prefs?: ClassPreferenceProfile,
   exclusions?: DismantleExclusions,
+  minTier?: number,
 ): DismantleCandidate[] {
-  const active = filterDismantleItems(slotItems, exclusions);
+  const active = filterDismantleItems(slotItems, exclusions, minTier);
   const dominators = findDominatorsMap(active, scope, prefs);
   const statLowerIds = new Set(dominators.keys());
   const tuningMap = findTuningRedundantMap(active, statLowerIds, scope, prefs);
@@ -147,33 +156,48 @@ export function findDismantleBySlot(
   scope: RedundantPeerScope = DEFAULT_REDUNDANT_PEER_SCOPE,
   prefs?: ClassPreferenceProfile,
   exclusions?: DismantleExclusions,
+  minTier?: number,
 ): Map<ArmorSlot, DismantleCandidate[]> {
   const active = filterDismantleItems(
     items.filter((i) => i.classType === classType),
     exclusions,
+    minTier,
   );
   const result = new Map<ArmorSlot, DismantleCandidate[]>();
 
   for (const slot of ARMOR_SLOTS) {
     const slotItems = active.filter((i) => i.armorSlot === slot);
-    const candidates = candidatesForSlot(slotItems, scope, prefs, exclusions);
+    const candidates = candidatesForSlot(slotItems, scope, prefs, exclusions, minTier);
     if (candidates.length > 0) result.set(slot, candidates);
   }
   return result;
 }
 
+/** Count redundant pieces using the same browse groups shown in the redundant-roll list. */
 export function countDismantleCandidates(
   items: ArmorPiece[],
   classType: ClassType,
   scope: RedundantPeerScope = DEFAULT_REDUNDANT_PEER_SCOPE,
   prefs?: ClassPreferenceProfile,
   exclusions?: DismantleExclusions,
+  minTier?: number,
 ): number {
-  let n = 0;
-  for (const list of findDismantleBySlot(items, classType, scope, prefs, exclusions).values()) {
-    n += groupDismantleCandidatesForDisplay(list, scope).length;
-  }
-  return n;
+  const candidates = allDismantleCandidates(
+    items,
+    classType,
+    scope,
+    prefs,
+    exclusions,
+    minTier,
+  );
+  const active = filterDismantleItems(
+    items.filter((i) => i.classType === classType),
+    exclusions,
+    minTier,
+  );
+  return countRedundantMembersInGroups(
+    buildRedundantBrowseGroups(candidates, active, scope, prefs),
+  );
 }
 
 export function allDismantleCandidates(
@@ -182,9 +206,17 @@ export function allDismantleCandidates(
   scope: RedundantPeerScope = DEFAULT_REDUNDANT_PEER_SCOPE,
   prefs?: ClassPreferenceProfile,
   exclusions?: DismantleExclusions,
+  minTier?: number,
 ): DismantleCandidate[] {
   const out: DismantleCandidate[] = [];
-  for (const list of findDismantleBySlot(items, classType, scope, prefs, exclusions).values()) {
+  for (const list of findDismantleBySlot(
+    items,
+    classType,
+    scope,
+    prefs,
+    exclusions,
+    minTier,
+  ).values()) {
     out.push(...list);
   }
   return out;
