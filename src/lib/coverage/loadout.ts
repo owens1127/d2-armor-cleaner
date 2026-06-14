@@ -8,6 +8,7 @@ import {
   isBestTierLoadoutPiece,
   pieceTuningFit,
   priorityStatsFromTargets,
+  rollShapeTertiaryMatches,
   T5_CANONICAL_PRIMARY,
   T5_CANONICAL_SECONDARY,
   T5_CANONICAL_TERTIARY,
@@ -178,11 +179,21 @@ export function patternSetColumnKey(patternKey: string, setHash: number): string
 export function pieceMatchesRollPattern(
   item: ArmorPiece,
   pattern: OptimalRollPattern,
+  priorities: Stat[] = [],
 ): boolean {
-  if (item.tertiaryStat !== pattern.tertiaryStat) return false;
   if (item.tuningStat !== pattern.tuningStat) return false;
   if (pattern.archetype !== null && item.archetype !== pattern.archetype) return false;
-  return true;
+  if (pattern.archetype === null) {
+    return item.tertiaryStat === pattern.tertiaryStat;
+  }
+  if (priorities.length >= 2) {
+    return rollShapeTertiaryMatches(
+      item,
+      { archetype: pattern.archetype, tertiaryStat: pattern.tertiaryStat },
+      priorities,
+    );
+  }
+  return item.tertiaryStat === pattern.tertiaryStat;
 }
 
 /**
@@ -192,11 +203,21 @@ export function pieceMatchesRollPattern(
 export function pieceMatchesNearRollPattern(
   item: ArmorPiece,
   pattern: OptimalRollPattern,
+  priorities: Stat[] = [],
 ): boolean {
-  if (item.tertiaryStat !== pattern.tertiaryStat) return false;
   if (pattern.archetype !== null && item.archetype !== pattern.archetype) return false;
   if (item.tuningStat === pattern.tuningStat) return false;
-  return true;
+  if (pattern.archetype === null) {
+    return item.tertiaryStat === pattern.tertiaryStat;
+  }
+  if (priorities.length >= 2) {
+    return rollShapeTertiaryMatches(
+      item,
+      { archetype: pattern.archetype, tertiaryStat: pattern.tertiaryStat },
+      priorities,
+    );
+  }
+  return item.tertiaryStat === pattern.tertiaryStat;
 }
 
 /** Tooltip for a near-match piece shown dimmed in the combo grid. */
@@ -890,7 +911,7 @@ export function pieceEligibleForPatternColumn(
   priorities: Stat[],
 ): boolean {
   return (
-    pieceMatchesRollPattern(item, pattern) &&
+    pieceMatchesRollPattern(item, pattern, priorities) &&
     isBestTierLoadoutPiece(item, priorities)
   );
 }
@@ -1159,7 +1180,7 @@ function pieceEligibleForSetPatternColumnSlot(
   if (!pieceMatchesSetColumnFilter(item, setHash)) return false;
   if (pieceEligibleForPatternColumn(item, pattern, priorities)) return true;
   if (setHash === undefined) return false;
-  if (!pieceMatchesRollPattern(item, pattern)) return false;
+  if (!pieceMatchesRollPattern(item, pattern, priorities)) return false;
   return pieceLoadoutContribution(item, priorities) > 0;
 }
 
@@ -1170,7 +1191,7 @@ function pieceEligibleForNearPatternColumnSlot(
   setHash?: number,
 ): boolean {
   if (!pieceMatchesSetColumnFilter(item, setHash)) return false;
-  if (!pieceMatchesNearRollPattern(item, pattern)) return false;
+  if (!pieceMatchesNearRollPattern(item, pattern, priorities)) return false;
   return pieceLoadoutContribution(item, priorities) > 0;
 }
 

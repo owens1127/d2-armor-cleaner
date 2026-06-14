@@ -33,8 +33,8 @@ const demoTags: PendingTag[] = [
     itemName: 'Verify Keep',
     classType: 'hunter',
     tag: 'keep',
-    archetype: 'gunner',
-    tertiaryStat: 'super',
+    archetype: 'powerhouse',
+    tertiaryStat: 'melee',
     tuningStat: 'weapons',
   },
   {
@@ -42,8 +42,8 @@ const demoTags: PendingTag[] = [
     itemName: 'Verify Junk',
     classType: 'hunter',
     tag: 'junk',
-    archetype: 'gunner',
-    tertiaryStat: 'super',
+    archetype: 'powerhouse',
+    tertiaryStat: 'melee',
     tuningStat: 'weapons',
   },
 ];

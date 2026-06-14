@@ -4,6 +4,7 @@ import type { ArmorPiece, Stat } from '@/types';
 import {
   buildVerdictFromRows,
   canonicalCombinedPriorityTotal,
+  computeOptimalRollShapes,
   computeStatAchievability,
   formatBuildVerdict,
   isBestTierLoadoutPiece,
@@ -40,17 +41,21 @@ describe('canonical optimal roll math', () => {
     expect(intrinsicOnly('paragon', 'weapons')).toBe(50);
     expect(intrinsicOnly('grenadier', 'weapons')).toBeLessThan(50);
     expect(intrinsicOnly('specialist', 'super')).toBeLessThan(50);
+    expect(intrinsicOnly('powerhouse', 'melee')).toBe(55);
   });
 
-  it('Gunner and Paragon maximize Weapons+Super; Grenadier and Specialist do not', () => {
+  it('Powerhouse maximizes Weapons+Super; legacy split-push archetypes do not', () => {
     const max = maxCanonicalCombinedPriorityTotal(['weapons', 'super']);
-    expect(max).toBe(62);
+    expect(max).toBe(67);
+    expect(
+      canonicalCombinedPriorityTotal('powerhouse', 'melee', 'weapons', ['weapons', 'super']),
+    ).toBe(67);
     expect(
       canonicalCombinedPriorityTotal('gunner', 'super', 'weapons', ['weapons', 'super']),
-    ).toBe(62);
+    ).toBeLessThan(max);
     expect(
       canonicalCombinedPriorityTotal('paragon', 'weapons', 'super', ['weapons', 'super']),
-    ).toBe(62);
+    ).toBeLessThan(max);
     expect(
       canonicalCombinedPriorityTotal('grenadier', 'weapons', 'weapons', ['weapons', 'super']),
     ).toBeLessThan(max);
@@ -60,11 +65,14 @@ describe('canonical optimal roll math', () => {
   });
 
   it('lists only max-budget archetypes per push stat', () => {
-    expect(optimalArchetypesForPush('super', ['weapons', 'super'])).toEqual(['gunner']);
-    expect(optimalArchetypesForPush('weapons', ['weapons', 'super'])).toEqual([
-      'paragon',
-      'colossus',
-    ]);
+    expect(optimalArchetypesForPush('super', ['weapons', 'super'])).toEqual([]);
+    expect(optimalArchetypesForPush('weapons', ['weapons', 'super'])).toEqual([]);
+  });
+
+  it('includes dual-intrinsic monument shapes for matching two-stat builds', () => {
+    const shapes = computeOptimalRollShapes(['weapons', 'super']);
+    expect(shapes.some((shape) => shape.archetype === 'powerhouse')).toBe(true);
+    expect(new Set(shapes.map((shape) => shape.archetype))).toEqual(new Set(['powerhouse']));
   });
 
   it('finds optimal shapes for a three-stat build (Weapons/Super/Grenade)', () => {

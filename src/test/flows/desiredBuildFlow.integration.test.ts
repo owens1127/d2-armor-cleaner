@@ -128,8 +128,8 @@ describe('desired build edit → coverage refresh', () => {
     const smoke = { hash: 200, name: 'Smoke Jumper Set', perks: [] };
     const shared = {
       classType: 'hunter' as const,
-      archetype: 'gunner' as const,
-      tertiaryStat: 'super' as const,
+      archetype: 'powerhouse' as const,
+      tertiaryStat: 'melee' as const,
       tuningStat: 'weapons' as const,
     };
     const vault = ARMOR_SLOTS.flatMap((armorSlot) => [
@@ -138,14 +138,14 @@ describe('desired build edit → coverage refresh', () => {
         armorSlot,
         armorSet: ferro,
         ...shared,
-        baseStats: { weapons: 35, grenade: 20, super: 30 },
+        baseStats: { weapons: 35, super: 30, melee: 20 },
       }),
       armorPiece({
         instanceId: `smoke-${armorSlot}`,
         armorSlot,
         armorSet: smoke,
         ...shared,
-        baseStats: { weapons: 34, grenade: 20, super: 30 },
+        baseStats: { weapons: 34, super: 29, melee: 20 },
       }),
     ]);
 
@@ -194,8 +194,8 @@ describe('desired build edit → coverage refresh', () => {
     const ferro = { hash: 100, name: 'Ferropotent', perks: [] };
     const smoke = { hash: 200, name: 'Smoke Jumper Set', perks: [] };
     const shared = {
-      archetype: 'gunner' as const,
-      tertiaryStat: 'super' as const,
+      archetype: 'powerhouse' as const,
+      tertiaryStat: 'melee' as const,
       tuningStat: 'weapons' as const,
     };
     const vault = ARMOR_SLOTS.flatMap((armorSlot) => [
@@ -204,14 +204,14 @@ describe('desired build edit → coverage refresh', () => {
         armorSlot,
         armorSet: ferro,
         ...shared,
-        baseStats: { weapons: 35, grenade: 20, super: 30 },
+        baseStats: { weapons: 35, super: 30, melee: 20 },
       }),
       armorPiece({
         instanceId: `smoke-${armorSlot}`,
         armorSlot,
         armorSet: smoke,
         ...shared,
-        baseStats: { weapons: 34, grenade: 20, super: 30 },
+        baseStats: { weapons: 34, super: 29, melee: 20 },
       }),
     ]);
     const targets = [
@@ -222,7 +222,7 @@ describe('desired build edit → coverage refresh', () => {
       setBonus2pc: ferro.hash,
       setBonus4pc: smoke.hash,
     });
-    expect(patternLoadout.columnsTotal).toBe(12);
-    expect(new Set(patternLoadout.columns.map((column) => column.columnKey)).size).toBe(12);
+    expect(patternLoadout.columnsTotal).toBe(4);
+    expect(new Set(patternLoadout.columns.map((column) => column.columnKey)).size).toBe(4);
   });
 });
