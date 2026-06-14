@@ -5,6 +5,11 @@ import { mergeDupeRules } from '@/lib/dupes/rules';
 import { normalizeCalibrationChoices } from '@/lib/prefs/calibrationChoices';
 import { normalizeTertiaryWeights } from '@/lib/prefs/tertiaryWeights';
 import { normalizeTuningWeights } from '@/lib/prefs/tuningWeights';
+import {
+  fillMissingTertiaryWeights,
+  fillMissingTuningWeights,
+  normalizeArchetypeWeights,
+} from '@/lib/prefs/archetypeMigration';
 import type {
   Archetype,
   ClassPreferenceProfile,
@@ -121,13 +126,13 @@ function mergeClassPrefPartial(
     ...base,
     ...rest,
     statWeights: { ...base.statWeights, ...rest.statWeights },
-    archetypeWeights: { ...base.archetypeWeights, ...rest.archetypeWeights },
-    tertiaryWeights: rest.tertiaryWeights
-      ? normalizeTertiaryWeights(rest.tertiaryWeights)
-      : base.tertiaryWeights,
-    tuningWeights: rest.tuningWeights
-      ? normalizeTuningWeights(rest.tuningWeights)
-      : base.tuningWeights,
+    archetypeWeights: normalizeArchetypeWeights(rest.archetypeWeights, base.archetypeWeights),
+    tertiaryWeights: fillMissingTertiaryWeights(
+      rest.tertiaryWeights ? normalizeTertiaryWeights(rest.tertiaryWeights) : base.tertiaryWeights,
+    ),
+    tuningWeights: fillMissingTuningWeights(
+      rest.tuningWeights ? normalizeTuningWeights(rest.tuningWeights) : base.tuningWeights,
+    ),
     setWeights: { ...base.setWeights, ...rest.setWeights },
     calibrationChoices: rest.calibrationChoices ?? base.calibrationChoices,
     desiredBuilds:

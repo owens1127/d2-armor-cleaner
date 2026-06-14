@@ -52,6 +52,13 @@ describe('default order helpers', () => {
     expect(normalizeArchetypeOrder(['gunner'])).toEqual(base);
   });
 
+  it('preserves legacy six-archetype order when appending new archetypes', () => {
+    const legacy = ARCHETYPES.slice(0, 6);
+    const normalized = normalizeArchetypeOrder(legacy);
+    expect(normalized.slice(0, 6)).toEqual(legacy);
+    expect(normalized.slice(6)).toEqual(ARCHETYPES.slice(6));
+  });
+
   it('defaultSetOrderHashes follows vault frequency ordering', () => {
     const items = [
       piece('a', 'gunner', 'melee', {

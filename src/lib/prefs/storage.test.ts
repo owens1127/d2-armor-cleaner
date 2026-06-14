@@ -86,6 +86,33 @@ describe('migrateProfile', () => {
     expect(migrated).not.toHaveProperty('redundantGroupByTuning');
   });
 
+  it('fills missing archetype weights and infers tertiary weights for new archetypes', () => {
+    const legacyArchetypes = {
+      gunner: 1,
+      grenadier: 0.9,
+      paragon: 0.8,
+      brawler: 0.7,
+      bulwark: 0.6,
+      specialist: 0.5,
+    };
+    const migrated = migrateProfile({
+      version: 2,
+      classPrefs: {
+        hunter: {
+          archetypeWeights: legacyArchetypes,
+          tertiaryWeights: {
+            gunner: { super: 0.9, melee: 0.4 },
+            grenadier: { weapons: 0.7, melee: 0.5 },
+          },
+        },
+      },
+    });
+    const hunter = getClassPrefs(migrated, 'hunter');
+    expect(hunter.archetypeWeights.reaver).toBe(0.6);
+    expect(hunter.archetypeWeights.gunner).toBe(1);
+    expect(hunter.tertiaryWeights.demolitionist?.weapons).toBeCloseTo(0.7);
+  });
+
   it('strips legacy dupe rule keys from stored defaultDupeRules', () => {
     const migrated = migrateProfile({
       version: 2,

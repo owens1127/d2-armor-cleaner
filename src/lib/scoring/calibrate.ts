@@ -1,5 +1,8 @@
 import type { ArmorPiece, Archetype, ArmorSetInfo, Stat } from '@/types';
 import { ARCHETYPES, STATS, tertiaryStatsForArchetype } from '@/lib/constants';
+export { normalizeArchetypeOrder } from '@/lib/prefs/archetypeMigration';
+
+/** Default archetype rank list (vault frequency not applied). */
 import { resolveArmorSetInfoForHash } from '@/lib/items/setIcons';
 import type { PairwiseDecision } from '@/lib/onboarding/storage';
 import {
@@ -42,25 +45,6 @@ export function calibrationArchetypes(): Archetype[] {
 export function defaultArchetypeOrder(): Archetype[] {
   return calibrationArchetypes();
 }
-
-/** Full archetype list with duplicates removed and any missing entries appended. */
-export function normalizeArchetypeOrder(order: readonly Archetype[]): Archetype[] {
-  const expected = defaultArchetypeOrder();
-  if (order.length !== expected.length) return [...expected];
-
-  const seen = new Set<Archetype>();
-  const deduped: Archetype[] = [];
-  for (const arch of order) {
-    if (!ARCHETYPES.includes(arch) || seen.has(arch)) continue;
-    seen.add(arch);
-    deduped.push(arch);
-  }
-  for (const arch of expected) {
-    if (!seen.has(arch)) deduped.push(arch);
-  }
-  return deduped.length === expected.length ? deduped : [...expected];
-}
-
 /** Default set hash rank list from vault frequency. */
 export function defaultSetOrderHashes(items: ArmorPiece[]): number[] {
   return calibrationSetPieces(items).map((p) => p.armorSet!.hash);

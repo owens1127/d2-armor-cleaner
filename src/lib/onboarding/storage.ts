@@ -1,4 +1,8 @@
-import { ARCHETYPES, STATS } from '@/lib/constants';
+import { ARCHETYPES, STATS, tertiaryStatsForArchetype } from '@/lib/constants';
+import {
+  fillMissingStatOrders,
+  normalizeArchetypeOrder,
+} from '@/lib/prefs/archetypeMigration';
 import {
   buildCalibratePath,
   mergeCalibrateProgressFromUrl,
@@ -413,11 +417,16 @@ function parseCalibrateProgress(raw: unknown): CalibrateProgress | undefined {
   return {
     step,
     calibrateClass,
-    archetypeOrder:
-      archetypeOrder.length === ARCHETYPES.length ? archetypeOrder : [...ARCHETYPES],
+    archetypeOrder: normalizeArchetypeOrder(archetypeOrder),
     setOrder,
-    tertiaryOrderByArchetype,
-    tuningOrderByArchetype,
+    tertiaryOrderByArchetype: fillMissingStatOrders(
+      tertiaryOrderByArchetype,
+      tertiaryStatsForArchetype,
+    ),
+    tuningOrderByArchetype: fillMissingStatOrders(
+      tuningOrderByArchetype,
+      () => [...STATS],
+    ),
     archetypeRound: typeof data.archetypeRound === 'number' ? data.archetypeRound : 0,
     tertiaryRound: typeof data.tertiaryRound === 'number' ? data.tertiaryRound : 0,
     tertiaryArchetypeIndex:
