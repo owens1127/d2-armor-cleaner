@@ -223,7 +223,7 @@
     "stepHeader": "Krok {{current}} z {{total}} · {{step}}",
     "classTitle": "Którą klasę kalibrujesz?",
     "archetypeTitle": "Uporządkuj archetypy według preferencji",
-    "archetypeInstruction": "Najbardziej preferowany na górze. Przeciągaj wiersze lub używaj strzałek. Na liście są wszystkie sześć archetypów; to, co masz w skarbcu, nie ogranicza listy.",
+    "archetypeInstruction": "Najbardziej preferowany na górze. Przeciągaj wiersze lub używaj strzałek. Na liście są wszystkie {{count}} archetypy; to, co masz w skarbcu, nie ogranicza listy.",
     "tertiaryTitle": "Uporządkuj statystyki trzeciorzędne",
     "tuningTitle": "Uporządkuj statystyki strojenia",
     "setsTitle": "Uporządkuj zestawy pancerza według preferencji",
@@ -731,7 +731,8 @@
     },
     "heatmap": {
       "mixedTuning": "Mieszane statystyki strojenia w grupie",
-      "dupeBucket": "grupa duplikatów"
+      "dupeBucket": "grupa duplikatów",
+      "armorView": "widok pancerza ({{count}} archetypów)"
     },
     "minTier": {
       "tier5Only": "Tylko poziom 5"
@@ -775,7 +776,13 @@
       "paragon": "Paragon",
       "brawler": "Zapaśnik",
       "bulwark": "Bastion",
-      "specialist": "Specjalista"
+      "specialist": "Specjalista",
+      "reaver": "Łupieżca",
+      "siegebreaker": "Wyzwoliciel",
+      "demolitionist": "Niszczyciel",
+      "skirmisher": "Rozrabiaka",
+      "powerhouse": "Mocarz",
+      "colossus": "Kolos"
     },
     "slots": {
       "helmet": "Hełm",

@@ -223,7 +223,7 @@
     "stepHeader": "Passo {{current}} di {{total}} · {{step}}",
     "classTitle": "Quale classe stai calibrando?",
     "archetypeTitle": "Ordina gli archetipi per preferenza",
-    "archetypeInstruction": "Il più preferito in alto. Trascina le righe o usa le frecce. Sono elencati tutti e sei gli archetipi; averli in cripta non limita l'elenco.",
+    "archetypeInstruction": "Il più preferito in alto. Trascina le righe o usa le frecce. Sono elencati tutti e {{count}} gli archetipi; averli in cripta non limita l'elenco.",
     "tertiaryTitle": "Ordina le statistiche terziarie",
     "tuningTitle": "Ordina le statistiche di tuning",
     "setsTitle": "Ordina i set di armatura per preferenza",
@@ -731,7 +731,8 @@
     },
     "heatmap": {
       "mixedTuning": "Statistiche di tuning miste nel gruppo",
-      "dupeBucket": "gruppo duplicati"
+      "dupeBucket": "gruppo duplicati",
+      "armorView": "vista armature ({{count}} archetipi)"
     },
     "minTier": {
       "tier5Only": "Solo Tier 5"
@@ -775,7 +776,13 @@
       "paragon": "Esemplare",
       "brawler": "Combattente",
       "bulwark": "Baluardo",
-      "specialist": "Specialista"
+      "specialist": "Specialista",
+      "reaver": "Devastatore",
+      "siegebreaker": "Spezzassedio",
+      "demolitionist": "Demolitore",
+      "skirmisher": "Schermagliatore",
+      "powerhouse": "Inarrestabile",
+      "colossus": "Colosso"
     },
     "slots": {
       "helmet": "Elmo",

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { ARCHETYPES } from '@/lib/constants';
 import {
   buildArchetypeRanker,
   buildSetRanker,
@@ -40,8 +41,13 @@ describe('default order helpers', () => {
   it('normalizeArchetypeOrder dedupes and fills missing archetypes', () => {
     const base = defaultArchetypeOrder();
     expect(
-      normalizeArchetypeOrder(['gunner', 'gunner', 'grenadier', 'paragon', 'brawler', 'bulwark']),
-    ).toEqual(['gunner', 'grenadier', 'paragon', 'brawler', 'bulwark', 'specialist']);
+      normalizeArchetypeOrder([
+        base[0],
+        base[0],
+        ...base.slice(1, -1),
+        base[base.length - 2],
+      ]),
+    ).toEqual(base);
     expect(normalizeArchetypeOrder(base)).toEqual(base);
     expect(normalizeArchetypeOrder(['gunner'])).toEqual(base);
   });
@@ -67,11 +73,9 @@ describe('buildArchetypeRanker', () => {
   it('picks adjacent prior pairs first and stops when order is clear', () => {
     const ranker = buildArchetypeRanker([]);
     expect(ranker.nextPair()?.[0]).toBe('gunner');
-    ranker.recordChoice('gunner', 'grenadier');
-    ranker.recordChoice('grenadier', 'paragon');
-    ranker.recordChoice('paragon', 'brawler');
-    ranker.recordChoice('brawler', 'bulwark');
-    ranker.recordChoice('bulwark', 'specialist');
+    for (let i = 0; i < ARCHETYPES.length - 1; i++) {
+      ranker.recordChoice(ARCHETYPES[i], ARCHETYPES[i + 1]);
+    }
     expect(ranker.isConfident()).toBe(true);
   });
 });

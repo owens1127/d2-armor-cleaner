@@ -1,4 +1,5 @@
 import { i18n } from '@/i18n';
+import { ARCHETYPE_STATS } from '@/lib/constants';
 import type { Archetype, ArmorSlot, ClassType, Stat } from '@/types';
 
 export function classLabel(classType: ClassType): string {
@@ -22,16 +23,7 @@ export function gameLabelSeparator(): string {
 }
 
 export function formatArchetypeStatsLabel(archetype: Archetype): string {
-  const [primary, secondary] = (
-    {
-      gunner: ['weapons', 'grenade'],
-      grenadier: ['grenade', 'super'],
-      paragon: ['super', 'melee'],
-      brawler: ['melee', 'health'],
-      bulwark: ['health', 'class'],
-      specialist: ['class', 'weapons'],
-    } as const satisfies Record<Archetype, readonly [Stat, Stat]>
-  )[archetype];
+  const [primary, secondary] = ARCHETYPE_STATS[archetype];
   return `${statLabel(primary)}${gameLabelSeparator()}${statLabel(secondary)}`;
 }
 

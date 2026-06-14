@@ -1,4 +1,4 @@
-import { CLASSES, STATS } from '@/lib/constants';
+import { ARCHETYPES, CLASSES, STATS } from '@/lib/constants';
 import { normalizeAutoFilterRules } from '@/lib/auto-filter/match';
 import { normalizeDesiredBuilds } from '@/lib/coverage/builds';
 import { mergeDupeRules } from '@/lib/dupes/rules';
@@ -21,9 +21,7 @@ export function defaultClassPreferenceProfile(): ClassPreferenceProfile {
   ) as Record<Stat, number>;
 
   const archetypeWeights = Object.fromEntries(
-    (['gunner', 'grenadier', 'paragon', 'brawler', 'bulwark', 'specialist'] as Archetype[]).map(
-      (a) => [a, a === 'gunner' || a === 'grenadier' ? 1 : 0.6],
-    ),
+    ARCHETYPES.map((a) => [a, a === 'gunner' || a === 'grenadier' ? 1 : 0.6]),
   ) as Record<Archetype, number>;
 
   return {

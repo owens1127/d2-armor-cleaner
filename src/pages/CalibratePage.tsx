@@ -1,6 +1,7 @@
 import { archetypeLabel, classLabel, statLabel, formatArchetypeStatsLabel } from '@/i18n/gameCopy';
 import {
   CLASSES,
+  ARCHETYPES,
   ARCHETYPE_STATS,
   formatArmorSetPerkTierLabel,
   getArmorSetPerkLines,
@@ -703,7 +704,7 @@ export function CalibratePage() {
             calibrateClass={calibrateClass}
             classSelected={classSelected}
             title={t('archetypeTitle')}
-            instruction={t('archetypeInstruction')}
+            instruction={t('archetypeInstruction', { count: ARCHETYPES.length })}
           />
           <RankedReorderList
             items={effectiveArchetypeOrder}

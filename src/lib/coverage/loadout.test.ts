@@ -412,9 +412,9 @@ describe('selectRecommendedPatternLoadout', () => {
       setBonus2pc: ferro.hash,
       setBonus4pc: smoke.hash,
     });
-    expect(loadout.columnsTotal).toBe(8);
-    expect(loadout.columns.filter((column) => column.setHash === ferro.hash)).toHaveLength(4);
-    expect(loadout.columns.filter((column) => column.setHash === smoke.hash)).toHaveLength(4);
+    expect(loadout.columnsTotal).toBe(12);
+    expect(loadout.columns.filter((column) => column.setHash === ferro.hash)).toHaveLength(6);
+    expect(loadout.columns.filter((column) => column.setHash === smoke.hash)).toHaveLength(6);
     for (const column of loadout.columns) {
       expect(column.columnKey).toContain(String(column.setHash));
       const slotEntries = bestPiecesForPatternBySlot(
@@ -450,7 +450,7 @@ describe('selectRecommendedPatternLoadout', () => {
       setBonus2pc: ferro.hash,
       setBonus4pc: ferro.hash,
     });
-    expect(loadout.columnsTotal).toBe(4);
+    expect(loadout.columnsTotal).toBe(6);
     expect(loadout.columns.every((column) => column.setHash === ferro.hash)).toBe(true);
   });
 });

@@ -223,7 +223,7 @@
     "stepHeader": "Paso {{current}} de {{total}} · {{step}}",
     "classTitle": "¿Qué clase estás calibrando?",
     "archetypeTitle": "Ordena arquetipos por preferencia",
-    "archetypeInstruction": "El más preferido arriba. Arrastra filas o usa las flechas. Se listan los seis arquetipos; lo que tengas en la bóveda no limita la lista.",
+    "archetypeInstruction": "El más preferido arriba. Arrastra filas o usa las flechas. Se listan los {{count}} arquetipos; lo que tengas en la bóveda no limita la lista.",
     "tertiaryTitle": "Ordena estadísticas terciarias",
     "tuningTitle": "Ordena estadísticas de afinación",
     "setsTitle": "Ordena sets de armadura por preferencia",
@@ -731,7 +731,8 @@
     },
     "heatmap": {
       "mixedTuning": "Estadísticas de afinación mezcladas en el grupo",
-      "dupeBucket": "grupo de duplicados"
+      "dupeBucket": "grupo de duplicados",
+      "armorView": "vista de armadura ({{count}} arquetipos)"
     },
     "minTier": {
       "tier5Only": "Solo nivel 5"
@@ -775,7 +776,13 @@
       "paragon": "Paragón",
       "brawler": "Pendenciero",
       "bulwark": "Baluarte",
-      "specialist": "Especialista"
+      "specialist": "Especialista",
+      "reaver": "Vándalo",
+      "siegebreaker": "Rompedor de asedios",
+      "demolitionist": "Demoledor",
+      "skirmisher": "Escaramuzador",
+      "powerhouse": "Portentoso",
+      "colossus": "Coloso"
     },
     "slots": {
       "helmet": "Casco",
