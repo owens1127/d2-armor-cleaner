@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { useTranslation } from 'react-i18next';
 import { classLabel, statLabel, archetypeLabel, slotLabel } from '@/i18n/gameCopy';
 import {
   ARCHETYPES,
@@ -28,7 +29,7 @@ import type {
 
 export type HeatmapViewMode = 'armor' | 'archetype';
 
-/** Column header / row-label icons - larger than table chips, fits 6-col armor grid. */
+/** Column header / row-label icons - larger than table chips, fits 12-col armor grid. */
 const HEATMAP_HEADER_STAT_SIZE = 'md' as const;
 const HEATMAP_ROW_SLOT_SIZE = 'md' as const;
 
@@ -224,6 +225,7 @@ export function Heatmap({
   viewMode = 'armor',
   focusArchetype = 'gunner',
 }: HeatmapProps) {
+  const { t } = useTranslation('game');
   const pendingTags = useSessionStore((s) => s.pendingTags);
   const bucketJunkedIds = useSessionStore((s) => s.bucketJunkedIds);
   const visibleSlots =
@@ -257,7 +259,7 @@ export function Heatmap({
           {classLabel(classState.classType)} · count per cell (excludes junk) · tint = avg interest ·
           white dot = dupes · dim dot = mixed tuning
           {viewMode === 'armor'
-            ? ' · armor view (6 archetypes)'
+            ? ` · ${t('heatmap.armorView', { count: ARCHETYPES.length })}`
             : ` · archetype view (${archetypeLabel(focusArchetype)})`}
           {slotFilter !== 'all' && ` · ${slotLabel(slotFilter)} only`}
         </p>

@@ -259,4 +259,20 @@ describe('parseArmorFromProfile', () => {
     expect(diagnostics.inferredArchetype).toBe(1);
     expect(diagnostics.skipped.noArchetype).toBe(0);
   });
+
+  it('recognizes Monument of Triumph archetype plugs', () => {
+    const components = structuredClone(gold.components);
+    const manifest = structuredClone(gold.manifest) as typeof gold.manifest;
+    manifest.items['2503381935'] = {
+      displayProperties: { name: 'Siegebreaker' },
+      classType: 3,
+    };
+    components.sockets!['fixture-gunner-helm-001'] = {
+      sockets: [{ plugHash: 2503381935, isVisible: true }],
+    };
+
+    const { items } = parseArmorFromProfile(gold.rawItems, components, manifest);
+
+    expect(items[0].archetype).toBe('siegebreaker');
+  });
 });

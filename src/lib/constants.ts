@@ -55,6 +55,12 @@ export const ARCHETYPES: Archetype[] = [
   'brawler',
   'bulwark',
   'specialist',
+  'reaver',
+  'siegebreaker',
+  'demolitionist',
+  'skirmisher',
+  'powerhouse',
+  'colossus',
 ];
 
 export const ARCHETYPE_STATS: Record<Archetype, [Stat, Stat]> = {
@@ -64,6 +70,12 @@ export const ARCHETYPE_STATS: Record<Archetype, [Stat, Stat]> = {
   brawler: ['melee', 'health'],
   bulwark: ['health', 'class'],
   specialist: ['class', 'weapons'],
+  reaver: ['class', 'melee'],
+  siegebreaker: ['health', 'grenade'],
+  demolitionist: ['grenade', 'class'],
+  skirmisher: ['melee', 'weapons'],
+  powerhouse: ['weapons', 'super'],
+  colossus: ['super', 'health'],
 };
 
 export interface ArmorSetPerkLine {
@@ -134,7 +146,7 @@ export const BUCKET_TO_SLOT: Record<number, ArmorSlot> = {
   1585787867: 'classItem',
 };
 
-/** Archetype intrinsic plug hashes */
+/** Archetype intrinsic plug hashes (DestinyPlugSet 1315181101) */
 export const PLUG_TO_ARCHETYPE: Record<number, Archetype> = {
   1807652646: 'gunner',
   3349393475: 'brawler',
@@ -142,6 +154,12 @@ export const PLUG_TO_ARCHETYPE: Record<number, Archetype> = {
   4227065942: 'paragon',
   2937665788: 'grenadier',
   2230428468: 'specialist',
+  351770835: 'reaver',
+  2503381935: 'siegebreaker',
+  2222960133: 'demolitionist',
+  1687144140: 'skirmisher',
+  544009373: 'powerhouse',
+  1418248448: 'colossus',
 };
 
 /** Stat type hash → stat (Armor 3.0). Legacy Strength/Recovery hashes map to Melee/Class. */

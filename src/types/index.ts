@@ -13,7 +13,13 @@ export type Archetype =
   | 'paragon'
   | 'brawler'
   | 'bulwark'
-  | 'specialist';
+  | 'specialist'
+  | 'reaver'
+  | 'siegebreaker'
+  | 'demolitionist'
+  | 'skirmisher'
+  | 'powerhouse'
+  | 'colossus';
 export type TagValue = 'keep' | 'junk' | 'favorite' | 'infuse' | 'archive';
 export type Confidence = 'low' | 'medium' | 'high';
 /** How aggressively the user wants to trim vault armor during cleaning. */

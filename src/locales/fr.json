@@ -223,7 +223,7 @@
     "stepHeader": "Étape {{current}} sur {{total}} · {{step}}",
     "classTitle": "Quelle classe calibrez-vous ?",
     "archetypeTitle": "Classer les archétypes par préférence",
-    "archetypeInstruction": "Le plus préféré en haut. Glissez les lignes ou utilisez les flèches. Les six archétypes sont listés ; la possession dans le coffre ne limite pas la liste.",
+    "archetypeInstruction": "Le plus préféré en haut. Glissez les lignes ou utilisez les flèches. Les {{count}} archétypes sont listés ; la possession dans le coffre ne limite pas la liste.",
     "tertiaryTitle": "Classer les stats tertiaires",
     "tuningTitle": "Classer les stats d’ajustement",
     "setsTitle": "Classer les sets d’armure par préférence",
@@ -731,7 +731,8 @@
     },
     "heatmap": {
       "mixedTuning": "Stats d’ajustement mélangées dans le groupe",
-      "dupeBucket": "groupe de doublons"
+      "dupeBucket": "groupe de doublons",
+      "armorView": "vue armure ({{count}} archétypes)"
     },
     "minTier": {
       "tier5Only": "Niveau 5 uniquement"
@@ -775,7 +776,13 @@
       "paragon": "Parangon",
       "brawler": "Bagarreur",
       "bulwark": "Rempart",
-      "specialist": "Spécialiste"
+      "specialist": "Spécialiste",
+      "reaver": "Pilleur",
+      "siegebreaker": "Brise-siège",
+      "demolitionist": "Démolisseur",
+      "skirmisher": "Escarmoucheur",
+      "powerhouse": "Maître",
+      "colossus": "Colosse"
     },
     "slots": {
       "helmet": "Casque",

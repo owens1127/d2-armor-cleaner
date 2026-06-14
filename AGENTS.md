@@ -28,9 +28,20 @@ Global conventions for AI agents working in this repo.
 2. Run `node scripts/sync-locale-keys.mjs` to backfill any new English keys into other locales.
 3. No manual `resources.ts` imports: new `<code>.json` files are picked up by the glob.
 
+### What stays untranslated
+
+Only strings that should not or do not make sense to localize:
+
+- **Product and brand names:** Bungie, DIM, DIM Sync, GitHub, etc.
+- **Search/query syntax:** DIM filters (`id:`, `tag:junk`, …), not the UI labels around them.
+- **Manifest-owned names:** armor piece and set names from Bungie API definitions (loaded at runtime per locale, not hand-translated in JSON).
+- **Raw API errors:** verbatim Bungie error text; app hints use `errors:*`.
+
+**Do localize** UI chrome and game taxonomy the player sees in our UI: stats, archetypes, classes, slots, buttons, instructions, etc. Prefer Bungie manifest display names for taxonomy when available; use `game:*` locale keys as fallback before manifest load.
+
 ### Phase 2 follow-up (not required for every change)
 
-- Destiny game terms and Bungie API display names may stay English.
+- Manifest-driven labels for stats, archetypes, classes, and slots (reduce duplicate `game.*` strings).
 - Pluralization and ICU rules for non-English locales where needed.
 
 ## Code changes
@@ -45,7 +56,7 @@ Global conventions for AI agents working in this repo.
 - Assert behavior and outcomes, not implementation strings or locale JSON mirrors.
 - i18n: `localeCompleteness.test.ts` for keys; runtime checks with `i18n.changeLanguage` for wired copy (see `src/i18n/locale.test.ts`).
 - Avoid shallow tests: constant tables, preset field mirrors, CSS string literals, English label asserts when keys live in `src/locales/*.json`.
-- Audit notes: `src/test/TEST_AUDIT.md`. See `.cursor/rules/testing.mdc` for details.
+- See `.cursor/rules/testing.mdc` for details.
 
 ## Mobile layout
 

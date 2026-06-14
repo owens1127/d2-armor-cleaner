@@ -223,7 +223,7 @@
     "stepHeader": "第 {{current}} / {{total}} 步 · {{step}}",
     "classTitle": "你要校準哪個職業？",
     "archetypeTitle": "按偏好排列原型",
-    "archetypeInstruction": "最偏好的在頂部。拖曳行或使用箭頭。列出全部六種原型；是否擁有該原型不影響清單。",
+    "archetypeInstruction": "最偏好的在頂部。拖曳行或使用箭頭。列出全部 {{count}} 種原型；是否擁有該原型不影響清單。",
     "tertiaryTitle": "排列第三屬性",
     "tuningTitle": "排列調優屬性",
     "setsTitle": "按偏好排列護甲套裝",
@@ -719,7 +719,13 @@
       "paragon": "楷模",
       "brawler": "鬥毆者",
       "bulwark": "壁壘",
-      "specialist": "專家"
+      "specialist": "專家",
+      "reaver": "剝奪者",
+      "siegebreaker": "破圍者",
+      "demolitionist": "爆破專家",
+      "skirmisher": "衝突者",
+      "powerhouse": "發電站",
+      "colossus": "巨神兵"
     },
     "slots": {
       "helmet": "頭盔",
@@ -769,7 +775,8 @@
     },
     "heatmap": {
       "mixedTuning": "桶內混合調優屬性",
-      "dupeBucket": "重複桶"
+      "dupeBucket": "重複桶",
+      "armorView": "護甲視圖（{{count}} 種原型）"
     },
     "dominator": {
       "differentStatSplit": "屬性分配不同",

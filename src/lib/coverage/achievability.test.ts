@@ -61,7 +61,10 @@ describe('canonical optimal roll math', () => {
 
   it('lists only max-budget archetypes per push stat', () => {
     expect(optimalArchetypesForPush('super', ['weapons', 'super'])).toEqual(['gunner']);
-    expect(optimalArchetypesForPush('weapons', ['weapons', 'super'])).toEqual(['paragon']);
+    expect(optimalArchetypesForPush('weapons', ['weapons', 'super'])).toEqual([
+      'paragon',
+      'colossus',
+    ]);
   });
 
   it('finds optimal shapes for a three-stat build (Weapons/Super/Grenade)', () => {
@@ -70,7 +73,7 @@ describe('canonical optimal roll math', () => {
     expect(max).toBeGreaterThan(0);
     expect(optimalArchetypesForPush('weapons', [...priorities])).toEqual(['grenadier']);
     expect(optimalArchetypesForPush('super', [...priorities])).toEqual(['gunner']);
-    expect(optimalArchetypesForPush('grenade', [...priorities])).toEqual([]);
+    expect(optimalArchetypesForPush('grenade', [...priorities])).toEqual(['powerhouse']);
   });
 });
 

@@ -33,17 +33,17 @@ export function archetypesInVault(items: ArmorPiece[]): Archetype[] {
     .map(([a]) => a);
 }
 
-/** All six archetypes for pairwise calibration. */
+/** All archetypes for pairwise calibration. */
 export function calibrationArchetypes(): Archetype[] {
   return [...ARCHETYPES];
 }
 
-/** Default archetype rank list (all six, vault frequency not applied). */
+/** Default archetype rank list (vault frequency not applied). */
 export function defaultArchetypeOrder(): Archetype[] {
   return calibrationArchetypes();
 }
 
-/** Full six-archetype list with duplicates removed and any missing entries appended. */
+/** Full archetype list with duplicates removed and any missing entries appended. */
 export function normalizeArchetypeOrder(order: readonly Archetype[]): Archetype[] {
   const expected = defaultArchetypeOrder();
   if (order.length !== expected.length) return [...expected];

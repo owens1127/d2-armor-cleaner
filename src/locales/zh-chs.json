@@ -223,7 +223,7 @@
     "stepHeader": "第 {{current}} / {{total}} 步 · {{step}}",
     "classTitle": "你要校准哪个职业？",
     "archetypeTitle": "按偏好排列原型",
-    "archetypeInstruction": "最偏好的在顶部。拖动行或使用箭头。列出全部六种原型；是否拥有该原型不影响列表。",
+    "archetypeInstruction": "最偏好的在顶部。拖动行或使用箭头。列出全部 {{count}} 种原型；是否拥有该原型不影响列表。",
     "tertiaryTitle": "排列第三属性",
     "tuningTitle": "排列调优属性",
     "setsTitle": "按偏好排列护甲套装",
@@ -731,7 +731,8 @@
     },
     "heatmap": {
       "mixedTuning": "桶内混合调优属性",
-      "dupeBucket": "重复桶"
+      "dupeBucket": "重复桶",
+      "armorView": "护甲视图（{{count}} 种原型）"
     },
     "minTier": {
       "tier5Only": "仅 T5 阶"
@@ -775,7 +776,13 @@
       "paragon": "楷模",
       "brawler": "斗殴者",
       "bulwark": "壁垒",
-      "specialist": "专家"
+      "specialist": "专家",
+      "reaver": "掠夺者",
+      "siegebreaker": "突围者",
+      "demolitionist": "爆破专家",
+      "skirmisher": "突击手",
+      "powerhouse": "高能者",
+      "colossus": "装甲兵"
     },
     "slots": {
       "helmet": "头盔",

@@ -25,22 +25,6 @@ Open **https://localhost:5173** and click **Sign in with Bungie.net**.
 
 > **DIM app name:** If you registered DIM before the rename, your production API key may still show an older app label in the DIM portal. That is fine: only the origin and key matter, not the display name. No `.env` changes needed.
 
-## What's built (v0.1)
-
-| Feature | Status |
-|---------|--------|
-| Bungie OAuth + live vault load | ✅ |
-| Dupe rule onboarding + vault-aware suggestions | ✅ |
-| 6-step preference calibration (swipe + drag) | ✅ |
-| Per-class dashboard heatmap (armor + archetype views) | ✅ |
-| Want-score overlay + vault insights | ✅ |
-| Dupe duels (tournament, keyboard + swipe) | ✅ |
-| Safe dismantle (tuning-aware stat-lower) | ✅ |
-| Browse all + mark keep/junk | ✅ |
-| Review + partial DIM apply + retry | ✅ |
-| Settings: dupe presets, per-class overrides, import/export prefs | ✅ |
-| Session persistence + focus refresh (90s) | ✅ |
-
 ## Scripts
 
 | Command | Purpose |

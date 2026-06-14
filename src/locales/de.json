@@ -223,7 +223,7 @@
     "stepHeader": "Schritt {{current}} von {{total}} · {{step}}",
     "classTitle": "Welche Klasse kalibrierst du?",
     "archetypeTitle": "Archetypen nach Präferenz sortieren",
-    "archetypeInstruction": "Am liebsten oben. Zeilen ziehen oder Pfeile nutzen. Alle sechs Archetypen sind aufgelistet; Tresor-Besitz schränkt die Liste nicht ein.",
+    "archetypeInstruction": "Am liebsten oben. Zeilen ziehen oder Pfeile nutzen. Alle {{count}} Archetypen sind aufgelistet; Tresor-Besitz schränkt die Liste nicht ein.",
     "tertiaryTitle": "Tertiärwerte sortieren",
     "tuningTitle": "Abstimmungswerte sortieren",
     "setsTitle": "Rüstungssets nach Präferenz sortieren",
@@ -731,7 +731,8 @@
     },
     "heatmap": {
       "mixedTuning": "Gemischte Abstimmungswerte in der Gruppe",
-      "dupeBucket": "Duplikat-Gruppe"
+      "dupeBucket": "Duplikat-Gruppe",
+      "armorView": "Rüstungsansicht ({{count}} Archetypen)"
     },
     "minTier": {
       "tier5Only": "Nur Stufe 5"
@@ -775,7 +776,13 @@
       "paragon": "Vorbild",
       "brawler": "Schläger",
       "bulwark": "Bollwerk",
-      "specialist": "Spezialist"
+      "specialist": "Spezialist",
+      "reaver": "Plünderer",
+      "siegebreaker": "Belagerungsbrecher",
+      "demolitionist": "Demolierer",
+      "skirmisher": "Verfechter",
+      "powerhouse": "Kraftpaket",
+      "colossus": "Koloss"
     },
     "slots": {
       "helmet": "Helm",

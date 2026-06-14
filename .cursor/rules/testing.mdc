@@ -28,8 +28,6 @@ alwaysApply: true
 - Shallow component renders with no interaction.
 - CSS/style object string literals with no user-visible outcome.
 
-See `src/test/TEST_AUDIT.md` for the latest suite audit.
-
 ## Where tests live
 
 - Unit/algorithm: colocated `*.test.ts` next to source.

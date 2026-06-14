@@ -222,7 +222,7 @@ describe('desired build edit → coverage refresh', () => {
       setBonus2pc: ferro.hash,
       setBonus4pc: smoke.hash,
     });
-    expect(patternLoadout.columnsTotal).toBe(8);
-    expect(new Set(patternLoadout.columns.map((column) => column.columnKey)).size).toBe(8);
+    expect(patternLoadout.columnsTotal).toBe(12);
+    expect(new Set(patternLoadout.columns.map((column) => column.columnKey)).size).toBe(12);
   });
 });

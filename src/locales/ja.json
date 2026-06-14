@@ -223,7 +223,7 @@
     "stepHeader": "ステップ {{current}} / {{total}} · {{step}}",
     "classTitle": "どのクラスを較正しますか？",
     "archetypeTitle": "アーキタイプを好み順に並べる",
-    "archetypeInstruction": "一番好みのものを上に。行をドラッグするか矢印を使用。6 つのアーキタイプすべてが表示されます。保管庫の所持状況はリストを制限しません。",
+    "archetypeInstruction": "一番好みのものを上に。行をドラッグするか矢印を使用。{{count}} つのアーキタイプすべてが表示されます。保管庫の所持状況はリストを制限しません。",
     "tertiaryTitle": "第3ステータスを好み順に並べる",
     "tuningTitle": "チューニングステータスを好み順に並べる",
     "setsTitle": "防具セットを好み順に並べる",
@@ -731,7 +731,8 @@
     },
     "heatmap": {
       "mixedTuning": "バケット内に混在するチューニングステータス",
-      "dupeBucket": "重複バケット"
+      "dupeBucket": "重複バケット",
+      "armorView": "防具ビュー（{{count}} アーキタイプ）"
     },
     "minTier": {
       "tier5Only": "ティア 5 のみ"
@@ -775,7 +776,13 @@
       "paragon": "パラゴン",
       "brawler": "ブローラー",
       "bulwark": "バルワーク",
-      "specialist": "スペシャリスト"
+      "specialist": "スペシャリスト",
+      "reaver": "リーバー",
+      "siegebreaker": "シージブレーカー",
+      "demolitionist": "デモリショニスト",
+      "skirmisher": "スカーミッシャー",
+      "powerhouse": "パワーハウス",
+      "colossus": "コロッサス"
     },
     "slots": {
       "helmet": "ヘルメット",
