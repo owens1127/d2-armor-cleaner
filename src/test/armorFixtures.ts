@@ -35,32 +35,32 @@ export function splitSetHelmVault(): ArmorPiece[] {
   ];
 }
 
-/** Five gunner pieces with weapons/super optimal rolls - fills recommended loadout. */
+/** Five powerhouse pieces with weapons/super optimal rolls - fills recommended loadout. */
 export function weaponsSuperVault(classType: ArmorPiece['classType'] = 'hunter'): ArmorPiece[] {
   return ARMOR_SLOTS.map((armorSlot) =>
     armorPiece({
       instanceId: `ws-${armorSlot}`,
       classType,
       armorSlot,
-      archetype: 'gunner',
-      tertiaryStat: 'super',
+      archetype: 'powerhouse',
+      tertiaryStat: 'melee',
       tuningStat: 'weapons',
-      baseStats: { weapons: 35, grenade: 20, super: 30 },
+      baseStats: { weapons: 35, super: 30, melee: 20 },
     }),
   );
 }
 
-/** Five brawler pieces covering all slots for build-ready coverage tests. */
+/** Five paragon pieces covering all slots for melee+super build-ready coverage tests. */
 export function fullBrawlerVault(classType: ArmorPiece['classType'] = 'hunter'): ArmorPiece[] {
   return ARMOR_SLOTS.map((armorSlot) =>
     armorPiece({
-      instanceId: `brawler-${armorSlot}`,
+      instanceId: `melee-super-${armorSlot}`,
       classType,
       armorSlot,
-      archetype: 'brawler',
-      tertiaryStat: 'super',
+      archetype: 'paragon',
+      tertiaryStat: 'weapons',
       tuningStat: 'melee',
-      baseStats: { melee: 30, health: 25, super: 20 },
+      baseStats: { super: 30, melee: 25, weapons: 20 },
     }),
   );
 }

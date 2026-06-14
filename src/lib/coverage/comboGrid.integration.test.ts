@@ -31,9 +31,9 @@ function piece(overrides: Partial<ArmorPiece> & { instanceId: string }): ArmorPi
     tier: 5,
     power: 450,
     location: 'vault',
-    archetype: 'grenadier',
-    baseStats: { weapons: 30, grenade: 25, super: 10 },
-    tertiaryStat: 'weapons',
+    archetype: 'gunner',
+    baseStats: { weapons: 35, grenade: 30, melee: 20 },
+    tertiaryStat: 'melee',
     tuningStat: 'weapons',
     isMasterwork: false,
     dimTag: null,
@@ -48,21 +48,36 @@ const targets = [
   { stat: 'weapons' as const, target: 0 },
   { stat: 'grenade' as const, target: 0 },
 ];
+const weaponsSuperOptimalRoll = {
+  archetype: 'powerhouse' as const,
+  tertiaryStat: 'melee' as const,
+  tuningStat: 'weapons' as const,
+  baseStats: { weapons: 35, super: 30, melee: 20 },
+};
+
+function weaponsSuperPattern(tuningStat: 'weapons' | 'super') {
+  return deriveOptimalRollPatterns(['weapons', 'super']).find(
+    (pattern) => pattern.archetype === 'powerhouse' && pattern.tuningStat === tuningStat,
+  )!;
+}
+
+const weaponsGrenadeOptimalRoll = {
+  archetype: 'gunner' as const,
+  tertiaryStat: 'melee' as const,
+  tuningStat: 'weapons' as const,
+  baseStats: { weapons: 35, grenade: 30, melee: 20 },
+};
+
+function weaponsGrenadePattern(tuningStat: 'weapons' | 'grenade') {
+  return deriveOptimalRollPatterns(['weapons', 'grenade']).find(
+    (pattern) => pattern.archetype === 'gunner' && pattern.tuningStat === tuningStat,
+  )!;
+}
 const setTargets = parseSetBonusTargets(ferro.hash, smoke.hash);
 
 describe('combo grid integration', () => {
-  const weaponsPattern = deriveOptimalRollPatterns([...priorities]).find(
-    (p) =>
-      p.archetype === 'grenadier' &&
-      p.tertiaryStat === 'weapons' &&
-      p.tuningStat === 'weapons',
-  )!;
-  const grenadePattern = deriveOptimalRollPatterns([...priorities]).find(
-    (p) =>
-      p.archetype === 'grenadier' &&
-      p.tertiaryStat === 'weapons' &&
-      p.tuningStat === 'grenade',
-  )!;
+  const weaponsPattern = weaponsGrenadePattern('weapons');
+  const grenadePattern = weaponsGrenadePattern('grenade');
 
   it('weapons vs grenade columns pick different pieces per slot', () => {
     const items = [
@@ -152,15 +167,10 @@ describe('combo grid integration', () => {
         instanceId: 'ferro-helm',
         armorSlot: 'helmet',
         armorSet: ferro,
-        archetype: 'gunner',
-        tertiaryStat: 'super',
-        tuningStat: 'weapons',
-        baseStats: { weapons: 35, grenade: 20, super: 30 },
+        ...weaponsSuperOptimalRoll,
       }),
     ];
-    const pattern = deriveOptimalRollPatterns(['weapons', 'super']).find(
-      (p) => p.archetype === 'gunner' && p.tuningStat === 'weapons',
-    )!;
+    const pattern = weaponsSuperPattern('weapons');
     const ctx = columnSlotContextFromColumn(pattern, ['weapons', 'super'], ferro.hash, ferro.name, setTargets);
     expect(isColumnSlotEligiblePiece(items[0]!, ctx)).toBe(true);
     const placements = globalGoldBadgePlacementKeys(
@@ -256,10 +266,7 @@ describe('combo grid integration', () => {
     const sharedPiece = piece({
       instanceId: 'shared-weapons',
       armorSlot: 'chest',
-      archetype: 'gunner',
-      tertiaryStat: 'super',
-      tuningStat: 'weapons',
-      baseStats: { weapons: 38, grenade: 20, super: 30 },
+      ...weaponsSuperOptimalRoll,
     });
     const counts = countEligibleBuildBadgesByInstance(
       [sharedPiece],
@@ -277,19 +284,15 @@ describe('combo grid integration', () => {
         instanceId: 'ferro-cloak-weapons',
         armorSlot: 'classItem',
         armorSet: ferro,
-        archetype: 'grenadier',
-        tertiaryStat: 'weapons',
-        tuningStat: 'weapons',
-        baseStats: { weapons: 35, grenade: 30, super: 10 },
+        ...weaponsGrenadeOptimalRoll,
       }),
       piece({
         instanceId: 'ferro-chest-grenade',
         armorSlot: 'chest',
         armorSet: ferro,
-        archetype: 'grenadier',
-        tertiaryStat: 'weapons',
+        ...weaponsGrenadeOptimalRoll,
         tuningStat: 'grenade',
-        baseStats: { weapons: 28, grenade: 38, super: 10 },
+        baseStats: { weapons: 28, grenade: 38, melee: 10 },
       }),
     ];
     const build = {
@@ -319,19 +322,15 @@ describe('combo grid integration', () => {
         instanceId: 'ferro-cloak-weapons',
         armorSlot: 'classItem',
         armorSet: ferro,
-        archetype: 'grenadier',
-        tertiaryStat: 'weapons',
-        tuningStat: 'weapons',
-        baseStats: { weapons: 35, grenade: 30, super: 10 },
+        ...weaponsGrenadeOptimalRoll,
       }),
       piece({
         instanceId: 'ferro-chest-grenade',
         armorSlot: 'chest',
         armorSet: ferro,
-        archetype: 'grenadier',
-        tertiaryStat: 'weapons',
+        ...weaponsGrenadeOptimalRoll,
         tuningStat: 'grenade',
-        baseStats: { weapons: 28, grenade: 38, super: 10 },
+        baseStats: { weapons: 28, grenade: 38, melee: 10 },
       }),
     ];
     const build = {
@@ -365,17 +364,10 @@ describe('combo grid integration', () => {
       name: 'Smoke Jumper Cloak',
       armorSlot: 'classItem',
       armorSet: smoke,
-      archetype: 'gunner',
-      tertiaryStat: 'super',
+      ...weaponsSuperOptimalRoll,
       tuningStat: 'weapons',
-      baseStats: { grenade: 25, super: 20, weapons: 30 },
     });
-    const gunnerSuperSuper = deriveOptimalRollPatterns(['weapons', 'super']).find(
-      (p) =>
-        p.archetype === 'gunner' &&
-        p.tertiaryStat === 'super' &&
-        p.tuningStat === 'super',
-    )!;
+    const powerhouseSuperSuper = weaponsSuperPattern('super');
     const grid = buildPatternLoadoutGridData(
       [nearCloak],
       {
@@ -396,7 +388,7 @@ describe('combo grid integration', () => {
     const smokeColumn = grid.recommendedPatternLoadout.columns.find(
       (col) =>
         col.setHash === smoke.hash &&
-        optimalRollPatternKey(col.pattern) === optimalRollPatternKey(gunnerSuperSuper),
+        optimalRollPatternKey(col.pattern) === optimalRollPatternKey(powerhouseSuperSuper),
     );
     expect(smokeColumn).toBeDefined();
     const classRow = grid.columnRowsByKey[smokeColumn!.columnKey]?.find(
@@ -413,29 +405,20 @@ describe('combo grid integration', () => {
       instanceId: 'smoke-cloak-perfect',
       armorSlot: 'classItem',
       armorSet: smoke,
-      archetype: 'gunner',
-      tertiaryStat: 'super',
+      ...weaponsSuperOptimalRoll,
       tuningStat: 'super',
-      baseStats: { grenade: 25, super: 30, weapons: 25 },
     });
     const nearCloak = piece({
       instanceId: 'smoke-cloak-near',
       armorSlot: 'classItem',
       armorSet: smoke,
-      archetype: 'gunner',
-      tertiaryStat: 'super',
+      ...weaponsSuperOptimalRoll,
       tuningStat: 'weapons',
-      baseStats: { grenade: 25, super: 20, weapons: 30 },
     });
-    const gunnerSuperSuper = deriveOptimalRollPatterns(['weapons', 'super']).find(
-      (p) =>
-        p.archetype === 'gunner' &&
-        p.tertiaryStat === 'super' &&
-        p.tuningStat === 'super',
-    )!;
+    const powerhouseSuperSuper = weaponsSuperPattern('super');
     const entry = bestPiecesForPatternBySlot(
       [perfectCloak, nearCloak],
-      gunnerSuperSuper,
+      powerhouseSuperSuper,
       ['weapons', 'super'],
       setTargets,
       undefined,
@@ -447,13 +430,13 @@ describe('combo grid integration', () => {
 
   it('wrong archetype stays empty not dimmed near match', () => {
     const wrongArchetype = piece({
-      instanceId: 'smoke-gunner-arms',
+      instanceId: 'smoke-grenadier-arms',
       armorSlot: 'arms',
       armorSet: smoke,
-      archetype: 'gunner',
-      tertiaryStat: 'class',
+      archetype: 'grenadier',
+      tertiaryStat: 'weapons',
       tuningStat: 'weapons',
-      baseStats: { class: 20, grenade: 25, weapons: 30 },
+      baseStats: { weapons: 30, grenade: 25, super: 10 },
     });
     const entry = bestPiecesForPatternBySlot(
       [wrongArchetype],

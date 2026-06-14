@@ -38,10 +38,24 @@ function piece(overrides: Partial<ArmorPiece> & { instanceId: string }): ArmorPi
   };
 }
 
+/** Shared optimal roll for Weapons + Super combos (Powerhouse monument archetype). */
+const weaponsSuperOptimalRoll = {
+  archetype: 'powerhouse' as const,
+  tertiaryStat: 'melee' as const,
+  tuningStat: 'weapons' as const,
+  baseStats: { weapons: 35, super: 30, melee: 20 },
+};
+
 const weaponsSuperTargets = [
   { stat: 'weapons' as const, target: 0 },
   { stat: 'super' as const, target: 0 },
 ];
+
+function weaponsSuperPattern(tuningStat: 'weapons' | 'super') {
+  return deriveOptimalRollPatterns(['weapons', 'super']).find(
+    (pattern) => pattern.archetype === 'powerhouse' && pattern.tuningStat === tuningStat,
+  )!;
+}
 
 describe('pieceLoadoutContribution', () => {
   it('prefers pieces that stack multiple priority stats (weapons + super)', () => {
@@ -87,28 +101,20 @@ describe('rankEligiblePiecesForSlot', () => {
         baseStats: { super: 35, grenade: 20, weapons: 30 },
       }),
       piece({
-        instanceId: 'gunner-shape',
+        instanceId: 'powerhouse-shape',
         armorSlot: 'chest',
-        archetype: 'gunner',
-        tertiaryStat: 'super',
-        tuningStat: 'weapons',
-        baseStats: { weapons: 35, grenade: 20, super: 30 },
+        ...weaponsSuperOptimalRoll,
       }),
       piece({
-        instanceId: 'paragon-shape',
+        instanceId: 'powerhouse-alt',
         armorSlot: 'chest',
-        archetype: 'paragon',
-        tertiaryStat: 'weapons',
+        ...weaponsSuperOptimalRoll,
         tuningStat: 'super',
-        baseStats: { super: 35, melee: 20, weapons: 30 },
       }),
       piece({
         instanceId: 'wrong-slot',
         armorSlot: 'helmet',
-        archetype: 'gunner',
-        tertiaryStat: 'super',
-        tuningStat: 'weapons',
-        baseStats: { weapons: 40, grenade: 20, super: 10 },
+        ...weaponsSuperOptimalRoll,
       }),
       piece({
         instanceId: 'no-fit',
@@ -119,7 +125,7 @@ describe('rankEligiblePiecesForSlot', () => {
       }),
     ];
     const ranked = rankEligiblePiecesForSlot(items, 'chest', ['weapons', 'super']);
-    expect(ranked.map((r) => r.piece.instanceId)).toEqual(['gunner-shape', 'paragon-shape']);
+    expect(ranked.map((r) => r.piece.instanceId)).toEqual(['powerhouse-shape', 'powerhouse-alt']);
     expect(ranked[0].fitLabel).toContain('Weapons');
   });
 });
@@ -138,10 +144,7 @@ describe('selectRecommendedLoadout', () => {
       piece({
         instanceId: 'strong',
         armorSlot: 'chest',
-        archetype: 'gunner',
-        tertiaryStat: 'super',
-        tuningStat: 'weapons',
-        baseStats: { weapons: 35, grenade: 20, super: 30 },
+        ...weaponsSuperOptimalRoll,
       }),
     ];
     const loadout = selectRecommendedLoadout(items, weaponsSuperTargets);
@@ -175,11 +178,7 @@ describe('selectRecommendedLoadout', () => {
   it('mixes two 2pc set targets when vault has options', () => {
     const ferro = { hash: 100, name: 'Ferropotent', perks: [] };
     const smoke = { hash: 200, name: 'Smoke Jumper Set', perks: [] };
-    const shared = {
-      archetype: 'gunner' as const,
-      tertiaryStat: 'super' as const,
-      tuningStat: 'weapons' as const,
-    };
+    const shared = weaponsSuperOptimalRoll;
     const items = ARMOR_SLOTS.flatMap((armorSlot) => [
       piece({
         instanceId: `ferro-${armorSlot}`,
@@ -208,12 +207,7 @@ describe('selectRecommendedLoadout', () => {
   it('does not place more than the 2pc quota from one set in the loadout', () => {
     const ferro = { hash: 100, name: 'Ferropotent', perks: [] };
     const smoke = { hash: 200, name: 'Smoke Jumper Set', perks: [] };
-    const roll = {
-      archetype: 'gunner' as const,
-      tertiaryStat: 'super' as const,
-      tuningStat: 'weapons' as const,
-      baseStats: { weapons: 40, grenade: 20, super: 30 },
-    };
+    const roll = weaponsSuperOptimalRoll;
     const items = ARMOR_SLOTS.flatMap((armorSlot) => [
       piece({
         instanceId: `smoke-a-${armorSlot}`,
@@ -252,18 +246,13 @@ describe('resolveSlotLoadoutPiece', () => {
     const auto = piece({
       instanceId: 'auto',
       armorSlot: 'chest',
-      archetype: 'gunner',
-      tertiaryStat: 'super',
-      tuningStat: 'weapons',
-      baseStats: { weapons: 35, grenade: 20, super: 30 },
+      ...weaponsSuperOptimalRoll,
     });
     const alt = piece({
       instanceId: 'alt',
       armorSlot: 'chest',
-      archetype: 'paragon',
-      tertiaryStat: 'weapons',
+      ...weaponsSuperOptimalRoll,
       tuningStat: 'super',
-      baseStats: { super: 30, melee: 25, weapons: 20 },
     });
     const resolved = resolveSlotLoadoutPiece(
       [auto, alt],
@@ -280,18 +269,12 @@ describe('resolveSlotLoadoutPiece', () => {
     const auto = piece({
       instanceId: 'auto',
       armorSlot: 'chest',
-      archetype: 'gunner',
-      tertiaryStat: 'super',
-      tuningStat: 'weapons',
-      baseStats: { weapons: 35, grenade: 20, super: 30 },
+      ...weaponsSuperOptimalRoll,
     });
     const wrongSlot = piece({
       instanceId: 'wrong-slot',
       armorSlot: 'helmet',
-      archetype: 'gunner',
-      tertiaryStat: 'super',
-      tuningStat: 'weapons',
-      baseStats: { weapons: 35, grenade: 20, super: 30 },
+      ...weaponsSuperOptimalRoll,
     });
     expect(
       resolveSlotLoadoutPiece([auto, wrongSlot], 'chest', [...priorities], auto, 'wrong-slot')
@@ -308,10 +291,7 @@ describe('isValidSlotRepresentative', () => {
     const eligible = piece({
       instanceId: 'ok',
       armorSlot: 'chest',
-      archetype: 'gunner',
-      tertiaryStat: 'super',
-      tuningStat: 'weapons',
-      baseStats: { weapons: 35, grenade: 20, super: 30 },
+      ...weaponsSuperOptimalRoll,
     });
     const ineligible = piece({
       instanceId: 'bad',
@@ -336,13 +316,8 @@ describe('loadoutVerdictFromLoadout', () => {
       piece({
         instanceId: String(i),
         armorSlot: slot,
-        archetype: i % 2 === 0 ? 'gunner' : 'paragon',
-        tertiaryStat: i % 2 === 0 ? 'super' : 'weapons',
+        ...weaponsSuperOptimalRoll,
         tuningStat: i % 2 === 0 ? 'weapons' : 'super',
-        baseStats:
-          i % 2 === 0
-            ? { weapons: 30, grenade: 25, super: 20 }
-            : { super: 30, melee: 25, weapons: 20 },
       }),
     );
     const { loadout, loadoutVerdict } = analyzeRecommendedLoadout(items, weaponsSuperTargets);
@@ -357,10 +332,7 @@ describe('loadoutVerdictFromLoadout', () => {
       piece({
         instanceId: 'a',
         armorSlot: 'chest',
-        archetype: 'paragon',
-        tertiaryStat: 'weapons',
-        tuningStat: 'super',
-        baseStats: { super: 30, melee: 25, weapons: 20 },
+        ...weaponsSuperOptimalRoll,
       }),
     ];
     const loadout = selectRecommendedLoadout(items, weaponsSuperTargets);
@@ -387,12 +359,7 @@ describe('selectRecommendedPatternLoadout', () => {
   it('expands to pattern × set columns for a 2+2 set bonus combo', () => {
     const ferro = { hash: 100, name: 'Ferropotent', perks: [] };
     const smoke = { hash: 200, name: 'Smoke Jumper Set', perks: [] };
-    const shared = {
-      archetype: 'gunner' as const,
-      tertiaryStat: 'super' as const,
-      tuningStat: 'weapons' as const,
-      baseStats: { weapons: 35, grenade: 20, super: 30 },
-    };
+    const shared = weaponsSuperOptimalRoll;
     const items = ARMOR_SLOTS.flatMap((armorSlot) => [
       piece({
         instanceId: `ferro-${armorSlot}`,
@@ -405,16 +372,16 @@ describe('selectRecommendedPatternLoadout', () => {
         armorSlot,
         armorSet: smoke,
         ...shared,
-        baseStats: { weapons: 34, grenade: 20, super: 30 },
+        baseStats: { weapons: 34, super: 29, melee: 20 },
       }),
     ]);
     const loadout = selectRecommendedPatternLoadout(items, weaponsSuperTargets, {
       setBonus2pc: ferro.hash,
       setBonus4pc: smoke.hash,
     });
-    expect(loadout.columnsTotal).toBe(12);
-    expect(loadout.columns.filter((column) => column.setHash === ferro.hash)).toHaveLength(6);
-    expect(loadout.columns.filter((column) => column.setHash === smoke.hash)).toHaveLength(6);
+    expect(loadout.columnsTotal).toBe(4);
+    expect(loadout.columns.filter((column) => column.setHash === ferro.hash)).toHaveLength(2);
+    expect(loadout.columns.filter((column) => column.setHash === smoke.hash)).toHaveLength(2);
     for (const column of loadout.columns) {
       expect(column.columnKey).toContain(String(column.setHash));
       const slotEntries = bestPiecesForPatternBySlot(
@@ -433,59 +400,47 @@ describe('selectRecommendedPatternLoadout', () => {
     }
   });
 
-  it('keeps four columns for a single 4pc set target', () => {
+  it('keeps two columns for a single 4pc set target', () => {
     const ferro = { hash: 100, name: 'Ferropotent', perks: [] };
     const items = [
       piece({
         instanceId: 'ferro-chest',
         armorSlot: 'chest',
         armorSet: ferro,
-        archetype: 'gunner',
-        tertiaryStat: 'super',
-        tuningStat: 'weapons',
-        baseStats: { weapons: 35, grenade: 20, super: 30 },
+        ...weaponsSuperOptimalRoll,
       }),
     ];
     const loadout = selectRecommendedPatternLoadout(items, weaponsSuperTargets, {
       setBonus2pc: ferro.hash,
       setBonus4pc: ferro.hash,
     });
-    expect(loadout.columnsTotal).toBe(6);
+    expect(loadout.columnsTotal).toBe(2);
     expect(loadout.columns.every((column) => column.setHash === ferro.hash)).toBe(true);
   });
 });
 
 describe('rankEligiblePiecesForPatternInSlot', () => {
   it('returns only eligible pieces for the given slot and pattern', () => {
+    const pattern = weaponsSuperPattern('super');
     const items = [
       piece({
         instanceId: 'chest-w',
         armorSlot: 'chest',
-        archetype: 'paragon',
-        tertiaryStat: 'weapons',
+        ...weaponsSuperOptimalRoll,
         tuningStat: 'super',
-        baseStats: { super: 35, melee: 20, weapons: 30 },
       }),
       piece({
         instanceId: 'helm-w',
         armorSlot: 'helmet',
-        archetype: 'paragon',
-        tertiaryStat: 'weapons',
+        ...weaponsSuperOptimalRoll,
         tuningStat: 'super',
-        baseStats: { super: 30, melee: 25, weapons: 20 },
       }),
       piece({
         instanceId: 'chest-s',
         armorSlot: 'chest',
-        archetype: 'paragon',
-        tertiaryStat: 'weapons',
-        tuningStat: 'weapons',
-        baseStats: { super: 35, melee: 20, weapons: 30 },
+        ...weaponsSuperOptimalRoll,
       }),
     ];
-    const pattern = deriveOptimalRollPatterns(['weapons', 'super']).find(
-      (p) => p.tuningStat === 'super' && p.archetype === 'paragon',
-    )!;
     const ranked = rankEligiblePiecesForPatternInSlot(
       items,
       'chest',
@@ -496,15 +451,11 @@ describe('rankEligiblePiecesForPatternInSlot', () => {
   });
 
   it('breaks ties by wantScore, tier, then set name', () => {
-    const pattern = deriveOptimalRollPatterns(['weapons', 'super']).find(
-      (p) => p.tuningStat === 'super' && p.archetype === 'paragon',
-    )!;
+    const pattern = weaponsSuperPattern('super');
     const sharedStats = {
       armorSlot: 'chest' as const,
-      archetype: 'paragon' as const,
-      tertiaryStat: 'weapons' as const,
+      ...weaponsSuperOptimalRoll,
       tuningStat: 'super' as const,
-      baseStats: { super: 35, melee: 20, weapons: 30 },
     };
     const items = [
       piece({
@@ -566,26 +517,21 @@ describe('orderEligiblePiecesForSlotPicker', () => {
 
 describe('resolvePatternSlotLoadoutPiece', () => {
   const priorities = ['weapons', 'super'] as const;
-  const pattern = deriveOptimalRollPatterns([...priorities]).find(
-    (p) => p.archetype === 'paragon' && p.tuningStat === 'super',
-  )!;
+  const pattern = weaponsSuperPattern('super');
 
   it('uses a valid saved representative for the slot', () => {
     const auto = piece({
       instanceId: 'auto',
       armorSlot: 'chest',
-      archetype: 'paragon',
-      tertiaryStat: 'weapons',
+      ...weaponsSuperOptimalRoll,
       tuningStat: 'super',
-      baseStats: { super: 35, melee: 20, weapons: 30 },
     });
     const alt = piece({
       instanceId: 'alt',
       armorSlot: 'chest',
-      archetype: 'paragon',
-      tertiaryStat: 'weapons',
+      ...weaponsSuperOptimalRoll,
       tuningStat: 'super',
-      baseStats: { super: 30, melee: 25, weapons: 20 },
+      baseStats: { weapons: 30, super: 30, melee: 20 },
     });
     const resolved = resolvePatternSlotLoadoutPiece(
       [auto, alt],
@@ -603,18 +549,14 @@ describe('resolvePatternSlotLoadoutPiece', () => {
     const auto = piece({
       instanceId: 'auto',
       armorSlot: 'chest',
-      archetype: 'paragon',
-      tertiaryStat: 'weapons',
+      ...weaponsSuperOptimalRoll,
       tuningStat: 'super',
-      baseStats: { super: 35, melee: 20, weapons: 30 },
     });
     const wrongSlot = piece({
       instanceId: 'wrong-slot',
       armorSlot: 'helmet',
-      archetype: 'paragon',
-      tertiaryStat: 'weapons',
+      ...weaponsSuperOptimalRoll,
       tuningStat: 'super',
-      baseStats: { super: 35, melee: 20, weapons: 30 },
     });
     expect(
       resolvePatternSlotLoadoutPiece(
@@ -635,18 +577,16 @@ describe('migrateRollPatternToSlotRepresentatives', () => {
       piece({
         instanceId: 'chest-w',
         armorSlot: 'chest',
-        archetype: 'paragon',
-        tertiaryStat: 'weapons',
+        ...weaponsSuperOptimalRoll,
         tuningStat: 'super',
-        baseStats: { super: 35, melee: 20, weapons: 30 },
       }),
     ];
     expect(
       migrateRollPatternToSlotRepresentatives(items, ['weapons', 'super'], {
-        'paragon:weapons:super': 'chest-w',
+        'powerhouse:grenade:super': 'chest-w',
       }),
     ).toEqual({
-      'paragon:weapons:super': { chest: 'chest-w' },
+      'powerhouse:grenade:super': { chest: 'chest-w' },
     });
   });
 });
@@ -657,28 +597,24 @@ describe('resolveEffectiveRollPatternSlotRepresentatives', () => {
       piece({
         instanceId: 'saved',
         armorSlot: 'chest',
-        archetype: 'paragon',
-        tertiaryStat: 'weapons',
+        ...weaponsSuperOptimalRoll,
         tuningStat: 'super',
-        baseStats: { super: 35, melee: 20, weapons: 30 },
       }),
       piece({
         instanceId: 'legacy',
         armorSlot: 'helmet',
-        archetype: 'paragon',
-        tertiaryStat: 'weapons',
+        ...weaponsSuperOptimalRoll,
         tuningStat: 'super',
-        baseStats: { super: 30, melee: 25, weapons: 20 },
       }),
     ];
     expect(
       resolveEffectiveRollPatternSlotRepresentatives(
         items,
         ['weapons', 'super'],
-        { 'paragon:weapons:super': { chest: 'saved' } },
-        { 'paragon:weapons:super': 'legacy' },
+        { 'powerhouse:grenade:super': { chest: 'saved' } },
+        { 'powerhouse:grenade:super': 'legacy' },
       ),
-    ).toEqual({ 'paragon:weapons:super': { chest: 'saved' } });
+    ).toEqual({ 'powerhouse:grenade:super': { chest: 'saved' } });
   });
 
   it('expands legacy pattern keys to per-set column keys when set targets configured', () => {
@@ -687,15 +623,15 @@ describe('resolveEffectiveRollPatternSlotRepresentatives', () => {
     const reps = resolveEffectiveRollPatternSlotRepresentatives(
       [],
       ['weapons', 'super'],
-      { 'gunner:super:weapons': { helmet: 'saved-helm' } },
+      { 'powerhouse:grenade:weapons': { helmet: 'saved-helm' } },
       undefined,
       undefined,
       undefined,
       parseSetBonusTargets(ferro.hash, smoke.hash),
     );
     expect(reps).toEqual({
-      [`gunner:super:weapons:${ferro.hash}`]: { helmet: 'saved-helm' },
-      [`gunner:super:weapons:${smoke.hash}`]: { helmet: 'saved-helm' },
+      [`powerhouse:grenade:weapons:${ferro.hash}`]: { helmet: 'saved-helm' },
+      [`powerhouse:grenade:weapons:${smoke.hash}`]: { helmet: 'saved-helm' },
     });
   });
 });

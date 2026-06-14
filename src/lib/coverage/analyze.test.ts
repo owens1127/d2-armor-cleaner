@@ -40,6 +40,13 @@ const meleeSuperTargets = [
   { stat: 'super' as const, target: 150 },
 ];
 
+const meleeSuperOptimalRoll = {
+  archetype: 'paragon' as const,
+  tertiaryStat: 'weapons' as const,
+  tuningStat: 'melee' as const,
+  baseStats: { super: 30, melee: 25, weapons: 20 },
+};
+
 describe('buildReadinessForSlot', () => {
   it('picks best-tier piece per slot', () => {
     const items = [
@@ -54,17 +61,12 @@ describe('buildReadinessForSlot', () => {
       piece({
         instanceId: 'strong',
         armorSlot: 'chest',
-        archetype: 'brawler',
-        tertiaryStat: 'super',
-        tuningStat: 'melee',
-        baseStats: { melee: 35, health: 25, super: 30 },
+        ...meleeSuperOptimalRoll,
       }),
       piece({
         instanceId: 'other-slot',
         armorSlot: 'legs',
-        archetype: 'brawler',
-        tertiaryStat: 'super',
-        tuningStat: 'melee',
+        ...meleeSuperOptimalRoll,
       }),
     ];
     const result = buildReadinessForSlot(items, 'chest', meleeSuperTargets);
@@ -124,10 +126,7 @@ describe('analyzeCoverage', () => {
       piece({
         instanceId: String(i),
         armorSlot: slot,
-        archetype: 'brawler',
-        tertiaryStat: 'super',
-        tuningStat: 'melee',
-        baseStats: { melee: 30, health: 25, super: 20 },
+        ...meleeSuperOptimalRoll,
       }),
     );
     const buckets = groupIntoBuckets(items, rules);
@@ -148,10 +147,7 @@ describe('analyzeCoverage', () => {
       piece({
         instanceId: '1',
         armorSlot: 'chest',
-        archetype: 'brawler',
-        tertiaryStat: 'super',
-        tuningStat: 'melee',
-        baseStats: { melee: 30, health: 25, super: 20 },
+        ...meleeSuperOptimalRoll,
       }),
     ];
     const buckets = groupIntoBuckets(items, rules);
