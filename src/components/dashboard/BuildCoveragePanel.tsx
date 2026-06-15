@@ -15,8 +15,13 @@ import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-do
 import { useTranslation } from 'react-i18next';
 import {
   coverageGapDetailCopy,
+  patternColumnTitlePartsCopy,
+  patternCollapsedSetRowTitleCopy,
+  rollAnyTertiaryLabelCopy,
   rollStatRoleLabelCopy,
   rollStatRoleTitleCopy,
+  rollTertiaryStatLabelCopy,
+  rollTuningStatLabelCopy,
 } from '@/i18n/buildCopy';
 import { useVaultInteractionHold } from '@/hooks/useVaultRefreshGuard';
 import { BUILD_QUERY_PARAM, desiredBuildsEditorPath, resolveCombosBuildId } from '@/lib/nav';
@@ -48,6 +53,7 @@ import {
   rollPatternActionRailStyle,
   rollPatternColumnsGridClass,
   rollPatternLoadoutColumnGridStyle,
+  rollPatternLoadoutCollapsedColumnGridStyle,
   rollPatternLoadoutSetRowStyle,
   measureLoadoutPickerMenuWidthPx,
   rollPatternPickerActionRailStyle,
@@ -72,7 +78,6 @@ import {
   formatEmptyPatternSlotMessage,
   archetypeIrrelevantSecondary,
   archetypePriorityIntrinsics,
-  formatArchetypeGroupLabel,
   normalizeDesiredBuilds,
   rollPatternStatBonuses,
   orderEligiblePiecesForSlotPicker,
@@ -88,10 +93,23 @@ import type {
 import { defaultStatTargetsFromPrefs, resolveDesiredBuild, resolveDesiredBuildFromParam } from '@/lib/coverage/builds';
 import {
   buildPatternLoadoutGridData,
+  buildMergedGroupedSlotRows,
   collectRecommendedPatternGridPieces,
+  countGroupPerfectSlots,
+  countOverallPerfectSlotsInSetRow,
   countUniqueSetPiecesInPatternGrid,
+  groupPatternLoadoutColumnsIntoOne,
+  mergeGroupedEligibleBySlot,
+  patternSetRowColumnsAreCollapsible,
+  resolveGroupedSlotSelectionColumn,
   type PatternColumnSlotRow,
+  type PatternColumnGroup,
 } from '@/lib/coverage/patternLoadoutGrid';
+import {
+  readCoverageColumnLayout,
+  writeCoverageColumnLayout,
+  type CoverageColumnLayout,
+} from '@/lib/coverage/columnLayoutPreference';
 import { planBulkDimTagApply } from '@/lib/dim/bulkTagPlan';
 import {
   fingerprintArmorItems,
@@ -288,22 +306,37 @@ function PatternArchetypeChips({
   );
 }
 
+function PatternAnyTertiaryChip() {
+  const { t } = useTranslation('build');
+  return (
+    <span
+      title={rollAnyTertiaryLabelCopy()}
+      className={`${patternChipBaseClass} border-white/10 bg-transparent text-white/50`}
+    >
+      <span>{t('coverage.rollRoleAnyTertiary')}</span>
+    </span>
+  );
+}
+
 function PatternRollRoleChips({
   tertiaryStat,
   tuningStat,
   splitRollChips = false,
 }: {
-  tertiaryStat: Stat;
+  tertiaryStat: Stat | null;
   tuningStat: Stat;
   splitRollChips?: boolean;
 }) {
+  const showAnyTertiary = tertiaryStat === null;
+  const bonuses = rollPatternStatBonuses(tertiaryStat, tuningStat, { forceSplit: splitRollChips });
+
   return (
     <>
-      {rollPatternStatBonuses(tertiaryStat, tuningStat, { forceSplit: splitRollChips }).map(
-        ({ stat, role }) => (
-          <PatternRollRoleChip key={`${stat}-${role}`} stat={stat} role={role} />
-        ),
-      )}
+      {showAnyTertiary && <PatternAnyTertiaryChip />}
+      {showAnyTertiary && bonuses.length > 0 && <PatternRollSeparator />}
+      {bonuses.map(({ stat, role }) => (
+        <PatternRollRoleChip key={`${stat}-${role}`} stat={stat} role={role} />
+      ))}
     </>
   );
 }
@@ -325,31 +358,39 @@ function RollPatternColumnHeader({
   items?: ArmorPiece[];
   splitRollChips?: boolean;
 }) {
-  const { t } = useTranslation('build');
-  const title =
-    pattern.archetype !== null
-      ? formatArchetypeGroupLabel(pattern.archetype, priorities)
-      : t('coverage.anyArchetype');
+  const titleParts = patternColumnTitlePartsCopy(
+    pattern.archetype,
+    pattern.tertiaryStat,
+    pattern.tuningStat,
+  );
+  const titleRollParts = [titleParts.tertiary, titleParts.tuning].filter(Boolean).join(' · ');
+  const titleAria = `${titleParts.lead} · ${titleRollParts}${setName ? ` · ${setName}` : ''}`;
 
   const showArchetypeChips =
     pattern.archetype !== null &&
     (archetypePriorityIntrinsics(pattern.archetype, priorities).length > 0 ||
       archetypeIrrelevantSecondary(pattern.archetype, priorities) !== null);
 
+  const rollBonuses = rollPatternStatBonuses(pattern.tertiaryStat, pattern.tuningStat, {
+    forceSplit: splitRollChips,
+  });
   const showChipRow =
     showArchetypeChips ||
-    rollPatternStatBonuses(pattern.tertiaryStat, pattern.tuningStat, {
-      forceSplit: splitRollChips,
-    }).length > 0;
+    pattern.tertiaryStat === null ||
+    rollBonuses.length > 0;
 
   return (
     <div
       className="flex min-w-0 flex-col gap-1"
-      aria-label={`${title}${setName ? ` · ${setName}` : ''}`}
+      aria-label={titleAria}
     >
       <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-0.5">
         <span className="text-base font-semibold tracking-tight leading-snug text-white/90">
-          {title}
+          {titleParts.lead}
+          <span className="font-normal text-white/65">
+            {titleParts.tertiary && ` · ${titleParts.tertiary}`}
+            {` · ${titleParts.tuning}`}
+          </span>
         </span>
         {slotsFilled !== undefined && (
           <span className="shrink-0 text-sm font-normal tabular-nums text-muted">
@@ -380,6 +421,86 @@ function RollPatternColumnHeader({
           />
         </div>
       )}
+    </div>
+  );
+}
+
+function CollapsedRollPatternColumnHeader({
+  headerPattern,
+  slotsFilled,
+  setName,
+  setHash,
+  items = [],
+}: {
+  headerPattern: Pick<OptimalRollPattern, 'archetype' | 'tertiaryStat'>;
+  slotsFilled?: number;
+  setName?: string;
+  setHash?: number;
+  items?: ArmorPiece[];
+}) {
+  const title = patternCollapsedSetRowTitleCopy(headerPattern.archetype);
+  const titleAria = `${title}${setName ? ` · ${setName}` : ''}`;
+
+  return (
+    <div className="flex min-w-0 flex-col" aria-label={titleAria}>
+      <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-0">
+        <span className="text-base font-semibold tracking-tight leading-tight text-white/90">
+          {title}
+        </span>
+        {slotsFilled !== undefined && (
+          <span className="shrink-0 text-sm font-normal tabular-nums text-muted">
+            {slotsFilled}/5
+          </span>
+        )}
+        {setName && (
+          <span className="inline-flex min-w-0 items-center gap-1 text-sm font-medium leading-snug text-muted">
+            {setHash !== undefined && (
+              <ArmorSetIcons setHash={setHash} items={items} size="sm" maxIcons={1} />
+            )}
+            {setName}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ColumnLayoutToggle({
+  layout,
+  onChange,
+}: {
+  layout: CoverageColumnLayout;
+  onChange: (layout: CoverageColumnLayout) => void;
+}) {
+  const { t } = useTranslation('build');
+  const baseBtn =
+    'cursor-pointer rounded-md px-2 py-1 text-[10px] font-medium leading-none transition-colors';
+  const activeBtn = `${baseBtn} bg-white/12 text-white ring-1 ring-white/20`;
+  const idleBtn = `${baseBtn} text-muted hover:bg-white/[0.06] hover:text-white`;
+
+  return (
+    <div
+      className="inline-flex shrink-0 items-center gap-0.5 rounded-lg bg-white/[0.03] p-0.5 ring-1 ring-white/10"
+      role="group"
+      aria-label={t('coverage.columnLayoutToggle')}
+      title={t('coverage.columnLayoutGroupHint')}
+    >
+      <button
+        type="button"
+        className={layout === 'split' ? activeBtn : idleBtn}
+        aria-pressed={layout === 'split'}
+        onClick={() => onChange('split')}
+      >
+        {t('coverage.columnLayoutSplit')}
+      </button>
+      <button
+        type="button"
+        className={layout === 'group' ? activeBtn : idleBtn}
+        aria-pressed={layout === 'group'}
+        onClick={() => onChange('group')}
+      >
+        {t('coverage.columnLayoutGroup')}
+      </button>
     </div>
   );
 }
@@ -430,14 +551,21 @@ const LOADOUT_COLUMN_SELECTOR = '[data-loadout-column]';
 function PiecePickerMetaLine({
   piece,
   isSetTarget = false,
+  showTertiary = false,
+  showTuning = false,
 }: {
   piece: ArmorPiece;
   isSetTarget?: boolean;
+  showTertiary?: boolean;
+  showTuning?: boolean;
 }) {
   const setName = piece.armorSet?.name;
   const tierLabel = hasDisplayTier(piece.tier) ? formatArmorTierBadge(piece.tier) : null;
+  const tertiaryLabel = showTertiary ? rollTertiaryStatLabelCopy(piece.tertiaryStat) : null;
+  const tuningLabel =
+    showTuning && piece.tuningStat ? rollTuningStatLabelCopy(piece.tuningStat) : null;
 
-  if (!tierLabel && !setName) {
+  if (!tierLabel && !setName && !tertiaryLabel && !tuningLabel) {
     return null;
   }
 
@@ -446,6 +574,24 @@ function PiecePickerMetaLine({
       {tierLabel && (
         <span className="shrink-0 tabular-nums" title={`Tier ${piece.tier}`}>
           {tierLabel}
+        </span>
+      )}
+      {tertiaryLabel && (
+        <span
+          className="inline-flex min-w-0 shrink-0 items-center gap-1"
+          title={tertiaryLabel}
+        >
+          <StatIcon stat={piece.tertiaryStat} size="sm" variant="glyph" />
+          <span>{tertiaryLabel}</span>
+        </span>
+      )}
+      {tuningLabel && piece.tuningStat && (
+        <span
+          className="inline-flex min-w-0 shrink-0 items-center gap-1"
+          title={tuningLabel}
+        >
+          <StatIcon stat={piece.tuningStat} size="sm" variant="glyph" />
+          <span>{tuningLabel}</span>
         </span>
       )}
       {setName && (
@@ -466,10 +612,54 @@ function PiecePickerMetaLine({
   );
 }
 
+function SlotRowMetaLine({
+  piece,
+  isNearMatch,
+  nearMatchTitle,
+  isSetTarget = false,
+  showTertiaryLabel = false,
+  showTuningLabel = false,
+}: {
+  piece: ArmorPiece;
+  isNearMatch: boolean;
+  nearMatchTitle?: string;
+  isSetTarget?: boolean;
+  showTertiaryLabel?: boolean;
+  showTuningLabel?: boolean;
+}) {
+  if (isNearMatch) {
+    return (
+      <div className={LOADOUT_META_LINE_CLASS}>
+        {piece.tertiaryStat && showTertiaryLabel && (
+          <span className="text-xs text-muted" title={rollTertiaryStatLabelCopy(piece.tertiaryStat)}>
+            {rollTertiaryStatLabelCopy(piece.tertiaryStat)}
+          </span>
+        )}
+        {piece.tuningStat && (
+          <span className="text-xs text-muted" title={nearMatchTitle}>
+            {rollTuningStatLabelCopy(piece.tuningStat)}
+          </span>
+        )}
+        <NearMatchTuneIndicator title={nearMatchTitle} />
+      </div>
+    );
+  }
+
+  return (
+    <PiecePickerMetaLine
+      piece={piece}
+      isSetTarget={isSetTarget}
+      showTertiary={showTertiaryLabel}
+      showTuning={showTuningLabel}
+    />
+  );
+}
+
 function SlotPiecePickerMenu({
   open,
   anchorRef,
   slot,
+  pattern,
   eligiblePieces,
   selectedInstanceId,
   onSelectPiece,
@@ -477,10 +667,13 @@ function SlotPiecePickerMenu({
   onToggleFavorite,
   onToggleJunk,
   onClose,
+  showTuningAlways = false,
+  showTertiaryAlways = false,
 }: {
   open: boolean;
   anchorRef: React.RefObject<HTMLButtonElement | null>;
   slot: ArmorSlot;
+  pattern: OptimalRollPattern;
   eligiblePieces: EligibleLoadoutPiece[];
   selectedInstanceId: string;
   onSelectPiece: (instanceId: string) => void;
@@ -488,11 +681,21 @@ function SlotPiecePickerMenu({
   onToggleFavorite: (piece: ArmorPiece) => void;
   onToggleJunk: (piece: ArmorPiece) => void;
   onClose: () => void;
+  showTuningAlways?: boolean;
+  showTertiaryAlways?: boolean;
 }) {
   const { t } = useTranslation('build');
   const menuRef = useRef<HTMLDivElement>(null);
   const listId = useId();
   const displayPieces = orderEligiblePiecesForSlotPicker(eligiblePieces);
+  const showFlexTertiary = pattern.tertiaryStat === null;
+  const duplicateNameCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const { piece } of eligiblePieces) {
+      counts.set(piece.name, (counts.get(piece.name) ?? 0) + 1);
+    }
+    return counts;
+  }, [eligiblePieces]);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [menuWidthPx, setMenuWidthPx] = useState(0);
 
@@ -584,6 +787,9 @@ function SlotPiecePickerMenu({
       <ul className="overflow-y-auto flex-1 min-h-0">
         {displayPieces.map(({ piece: altPiece }) => {
           const selected = altPiece.instanceId === selectedInstanceId;
+          const showTuning =
+            showTuningAlways || (duplicateNameCounts.get(altPiece.name) ?? 0) > 1;
+          const showTertiary = showTertiaryAlways || showFlexTertiary;
           const selectRow = () => {
             onSelectPiece(altPiece.instanceId);
             onClose();
@@ -621,7 +827,11 @@ function SlotPiecePickerMenu({
                     {altPiece.name}
                   </span>
                   <div className={LOADOUT_META_LINE_CLASS}>
-                    <PiecePickerMetaLine piece={altPiece} />
+                    <PiecePickerMetaLine
+                      piece={altPiece}
+                      showTertiary={showTertiary}
+                      showTuning={showTuning}
+                    />
                   </div>
                 </div>
                 <PatternLoadoutActionGrid
@@ -712,7 +922,7 @@ function PatternLoadoutActionGrid({
   onToggleJunk,
 }: {
   piece?: ArmorPiece;
-  mode: 'full' | 'dim-only' | 'empty';
+  mode: 'full' | 'empty';
   railVariant?: 'slot' | 'picker';
   hasAlternatives: boolean;
   eligibleCount: number;
@@ -755,53 +965,40 @@ function PatternLoadoutActionGrid({
   const isTaggedKeep = tagActionKeepActive(piece);
   const isTaggedJunk = tagActionJunkActive(piece);
   const dimFavorite = tagActionFavoriteActive(piece);
-  const dimOnly = mode === 'dim-only';
 
   return (
     <div className={LOADOUT_ACTION_GRID_CLASS} style={railStyle} {...isolateActivation}>
-      <div className={`${LOADOUT_ACTION_CELL_CLASS} ${dimOnly ? 'opacity-55' : ''}`}>
+      <div className={LOADOUT_ACTION_CELL_CLASS}>
         <CopyDimQueryButton compact instanceId={piece.instanceId} itemName={piece.name} />
       </div>
-      {dimOnly ? (
-        <LoadoutActionIconPlaceholder />
-      ) : (
-        <div className={LOADOUT_ACTION_CELL_CLASS}>
-          <TagActionButton
-            compact
-            tag="keep"
-            active={isTaggedKeep}
-            title={isTaggedKeep ? t('coverage.tagKeepRemove') : t('coverage.tagKeep')}
-            onClick={() => onToggleKeep(piece)}
-          />
-        </div>
-      )}
-      {dimOnly ? (
-        <LoadoutActionIconPlaceholder />
-      ) : (
-        <div className={LOADOUT_ACTION_CELL_CLASS}>
-          <TagActionButton
-            compact
-            tag="favorite"
-            active={dimFavorite}
-            locked={dimFavorite}
-            title={dimFavorite ? t('coverage.tagFavoriteAlready') : t('coverage.tagFavorite')}
-            onClick={() => onToggleFavorite(piece)}
-          />
-        </div>
-      )}
-      {dimOnly ? (
-        <LoadoutActionIconPlaceholder />
-      ) : (
-        <div className={LOADOUT_ACTION_CELL_CLASS}>
-          <TagActionButton
-            compact
-            tag="junk"
-            active={isTaggedJunk}
-            title={isTaggedJunk ? t('coverage.tagJunkRemove') : t('coverage.tagJunk')}
-            onClick={() => onToggleJunk(piece)}
-          />
-        </div>
-      )}
+      <div className={LOADOUT_ACTION_CELL_CLASS}>
+        <TagActionButton
+          compact
+          tag="keep"
+          active={isTaggedKeep}
+          title={isTaggedKeep ? t('coverage.tagKeepRemove') : t('coverage.tagKeep')}
+          onClick={() => onToggleKeep(piece)}
+        />
+      </div>
+      <div className={LOADOUT_ACTION_CELL_CLASS}>
+        <TagActionButton
+          compact
+          tag="favorite"
+          active={dimFavorite}
+          locked={dimFavorite}
+          title={dimFavorite ? t('coverage.tagFavoriteAlready') : t('coverage.tagFavorite')}
+          onClick={() => onToggleFavorite(piece)}
+        />
+      </div>
+      <div className={LOADOUT_ACTION_CELL_CLASS}>
+        <TagActionButton
+          compact
+          tag="junk"
+          active={isTaggedJunk}
+          title={isTaggedJunk ? t('coverage.tagJunkRemove') : t('coverage.tagJunk')}
+          onClick={() => onToggleJunk(piece)}
+        />
+      </div>
       {!isPickerRail &&
         (hasAlternatives ? (
           <div className={LOADOUT_ACTION_CHOOSE_CELL_CLASS}>
@@ -846,6 +1043,10 @@ function PatternSlotRow({
   columnGoldTitle,
   columnComboTitle,
   nearMatchTitle,
+  showTuningLabel = false,
+  showTertiaryLabel = false,
+  pickerShowTuningAlways = false,
+  pickerShowTertiaryAlways = false,
 }: {
   slotEntry: PatternSlotLoadoutEntry;
   pattern: OptimalRollPattern;
@@ -865,6 +1066,10 @@ function PatternSlotRow({
   columnGoldTitle?: string;
   columnComboTitle?: string;
   nearMatchTitle?: string;
+  showTuningLabel?: boolean;
+  showTertiaryLabel?: boolean;
+  pickerShowTuningAlways?: boolean;
+  pickerShowTertiaryAlways?: boolean;
 }) {
   const { slot } = slotEntry;
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -968,17 +1173,20 @@ function PatternSlotRow({
             {piece.name}
           </span>
           <div className={LOADOUT_META_LINE_CLASS}>
-            {isNearMatch ? (
-              <NearMatchTuneIndicator title={nearMatchTitle} />
-            ) : (
-              <PiecePickerMetaLine piece={piece} isSetTarget={pieceIsSetTarget} />
-            )}
+            <SlotRowMetaLine
+              piece={piece}
+              isNearMatch={isNearMatch}
+              nearMatchTitle={nearMatchTitle}
+              isSetTarget={pieceIsSetTarget}
+              showTertiaryLabel={showTertiaryLabel}
+              showTuningLabel={showTuningLabel}
+            />
           </div>
         </div>
 
         <PatternLoadoutActionGrid
           piece={piece}
-          mode={isNearMatch ? 'dim-only' : 'full'}
+          mode="full"
           hasAlternatives={hasAlternatives}
           eligibleCount={eligiblePieces.length}
           pickerOpen={pickerOpen}
@@ -995,6 +1203,7 @@ function PatternSlotRow({
           open={pickerOpen}
           anchorRef={pickerTriggerRef}
           slot={slot}
+          pattern={pattern}
           eligiblePieces={eligiblePieces}
           selectedInstanceId={piece.instanceId}
           onSelectPiece={onSelectPiece}
@@ -1002,6 +1211,8 @@ function PatternSlotRow({
           onToggleFavorite={onToggleFavorite}
           onToggleJunk={onToggleJunk}
           onClose={() => setPickerOpen(false)}
+          showTuningAlways={pickerShowTuningAlways}
+          showTertiaryAlways={pickerShowTertiaryAlways}
         />
       )}
     </div>
@@ -1097,6 +1308,93 @@ const RollPatternColumn = memo(function RollPatternColumn({
   );
 });
 
+const GroupedRollPatternColumn = memo(function GroupedRollPatternColumn({
+  group,
+  focusStats,
+  items,
+  mergedRows,
+  eligibleBySlot,
+  columnRowsByKey,
+  onSelectSlotPiece,
+  onToggleKeep,
+  onToggleFavorite,
+  onToggleJunk,
+  setTargets,
+  globalGoldPlacements,
+  setHash,
+  setName,
+}: {
+  group: PatternColumnGroup;
+  focusStats: Stat[];
+  items: ArmorPiece[];
+  mergedRows: ReturnType<typeof buildMergedGroupedSlotRows>;
+  eligibleBySlot: Partial<Record<ArmorSlot, EligibleLoadoutPiece[]>>;
+  columnRowsByKey: Partial<Record<string, PatternColumnSlotRow[]>>;
+  onSelectSlotPiece: (slot: ArmorSlot, instanceId: string) => void;
+  onToggleKeep: (piece: ArmorPiece) => void;
+  onToggleFavorite: (piece: ArmorPiece) => void;
+  onToggleJunk: (piece: ArmorPiece) => void;
+  setTargets: ReturnType<typeof parseSetBonusTargets>;
+  globalGoldPlacements: ReadonlySet<string>;
+  setHash?: number;
+  setName?: string;
+}) {
+  const slotsFilled = countGroupPerfectSlots(group, columnRowsByKey);
+  const hasAnyPiece = mergedRows.some((row) => row.displayPiece !== null);
+
+  return (
+    <div
+      data-loadout-column
+      className={`grid min-w-0 rounded-xl bg-surface/50 ring-1 ${hasAnyPiece ? 'ring-white/10' : 'ring-white/7'} backdrop-blur-sm`}
+      style={rollPatternLoadoutCollapsedColumnGridStyle()}
+    >
+      <div className="flex min-h-0 flex-col justify-center overflow-hidden border-b border-white/10 px-3 py-1.5">
+        <CollapsedRollPatternColumnHeader
+          headerPattern={group.headerPattern}
+          slotsFilled={slotsFilled}
+          setName={setName}
+          setHash={setHash}
+          items={items}
+        />
+      </div>
+
+      {mergedRows.map((row) => {
+        const topGold =
+          row.topGold && globalGoldPlacements.has(`${row.sourceColumnKey}|${row.slotEntry.slot}`);
+        return (
+          <PatternSlotRow
+            key={row.slotEntry.slot}
+            slotEntry={row.slotEntry}
+            pattern={row.sourcePattern}
+            priorities={focusStats}
+            setName={setName}
+            displayPiece={row.displayPiece}
+            matchTier={row.matchTier}
+            eligiblePieces={eligibleBySlot[row.slotEntry.slot] ?? []}
+            onSelectPiece={(instanceId) => onSelectSlotPiece(row.slotEntry.slot, instanceId)}
+            onToggleKeep={onToggleKeep}
+            onToggleFavorite={onToggleFavorite}
+            onToggleJunk={onToggleJunk}
+            isSetTargetPiece={
+              row.matchTier === 'perfect' && isSetTargetPiece(row.displayPiece, setTargets)
+            }
+            isTopGoldColumnPiece={topGold}
+            showColumnComboBadge={row.showComboBadge}
+            columnComboBadgeCount={row.comboBadgeCount}
+            columnGoldTitle={topGold ? row.columnGoldTitle : undefined}
+            columnComboTitle={row.columnComboTitle}
+            nearMatchTitle={row.nearMatchTitle}
+            showTertiaryLabel
+            showTuningLabel
+            pickerShowTertiaryAlways
+            pickerShowTuningAlways
+          />
+        );
+      })}
+    </div>
+  );
+});
+
 export function BuildCoveragePanel({
   classState,
   classType,
@@ -1134,6 +1432,14 @@ export function BuildCoveragePanel({
     [searchParams, enabledBuilds, classType],
   );
   const [showDetails, setShowDetails] = useState(false);
+  const [columnLayout, setColumnLayout] = useState<CoverageColumnLayout>(() =>
+    readCoverageColumnLayout(),
+  );
+
+  const setColumnLayoutPreference = useCallback((layout: CoverageColumnLayout) => {
+    setColumnLayout(layout);
+    writeCoverageColumnLayout(layout);
+  }, []);
 
   useEffect(() => {
     const param = searchParams.get(BUILD_QUERY_PARAM);
@@ -1457,6 +1763,17 @@ export function BuildCoveragePanel({
     [applyTagDirect],
   );
 
+  const canGroupPatternColumns = useMemo(
+    () =>
+      loadoutSetRows.some((setRow) =>
+        patternSetRowColumnsAreCollapsible(setRow.columns),
+      ),
+    [loadoutSetRows],
+  );
+
+  const effectiveColumnLayout: CoverageColumnLayout =
+    canGroupPatternColumns && columnLayout === 'group' ? 'group' : 'split';
+
   if (!hasSavedBuilds) {
     return (
       <section className="mb-10 min-w-0 rounded-2xl bg-surface/60 px-4 py-4 sm:px-5 ring-1 ring-white/8">
@@ -1535,6 +1852,12 @@ export function BuildCoveragePanel({
             <p className="mt-0.5 text-[10px] text-muted">{t('coverage.recommendedHint')}</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
+            {canGroupPatternColumns && (
+              <ColumnLayoutToggle
+                layout={effectiveColumnLayout}
+                onChange={setColumnLayoutPreference}
+              />
+            )}
             <RecommendedPiecesBulkActions
               dimCopyInstanceIds={recommendedDimCopyInstanceIds}
               taggablePieces={recommendedTaggablePieces}
@@ -1607,41 +1930,111 @@ export function BuildCoveragePanel({
           </div>
         )}
         <div className="flex min-w-0 flex-col gap-4">
-          {loadoutSetRows.map((setRow) => (
-            <div
-              key={setRow.setKey}
-              className={`grid min-w-0 items-stretch gap-3.5 ${rollPatternColumnsGridClass()}`}
-              style={rollPatternLoadoutSetRowStyle(setRow.columns.length)}
-            >
-              {setRow.columns.map((column) => (
-                  <RollPatternColumn
-                    key={column.columnKey}
-                    columnKey={column.columnKey}
-                    pattern={column.pattern}
-                    focusStats={focusStats}
-                    items={classState.items}
-                    rows={columnRowsByKey[column.columnKey] ?? []}
-                    eligibleBySlot={patternEligibleBySlot[column.columnKey] ?? {}}
-                    onSelectSlotPiece={(slot, instanceId) =>
-                      persistPatternSlotRepresentative(
-                        column.columnKey,
-                        column.patternKey,
-                        slot,
-                        instanceId,
+          {loadoutSetRows.map((setRow) => {
+            const collapsedGroup = groupPatternLoadoutColumnsIntoOne(setRow.columns);
+            const displayUnits =
+              effectiveColumnLayout === 'group'
+                ? [
+                    {
+                      key: collapsedGroup.groupKey,
+                      kind: 'group' as const,
+                      group: collapsedGroup,
+                      columnCount: setRow.columns.length,
+                    },
+                  ]
+                : setRow.columns.map((column) => ({
+                    key: column.columnKey,
+                    kind: 'split' as const,
+                    column,
+                    columnCount: 1,
+                  }));
+            const showOverallCoverage = displayUnits.length > 1;
+            const overallFilled = showOverallCoverage
+              ? countOverallPerfectSlotsInSetRow(setRow.columns, columnRowsByKey)
+              : 0;
+            return (
+              <div key={setRow.setKey} className="flex min-w-0 flex-col gap-1.5">
+                {showOverallCoverage && (
+                  <p className="text-sm font-medium tabular-nums text-white/80">
+                    {t('coverage.overallCoverage', { filled: overallFilled, total: 5 })}
+                  </p>
+                )}
+                <div
+                  className={`grid min-w-0 items-stretch gap-3.5 ${rollPatternColumnsGridClass()}`}
+                  style={rollPatternLoadoutSetRowStyle(displayUnits.length)}
+                >
+                  {effectiveColumnLayout === 'group'
+                    ? (
+                        <GroupedRollPatternColumn
+                          key={collapsedGroup.groupKey}
+                          group={collapsedGroup}
+                          focusStats={focusStats}
+                          items={classState.items}
+                          mergedRows={buildMergedGroupedSlotRows(
+                            collapsedGroup,
+                            columnRowsByKey,
+                          )}
+                          eligibleBySlot={mergeGroupedEligibleBySlot(
+                            collapsedGroup,
+                            patternEligibleBySlot,
+                            focusStats,
+                            setTargets,
+                          )}
+                          columnRowsByKey={columnRowsByKey}
+                          onSelectSlotPiece={(slot, instanceId) => {
+                            const targetColumn = resolveGroupedSlotSelectionColumn(
+                              collapsedGroup,
+                              slot,
+                              instanceId,
+                              patternEligibleBySlot,
+                            );
+                            persistPatternSlotRepresentative(
+                              targetColumn.columnKey,
+                              targetColumn.patternKey,
+                              slot,
+                              instanceId,
+                            );
+                          }}
+                          onToggleKeep={toggleKeep}
+                          onToggleFavorite={toggleFavorite}
+                          onToggleJunk={toggleJunk}
+                          setTargets={setTargets}
+                          globalGoldPlacements={globalGoldPlacements}
+                          setHash={setRow.setHash}
+                          setName={setRow.setName}
+                        />
                       )
-                    }
-                    onToggleKeep={toggleKeep}
-                    onToggleFavorite={toggleFavorite}
-                    onToggleJunk={toggleJunk}
-                    setTargets={setTargets}
-                    globalGoldPlacements={globalGoldPlacements}
-                    setHash={column.setHash}
-                    setName={column.setName}
-                    splitRollChips={shouldSplitRollChipsInSetRow(setRow.columns)}
-                  />
-              ))}
-            </div>
-          ))}
+                    : setRow.columns.map((column) => (
+                        <RollPatternColumn
+                          key={column.columnKey}
+                          columnKey={column.columnKey}
+                          pattern={column.pattern}
+                          focusStats={focusStats}
+                          items={classState.items}
+                          rows={columnRowsByKey[column.columnKey] ?? []}
+                          eligibleBySlot={patternEligibleBySlot[column.columnKey] ?? {}}
+                          onSelectSlotPiece={(slot, instanceId) =>
+                            persistPatternSlotRepresentative(
+                              column.columnKey,
+                              column.patternKey,
+                              slot,
+                              instanceId,
+                            )
+                          }
+                          onToggleKeep={toggleKeep}
+                          onToggleFavorite={toggleFavorite}
+                          onToggleJunk={toggleJunk}
+                          setTargets={setTargets}
+                          globalGoldPlacements={globalGoldPlacements}
+                          setHash={column.setHash}
+                          setName={column.setName}
+                          splitRollChips={shouldSplitRollChipsInSetRow(setRow.columns)}
+                        />
+                      ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 

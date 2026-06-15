@@ -41,10 +41,10 @@ const meleeSuperTargets = [
 ];
 
 const meleeSuperOptimalRoll = {
-  archetype: 'paragon' as const,
-  tertiaryStat: 'weapons' as const,
+  archetype: 'brawler' as const,
+  tertiaryStat: 'super' as const,
   tuningStat: 'melee' as const,
-  baseStats: { super: 30, melee: 25, weapons: 20 },
+  baseStats: { melee: 30, health: 25, super: 20 },
 };
 
 describe('buildReadinessForSlot', () => {

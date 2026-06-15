@@ -205,7 +205,16 @@
       "gapAllPriorities": "모든 우선순위 일치",
       "gapMultiplePriorities": "여러 우선순위 일치",
       "gapOnePriority": "한 우선순위 일치",
-      "chooseEligibleTitle": "금고 후보 {{count}}개"
+      "chooseEligibleTitle": "금고 후보 {{count}}개",
+      "columnTitleArchetype": "{{archetype}} · {{tuning}}",
+      "columnTitleAnyArchetype": "{{anyArchetype}} · {{tuning}}",
+      "nearMatchTuningTooltip": "Wrong tuning · has {{actual}}, need {{expected}}",
+      "overallCoverage": "Overall · {{filled}}/{{total}} slots",
+      "rollRoleAnyTertiary": "any tertiary",
+      "columnLayoutToggle": "Recommended pieces layout",
+      "columnLayoutSplit": "Expand",
+      "columnLayoutGroup": "Collapse",
+      "columnLayoutGroupHint": "Collapse roll patterns into one card per set"
     }
   },
   "calibrate": {
@@ -1039,3 +1048,4 @@
     "dupeRulesImpact": "영향을 보려면 금고를 불러오세요."
   }
 }
+

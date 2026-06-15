@@ -5,6 +5,14 @@ import {
   tertiaryStatsForArchetype,
 } from '@/lib/constants';
 import { MASTERWORK_STAT_BONUS } from '@/lib/armor/effectiveStats';
+import {
+  enumerateValidRollShapes,
+  maxPrioritySlotScore,
+  optimalArchetypesForTertiaryPush,
+  optimalEnumeratedRollShapes,
+  piecePrioritySlotScore,
+  rollShapeCoversAllPriorities,
+} from '@/lib/coverage/prioritySlotScore';
 import type { Archetype, ArmorPiece, ArmorSlot, Stat, StatTarget } from '@/types';
 
 /**
@@ -134,39 +142,14 @@ export function canonicalCombinedPriorityTotal(
   );
 }
 
-function multiPriorityShapeFits(
+function isValidRollShape(
   archetype: Archetype,
   tertiaryStat: Stat,
   tuningStat: Stat | undefined,
   priorities: Stat[],
 ): boolean {
-  const synthetic = {
-    archetype,
-    tertiaryStat,
-    tuningStat,
-  } as Pick<ArmorPiece, 'archetype' | 'tertiaryStat' | 'tuningStat'>;
-
-  const fits = priorities.map((stat) =>
-    pieceTuningFit(synthetic as ArmorPiece, stat),
-  );
-  if (fits.some((f) => f.level === 'none')) return false;
-
-  const tertiaryPushes = fits.filter((f) => f.tertiaryMatch);
-
-  if (tertiaryPushes.length === 1) {
-    for (const fit of fits) {
-      if (fit.tertiaryMatch) continue;
-      if (!fit.intrinsicMatch || fit.tertiaryMatch) return false;
-    }
-    return true;
-  }
-
-  // Monument archetypes whose intrinsics cover every build priority (e.g. Powerhouse for Weapons+Super).
-  if (tertiaryPushes.length === 0) {
-    return fits.every((fit) => fit.intrinsicMatch && !fit.tertiaryMatch);
-  }
-
-  return false;
+  if (tuningStat !== undefined && !priorities.includes(tuningStat)) return false;
+  return rollShapeCoversAllPriorities(archetype, tertiaryStat, tuningStat, priorities);
 }
 
 /** Best combined priority total reachable on a valid multi-priority roll shape. */
@@ -177,7 +160,7 @@ export function maxCanonicalCombinedPriorityTotal(priorities: Stat[]): number {
   for (const archetype of ARCHETYPES) {
     for (const tertiaryStat of tertiaryStatsForArchetype(archetype)) {
       for (const tuningStat of [...priorities, undefined] as (Stat | undefined)[]) {
-        if (!multiPriorityShapeFits(archetype, tertiaryStat, tuningStat, priorities)) {
+        if (!isValidRollShape(archetype, tertiaryStat, tuningStat, priorities)) {
           continue;
         }
         max = Math.max(
@@ -190,45 +173,21 @@ export function maxCanonicalCombinedPriorityTotal(priorities: Stat[]): number {
   return max;
 }
 
-/** Archetypes that maximize combined priority stats when tertiary pushes `pushedStat`. */
+/** Archetypes that maximize slot affinity when tertiary pushes `pushedStat`. */
 export function optimalArchetypesForPush(
   pushedStat: Stat,
   priorities: Stat[],
 ): Archetype[] {
-  if (priorities.length < 2) return [];
-
-  const maxTotal = maxCanonicalCombinedPriorityTotal(priorities);
-  const matches: Archetype[] = [];
-
-  for (const archetype of ARCHETYPES) {
-    if (!tertiaryStatsForArchetype(archetype).includes(pushedStat)) continue;
-
-    let archetypeMax = 0;
-    for (const tuningStat of [...priorities, undefined] as (Stat | undefined)[]) {
-      if (!multiPriorityShapeFits(archetype, pushedStat, tuningStat, priorities)) continue;
-      archetypeMax = Math.max(
-        archetypeMax,
-        canonicalCombinedPriorityTotal(archetype, pushedStat, tuningStat, priorities),
-      );
-    }
-
-    if (archetypeMax === maxTotal && archetypeMax > 0) {
-      matches.push(archetype);
-    }
-  }
-
-  return matches;
+  return optimalArchetypesForTertiaryPush(pushedStat, priorities);
 }
 
 /** Max-budget archetype + tertiary pairs for multi-priority builds. */
 export interface OptimalRollShape {
   archetype: Archetype;
-  /** Priority stat on tertiary, or any valid tertiary for dual-intrinsic monument shapes. */
-  tertiaryStat: Stat;
-}
-
-function dualIntrinsicArchetypesForPriorities(priorities: Stat[]): Archetype[] {
-  return ARCHETYPES.filter((archetype) => prioritiesCoveredByArchetypeIntrinsics(archetype, priorities));
+  /** Priority stat on tertiary when it matters for the build. */
+  tertiaryStat?: Stat;
+  /** Both build priorities come from archetype intrinsics; any valid tertiary works. */
+  flexTertiary?: boolean;
 }
 
 /** True when every build priority is on the archetype intrinsic pair. */
@@ -241,82 +200,84 @@ export function prioritiesCoveredByArchetypeIntrinsics(
   return priorities.every((stat) => intrinsic.has(stat));
 }
 
-/** Exact or flexible tertiary match for dual-intrinsic monument shapes. */
+/** Exact or flexible tertiary match for a roll shape. */
 export function rollShapeTertiaryMatches(
   item: Pick<ArmorPiece, 'archetype' | 'tertiaryStat'>,
-  shape: Pick<OptimalRollShape, 'archetype' | 'tertiaryStat'>,
-  priorities: Stat[],
+  shape: Pick<OptimalRollShape, 'archetype' | 'tertiaryStat' | 'flexTertiary'>,
+  _priorities: Stat[],
 ): boolean {
   if (item.archetype !== shape.archetype) return false;
-  if (item.tertiaryStat === shape.tertiaryStat) return true;
-  if (!prioritiesCoveredByArchetypeIntrinsics(shape.archetype, priorities)) return false;
-  return tertiaryStatsForArchetype(item.archetype).includes(item.tertiaryStat);
-}
-
-/** Max-budget tertiary lines when every build priority comes from the archetype intrinsics. */
-function optimalDualIntrinsicRollShapes(priorities: Stat[]): OptimalRollShape[] {
-  const maxTotal = maxCanonicalCombinedPriorityTotal(priorities);
-  const shapes: OptimalRollShape[] = [];
-
-  for (const archetype of dualIntrinsicArchetypesForPriorities(priorities)) {
-    const tiedTertiaries: Stat[] = [];
-    let archetypeMax = 0;
-
-    for (const tertiaryStat of tertiaryStatsForArchetype(archetype)) {
-      for (const tuningStat of [...priorities, undefined] as (Stat | undefined)[]) {
-        if (!multiPriorityShapeFits(archetype, tertiaryStat, tuningStat, priorities)) continue;
-        const total = canonicalCombinedPriorityTotal(
-          archetype,
-          tertiaryStat,
-          tuningStat,
-          priorities,
-        );
-        if (total > archetypeMax) {
-          archetypeMax = total;
-          tiedTertiaries.length = 0;
-          tiedTertiaries.push(tertiaryStat);
-        } else if (total === archetypeMax && total > 0 && !tiedTertiaries.includes(tertiaryStat)) {
-          tiedTertiaries.push(tertiaryStat);
-        }
-      }
-    }
-
-    if (archetypeMax !== maxTotal || archetypeMax <= 0) continue;
-    const representative = tiedTertiaries[0];
-    if (representative) shapes.push({ archetype, tertiaryStat: representative });
+  if (shape.flexTertiary) {
+    return tertiaryStatsForArchetype(item.archetype).includes(item.tertiaryStat);
   }
-
-  return shapes;
+  return item.tertiaryStat === shape.tertiaryStat;
 }
 
-/**
- * All tied-max roll shapes: tertiary on one priority, others from archetype intrinsics,
- * plus dual-intrinsic monument archetypes when every priority is on the archetype pair.
- * Tuning on actual pieces must be one of the build priorities (when present).
- */
+function enumeratedToOptimalShape(
+  shape: ReturnType<typeof optimalEnumeratedRollShapes>[number],
+): OptimalRollShape {
+  if (shape.flexTertiary) {
+    return { archetype: shape.archetype, flexTertiary: true };
+  }
+  return { archetype: shape.archetype, tertiaryStat: shape.tertiaryStat! };
+}
+
+/** Max unified slot-score roll shapes (deduped by archetype + tertiary identity). */
 export function computeOptimalRollShapes(priorities: Stat[]): OptimalRollShape[] {
   if (priorities.length < 2) return [];
 
   const seen = new Set<string>();
   const shapes: OptimalRollShape[] = [];
-  const addShape = (archetype: Archetype, tertiaryStat: Stat) => {
-    const key = `${archetype}:${tertiaryStat}`;
-    if (seen.has(key)) return;
+
+  for (const shape of optimalEnumeratedRollShapes(priorities)) {
+    const key = shape.flexTertiary
+      ? `${shape.archetype}:flex`
+      : `${shape.archetype}:${shape.tertiaryStat}`;
+    if (seen.has(key)) continue;
     seen.add(key);
-    shapes.push({ archetype, tertiaryStat });
-  };
-
-  for (const tertiaryStat of priorities) {
-    for (const archetype of optimalArchetypesForPush(tertiaryStat, priorities)) {
-      addShape(archetype, tertiaryStat);
-    }
-  }
-
-  for (const shape of optimalDualIntrinsicRollShapes(priorities)) {
-    addShape(shape.archetype, shape.tertiaryStat);
+    shapes.push(enumeratedToOptimalShape(shape));
   }
 
   return shapes;
+}
+
+/** Every valid roll shape, including split-push archetypes below max slot score. */
+export function computeViableRollShapes(priorities: Stat[]): OptimalRollShape[] {
+  if (priorities.length < 2) return [];
+
+  const seen = new Set<string>();
+  const shapes: OptimalRollShape[] = [];
+
+  for (const shape of enumerateValidRollShapes(priorities)) {
+    const key = shape.flexTertiary
+      ? `${shape.archetype}:flex`
+      : `${shape.archetype}:${shape.tertiaryStat}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    shapes.push(enumeratedToOptimalShape(shape));
+  }
+
+  return shapes;
+}
+
+/** Max unified priority-slot score for a build (re-exported for tests and UI). */
+export { maxPrioritySlotScore, piecePrioritySlotScore };
+
+/** Whether a piece matches any viable (not necessarily max-budget) combo roll shape. */
+export function isViableComboLoadoutPiece(item: ArmorPiece, priorities: Stat[]): boolean {
+  if (priorities.length === 0) return false;
+
+  if (priorities.length === 1) {
+    return isBestTierLoadoutPiece(item, priorities);
+  }
+
+  if (!isTuningValidForBuildPriorities(item.tuningStat, priorities)) {
+    return false;
+  }
+
+  return computeViableRollShapes(priorities).some((shape) =>
+    rollShapeTertiaryMatches(item, shape, priorities),
+  );
 }
 
 /** When present, tuning must be one of the build's 2–4 priority stats. */

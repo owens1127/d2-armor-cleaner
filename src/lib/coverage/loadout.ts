@@ -1,11 +1,15 @@
+import { i18n } from '@/i18n';
 import { MASTERWORK_STAT_BONUS } from '@/lib/armor/effectiveStats';
-import { ARCHETYPE_STATS, ARMOR_SLOTS, STATS } from '@/lib/constants';
+import { ARCHETYPE_STATS, ARMOR_SLOTS, STATS, tertiaryStatsForArchetype } from '@/lib/constants';
 import { statLabel, archetypeLabel, slotLabel } from '@/i18n/gameCopy';
 import { intrinsicStats } from '@/lib/armor/intrinsicCompare';
 import {
   computeOptimalRollShapes,
   formatBuildVerdict,
   isBestTierLoadoutPiece,
+  isViableComboLoadoutPiece,
+  maxPrioritySlotScore,
+  piecePrioritySlotScore,
   pieceTuningFit,
   priorityStatsFromTargets,
   rollShapeTertiaryMatches,
@@ -16,6 +20,7 @@ import {
   tuningFitScore,
   type BuildVerdict,
 } from '@/lib/coverage/achievability';
+import { enumerateValidRollShapes } from '@/lib/coverage/prioritySlotScore';
 import type { Archetype, ArmorPiece, ArmorSlot, Stat, StatTarget } from '@/types';
 import type { BuildProfile } from '@/lib/coverage/builds';
 import {
@@ -154,20 +159,40 @@ export function pieceLoadoutContribution(
 
 export interface OptimalRollPattern {
   archetype: Archetype | null;
-  tertiaryStat: Stat;
+  /** Null when both build priorities come from archetype intrinsics (any valid tertiary). */
+  tertiaryStat: Stat | null;
   tuningStat: Stat;
-  /** Priority stat on tertiary for this shape. */
+  /** Priority stat on tertiary for this shape, or tuning stat when tertiary is flexible. */
   idealStat: Stat;
   /** Compact plain-text label (aria, empty-slot copy). */
   label: string;
 }
 
-/** Stable key for persistence: `archetype:tertiary:tuning` (`any` when archetype is open). */
+/** Stable key for persistence: `archetype:tertiary:tuning` (`any` when archetype or tertiary is open). */
 export function optimalRollPatternKey(
   pattern: Pick<OptimalRollPattern, 'archetype' | 'tertiaryStat' | 'tuningStat'>,
 ): string {
   const archetype = pattern.archetype ?? 'any';
-  return `${archetype}:${pattern.tertiaryStat}:${pattern.tuningStat}`;
+  return `${archetype}:${pattern.tertiaryStat ?? 'any'}:${pattern.tuningStat}`;
+}
+
+/** Map legacy pinned-tertiary keys to current flex-tertiary pattern keys. */
+function resolvePatternForPersistenceKey(
+  patternKey: string,
+  patterns: OptimalRollPattern[],
+): OptimalRollPattern | undefined {
+  const exact = patterns.find((p) => optimalRollPatternKey(p) === patternKey);
+  if (exact) return exact;
+
+  const parts = patternKey.split(':');
+  if (parts.length !== 3) return undefined;
+  const [archetypeKey, , tuningStat] = parts;
+  return patterns.find(
+    (pattern) =>
+      (pattern.archetype ?? 'any') === archetypeKey &&
+      pattern.tuningStat === tuningStat &&
+      (pattern.tertiaryStat === null || pattern.tertiaryStat === parts[1]),
+  );
 }
 
 /** Persistence key for a roll-pattern column scoped to one target armor set. */
@@ -187,13 +212,13 @@ export function pieceMatchesRollPattern(
     return item.tertiaryStat === pattern.tertiaryStat;
   }
   if (priorities.length >= 2) {
-    return rollShapeTertiaryMatches(
-      item,
-      { archetype: pattern.archetype, tertiaryStat: pattern.tertiaryStat },
-      priorities,
-    );
+    const shape =
+      pattern.tertiaryStat === null
+        ? { archetype: pattern.archetype, flexTertiary: true as const }
+        : { archetype: pattern.archetype, tertiaryStat: pattern.tertiaryStat };
+    return rollShapeTertiaryMatches(item, shape, priorities);
   }
-  return item.tertiaryStat === pattern.tertiaryStat;
+  return pattern.tertiaryStat !== null && item.tertiaryStat === pattern.tertiaryStat;
 }
 
 /**
@@ -211,13 +236,13 @@ export function pieceMatchesNearRollPattern(
     return item.tertiaryStat === pattern.tertiaryStat;
   }
   if (priorities.length >= 2) {
-    return rollShapeTertiaryMatches(
-      item,
-      { archetype: pattern.archetype, tertiaryStat: pattern.tertiaryStat },
-      priorities,
-    );
+    const shape =
+      pattern.tertiaryStat === null
+        ? { archetype: pattern.archetype, flexTertiary: true as const }
+        : { archetype: pattern.archetype, tertiaryStat: pattern.tertiaryStat };
+    return rollShapeTertiaryMatches(item, shape, priorities);
   }
-  return item.tertiaryStat === pattern.tertiaryStat;
+  return pattern.tertiaryStat !== null && item.tertiaryStat === pattern.tertiaryStat;
 }
 
 /** Tooltip for a near-match piece shown dimmed in the combo grid. */
@@ -225,9 +250,10 @@ export function formatNearMatchTooltip(
   item: ArmorPiece,
   pattern: OptimalRollPattern,
 ): string {
-  const expected = statLabel(pattern.tuningStat);
-  const actual = item.tuningStat ? statLabel(item.tuningStat) : 'none';
-  return `Wrong tuning · has ${actual}, need ${expected}`;
+  return i18n.t('build:coverage.nearMatchTuningTooltip', {
+    actual: item.tuningStat ? statLabel(item.tuningStat) : i18n.t('game:roll.none'),
+    expected: statLabel(pattern.tuningStat),
+  });
 }
 
 /** Label for acceptable tuning on multi-priority builds (any priority stat). */
@@ -260,10 +286,20 @@ export interface RollPatternStatBonus {
 
 /** Display chips/labels for a pattern's tertiary and tuning - merged when same stat. */
 export function rollPatternStatBonuses(
-  tertiaryStat: Stat,
+  tertiaryStat: Stat | null,
   tuningStat: Stat,
   options?: { forceSplit?: boolean },
 ): RollPatternStatBonus[] {
+  if (tertiaryStat === null) {
+    return [
+      {
+        stat: tuningStat,
+        totalBonus: OPTIMAL_ROLL_TUNING_BONUS,
+        combined: false,
+        role: 'tuning',
+      },
+    ];
+  }
   if (!options?.forceSplit && tertiaryStat === tuningStat) {
     return [
       {
@@ -361,7 +397,10 @@ export function formatRollStatRoleLabel(stat: Stat, role: RollStatRole): string 
 }
 
 /** Tertiary + tuning roll line for a pattern (plain text). */
-export function formatPatternRollLine(tertiaryStat: Stat, tuningStat: Stat): string {
+export function formatPatternRollLine(tertiaryStat: Stat | null, tuningStat: Stat): string {
+  if (tertiaryStat === null) {
+    return `${i18n.t('build:coverage.rollRoleAnyTertiary')} · ${formatRollStatRoleLabel(tuningStat, 'tuning')}`;
+  }
   return rollPatternStatBonuses(tertiaryStat, tuningStat)
     .map(({ stat, role }) => formatRollStatRoleLabel(stat, role))
     .join(' · ');
@@ -381,7 +420,7 @@ export function formatArchetypeRollContext(archetype: Archetype, priorities: Sta
 /** One-line label for an optimal roll shape (archetype context + tertiary + tuning). */
 export function formatOptimalRollPatternLabel(
   archetype: Archetype | null,
-  tertiaryStat: Stat,
+  tertiaryStat: Stat | null,
   tuningStat: Stat,
   priorities: Stat[] = [],
 ): string {
@@ -502,17 +541,37 @@ export function deriveOptimalRollPatterns(priorities: Stat[]): OptimalRollPatter
   }
 
   const patterns: OptimalRollPattern[] = [];
-  for (const { archetype, tertiaryStat } of computeOptimalRollShapes(priorities)) {
-    for (const tuningStat of priorities) {
-      patterns.push({
-        archetype,
+  const validShapes = enumerateValidRollShapes(priorities);
+  const maxScore = maxPrioritySlotScore(priorities);
+  const optimalArchetypes = new Set(
+    validShapes.filter((shape) => shape.score === maxScore).map((shape) => shape.archetype),
+  );
+  const sortedShapes = validShapes.filter((shape) => optimalArchetypes.has(shape.archetype)).sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    const tuningIdxA = priorities.indexOf(a.tuningStat);
+    const tuningIdxB = priorities.indexOf(b.tuningStat);
+    if (tuningIdxA !== tuningIdxB) return tuningIdxA - tuningIdxB;
+    const keyA = a.flexTertiary ? `${a.archetype}:flex:${a.tuningStat}` : `${a.archetype}:${a.tertiaryStat}:${a.tuningStat}`;
+    const keyB = b.flexTertiary ? `${b.archetype}:flex:${b.tuningStat}` : `${b.archetype}:${b.tertiaryStat}:${b.tuningStat}`;
+    return keyA.localeCompare(keyB);
+  });
+
+  for (const shape of sortedShapes) {
+    const tertiaryStat = shape.flexTertiary ? null : shape.tertiaryStat!;
+    patterns.push({
+      archetype: shape.archetype,
+      tertiaryStat,
+      tuningStat: shape.tuningStat,
+      idealStat: tertiaryStat ?? shape.tuningStat,
+      label: formatOptimalRollPatternLabel(
+        shape.archetype,
         tertiaryStat,
-        tuningStat,
-        idealStat: tertiaryStat,
-        label: formatOptimalRollPatternLabel(archetype, tertiaryStat, tuningStat, priorities),
-      });
-    }
+        shape.tuningStat,
+        priorities,
+      ),
+    });
   }
+
   return patterns;
 }
 
@@ -617,6 +676,10 @@ function compareLoadoutPieces(
   setTargets: SetBonusTarget[] = [],
   currentSetCounts?: ReadonlyMap<number, number>,
 ): number {
+  const slotScoreDiff =
+    piecePrioritySlotScore(b, priorities) - piecePrioritySlotScore(a, priorities);
+  if (slotScoreDiff !== 0) return slotScoreDiff;
+
   const scoreDiff =
     pieceLoadoutContribution(b, priorities) - pieceLoadoutContribution(a, priorities);
   if (scoreDiff !== 0) return scoreDiff;
@@ -644,16 +707,21 @@ function compareLoadoutPieces(
   return setA.localeCompare(setB);
 }
 
-/** Picker display order: stable ascending item instance id (not algorithm rank). */
+/** Picker display order: preserve algorithm rank (best fit first). */
 export function orderEligiblePiecesForSlotPicker(
   ranked: EligibleLoadoutPiece[],
 ): EligibleLoadoutPiece[] {
-  if (ranked.length <= 1) return ranked;
-  return [...ranked].sort((a, b) =>
-    a.piece.instanceId.localeCompare(b.piece.instanceId, undefined, {
-      numeric: true,
-    }),
-  );
+  return ranked;
+}
+
+/** Cross-column picker order when pieces come from different roll patterns. */
+export function compareEligiblePickerPieces(
+  a: ArmorPiece,
+  b: ArmorPiece,
+  priorities: Stat[],
+  setTargets: SetBonusTarget[] = [],
+): number {
+  return compareLoadoutPieces(a, b, priorities, setTargets);
 }
 
 function bestPieceForSlot(
@@ -1166,7 +1234,17 @@ export function rollPatternMatchScore(
   if (pattern.archetype === null || item.archetype === pattern.archetype) {
     score += 4;
   }
-  if (item.tertiaryStat === pattern.tertiaryStat) score += 2;
+  if (pattern.tertiaryStat === null) {
+    if (
+      pattern.archetype !== null &&
+      item.archetype === pattern.archetype &&
+      tertiaryStatsForArchetype(item.archetype).includes(item.tertiaryStat)
+    ) {
+      score += 2;
+    }
+  } else if (item.tertiaryStat === pattern.tertiaryStat) {
+    score += 2;
+  }
   if (item.tuningStat === pattern.tuningStat) score += 1;
   return score;
 }
@@ -1180,8 +1258,33 @@ function pieceEligibleForSetPatternColumnSlot(
   if (!pieceMatchesSetColumnFilter(item, setHash)) return false;
   if (pieceEligibleForPatternColumn(item, pattern, priorities)) return true;
   if (setHash === undefined) return false;
-  if (!pieceMatchesRollPattern(item, pattern, priorities)) return false;
-  return pieceLoadoutContribution(item, priorities) > 0;
+  if (allowsViableCrossMatch(item, pattern, priorities)) {
+    return pieceLoadoutContribution(item, priorities) > 0;
+  }
+  return false;
+}
+
+/** Set columns accept viable split-push pieces with matching tuning when no optimal piece exists. */
+function allowsViableCrossMatch(
+  item: ArmorPiece,
+  pattern: OptimalRollPattern,
+  priorities: Stat[],
+): boolean {
+  if (item.tuningStat !== pattern.tuningStat) return false;
+  if (!isViableComboLoadoutPiece(item, priorities)) return false;
+  if (isBestTierLoadoutPiece(item, priorities)) return false;
+  if (pieceMatchesRollPattern(item, pattern, priorities)) return false;
+
+  const maxScore = maxPrioritySlotScore(priorities);
+  const pieceScore = piecePrioritySlotScore(item, priorities);
+  if (maxScore <= 0 || pieceScore <= 0) return false;
+
+  const matchesMaxBudgetShape = computeOptimalRollShapes(priorities).some((shape) =>
+    rollShapeTertiaryMatches(item, shape, priorities),
+  );
+  if (matchesMaxBudgetShape) return false;
+
+  return pieceScore >= maxScore - 2;
 }
 
 function pieceEligibleForNearPatternColumnSlot(
@@ -1268,6 +1371,10 @@ function comparePatternSlotCandidates(
   priorities: Stat[],
   setTargets: SetBonusTarget[] = [],
 ): number {
+  const slotScoreDiff =
+    piecePrioritySlotScore(b, priorities) - piecePrioritySlotScore(a, priorities);
+  if (slotScoreDiff !== 0) return slotScoreDiff;
+
   const patternDiff = rollPatternMatchScore(b, pattern) - rollPatternMatchScore(a, pattern);
   if (patternDiff !== 0) return patternDiff;
 
@@ -1276,7 +1383,33 @@ function comparePatternSlotCandidates(
     Number(pieceEligibleForPatternColumn(a, pattern, priorities));
   if (exactDiff !== 0) return exactDiff;
 
-  return compareLoadoutPieces(a, b, priorities, setTargets);
+  const loadoutDiff = compareLoadoutPieces(a, b, priorities, setTargets);
+  if (loadoutDiff !== 0) return loadoutDiff;
+
+  if (pattern.tertiaryStat === null && a.tertiaryStat !== b.tertiaryStat) {
+    const aIdx = priorities.indexOf(a.tertiaryStat);
+    const bIdx = priorities.indexOf(b.tertiaryStat);
+    if (aIdx !== -1 || bIdx !== -1) {
+      if (aIdx === -1) return 1;
+      if (bIdx === -1) return -1;
+      if (aIdx !== bIdx) return aIdx - bIdx;
+    }
+    const tertiaryDiff = statLabel(a.tertiaryStat).localeCompare(statLabel(b.tertiaryStat));
+    if (tertiaryDiff !== 0) return tertiaryDiff;
+  }
+
+  if (a.tuningStat !== b.tuningStat) {
+    const aIdx = priorities.indexOf(a.tuningStat!);
+    const bIdx = priorities.indexOf(b.tuningStat!);
+    if (aIdx !== -1 || bIdx !== -1) {
+      if (aIdx === -1) return 1;
+      if (bIdx === -1) return -1;
+      if (aIdx !== bIdx) return aIdx - bIdx;
+    }
+    return statLabel(a.tuningStat!).localeCompare(statLabel(b.tuningStat!));
+  }
+
+  return a.instanceId.localeCompare(b.instanceId, undefined, { numeric: true });
 }
 
 function patternSlotCandidates(
@@ -1562,10 +1695,11 @@ export function migrateRollPatternToSlotRepresentatives(
   for (const [patternKey, instanceId] of Object.entries(rollPatternRepresentatives)) {
     const item = items.find((i) => i.instanceId === instanceId);
     if (!item) continue;
-    const pattern = patterns.find((p) => optimalRollPatternKey(p) === patternKey);
+    const pattern = resolvePatternForPersistenceKey(patternKey, patterns);
     if (!pattern || !pieceEligibleForPatternColumn(item, pattern, priorities)) continue;
-    if (!out[patternKey]) out[patternKey] = {};
-    out[patternKey]![item.armorSlot] = instanceId;
+    const canonicalKey = optimalRollPatternKey(pattern);
+    if (!out[canonicalKey]) out[canonicalKey] = {};
+    out[canonicalKey]![item.armorSlot] = instanceId;
   }
 
   return Object.keys(out).length > 0 ? out : undefined;
@@ -1579,15 +1713,15 @@ export function expandRollPatternSlotRepresentativesForSetTargets(
 ): Partial<Record<string, Partial<Record<ArmorSlot, string>>>> {
   if (setTargets.length === 0) return reps;
 
-  const patternKeys = new Set(
-    deriveOptimalRollPatterns(priorities).map((pattern) => optimalRollPatternKey(pattern)),
-  );
+  const patterns = deriveOptimalRollPatterns(priorities);
   const out: Partial<Record<string, Partial<Record<ArmorSlot, string>>>> = { ...reps };
 
   for (const [key, slots] of Object.entries(reps)) {
-    if (!patternKeys.has(key)) continue;
+    const pattern = resolvePatternForPersistenceKey(key, patterns);
+    if (!pattern) continue;
+    const canonicalKey = optimalRollPatternKey(pattern);
     for (const target of setTargets) {
-      const columnKey = patternSetColumnKey(key, target.hash);
+      const columnKey = patternSetColumnKey(canonicalKey, target.hash);
       if (!out[columnKey]) {
         out[columnKey] = { ...slots };
       }

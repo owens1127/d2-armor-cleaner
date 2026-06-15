@@ -4,6 +4,9 @@ import type { PatternLoadoutEntry } from '@/lib/coverage/loadout';
 /** Fixed header row - keeps slot rows aligned across pattern columns. */
 export const LOADOUT_HEADER_ROW_H = '4.5rem';
 
+/** Collapsed (grouped) header - single title line, no roll chips. */
+export const LOADOUT_COLLAPSED_HEADER_ROW_H = '2.25rem';
+
 /** Slot row shell - fills subgrid track, clips overflow. */
 export const LOADOUT_SLOT_ROW_SHELL =
   'box-border h-16 min-h-16 max-h-16 overflow-hidden';
@@ -69,6 +72,13 @@ export function rollPatternLoadoutSetRowStyle(columnCount: number): CSSPropertie
 export function rollPatternLoadoutColumnGridStyle(): CSSProperties {
   return {
     gridTemplateRows: rollPatternLoadoutColumnGridTemplateRows(),
+  };
+}
+
+/** Grouped pattern column - shorter header row (no roll chip row). */
+export function rollPatternLoadoutCollapsedColumnGridStyle(): CSSProperties {
+  return {
+    gridTemplateRows: `${LOADOUT_COLLAPSED_HEADER_ROW_H} repeat(5, ${LOADOUT_SLOT_ROW_H})`,
   };
 }
 

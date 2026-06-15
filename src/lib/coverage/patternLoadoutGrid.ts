@@ -4,12 +4,14 @@ import { ARMOR_SLOTS } from '@/lib/constants';
 import {
   bestPiecesForPatternBySlot,
   columnSlotContextFromColumn,
+  compareEligiblePickerPieces,
   formatNearMatchTooltip,
   formatTopGoldColumnTooltip,
   isColumnSlotEligiblePiece,
   isTopGoldColumnPiece,
   rankEligiblePiecesForPatternInSlot,
   resolvePatternSlotLoadoutPiece,
+  rollPatternMatchScore,
   selectRecommendedPatternLoadout,
   type PatternLoadoutEntry,
   type PatternLoadoutSource,
@@ -19,7 +21,245 @@ import {
 import type { EligibleLoadoutPiece } from '@/lib/coverage/analyze';
 import { parseSetBonusTargets } from '@/lib/coverage/setBonus';
 import type { BuildProfile } from '@/lib/coverage/builds';
+import type { OptimalRollPattern } from '@/lib/coverage/loadout';
 import type { ArmorPiece, ArmorSlot, Stat } from '@/types';
+
+export interface PatternColumnGroup {
+  groupKey: string;
+  headerPattern: Pick<OptimalRollPattern, 'archetype' | 'tertiaryStat'>;
+  columns: PatternLoadoutEntry[];
+}
+
+/** True when a set row has multiple pattern columns worth collapsing into one card. */
+export function patternSetRowColumnsAreCollapsible(
+  columns: readonly PatternLoadoutEntry[],
+): boolean {
+  return columns.length > 1;
+}
+
+/** Shared archetype when every column matches; otherwise null (mixed archetypes). */
+export function resolveCollapsedSetRowHeaderPattern(
+  columns: readonly PatternLoadoutEntry[],
+): Pick<OptimalRollPattern, 'archetype' | 'tertiaryStat'> {
+  if (columns.length === 0) {
+    return { archetype: null, tertiaryStat: null };
+  }
+
+  const firstArchetype = columns[0]!.pattern.archetype;
+  const sameArchetype = columns.every(
+    (column) => column.pattern.archetype === firstArchetype,
+  );
+
+  return {
+    archetype: sameArchetype ? firstArchetype : null,
+    tertiaryStat: null,
+  };
+}
+
+/** Collapse every pattern column in one set row into a single grouped card. */
+export function groupPatternLoadoutColumnsIntoOne(
+  columns: readonly PatternLoadoutEntry[],
+): PatternColumnGroup {
+  return {
+    groupKey: 'collapsed',
+    headerPattern: resolveCollapsedSetRowHeaderPattern(columns),
+    columns: [...columns],
+  };
+}
+
+export interface MergedGroupedSlotRow extends PatternColumnSlotRow {
+  sourceColumnKey: string;
+  sourcePattern: OptimalRollPattern;
+}
+
+function mergedRowPriority(row: PatternColumnSlotRow): number {
+  if (row.matchTier === 'perfect') return 2;
+  if (row.matchTier === 'near') return 1;
+  return 0;
+}
+
+function pickMergedSlotWinner(
+  candidates: readonly {
+    columnKey: string;
+    pattern: OptimalRollPattern;
+    row: PatternColumnSlotRow;
+  }[],
+): (typeof candidates)[number] | null {
+  let best: (typeof candidates)[number] | null = null;
+
+  for (const candidate of candidates) {
+    if (candidate.row.displayPiece === null && candidate.row.matchTier === null) continue;
+
+    if (!best) {
+      best = candidate;
+      continue;
+    }
+
+    const candidatePriority = mergedRowPriority(candidate.row);
+    const bestPriority = mergedRowPriority(best.row);
+    if (candidatePriority > bestPriority) {
+      best = candidate;
+      continue;
+    }
+    if (candidatePriority < bestPriority) continue;
+
+    if (
+      candidate.row.selectionSource === 'representative' &&
+      best.row.selectionSource !== 'representative'
+    ) {
+      best = candidate;
+      continue;
+    }
+    if (
+      best.row.selectionSource === 'representative' &&
+      candidate.row.selectionSource !== 'representative'
+    ) {
+      continue;
+    }
+
+    const tuningOrder =
+      candidate.pattern.tuningStat.localeCompare(best.pattern.tuningStat);
+    if (tuningOrder < 0) {
+      best = candidate;
+    }
+  }
+
+  return best;
+}
+
+/** Best displayed piece per slot across all columns in one collapsed group. */
+export function buildMergedGroupedSlotRows(
+  group: PatternColumnGroup,
+  columnRowsByKey: PatternLoadoutGridData['columnRowsByKey'],
+): MergedGroupedSlotRow[] {
+  const slotEntries =
+    columnRowsByKey[group.columns[0]?.columnKey ?? '']?.map((row) => row.slotEntry) ?? [];
+
+  return slotEntries.map((slotEntry) => {
+    const candidates = group.columns
+      .map((column) => ({
+        columnKey: column.columnKey,
+        pattern: column.pattern,
+        row: (columnRowsByKey[column.columnKey] ?? []).find(
+          (entry) => entry.slotEntry.slot === slotEntry.slot,
+        ),
+      }))
+      .filter(
+        (
+          entry,
+        ): entry is {
+          columnKey: string;
+          pattern: OptimalRollPattern;
+          row: PatternColumnSlotRow;
+        } => entry.row !== undefined,
+      );
+
+    const winner = pickMergedSlotWinner(candidates);
+    if (!winner) {
+      return {
+        slotEntry,
+        displayPiece: null,
+        matchTier: null,
+        selectionSource: 'auto',
+        topGold: false,
+        showComboBadge: false,
+        comboBadgeCount: 0,
+        sourceColumnKey: group.columns[0]!.columnKey,
+        sourcePattern: group.columns[0]!.pattern,
+      };
+    }
+
+    return {
+      ...winner.row,
+      sourceColumnKey: winner.columnKey,
+      sourcePattern: winner.pattern,
+    };
+  });
+}
+
+/** Union of eligible pieces for one slot across all columns in a collapsed group. */
+export function mergeGroupedEligibleBySlot(
+  group: PatternColumnGroup,
+  patternEligibleBySlot: PatternLoadoutGridData['patternEligibleBySlot'],
+  priorities: Stat[],
+  setTargets: ReturnType<typeof parseSetBonusTargets> = [],
+): Partial<Record<ArmorSlot, EligibleLoadoutPiece[]>> {
+  const merged: Partial<Record<ArmorSlot, EligibleLoadoutPiece[]>> = {};
+
+  for (const slot of ARMOR_SLOTS) {
+    const seen = new Set<string>();
+    const pieces: EligibleLoadoutPiece[] = [];
+
+    for (const column of group.columns) {
+      for (const entry of patternEligibleBySlot[column.columnKey]?.[slot] ?? []) {
+        if (seen.has(entry.piece.instanceId)) continue;
+        seen.add(entry.piece.instanceId);
+        pieces.push(entry);
+      }
+    }
+
+    if (pieces.length > 0) {
+      merged[slot] = [...pieces].sort((a, b) =>
+        compareEligiblePickerPieces(a.piece, b.piece, priorities, setTargets),
+      );
+    }
+  }
+
+  return merged;
+}
+
+/** Resolve which pattern column owns a user pick inside a collapsed card. */
+export function resolveGroupedSlotSelectionColumn(
+  group: PatternColumnGroup,
+  slot: ArmorSlot,
+  instanceId: string,
+  patternEligibleBySlot: PatternLoadoutGridData['patternEligibleBySlot'],
+): PatternLoadoutEntry {
+  const matching = group.columns.filter((column) =>
+    (patternEligibleBySlot[column.columnKey]?.[slot] ?? []).some(
+      (entry) => entry.piece.instanceId === instanceId,
+    ),
+  );
+  if (matching.length === 0) return group.columns[0]!;
+  if (matching.length === 1) return matching[0]!;
+
+  const piece =
+    (patternEligibleBySlot[matching[0]!.columnKey]?.[slot] ?? []).find(
+      (entry) => entry.piece.instanceId === instanceId,
+    )?.piece ?? null;
+  if (!piece) return matching[0]!;
+
+  return matching.reduce((best, column) => {
+    const bestScore = rollPatternMatchScore(piece, best.pattern);
+    const columnScore = rollPatternMatchScore(piece, column.pattern);
+    if (columnScore !== bestScore) {
+      return columnScore > bestScore ? column : best;
+    }
+    if (best.pattern.tertiaryStat === null && column.pattern.tertiaryStat !== null) {
+      return column;
+    }
+    if (column.pattern.tertiaryStat === null && best.pattern.tertiaryStat !== null) {
+      return best;
+    }
+    return best;
+  });
+}
+
+/** Union of perfect slots across all columns in one collapsed card. */
+export function countGroupPerfectSlots(
+  group: PatternColumnGroup,
+  columnRowsByKey: PatternLoadoutGridData['columnRowsByKey'],
+): number {
+  const coveredSlots = new Set<ArmorSlot>();
+  for (const column of group.columns) {
+    for (const row of columnRowsByKey[column.columnKey] ?? []) {
+      if (row.matchTier === 'perfect' && row.displayPiece !== null) {
+        coveredSlots.add(row.slotEntry.slot);
+      }
+    }
+  }
+  return coveredSlots.size;
+}
 
 function comboScopeSlotKey(setHash: number | undefined, slot: ArmorSlot): string {
   return setHash === undefined ? `no-set:${slot}` : `${setHash}:${slot}`;
@@ -54,6 +294,22 @@ export function countUniqueSetPiecesInPatternGrid(
     }
   }
   return ids.size;
+}
+
+/** Union of slots with a perfect match across pattern columns in one set row. */
+export function countOverallPerfectSlotsInSetRow(
+  columns: readonly PatternLoadoutEntry[],
+  columnRowsByKey: PatternLoadoutGridData['columnRowsByKey'],
+): number {
+  const coveredSlots = new Set<ArmorSlot>();
+  for (const column of columns) {
+    for (const row of columnRowsByKey[column.columnKey] ?? []) {
+      if (row.matchTier === 'perfect' && row.displayPiece !== null) {
+        coveredSlots.add(row.slotEntry.slot);
+      }
+    }
+  }
+  return coveredSlots.size;
 }
 
 export interface PatternLoadoutGridData {

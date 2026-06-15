@@ -205,7 +205,16 @@
       "overlapCount_other": "{{count}} 件",
       "gapAllPriorities": "符合所有優先順序",
       "gapMultiplePriorities": "符合多項優先順序",
-      "gapOnePriority": "符合一項優先順序"
+      "gapOnePriority": "符合一項優先順序",
+      "columnTitleArchetype": "{{archetype}} · {{tuning}}",
+      "columnTitleAnyArchetype": "{{anyArchetype}} · {{tuning}}",
+      "nearMatchTuningTooltip": "Wrong tuning · has {{actual}}, need {{expected}}",
+      "overallCoverage": "Overall · {{filled}}/{{total}} slots",
+      "rollRoleAnyTertiary": "any tertiary",
+      "columnLayoutToggle": "Recommended pieces layout",
+      "columnLayoutSplit": "Expand",
+      "columnLayoutGroup": "Collapse",
+      "columnLayoutGroupHint": "Collapse roll patterns into one card per set"
     }
   },
   "calibrate": {
@@ -1039,3 +1048,4 @@
     "dupeRulesImpact": "載入倉庫以預覽影響。"
   }
 }
+

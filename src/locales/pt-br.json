@@ -205,7 +205,16 @@
       "gapAllPriorities": "corresponde a todas as prioridades",
       "gapMultiplePriorities": "corresponde a várias prioridades",
       "gapOnePriority": "corresponde a uma prioridade",
-      "chooseEligibleTitle": "{{count}} peças elegíveis no cofre"
+      "chooseEligibleTitle": "{{count}} peças elegíveis no cofre",
+      "columnTitleArchetype": "{{archetype}} · {{tuning}}",
+      "columnTitleAnyArchetype": "{{anyArchetype}} · {{tuning}}",
+      "nearMatchTuningTooltip": "Wrong tuning · has {{actual}}, need {{expected}}",
+      "overallCoverage": "Overall · {{filled}}/{{total}} slots",
+      "rollRoleAnyTertiary": "any tertiary",
+      "columnLayoutToggle": "Recommended pieces layout",
+      "columnLayoutSplit": "Expand",
+      "columnLayoutGroup": "Collapse",
+      "columnLayoutGroupHint": "Collapse roll patterns into one card per set"
     }
   },
   "calibrate": {
@@ -1039,3 +1048,4 @@
     "dupeRulesImpact": "Carregue o cofre para pré-visualizar o impacto."
   }
 }
+

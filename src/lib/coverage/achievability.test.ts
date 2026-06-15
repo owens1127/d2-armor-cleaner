@@ -79,9 +79,25 @@ describe('canonical optimal roll math', () => {
     const priorities = ['weapons', 'super', 'grenade'] as const;
     const max = maxCanonicalCombinedPriorityTotal([...priorities]);
     expect(max).toBeGreaterThan(0);
-    expect(optimalArchetypesForPush('weapons', [...priorities])).toEqual(['grenadier']);
-    expect(optimalArchetypesForPush('super', [...priorities])).toEqual(['gunner']);
+    expect(optimalArchetypesForPush('weapons', [...priorities])).toEqual([]);
+    expect(optimalArchetypesForPush('super', [...priorities])).toEqual([]);
     expect(optimalArchetypesForPush('grenade', [...priorities])).toEqual(['powerhouse']);
+
+    const shapes = computeOptimalRollShapes([...priorities]);
+    expect(shapes).toEqual([{ archetype: 'powerhouse', tertiaryStat: 'grenade' }]);
+  });
+
+  it('Super+Weapons+Class uses Powerhouse with class tertiary, not Specialist', () => {
+    const priorities = ['super', 'weapons', 'class'] as const;
+    expect(optimalArchetypesForPush('class', [...priorities])).toEqual(['powerhouse']);
+    expect(optimalArchetypesForPush('super', [...priorities])).toEqual([]);
+    expect(optimalArchetypesForPush('weapons', [...priorities])).toEqual([]);
+    expect(optimalArchetypesForPush('class', [...priorities])).not.toContain('specialist');
+
+    const shapes = computeOptimalRollShapes([...priorities]);
+    expect(shapes.every((s) => s.archetype === 'powerhouse')).toBe(true);
+    expect(shapes.some((s) => s.archetype === 'specialist')).toBe(false);
+    expect(shapes).toEqual([{ archetype: 'powerhouse', tertiaryStat: 'class' }]);
   });
 });
 

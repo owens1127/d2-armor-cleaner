@@ -57,10 +57,10 @@ export function fullBrawlerVault(classType: ArmorPiece['classType'] = 'hunter'):
       instanceId: `melee-super-${armorSlot}`,
       classType,
       armorSlot,
-      archetype: 'paragon',
-      tertiaryStat: 'weapons',
+      archetype: 'brawler',
+      tertiaryStat: 'super',
       tuningStat: 'melee',
-      baseStats: { super: 30, melee: 25, weapons: 20 },
+      baseStats: { melee: 30, health: 25, super: 20 },
     }),
   );
 }
