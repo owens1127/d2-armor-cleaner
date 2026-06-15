@@ -205,7 +205,16 @@
       "gapAllPriorities": "pasuje do wszystkich priorytetów",
       "gapMultiplePriorities": "pasuje do wielu priorytetów",
       "gapOnePriority": "pasuje do jednego priorytetu",
-      "chooseEligibleTitle": "{{count}} kwalifikujących się elementów w skarbcu"
+      "chooseEligibleTitle": "{{count}} kwalifikujących się elementów w skarbcu",
+      "columnTitleArchetype": "{{archetype}} · {{tuning}}",
+      "columnTitleAnyArchetype": "{{anyArchetype}} · {{tuning}}",
+      "nearMatchTuningTooltip": "Wrong tuning · has {{actual}}, need {{expected}}",
+      "overallCoverage": "Overall · {{filled}}/{{total}} slots",
+      "rollRoleAnyTertiary": "any tertiary",
+      "columnLayoutToggle": "Recommended pieces layout",
+      "columnLayoutSplit": "Expand",
+      "columnLayoutGroup": "Collapse",
+      "columnLayoutGroupHint": "Collapse roll patterns into one card per set"
     }
   },
   "calibrate": {
@@ -1039,3 +1048,4 @@
     "dupeRulesImpact": "Załaduj skarbiec, aby zobaczyć wpływ."
   }
 }
+

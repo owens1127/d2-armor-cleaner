@@ -205,7 +205,16 @@
       "gapAllPriorities": "匹配全部优先级",
       "gapMultiplePriorities": "匹配多个优先级",
       "gapOnePriority": "匹配一个优先级",
-      "chooseEligibleTitle": "仓库中有 {{count}} 件符合条件"
+      "chooseEligibleTitle": "仓库中有 {{count}} 件符合条件",
+      "columnTitleArchetype": "{{archetype}} · {{tuning}}",
+      "columnTitleAnyArchetype": "{{anyArchetype}} · {{tuning}}",
+      "nearMatchTuningTooltip": "Wrong tuning · has {{actual}}, need {{expected}}",
+      "overallCoverage": "Overall · {{filled}}/{{total}} slots",
+      "rollRoleAnyTertiary": "any tertiary",
+      "columnLayoutToggle": "Recommended pieces layout",
+      "columnLayoutSplit": "Expand",
+      "columnLayoutGroup": "Collapse",
+      "columnLayoutGroupHint": "Collapse roll patterns into one card per set"
     }
   },
   "calibrate": {
@@ -1039,3 +1048,4 @@
     "dupeRulesImpact": "加载仓库以预览影响。"
   }
 }
+

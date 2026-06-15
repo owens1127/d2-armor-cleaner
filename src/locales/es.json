@@ -205,7 +205,16 @@
       "gapAllPriorities": "coincide con todas las prioridades",
       "gapMultiplePriorities": "coincide con varias prioridades",
       "gapOnePriority": "coincide con una prioridad",
-      "chooseEligibleTitle": "{{count}} piezas aptas en la cámara"
+      "chooseEligibleTitle": "{{count}} piezas aptas en la cámara",
+      "columnTitleArchetype": "{{archetype}} · {{tuning}}",
+      "columnTitleAnyArchetype": "{{anyArchetype}} · {{tuning}}",
+      "nearMatchTuningTooltip": "Wrong tuning · has {{actual}}, need {{expected}}",
+      "overallCoverage": "Overall · {{filled}}/{{total}} slots",
+      "rollRoleAnyTertiary": "any tertiary",
+      "columnLayoutToggle": "Recommended pieces layout",
+      "columnLayoutSplit": "Expand",
+      "columnLayoutGroup": "Collapse",
+      "columnLayoutGroupHint": "Collapse roll patterns into one card per set"
     }
   },
   "calibrate": {
@@ -1039,3 +1048,4 @@
     "dupeRulesImpact": "Carga la cámara para previsualizar el impacto."
   }
 }
+

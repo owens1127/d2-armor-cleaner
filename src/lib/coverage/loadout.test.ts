@@ -498,19 +498,52 @@ describe('rankEligiblePiecesForPatternInSlot', () => {
       'lower-want',
     ]);
   });
+
+  it('ranks flex-tertiary duplicates by loadout fit then tertiary stat', () => {
+    const pattern = weaponsSuperPattern('weapons');
+    expect(pattern.tertiaryStat).toBeNull();
+    const shared = {
+      name: 'Pantheos Resplendent Grasps',
+      armorSlot: 'arms' as const,
+      archetype: 'powerhouse' as const,
+      tuningStat: 'weapons' as const,
+      baseStats: { weapons: 35, super: 30, melee: 20 },
+    };
+    const items = [
+      piece({
+        instanceId: 'grasps-grenade',
+        ...shared,
+        tertiaryStat: 'grenade',
+        wantScore: 0.5,
+      }),
+      piece({
+        instanceId: 'grasps-melee',
+        ...shared,
+        tertiaryStat: 'melee',
+        wantScore: 0.9,
+      }),
+    ];
+    const ranked = rankEligiblePiecesForPatternInSlot(
+      items,
+      'arms',
+      pattern,
+      ['weapons', 'super'],
+    );
+    expect(ranked.map((r) => r.piece.instanceId)).toEqual(['grasps-melee', 'grasps-grenade']);
+  });
 });
 
 describe('orderEligiblePiecesForSlotPicker', () => {
-  it('sorts by instance id ascending regardless of algorithm rank', () => {
+  it('preserves algorithm rank order', () => {
     const ranked = [
       { piece: piece({ instanceId: '300' }), contributionScore: 10, fitLabel: '' },
       { piece: piece({ instanceId: '20' }), contributionScore: 1, fitLabel: '' },
       { piece: piece({ instanceId: '100' }), contributionScore: 5, fitLabel: '' },
     ];
     expect(orderEligiblePiecesForSlotPicker(ranked).map((r) => r.piece.instanceId)).toEqual([
+      '300',
       '20',
       '100',
-      '300',
     ]);
   });
 });
@@ -586,7 +619,7 @@ describe('migrateRollPatternToSlotRepresentatives', () => {
         'powerhouse:grenade:super': 'chest-w',
       }),
     ).toEqual({
-      'powerhouse:grenade:super': { chest: 'chest-w' },
+      'powerhouse:any:super': { chest: 'chest-w' },
     });
   });
 });
@@ -611,10 +644,10 @@ describe('resolveEffectiveRollPatternSlotRepresentatives', () => {
       resolveEffectiveRollPatternSlotRepresentatives(
         items,
         ['weapons', 'super'],
-        { 'powerhouse:grenade:super': { chest: 'saved' } },
+        { 'powerhouse:any:super': { chest: 'saved' } },
         { 'powerhouse:grenade:super': 'legacy' },
       ),
-    ).toEqual({ 'powerhouse:grenade:super': { chest: 'saved' } });
+    ).toEqual({ 'powerhouse:any:super': { chest: 'saved' } });
   });
 
   it('expands legacy pattern keys to per-set column keys when set targets configured', () => {
@@ -630,8 +663,8 @@ describe('resolveEffectiveRollPatternSlotRepresentatives', () => {
       parseSetBonusTargets(ferro.hash, smoke.hash),
     );
     expect(reps).toEqual({
-      [`powerhouse:grenade:weapons:${ferro.hash}`]: { helmet: 'saved-helm' },
-      [`powerhouse:grenade:weapons:${smoke.hash}`]: { helmet: 'saved-helm' },
+      [`powerhouse:any:weapons:${ferro.hash}`]: { helmet: 'saved-helm' },
+      [`powerhouse:any:weapons:${smoke.hash}`]: { helmet: 'saved-helm' },
     });
   });
 });

@@ -205,7 +205,16 @@
       "gapAllPriorities": "erfüllt alle Prioritäten",
       "gapMultiplePriorities": "erfüllt mehrere Prioritäten",
       "gapOnePriority": "erfüllt eine Priorität",
-      "chooseEligibleTitle": "{{count}} passende Teile im Tresor"
+      "chooseEligibleTitle": "{{count}} passende Teile im Tresor",
+      "columnTitleArchetype": "{{archetype}} · {{tuning}}",
+      "columnTitleAnyArchetype": "{{anyArchetype}} · {{tuning}}",
+      "nearMatchTuningTooltip": "Wrong tuning · has {{actual}}, need {{expected}}",
+      "overallCoverage": "Overall · {{filled}}/{{total}} slots",
+      "rollRoleAnyTertiary": "any tertiary",
+      "columnLayoutToggle": "Recommended pieces layout",
+      "columnLayoutSplit": "Expand",
+      "columnLayoutGroup": "Collapse",
+      "columnLayoutGroupHint": "Collapse roll patterns into one card per set"
     }
   },
   "calibrate": {
@@ -1039,3 +1048,4 @@
     "dupeRulesImpact": "Tresor laden, um Auswirkung zu sehen."
   }
 }
+

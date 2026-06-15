@@ -205,7 +205,16 @@
       "gapAllPriorities": "соответствует всем приоритетам",
       "gapMultiplePriorities": "соответствует нескольким приоритетам",
       "gapOnePriority": "соответствует одному приоритету",
-      "chooseEligibleTitle": "{{count}} подходящих предметов в хранилище"
+      "chooseEligibleTitle": "{{count}} подходящих предметов в хранилище",
+      "columnTitleArchetype": "{{archetype}} · {{tuning}}",
+      "columnTitleAnyArchetype": "{{anyArchetype}} · {{tuning}}",
+      "nearMatchTuningTooltip": "Wrong tuning · has {{actual}}, need {{expected}}",
+      "overallCoverage": "Overall · {{filled}}/{{total}} slots",
+      "rollRoleAnyTertiary": "any tertiary",
+      "columnLayoutToggle": "Recommended pieces layout",
+      "columnLayoutSplit": "Expand",
+      "columnLayoutGroup": "Collapse",
+      "columnLayoutGroupHint": "Collapse roll patterns into one card per set"
     }
   },
   "calibrate": {
@@ -1039,3 +1048,4 @@
     "dupeRulesImpact": "Загрузите хранилище, чтобы увидеть влияние."
   }
 }
+

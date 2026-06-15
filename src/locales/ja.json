@@ -205,7 +205,16 @@
       "gapAllPriorities": "すべての優先度に一致",
       "gapMultiplePriorities": "複数の優先度に一致",
       "gapOnePriority": "1 つの優先度に一致",
-      "chooseEligibleTitle": "保管庫の候補 {{count}} 件"
+      "chooseEligibleTitle": "保管庫の候補 {{count}} 件",
+      "columnTitleArchetype": "{{archetype}} · {{tuning}}",
+      "columnTitleAnyArchetype": "{{anyArchetype}} · {{tuning}}",
+      "nearMatchTuningTooltip": "Wrong tuning · has {{actual}}, need {{expected}}",
+      "overallCoverage": "Overall · {{filled}}/{{total}} slots",
+      "rollRoleAnyTertiary": "any tertiary",
+      "columnLayoutToggle": "Recommended pieces layout",
+      "columnLayoutSplit": "Expand",
+      "columnLayoutGroup": "Collapse",
+      "columnLayoutGroupHint": "Collapse roll patterns into one card per set"
     }
   },
   "calibrate": {
@@ -1039,3 +1048,4 @@
     "dupeRulesImpact": "保管庫を読み込んで影響をプレビューします。"
   }
 }
+
